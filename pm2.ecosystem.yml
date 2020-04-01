@@ -1,0 +1,3 @@
+apps:
+  script: '.dist/src/Steve.js'
+  name: 'Steve'

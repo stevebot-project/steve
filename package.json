@@ -1,0 +1,54 @@
+{
+  "name": "steve",
+  "version": "3.1.0",
+  "description": "Discord bot for Tuataria and its sideservers.",
+  "main": "dist/src/bot.js",
+  "scripts": {
+    "start": "node --harmony dist/src/Steve.js",
+    "build": "tsc -p .",
+    "build-clear": "rm -rf dist && tsc -p .",
+    "test": "eslint src --ext .ts",
+    "lint": "eslint src --ext .ts --fix",
+    "pm2:start": "pm2 start pm2.ecosystem.yml",
+    "pm2:reload": "pm2 reload Steve",
+    "pm2:delete": "pm2 delete Steve",
+    "pm2:logs": "pm2 logs Steve --lines=50",
+    "pm2:stop": "pm2 stop Steve"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tuataria/steve.git"
+  },
+  "author": "Tuataria",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/tuataria/steve/issues"
+  },
+  "homepage": "https://github.com/tuataria/steve#readme",
+  "dependencies": {
+    "common-tags": "^1.8.0",
+    "discord.js": "^12.0.1",
+    "genius-lyrics": "^1.0.9",
+    "google-it": "^1.5.0",
+    "klasa": "github:dirigeants/klasa#v1.0.0-alpha",
+    "lavalink": "^2.9.0",
+    "module-alias": "^2.2.2",
+    "moment": "^2.24.0",
+    "mongodb": "^3.5.3",
+    "pretty-ms": "^6.0.1"
+  },
+  "_moduleAliases": {
+    "@root": "dist",
+    "@lib": "dist/src/lib",
+    "@utils": "dist/src/lib/util"
+  },
+  "devDependencies": {
+    "@types/common-tags": "^1.8.0",
+    "@types/mongodb": "^3.3.16",
+    "@types/node-fetch": "^2.5.4",
+    "@typescript-eslint/eslint-plugin": "^2.19.0",
+    "@typescript-eslint/parser": "^2.19.0",
+    "eslint": "^6.8.0",
+    "typescript": "^3.8.2"
+  }
+}
