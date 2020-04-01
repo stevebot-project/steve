@@ -17,7 +17,7 @@ Steve is an all-purpose Discord bot originally developed for [Tuataria] and its 
 
 #### To Run Steve Locally:
 - Make sure you have Node.js v12 installed (you can check your version by doing `node -v` in your terminal).
-- Clone this repo to your local machine, make a new file called `config.ts` and copy the contents of `config.example.ts` into it. Put your bot's client ID and token into your new `config.ts` file where specified.
+- Clone this repo to your local machine, make a new file called `config.ts` in the root and copy the contents of `config.example.ts` into it. Put your bot's client ID and token into your new `config.ts` file where specified.
 - Download Lavalink from the link above, and put the host/port/password for your Lavalink server into the config file. (You can run Lavalink on your localhost.)
 - Make sure you have a MongoDB Atlas server set up (it's free). Put the connection string into the config file.
 - Once all that's done, you should be good to go!
@@ -25,7 +25,7 @@ Steve is an all-purpose Discord bot originally developed for [Tuataria] and its 
 ##### Notes
 - Having the EditorConfig extension installed in whatever editor you use is recommended (we recommend using Visual Studio Code).
 - If you don't want to go through the trouble of setting up Lavalink, you can just set `ENABLE_LAVALINK` to `false` in your `config.ts` file.
-- If you don't want have a Genius API key, the `lyrics` command will be disabled automatically if you leave the `TOKENS.GENIUS` field blank in your `config.ts` file.
+- If you don't have a Genius API key, the `lyrics` command will be disabled automatically if you leave the `TOKENS.GENIUS` field blank in your `config.ts` file.
 
 ### Story
 Steve is the resident koala of Tuataria; he's named after one of the koalas featured on [Koalas to the Max dot Com]. Don't come between him and his eucalyptus or he'll end you.
