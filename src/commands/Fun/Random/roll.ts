@@ -9,10 +9,10 @@ export default class extends SteveCommand {
 		super(store, file, directory, {
 			aliases: ['dice'],
 			description: 'Roll dice!',
-			examples: ['roll 1d6', 'roll 5d10!'],
+			examples: ['roll 1d6', 'roll d20', 'roll 5d10!'],
 			extendedHelp: oneLine`Use standard dice notation. You can add a "!" at the end of your roll to use exploding dice. You can roll
 				up to 10 dice with up to 1,000 sides each.`,
-			usage: '<roll:reg/(?<dice>\\d{1,2})d(?<sides>\\d{1,4})(?<explode>!)?/>',
+			usage: '<roll:reg/(?<dice>\\d{1,2})?d(?<sides>\\d{1,4})(?<explode>!)?/>',
 			helpUsage: '[1-9]d[1-999] (!)'
 		});
 
@@ -22,7 +22,8 @@ export default class extends SteveCommand {
 
 	public async run(msg: KlasaMessage, [match]: [any]): Promise<Message> { // eslint-disable-line @typescript-eslint/no-explicit-any
 		let dice = parseInt(match.groups.dice);
-		dice = dice <= 10 ? dice : 10;
+		if (isNaN(dice)) dice = 1;
+		else dice = dice <= 10 ? dice : 10;
 
 		let sides = parseInt(match.groups.sides);
 		sides = sides <= 1000 ? sides : 1000;
