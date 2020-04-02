@@ -74,3 +74,11 @@ export const enum Sideservers {
 	GAMATARIA = 'https://discord.gg/8uTmbuX',
 	HOGWARTARIA = 'https://discord.gg/kVRp4Q7'
 }
+
+export const enum Time {
+	Millisecond = 1,
+	Second = 1 * 1000,
+	Minute = 1 * 1000 * 60,
+	Hour = 1 * 1000 * 60 * 60,
+	Day = 1 * 1000 * 60 * 60 * 24
+}

@@ -3,8 +3,9 @@ import { CommandStore, KlasaMessage } from 'klasa';
 import { GuildMember, Message, ColorResolvable } from 'discord.js';
 import moment from 'moment';
 import { UserSettings } from '@lib/types/settings/UserSettings';
-import { Colors } from '@lib/types/enums';
+import { Colors, Time } from '@lib/types/enums';
 import { newEmbed, friendlyDuration } from '@utils/util';
+import { oneLine } from 'common-tags';
 
 export default class extends SteveCommand {
 
@@ -29,8 +30,15 @@ export default class extends SteveCommand {
 		const fetchedMemberAccountAge = `${friendlyDuration(Date.now() - fetchedMember.user.createdTimestamp)}
 			ago (${moment(fetchedMember.user.createdTimestamp).format('MM-DD-YY')})`;
 
-		const fetchedMemberJoinedServer = `${friendlyDuration(Date.now() - fetchedMember.joinedTimestamp)} ago
-			(${moment(fetchedMember.joinedTimestamp).format('MM-DD-YY')})`;
+		let fetchedMemberJoinedServer: string;
+		const timeSinceJoin = Date.now() - fetchedMember.joinedTimestamp;
+		const joinedDate = moment(fetchedMember.joinedTimestamp).format('MM-DD-YY');
+
+		if (timeSinceJoin > Time.Day && timeSinceJoin < Time.Hour * 31) {
+			fetchedMemberJoinedServer = `${timeSinceJoin / Time.Hour} hours ago (${joinedDate})`;
+		} else {
+			fetchedMemberJoinedServer = oneLine`${friendlyDuration(timeSinceJoin)} ago (${joinedDate})`;
+		}
 
 		const embed = newEmbed()
 			.setAuthor(fetchedMember.user.tag, fetchedMember.user.displayAvatarURL())
