@@ -1,34 +1,3 @@
-export const enum PermissionLevels {
-	EVERYONE = 0,
-	TRUSTED = 1,
-	MODERATOR = 7,
-	ADMINISTRATOR = 8,
-	OWNER = 10
-}
-
-export const enum Events {
-	LavalinkEnd = 'lavalinkEnd',
-	LavalinkException = 'lavalinkException',
-	LavalinkDestroy = 'lavalinkDestroy',
-	LavalinkStuck = 'lavalinkStuck',
-	LavalinkWebsocketClosed = 'lavalinkWebsocketClosed',
-	MusicConnect = 'musicConnect',
-	MusicLeave = 'musicLeave',
-	MusicSongPlay = 'musicSongPlay',
-	MusicSongPause = 'musicSongPause',
-	MusicSongResume = 'musicSongResume',
-	MusicSongSkip = 'musicSongSkip',
-	MusicSongSkipVote = 'musicSongSkipVote',
-	MusicSongStop = 'musicSongStop',
-	MusicSongFinish = 'musicSongFinish',
-	MusicQueueClear = 'musicQueueClear',
-	MusicQueueShuffle = 'musicQueueShuffle',
-	MusicReplayUpdate = 'musicReplayUpdate',
-	MusicSongReplay = 'musicSongReplay',
-	MusicSongSeek = 'musicSongSeek',
-	MusicVolumeChange = 'musicVolumeChange'
-}
-
 export const enum Colors {
 	BrightBlue = 0x346eeb,
 	BrightGreen = 0x6eeb34,
@@ -59,6 +28,29 @@ export const enum Emojis {
 	SteveFaceDark = '<:steve_face_darkblue:693645780048937041>'
 }
 
+export const enum Events {
+	LavalinkEnd = 'lavalinkEnd',
+	LavalinkException = 'lavalinkException',
+	LavalinkDestroy = 'lavalinkDestroy',
+	LavalinkStuck = 'lavalinkStuck',
+	LavalinkWebsocketClosed = 'lavalinkWebsocketClosed',
+	MusicConnect = 'musicConnect',
+	MusicLeave = 'musicLeave',
+	MusicSongPlay = 'musicSongPlay',
+	MusicSongPause = 'musicSongPause',
+	MusicSongResume = 'musicSongResume',
+	MusicSongSkip = 'musicSongSkip',
+	MusicSongSkipVote = 'musicSongSkipVote',
+	MusicSongStop = 'musicSongStop',
+	MusicSongFinish = 'musicSongFinish',
+	MusicQueueClear = 'musicQueueClear',
+	MusicQueueShuffle = 'musicQueueShuffle',
+	MusicReplayUpdate = 'musicReplayUpdate',
+	MusicSongReplay = 'musicSongReplay',
+	MusicSongSeek = 'musicSongSeek',
+	MusicVolumeChange = 'musicVolumeChange'
+}
+
 export const enum Markdown {
 	ITALICS = '`*text*`',
 	BOLD = '`**text**`',
@@ -67,6 +59,14 @@ export const enum Markdown {
 	SPOILERTAGS = '`||text||`',
 	QUOTE = '`> text`',
 	BLOCKQUOTE = '`>>> text`'
+}
+
+export const enum PermissionLevels {
+	EVERYONE = 0,
+	TRUSTED = 1,
+	MODERATOR = 7,
+	ADMINISTRATOR = 8,
+	OWNER = 10
 }
 
 export const enum Sideservers {
