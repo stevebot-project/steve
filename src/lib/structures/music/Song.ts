@@ -1,7 +1,7 @@
 import { Snowflake, User, Util } from 'discord.js';
 import { Track } from 'lavalink';
 import { MusicHandler } from './MusicHandler';
-import prettyMilliseconds from 'pretty-ms';
+import { friendlyColonDuration } from '@utils/util';
 
 export class Song {
 
@@ -25,7 +25,7 @@ export class Song {
 	}
 
 	public get friendlyDuration(): string {
-		return prettyMilliseconds(this.duration, { colonNotation: true, secondsDecimalDigits: 0 });
+		return friendlyColonDuration(this.duration);
 	}
 
 	public get safeTitle(): string {
