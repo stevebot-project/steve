@@ -33,9 +33,7 @@ export default class extends SteveCommand {
 		const emoji = explodes ? '💥' : '🎲';
 
 		for (let i = 0; i < dice; i++) {
-			let roll = await this.roll(sides);
-
-			if (explodes && roll === sides) roll += await this.roll(sides);
+			const roll = this.roll(sides, explodes);
 
 			finishedRolls.push(roll);
 		}
@@ -43,8 +41,27 @@ export default class extends SteveCommand {
 		return msg.channel.send(`${emoji} You rolled: \`${finishedRolls.join(', ')}\` ${emoji}`);
 	}
 
-	private async roll(num: number): Promise<number> {
-		return Math.floor(Math.random() * num) + 1;
+	private rollOnce(sides: number): number {
+		return Math.floor(Math.random() * sides) + 1;
+	}
+
+	private roll(sides: number, explodes: boolean): number {
+		if (sides <= 1) return 1; // this one is easy
+
+		if (explodes) {
+			let total = 0;
+			let roll = 0;
+			do {
+				roll = this.rollOnce(sides);
+				total += roll;
+			} while (
+				roll === sides
+				&& roll < 1e6 // prevent an infinite loop, just in case
+			);
+			return total;
+		} else {
+			return this.rollOnce(sides);
+		}
 	}
 
 }
