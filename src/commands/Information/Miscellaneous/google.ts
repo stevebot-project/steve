@@ -11,7 +11,8 @@ export default class extends SteveCommand {
 		super(store, file, directory, {
 			description: 'Search Google for a phrase.',
 			examples: ['google john green'],
-			usage: '<search:string>',
+			extendedHelp: 'The maximum character length for Google searches is 200.',
+			usage: '<search:string{,200}>',
 			helpUsage: 'query'
 		});
 	}
