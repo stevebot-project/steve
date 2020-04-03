@@ -1,4 +1,4 @@
-# SteveBot ![version](https://img.shields.io/badge/version-3.2.1-004953)
+# SteveBot ![GitHub package.json version](https://img.shields.io/github/package-json/v/tuataria/steve?color=004953)
 Steve is an all-purpose Discord bot originally developed for [Tuataria] and its sideservers. Developed and maintained by Jonathan#0412 and BoedJ#5476.
 
 ## Features
