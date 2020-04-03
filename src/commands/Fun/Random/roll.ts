@@ -39,11 +39,11 @@ export default class extends SteveCommand {
 		this.createCustomResolver('dice', (arg): RollSpec => {
 			const match = DICE_REGEX.exec(arg);
 
-			let count = parseInt(match.groups.count) ?? 1;
+			let count = parseInt(match.groups.count, 10) ?? 1;
 			if (isNaN(count)) count = 1;
 			else if (count > 10) count = 10;
 
-			let sides = parseInt(match.groups.sides);
+			let sides = parseInt(match.groups.sides, 10);
 			if (sides > 1000) sides = 1000;
 
 			const explodes = match.groups.explode === '!';
@@ -55,7 +55,7 @@ export default class extends SteveCommand {
 				else keep = 'highest';
 			}
 
-			const keepCount = parseInt(match.groups.keepCount);
+			const keepCount = parseInt(match.groups.keepCount, 10);
 
 			return { input: match.input, count, sides, explodes, keep, keepCount };
 		});
