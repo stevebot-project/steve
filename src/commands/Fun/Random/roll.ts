@@ -28,10 +28,12 @@ export default class extends SteveCommand {
 			aliases: ['dice'],
 			description: 'Roll dice!',
 			examples: ['roll 1d6', 'roll d20', 'roll 5d10!', 'roll 1d8|4d6', 'roll 6d12k1', 'roll 6d12kl2'],
-			extendedHelp: oneLine`Use standard dice notation. You can add a "!" at the end of your roll to use exploding dice. You can roll
-				up to 10 dice with up to 1,000 sides each.`,
+			extendedHelp: oneLine`Use standard dice notation. You can roll up to 10 dice with up to 1,000 sides each.
+				Add a \`!\` at the end of your roll to use exploding dice.
+				To keep the highest n, add \`k<n>\`; to keep the lowest n, add \`kl<n>\` (with n < amount of dice).
+				You can do multiple rolls at once, separated by \`|\`.`,
 			usage: '<spec:dice> [...]',
-			helpUsage: '[1-9]d[1-999] (!)'
+			helpUsage: '<number of dice>d<number of sides>'
 		});
 
 		this.customizeResponse('roll', 'You can roll up to 10 dice with up to 1,000 sides each.');
