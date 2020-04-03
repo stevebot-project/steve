@@ -3,13 +3,17 @@ import { CommandStore, KlasaMessage } from 'klasa';
 import { Message } from 'discord.js';
 import { oneLine } from 'common-tags';
 
-const DICE_REGEX = /(?<count>\d{1,2})?d(?<sides>\d{1,4})(?<explode>!)?/;
+const DICE_REGEX = /(?<count>\d{1,2})?d(?<sides>\d{1,4})(?<explode>!)?(?<keep>kl?(?<keepCount>\d{1,2}))?/;
+
+type KeepType = 'highest' | 'lowest' | false;
 
 interface RollSpec {
 	input: string;
 	count: number;
 	sides: number;
 	explodes: boolean;
+	keep: KeepType;
+	keepCount?: number;
 }
 
 interface DiceResult {
@@ -44,7 +48,16 @@ export default class extends SteveCommand {
 
 			const explodes = match.groups.explode === '!';
 
-			return { input: match.input, count, sides, explodes };
+			let keep: KeepType = false;
+			if (match.groups.keep) {
+				const keepLowest = match.groups.keep.includes('l');
+				if (keepLowest) keep = 'lowest';
+				else keep = 'highest';
+			}
+
+			const keepCount = parseInt(match.groups.keepCount);
+
+			return { input: match.input, count, sides, explodes, keep, keepCount };
 		});
 	}
 
@@ -52,24 +65,37 @@ export default class extends SteveCommand {
 		const results: DiceResult[] = [];
 
 		for (const spec of specs) {
-			const rolls = [];
+			let rolls = [];
 			for (let i = 0; i < spec.count; i++) {
 				const roll = this.roll(spec.sides, spec.explodes);
 				rolls.push(roll);
 			}
 
+			if (spec.keep) {
+				rolls.sort();
+				if (spec.keep === 'highest') rolls.reverse();
+				rolls = rolls.slice(0, spec.keepCount);
+			}
+
 			results.push({ spec, rolls });
 		}
 
+		const getEmoji = (spec): string => {
+			if (spec.keep === 'highest') return '👍';
+			if (spec.keep === 'lowest') return '👎';
+			if (spec.explodes) return '💥';
+			return '🎲';
+		};
+
 		if (results.length === 1) {
 			const result = results[0];
-			const emoji = result.spec.explodes ? '💥' : '🎲';
+			const emoji = getEmoji(result.spec);
 			const message = `${emoji} You rolled: \`${result.rolls.join(', ')}\` ${emoji}`;
 			return msg.channel.send(message);
 		} else {
 			let message = 'You rolled:';
 			for (const result of results) {
-				const emoji = result.spec.explodes ? '💥' : '🎲';
+				const emoji = getEmoji(result.spec);
 				message += `\n${emoji} ${result.spec.input}: \`${result.rolls.join(', ')}\``;
 			}
 			return msg.channel.send(message);
