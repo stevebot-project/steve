@@ -19,9 +19,16 @@ export default class extends SteveCommand {
 			usage: '[member:membername]',
 			helpUsage: 'member'
 		});
+
+		this.createCustomResolver('membername', (str, possible, msg) => {
+			const arg = this.client.arguments.get('membername');
+
+			return str ? arg.run(str, possible, msg) : arg.run(msg.member.user.tag, possible, msg);
+		});
 	}
 
-	public async run(msg: KlasaMessage, [targetMember = msg.member]: [GuildMember]): Promise<Message> {
+	public async run(msg: KlasaMessage, [targetMember]: [GuildMember]): Promise<Message> {
+		if (!targetMember) throw `You must provide either a valid member's name, their long ID, or tag them.`;
 		const fetchedMember = await msg.guild.members.fetch(targetMember);
 
 		const fetchedMemberRoles = fetchedMember.roles.cache.size > 1
