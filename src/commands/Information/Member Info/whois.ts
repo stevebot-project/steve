@@ -28,11 +28,11 @@ export default class extends SteveCommand {
 			? fetchedMember.roles.cache.filter(r => r.id !== r.guild.id).sort().array().join(' ') : 'None';
 
 		const fetchedMemberAccountAge = oneLine`${friendlyDuration(Date.now() - fetchedMember.user.createdTimestamp)} ago
-			ago (${moment(fetchedMember.user.createdTimestamp).format('MM-DD-YY')})`;
+			(${moment(fetchedMember.user.createdTimestamp).format('YYYY MMM Do')})`;
 
 		let fetchedMemberJoinedServer: string;
 		const timeSinceJoin = Date.now() - fetchedMember.joinedTimestamp;
-		const joinedDate = moment(fetchedMember.joinedTimestamp).format('MM-DD-YY');
+		const joinedDate = moment(fetchedMember.joinedTimestamp).format('YYYY MMM Do');
 
 		if (timeSinceJoin > Time.Day && timeSinceJoin < Time.Hour * 31) {
 			fetchedMemberJoinedServer = `${timeSinceJoin / Time.Hour} hours ago (${joinedDate})`;

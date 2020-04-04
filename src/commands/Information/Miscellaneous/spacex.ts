@@ -54,7 +54,7 @@ export default class extends SteveCommand {
 		} else {
 			embed
 				.addFields([
-					{ name: 'NET Launch Date', value: moment(launch.launch_date_utc).format('MM/DD/YYYY') }
+					{ name: 'NET Launch Date', value: moment(launch.launch_date_utc).format('YYYY MMM Do') }
 				]);
 		}
 
@@ -75,7 +75,7 @@ export default class extends SteveCommand {
 				{ name: 'Status', value: core.status, inline: true },
 				{ name: 'Reuse Count', value: core.reuse_count, inline: true }
 			])
-			.setFooter(`Originally launched on ${moment(core.original_launch).format('MM/DD/YYYY')}`);
+			.setFooter(`Originally launched on ${moment(core.original_launch).format('YYYY MMM Do')}`);
 
 		if (core.reuse_count > 0) {
 			embed

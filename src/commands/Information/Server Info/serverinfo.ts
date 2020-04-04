@@ -18,7 +18,7 @@ export default class extends SteveCommand {
 	}
 
 	public async run(msg: KlasaMessage): Promise<Message> {
-		const guildCreationDate = oneLine`Created ${moment(msg.guild.createdTimestamp).format('MMMM Do YYYY')}
+		const guildCreationDate = oneLine`Created ${moment(msg.guild.createdTimestamp).format('YYYY MMM Do')}
 			(${friendlyDuration(Date.now() - msg.guild.createdTimestamp)} ago)`;
 
 		const membersWithRoles = msg.guild.members.cache.filter(m => m.roles.cache.size > 1).size;
