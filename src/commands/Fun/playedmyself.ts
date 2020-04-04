@@ -18,3 +18,4 @@ export default class extends SteveCommand {
 		return msg.channel.send({ files: [{ attachment: './assets/images/played_yourself.gif', name: 'played_yourself.gif' }] });
 	}
 }
+
