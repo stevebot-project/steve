@@ -40,9 +40,10 @@ export default class extends SteveCommand {
 
 		let list = '';
 
-		assignable.forEach(snowflake => {
-			list += `${msg.guild.roles.cache.get(snowflake).name}\n`;
-		});
+		for (let i = 0; i < assignable.length; i++) {
+			const role = msg.guild.roles.cache.get(assignable[i]);
+			list += `${role.name}\n`;
+		}
 
 		return msg.channel.send(list);
 	}
