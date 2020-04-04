@@ -9,7 +9,7 @@ export default class extends Event {
 	public async run(oldChannel, newChannel): Promise<Message | void> {
 		if (newChannel instanceof DMChannel || oldChannel.name === newChannel.name) return;
 
-		const serverlog = newChannel.guild.channels.get(newChannel.guild.settings.get(GuildSettings.Channels.Serverlog)) as TextChannel;
+		const serverlog = newChannel.guild.channels.cache.get(newChannel.guild.settings.get(GuildSettings.Channels.Serverlog)) as TextChannel;
 		if (!serverlog) return noLog(this.client.console, 'server', newChannel.guild.name);
 
 		const executor = await getExecutor(newChannel.guild, 'CHANNEL_UPDATE');
