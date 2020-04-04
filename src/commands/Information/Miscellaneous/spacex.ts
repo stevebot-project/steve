@@ -31,8 +31,8 @@ export default class extends SteveCommand {
 
 	public async launch(msg: KlasaMessage, [num]: [number]): Promise<Message> {
 		const res = await fetch(`${api}/launches/${num}`);
-		if (!res) throw 'That\'s not a valid launch number!';
 		const launch = await res.json();
+		if (launch.error) throw 'That\'s not a valid launch number!';
 
 		const embed = newEmbed()
 			.setTitle(launch.mission_name)
@@ -63,8 +63,8 @@ export default class extends SteveCommand {
 
 	public async core(msg: KlasaMessage, [num, serial]: [number, string]): Promise<Message> { // eslint-disable-line @typescript-eslint/no-unused-vars
 		const res = await fetch(`${api}/cores/${serial}`);
-		if (!res) throw 'That\'s not a valid core serial!';
 		const core = await res.json();
+		if (core.error) throw 'That\'s not a valid core serial!';
 
 		const embed = newEmbed()
 			.setTitle(core.core_serial)
