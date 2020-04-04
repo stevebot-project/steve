@@ -27,7 +27,7 @@ export default class extends SteveCommand {
 		const fetchedMemberRoles = fetchedMember.roles.cache.size > 1
 			? fetchedMember.roles.cache.filter(r => r.id !== r.guild.id).sort().array().join(' ') : 'None';
 
-		const fetchedMemberAccountAge = `${friendlyDuration(Date.now() - fetchedMember.user.createdTimestamp)}
+		const fetchedMemberAccountAge = oneLine`${friendlyDuration(Date.now() - fetchedMember.user.createdTimestamp)} ago
 			ago (${moment(fetchedMember.user.createdTimestamp).format('MM-DD-YY')})`;
 
 		let fetchedMemberJoinedServer: string;
