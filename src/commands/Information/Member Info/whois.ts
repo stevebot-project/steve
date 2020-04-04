@@ -35,7 +35,7 @@ export default class extends SteveCommand {
 		const joinedDate = moment(fetchedMember.joinedTimestamp).format('YYYY MMM Do');
 
 		if (timeSinceJoin > Time.Day && timeSinceJoin < Time.Hour * 31) {
-			fetchedMemberJoinedServer = `${timeSinceJoin / Time.Hour} hours ago (${joinedDate})`;
+			fetchedMemberJoinedServer = `${Math.floor(timeSinceJoin / Time.Hour)} hours ago (${joinedDate})`;
 		} else {
 			fetchedMemberJoinedServer = oneLine`${friendlyDuration(timeSinceJoin)} ago (${joinedDate})`;
 		}
