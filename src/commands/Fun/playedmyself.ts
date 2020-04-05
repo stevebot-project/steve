@@ -6,11 +6,11 @@ export default class extends SteveCommand {
 
 	public constructor(store: CommandStore, file: string[], directory: string) {
 		super(store, file, directory, {
+			aliases: ['iplayedmyself'],
 			cooldown: 60,
 			cooldownLevel: 'channel',
-			aliases: ['i played myself'],
-			description: 'congratulations, you played yourself.',
-			extendedHelp: 'this command returns the DJ Khaled GIF'
+			description: 'Congratulations, you played yourself.',
+			extendedHelp: 'This command returns the DJ Khaled GIF. You know, that DJ Khaled GIF.'
 		});
 	}
 
