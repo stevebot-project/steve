@@ -2,7 +2,7 @@ import { Event, KlasaMessage } from 'klasa';
 import { DMChannel, Message, TextChannel } from 'discord.js';
 import { GuildSettings } from '@lib/types/settings/GuildSettings';
 import { Colors } from '@lib/types/enums';
-import { newEmbed, noLog, friendlyDuration } from '@utils/util';
+import { newEmbed, friendlyDuration } from '@utils/util';
 
 export default class extends Event {
 
@@ -11,7 +11,7 @@ export default class extends Event {
 
 
 		const serverlog = msg.guild.channels.cache.get(msg.guild.settings.get(GuildSettings.Channels.Serverlog)) as TextChannel;
-		if (!serverlog) return noLog(this.client.console, 'server', msg.guild.name);
+		if (!serverlog) return;
 
 		const msgContent = msg.content.length < 1024 && msg.content.length > 0 ? msg.content : 'Message is unable to be displayed.';
 

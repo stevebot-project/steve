@@ -1,5 +1,4 @@
 import { Guild, GuildAuditLogsAction, User, MessageEmbed } from 'discord.js';
-import { KlasaConsole } from 'klasa';
 import prettyMilliseconds from 'pretty-ms';
 
 export function friendlyColonDuration(duration: number): string {
@@ -17,8 +16,4 @@ export async function getExecutor(guild: Guild, type: GuildAuditLogsAction | num
 
 export function newEmbed(): MessageEmbed {
 	return new MessageEmbed;
-}
-
-export function noLog(kconsole: KlasaConsole, log: string, guildName: string): void {
-	return kconsole.log(`The ${guildName} server has not set a ${log}log.`);
 }

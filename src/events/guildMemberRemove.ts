@@ -2,13 +2,13 @@ import { Event } from 'klasa';
 import { GuildMember, Message, TextChannel } from 'discord.js';
 import { GuildSettings } from '@lib/types/settings/GuildSettings';
 import { Colors } from '@lib/types/enums';
-import { newEmbed, noLog, friendlyDuration } from '@utils/util';
+import { newEmbed, friendlyDuration } from '@utils/util';
 
 export default class extends Event {
 
 	public async run(member: GuildMember): Promise<Message | void> {
 		const memberlog = member.guild.channels.cache.get(member.guild.settings.get(GuildSettings.Channels.Memberlog)) as TextChannel;
-		if (!memberlog) return noLog(this.client.console, 'member', member.guild.name);
+		if (!memberlog) return;
 
 		const joinedTime = friendlyDuration(Date.now() - member.joinedTimestamp);
 

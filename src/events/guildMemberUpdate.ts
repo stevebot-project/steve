@@ -2,13 +2,13 @@ import { Event } from 'klasa';
 import { GuildMember, Message, TextChannel, Guild, Role } from 'discord.js';
 import { GuildSettings } from '@lib/types/settings/GuildSettings';
 import { Colors } from '@lib/types/enums';
-import { getExecutor, newEmbed, noLog } from '@utils/util';
+import { getExecutor, newEmbed } from '@utils/util';
 
 export default class extends Event {
 
 	public async run(oldMember: GuildMember, newMember: GuildMember): Promise<Message | void> {
 		const memberlog = newMember.guild.channels.cache.get(newMember.guild.settings.get(GuildSettings.Channels.Memberlog)) as TextChannel;
-		if (!memberlog) return noLog(this.client.console, 'member', newMember.guild.name);
+		if (!memberlog) return;
 
 		// display name changes
 		if (oldMember.displayName !== newMember.displayName) {

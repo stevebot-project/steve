@@ -2,7 +2,7 @@ import { Event } from 'klasa';
 import { Collection, Snowflake, Message, TextChannel, DMChannel } from 'discord.js';
 import { GuildSettings } from '@lib/types/settings/GuildSettings';
 import { Colors } from '@lib/types/enums';
-import { getExecutor, newEmbed, noLog } from '@utils/util';
+import { getExecutor, newEmbed } from '@utils/util';
 
 export default class extends Event {
 
@@ -10,7 +10,7 @@ export default class extends Event {
 		if (msgs.first().channel instanceof DMChannel) return this.client.console.log('No logging of DMChannel bulk deletion.');
 
 		const serverlog = msgs.first().guild.channels.cache.get(msgs.first().guild.settings.get(GuildSettings.Channels.Serverlog)) as TextChannel;
-		if (!serverlog) return noLog(this.client.console, 'server', msgs.first().guild.name);
+		if (!serverlog) return;
 
 		/* eslint-disable-next-line no-extra-parens */
 		const parent = (msgs.first().channel as TextChannel).parent ? (msgs.first().channel as TextChannel).parent : 'No Category';

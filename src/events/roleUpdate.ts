@@ -2,7 +2,7 @@ import { Event } from 'klasa';
 import { Role, Message, TextChannel } from 'discord.js';
 import { GuildSettings } from '@lib/types/settings/GuildSettings';
 import { Colors } from '@lib/types/enums';
-import { getExecutor, newEmbed, noLog } from '@utils/util';
+import { getExecutor, newEmbed } from '@utils/util';
 
 module.exports = class extends Event {
 
@@ -10,7 +10,7 @@ module.exports = class extends Event {
 		if (oldRole.name === newRole.name) return;
 
 		const serverlog = newRole.guild.channels.cache.get(newRole.guild.settings.get(GuildSettings.Channels.Serverlog)) as TextChannel;
-		if (!serverlog) return noLog(this.client.console, 'server', newRole.guild.name);
+		if (!serverlog) return;
 
 		const executor = await getExecutor(newRole.guild, 'ROLE_UPDATE');
 

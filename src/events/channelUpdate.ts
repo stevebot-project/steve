@@ -2,7 +2,7 @@ import { Event } from 'klasa';
 import { DMChannel, TextChannel, Message } from 'discord.js';
 import { GuildSettings } from '@lib/types/settings/GuildSettings';
 import { Colors } from '@lib/types/enums';
-import { getExecutor, newEmbed, noLog } from '@utils/util';
+import { getExecutor, newEmbed } from '@utils/util';
 
 export default class extends Event {
 
@@ -10,7 +10,7 @@ export default class extends Event {
 		if (newChannel instanceof DMChannel || oldChannel.name === newChannel.name) return;
 
 		const serverlog = newChannel.guild.channels.cache.get(newChannel.guild.settings.get(GuildSettings.Channels.Serverlog)) as TextChannel;
-		if (!serverlog) return noLog(this.client.console, 'server', newChannel.guild.name);
+		if (!serverlog) return;
 
 		const executor = await getExecutor(newChannel.guild, 'CHANNEL_UPDATE');
 
