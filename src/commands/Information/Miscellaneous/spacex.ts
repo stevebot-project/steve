@@ -4,6 +4,7 @@ import { Message } from 'discord.js';
 import fetch from 'node-fetch';
 import { Colors } from '@lib/types/enums';
 import { formatDate, newEmbed } from '@utils/util';
+import { Core, Launch } from '@lib/types/spacex';
 const api = 'https://api.spacexdata.com/v3';
 
 export default class extends SteveCommand {
@@ -30,8 +31,9 @@ export default class extends SteveCommand {
 
 	public async launch(msg: KlasaMessage, [num]: [number]): Promise<Message> {
 		const res = await fetch(`${api}/launches/${num}`);
-		const launch = await res.json();
-		if (launch.error) throw 'That\'s not a valid launch number!';
+		const resJson = await res.json();
+		if (resJson.error) throw 'That\'s not a valid launch number!';
+		const launch = resJson as Launch;
 
 		const embed = newEmbed()
 			.setTitle(launch.mission_name)
@@ -62,8 +64,9 @@ export default class extends SteveCommand {
 
 	public async core(msg: KlasaMessage, [num, serial]: [number, string]): Promise<Message> { // eslint-disable-line @typescript-eslint/no-unused-vars
 		const res = await fetch(`${api}/cores/${serial}`);
-		const core = await res.json();
-		if (core.error) throw 'That\'s not a valid core serial!';
+		const resJson = await res.json();
+		if (resJson.error) throw 'That\'s not a valid core serial!';
+		const core = resJson as Core;
 
 		const embed = newEmbed()
 			.setTitle(core.core_serial)
