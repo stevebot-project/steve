@@ -11,12 +11,12 @@ Steve is an all-purpose Discord bot originally developed for [Tuataria] and its 
 - Much, much more!
 
 ### Development Requirements
-- [`Node.js`]: Required to run the project. Must be version 12.
+- [`Node.js`]: Required to run the project. Must be at least version 12.
 - [`MongoDB Atlas`]: Required to store persistent data.
 - [`Lavalink`]: Required to enable music functions.
 
 #### To Run Steve Locally:
-- Make sure you have Node.js v12 installed (you can check your version by doing `node -v` in your terminal).
+- Make sure you have Node.js installed (must be at least v12; you can check your version by doing `node -v` in your terminal).
 - Clone this repo to your local machine, make a new file called `config.ts` in the root and copy the contents of `config.example.ts` into it. Put your bot's client ID and token into your new `config.ts` file where specified.
 - Download Lavalink from the link above, and put the host/port/password for your Lavalink server into the config file. (You can run Lavalink on your localhost.)
 - Make sure you have a MongoDB Atlas server set up (it's free). Put the connection string into the config file.
