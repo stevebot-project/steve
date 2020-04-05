@@ -2,9 +2,8 @@ import { SteveCommand } from '@lib/structures/commands/SteveCommand';
 import { CommandStore, KlasaMessage } from 'klasa';
 import { Message } from 'discord.js';
 import { oneLine } from 'common-tags';
-import moment from 'moment';
 import { Colors } from '@lib/types/enums';
-import { newEmbed, friendlyDuration } from '@utils/util';
+import { newEmbed, friendlyDuration, formatDate } from '@utils/util';
 
 export default class extends SteveCommand {
 
@@ -18,7 +17,7 @@ export default class extends SteveCommand {
 	}
 
 	public async run(msg: KlasaMessage): Promise<Message> {
-		const guildCreationDate = oneLine`Created ${moment(msg.guild.createdTimestamp).format('YYYY MMM Do')}
+		const guildCreationDate = oneLine`Created ${formatDate(msg.guild.createdTimestamp)}
 			(${friendlyDuration(Date.now() - msg.guild.createdTimestamp)} ago)`;
 
 		const membersWithRoles = msg.guild.members.cache.filter(m => m.roles.cache.size > 1).size;

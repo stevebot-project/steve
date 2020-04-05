@@ -2,9 +2,8 @@ import { SteveCommand } from '@lib/structures/commands/SteveCommand';
 import { CommandStore, KlasaMessage } from 'klasa';
 import { Message } from 'discord.js';
 import fetch from 'node-fetch';
-import moment from 'moment';
 import { Colors } from '@lib/types/enums';
-import { newEmbed } from '@utils/util';
+import { formatDate, newEmbed } from '@utils/util';
 const api = 'https://api.spacexdata.com/v3';
 
 export default class extends SteveCommand {
@@ -54,7 +53,7 @@ export default class extends SteveCommand {
 		} else {
 			embed
 				.addFields([
-					{ name: 'NET Launch Date', value: moment(launch.launch_date_utc).format('YYYY MMM Do') }
+					{ name: 'NET Launch Date', value: formatDate(launch.launch_date_utc) }
 				]);
 		}
 
@@ -75,7 +74,7 @@ export default class extends SteveCommand {
 				{ name: 'Status', value: core.status, inline: true },
 				{ name: 'Reuse Count', value: core.reuse_count, inline: true }
 			])
-			.setFooter(`Originally launched on ${moment(core.original_launch).format('YYYY MMM Do')}`);
+			.setFooter(`Originally launched on ${formatDate(core.original_launch)}`);
 
 		if (core.reuse_count > 0) {
 			embed

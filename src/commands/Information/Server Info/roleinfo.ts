@@ -1,9 +1,8 @@
 import { SteveCommand } from '@lib/structures/commands/SteveCommand';
 import { CommandStore, KlasaMessage } from 'klasa';
 import { Role, Message } from 'discord.js';
-import moment from 'moment';
 import { GuildSettings } from '@lib/types/settings/GuildSettings';
-import { newEmbed } from '@utils/util';
+import { newEmbed, formatDate } from '@utils/util';
 
 export default class extends SteveCommand {
 
@@ -36,7 +35,7 @@ export default class extends SteveCommand {
 			: membersList.length > 1024 ? 'There\'s too many members in this role to display.' : membersList;
 
 		const assignable = msg.guild.settings.get(GuildSettings.Roles.Assignable).includes(role.id);
-		const created = moment(role.createdTimestamp).format('YYYY MMM Do');
+		const created = formatDate(role.createdTimestamp);
 
 		const embed = newEmbed()
 			.setDescription(`The ${role.name} role was created on ${created}.`)

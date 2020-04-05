@@ -1,5 +1,10 @@
 import { Guild, GuildAuditLogsAction, User, MessageEmbed } from 'discord.js';
 import prettyMilliseconds from 'pretty-ms';
+import moment from 'moment';
+
+export function formatDate(date: number | Date, format = 'YYYY MMM Do'): string {
+	return moment(date).format(format);
+}
 
 export function friendlyColonDuration(duration: number): string {
 	return prettyMilliseconds(duration, { colonNotation: true, secondsDecimalDigits: 0 });

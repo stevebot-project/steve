@@ -1,10 +1,9 @@
 import { SteveCommand } from '@lib/structures/commands/SteveCommand';
 import { CommandStore, KlasaMessage } from 'klasa';
 import { GuildMember, Message, ColorResolvable } from 'discord.js';
-import moment from 'moment';
 import { UserSettings } from '@lib/types/settings/UserSettings';
 import { Colors, Time } from '@lib/types/enums';
-import { newEmbed, friendlyDuration } from '@utils/util';
+import { newEmbed, friendlyDuration, formatDate } from '@utils/util';
 import { oneLine } from 'common-tags';
 
 export default class extends SteveCommand {
@@ -35,11 +34,11 @@ export default class extends SteveCommand {
 			? fetchedMember.roles.cache.filter(r => r.id !== r.guild.id).sort().array().join(' ') : 'None';
 
 		const fetchedMemberAccountAge = oneLine`${friendlyDuration(Date.now() - fetchedMember.user.createdTimestamp)} ago
-			(${moment(fetchedMember.user.createdTimestamp).format('YYYY MMM Do')})`;
+			(${formatDate(fetchedMember.user.createdTimestamp)})`;
 
 		let fetchedMemberJoinedServer: string;
 		const timeSinceJoin = Date.now() - fetchedMember.joinedTimestamp;
-		const joinedDate = moment(fetchedMember.joinedTimestamp).format('YYYY MMM Do');
+		const joinedDate = formatDate(fetchedMember.joinedTimestamp);
 
 		if (timeSinceJoin > Time.Day && timeSinceJoin < Time.Hour * 31) {
 			fetchedMemberJoinedServer = `${Math.floor(timeSinceJoin / Time.Hour)} hours ago (${joinedDate})`;
