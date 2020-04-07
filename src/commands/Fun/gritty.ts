@@ -6,6 +6,8 @@ export default class extends SteveCommand {
 
 	public constructor(store: CommandStore, file: string[], directory: string) {
 		super(store, file, directory, {
+			cooldown: 60,
+			cooldownLevel: 'channel',
 			description: 'Post a random Gritty GIF.',
 			examples: ['gritty'],
 			extendedHelp: 'Gritty is our lord and savior. (He\'s actually the mascot for Philadelphia\'s hockey team but shhh.)'
