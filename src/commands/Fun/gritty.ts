@@ -13,9 +13,7 @@ export default class extends SteveCommand {
 	}
 
 	public run(msg: KlasaMessage): Promise<Message> {
-		const num = Math.floor(Math.random() * 5) + 1;
-		console.log(num);
-		return msg.channel.send({ files: [{ attachment: `./assets/images/gritty/gritty_${num}.gif` }] });
+		return msg.channel.send({ files: [{ attachment: `./assets/images/gritty/gritty_${Math.floor(Math.random() * 5) + 1}.gif` }] });
 	}
 
 }
