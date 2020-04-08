@@ -18,12 +18,12 @@ export default class extends MusicCommand {
 	}
 
 	public async run(msg: KlasaMessage, [song]: [Song]): Promise<Message> {
-		const { music } = msg.guild;
+		const { music } = msg.guild!;
 
 		if (!this.maxEntries(music, song)) throw 'You\'ve already added the maximum amount of songs!';
 		if (!this.maxLength(music, song)) throw 'This song is too long to add to the queue!';
 
-		return msg.guild.music.add(song, this.getChannel(msg));
+		return music.add(song, this.getChannel(msg));
 	}
 
 	private maxEntries(handler: MusicHandler, song: Song): boolean {

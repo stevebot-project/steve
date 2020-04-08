@@ -15,7 +15,7 @@ export default class extends MusicCommand {
 	}
 
 	public async run(msg: KlasaMessage): Promise<MusicHandler> {
-		return msg.guild.music.leave(this.getChannel(msg));
+		return msg.guild!.music.leave(this.getChannel(msg));
 	}
 
 }

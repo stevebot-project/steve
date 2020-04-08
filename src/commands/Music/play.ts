@@ -18,10 +18,10 @@ export default class extends MusicCommand {
 	}
 
 	public async run(msg: KlasaMessage, [song]: [Song]): Promise<void> {
-		const { music } = msg.guild;
+		const { music } = msg.guild!;
 		const channel = this.getChannel(msg);
 
-		if (!msg.guild.music.voiceChannel) {
+		if (!music.voiceChannel) {
 			await this.store.get('join').run(msg, [song]);
 			music.channelID = msg.channel.id;
 		}

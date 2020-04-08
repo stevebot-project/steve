@@ -15,7 +15,7 @@ export default class extends MusicCommand {
 	}
 
 	public async run(msg: KlasaMessage, [position]: [number]): Promise<MusicHandler> {
-		return msg.guild.music.seek(position, this.getChannel(msg));
+		return msg.guild!.music.seek(position, this.getChannel(msg));
 	}
 
 }

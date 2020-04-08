@@ -13,7 +13,7 @@ export default class extends MusicCommand {
 	}
 
 	public async run(msg: KlasaMessage): Promise<Song[]> {
-		return msg.guild.music.shuffle(this.getChannel(msg));
+		return msg.guild!.music.shuffle(this.getChannel(msg));
 	}
 
 }

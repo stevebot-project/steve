@@ -15,7 +15,7 @@ export default class extends MusicCommand {
 	}
 
 	public async run(msg: KlasaMessage, [volume]: [number]): Promise<MusicHandler> {
-		return msg.guild.music.setVolume(volume, this.getChannel(msg));
+		return msg.guild!.music.setVolume(volume, this.getChannel(msg));
 	}
 
 }

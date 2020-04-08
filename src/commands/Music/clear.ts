@@ -13,7 +13,7 @@ export default class extends MusicCommand {
 	}
 
 	public async run(msg: KlasaMessage): Promise<MusicHandler> {
-		return msg.guild.music.clear(this.getChannel(msg));
+		return msg.guild!.music.clear(this.getChannel(msg));
 	}
 
 }

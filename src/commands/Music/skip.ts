@@ -17,17 +17,18 @@ export default class extends MusicCommand {
 	}
 
 	public async run(msg: KlasaMessage, [force]: [string]): Promise<MusicHandler | Message> {
-		const { music } = msg.guild;
+		const { music } = msg.guild!;
 		const song = music.song || music.queue[0];
 		const channel = this.getChannel(msg);
 
-		if (msg.member.isDJ && typeof force !== 'undefined') return music.skip(channel);
+		if (msg.member!.isDJ && typeof force !== 'undefined') return music.skip(channel);
 
-		if (song.skips.has(msg.member.id)) throw 'You\'ve already voted to skip this song!';
-		song.skips.add(msg.member.id);
+		if (song.skips.has(msg.member!.id)) throw 'You\'ve already voted to skip this song!';
+		song.skips.add(msg.member!.id);
 
 		const threshold = Math.ceil(music.listeners.length / 2);
-		return song.skips.size >= threshold ? music.skip(channel)
+		return song.skips.size >= threshold
+			? music.skip(channel)
 			: msg.channel.send(`${msg.author.tag} voted to skip the current song. (${song.skips.size}/${threshold})`);
 	}
 

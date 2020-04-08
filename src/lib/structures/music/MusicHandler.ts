@@ -21,7 +21,7 @@ export class MusicHandler {
 	}
 
 	public get player(): Player {
-		return this.client.lavalink.players.get(this.guild.id);
+		return this.client.lavalink!.players.get(this.guild.id);
 	}
 
 	public get playing(): boolean {
@@ -32,11 +32,11 @@ export class MusicHandler {
 		return this.player.status === Status.PAUSED;
 	}
 
-	public get voiceChannel(): VoiceChannel {
-		return this.guild.me.voice.channel;
+	public get voiceChannel(): VoiceChannel | null {
+		return this.guild.me!.voice.channel;
 	}
 
-	public get textChannel(): TextChannel {
+	public get textChannel(): TextChannel | null {
 		return (this.channelID && this.guild.channels.cache.get(this.channelID) as TextChannel) || null;
 	}
 
@@ -57,10 +57,11 @@ export class MusicHandler {
 		this.client = guild.client as SteveClient;
 		this.guild = guild;
 		this.volume = 100;
+		this.replay = false;
 	}
 
 	public async fetch(search: string, requester: Snowflake): Promise<Song> {
-		const res = await this.client.lavalink.load(`ytsearch:${search}`);
+		const res = await this.client.lavalink!.load(`ytsearch:${search}`);
 		if (res.loadType === LoadType.NO_MATCHES) throw `${Emojis.RedX} Couldn't find a YouTube video to match that search.`;
 		if (res.loadType === LoadType.LOAD_FAILED) throw `${Emojis.RedX} Failed to load search results, try again.`;
 
@@ -73,11 +74,11 @@ export class MusicHandler {
 		return channel.send(`${Emojis.Check} Added **${song.safeTitle}** to the queue!`);
 	}
 
-	public remove(num: number, channel: TextChannel): Promise<Message | void> {
+	public async remove(num: number, channel: TextChannel): Promise<void> {
 		if (num <= this.queue.length) {
 			const song = this.queue[num];
 			this.queue.splice(num, 1);
-			return channel.send(`Removed ${song.safeTitle} from the queue.`);
+			await channel.send(`Removed ${song.safeTitle} from the queue.`);
 		}
 	}
 
@@ -106,8 +107,8 @@ export class MusicHandler {
 		if (!this.queue.length) throw `${Emojis.Empty} No songs in the queue!`;
 		if (this.playing) throw 'Already playing!';
 
-		this.song = this.queue.shift();
-		await this.player.play(this.song.track);
+		this.song = this.queue.shift() as Song;
+		await this.player.play(this.song!.track);
 		this.client.emit(Events.MusicSongPlay, this.song, channel);
 
 		return this;
@@ -207,8 +208,9 @@ export class MusicHandler {
 	}
 
 	public manageable(msg: KlasaMessage): boolean {
-		return msg.member.isDJ || (this.song ? this.song.requester === msg.member.id
-			: this.queue.every(song => song.requester === msg.member.id));
+		return msg.member!.isDJ || (this.song
+			? this.song.requester === msg.member!.id
+			: this.queue.every(song => song.requester === msg.member!.id));
 	}
 
 }

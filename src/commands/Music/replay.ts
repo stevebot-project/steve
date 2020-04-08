@@ -14,7 +14,8 @@ export default class extends MusicCommand {
 	}
 
 	public async run(msg: KlasaMessage): Promise<MusicHandler> {
-		return msg.guild.music.setReplay(!msg.guild.music.replay, this.getChannel(msg));
+		const { music } = msg.guild!;
+		return music.setReplay(!music.replay, this.getChannel(msg));
 	}
 
 }

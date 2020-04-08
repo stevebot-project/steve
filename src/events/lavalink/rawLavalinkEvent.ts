@@ -8,12 +8,12 @@ export default class extends Event {
 
 	public constructor(store: EventStore, file: string[], directory: string) {
 		super(store, file, directory, {
-			emitter: store.client.lavalink,
+			emitter: store.client.lavalink!,
 			event: 'event'
 		});
 	}
 
-	public run(payload: LavalinkEvent): boolean {
+	public run(payload: LavalinkEvent): boolean | void {
 		if (typeof payload.guildId !== 'string') return;
 
 		const handler = this.client.guilds.cache.get(payload.guildId)?.music || null;
@@ -38,7 +38,7 @@ export default class extends Event {
 			return this.client.emit(Events.LavalinkDestroy, handler, payload);
 		}
 
-		this.client.console.log(`Lavalink OP code not recognized: ${payload.op}`);
+		return this.client.console.log(`${this.kHeader} OP code not recognized: ${payload.op}`);
 	}
 
 }

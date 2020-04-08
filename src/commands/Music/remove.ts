@@ -1,6 +1,5 @@
 import { MusicCommand } from '@lib/structures/commands/MusicCommand';
 import { CommandStore, KlasaMessage } from 'klasa';
-import { Message } from 'discord.js';
 
 export default class extends MusicCommand {
 
@@ -14,9 +13,9 @@ export default class extends MusicCommand {
 		});
 	}
 
-	public async run(msg: KlasaMessage, [num]: [number]): Promise<Message | void> {
-		const { music } = msg.guild;
-		if (!music.manageable(msg) && music.queue[num - 1].requester !== msg.member.id) throw 'I can\'t let you do that fam';
+	public async run(msg: KlasaMessage, [num]: [number]): Promise<void> {
+		const { music } = msg.guild!;
+		if (!music.manageable(msg) && music.queue[num - 1].requester !== msg.member!.id) throw 'I can\'t let you do that fam';
 		return music.remove(num - 1, this.getChannel(msg));
 	}
 

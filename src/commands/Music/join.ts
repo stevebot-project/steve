@@ -15,8 +15,10 @@ export default class extends MusicCommand {
 	}
 
 	public async run(msg: KlasaMessage): Promise<MusicHandler> {
-		msg.guild.music.channelID = msg.channel.id;
-		return msg.guild.music.connect(msg.member.voice.channel, msg.guild.music.textChannel);
+		const { music } = msg.guild!;
+
+		music.channelID = msg.channel.id;
+		return music.connect(msg.member!.voice.channel!, music.textChannel!);
 	}
 
 }
