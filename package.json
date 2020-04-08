@@ -43,12 +43,15 @@
     "@utils": "dist/src/lib/util"
   },
   "devDependencies": {
+    "@types/backoff": "^2.5.1",
     "@types/common-tags": "^1.8.0",
     "@types/mongodb": "^3.3.16",
     "@types/node-fetch": "^2.5.4",
+    "@types/ws": "^7.2.3",
     "@typescript-eslint/eslint-plugin": "^2.19.0",
     "@typescript-eslint/parser": "^2.19.0",
     "eslint": "^6.8.0",
+    "eslint-config-bamboo": "^3.0.0",
     "typescript": "^3.8.2"
   }
 }
