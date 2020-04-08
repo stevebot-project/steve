@@ -10,7 +10,7 @@ export default class extends Event {
 		if (msg.type === 'PINS_ADD' || msg.channel instanceof DMChannel) return this.client.console.log('Message deletion not logged.');
 
 
-		const serverlog = msg.guild.channels.cache.get(msg.guild.settings.get(GuildSettings.Channels.Serverlog)) as TextChannel;
+		const serverlog = msg.guild!.channels.cache.get(msg.guild!.settings.get(GuildSettings.Channels.Serverlog)) as TextChannel;
 		if (!serverlog) return;
 
 		const msgContent = msg.content.length < 1024 && msg.content.length > 0 ? msg.content : 'Message is unable to be displayed.';

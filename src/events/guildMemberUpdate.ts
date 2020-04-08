@@ -59,7 +59,7 @@ export default class extends Event {
 	private async getRole(guild: Guild): Promise<Role> {
 		const logs = await guild.fetchAuditLogs({ limit: 1, type: 'MEMBER_ROLE_UPDATE' });
 
-		return logs.entries.first().changes[0].new[0];
+		return logs.entries.first()!.changes![0].new[0];
 	}
 
 }

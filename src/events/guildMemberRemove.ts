@@ -10,7 +10,7 @@ export default class extends Event {
 		const memberlog = member.guild.channels.cache.get(member.guild.settings.get(GuildSettings.Channels.Memberlog)) as TextChannel;
 		if (!memberlog) return;
 
-		const joinedTime = friendlyDuration(Date.now() - member.joinedTimestamp);
+		const joinedTime = member.joinedTimestamp ? friendlyDuration(Date.now() - member.joinedTimestamp) : 'Unable to read join date.';
 
 		let memberRoles = member.roles.cache.filter(r => r.id !== member.guild.id).map(r => r.name).join(', ');
 		memberRoles = memberRoles.length > 0 ? memberRoles : 'None';

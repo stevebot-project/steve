@@ -23,8 +23,8 @@ module.exports = class extends Event {
 			.setTimestamp()
 			.setTitle('Role Name Changed')
 			.addFields([
-				{ name: 'Old Role Name', value: oldRole.name, inline: inline },
-				{ name: 'New Role Name', value: newRole.name, inline: inline }
+				{ name: 'Old Role Name', value: oldRole.name, inline },
+				{ name: 'New Role Name', value: newRole.name, inline }
 			]);
 
 		return serverlog.send(embed);
