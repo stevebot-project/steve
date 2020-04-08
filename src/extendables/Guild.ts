@@ -10,7 +10,7 @@ export default class extends Extendable {
 
 	public get trustedRole(this: Guild): Role | null {
 		const snowflake = this.settings.get(GuildSettings.Roles.Trusted);
-		return snowflake ? this.roles.cache.get(snowflake) : null;
+		return snowflake && this.roles.cache.has(snowflake) ? this.roles.cache.get(snowflake) as Role : null;
 	}
 
 }

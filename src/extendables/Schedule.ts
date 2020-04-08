@@ -7,7 +7,7 @@ export default class extends Extendable {
 		super(store, file, directory, { appliesTo: [Schedule] });
 	}
 
-	public async getUserReminders(this: Schedule, snowflake: Snowflake): Promise<ScheduledTask[]> {
+	public getUserReminders(this: Schedule, snowflake: Snowflake): ScheduledTask[] {
 		return this.tasks.filter(task => task.taskName === 'reminder' && task.data.user === snowflake);
 	}
 
