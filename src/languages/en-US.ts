@@ -2,12 +2,12 @@ import { Language, LanguageStore, util } from 'klasa';
 
 export default class extends Language {
 
-	constructor(store: LanguageStore, file: string[], directory: string) {
+	public constructor(store: LanguageStore, file: string[], directory: string) {
 		super(store, file, directory);
 		this.language = {
 			DEFAULT: (key): string => `${key} has not been localized for en-US yet.`,
 			DEFAULT_LANGUAGE: 'Default Language',
-			PREFIX_REMINDER: (prefix = `@${this.client.user.tag}`): string => `The prefix${Array.isArray(prefix)
+			PREFIX_REMINDER: (prefix = `@${this.client.user!.tag}`): string => `The prefix${Array.isArray(prefix)
 				? `es for this guild are: ${prefix.map(pre => `\`${pre}\``).join(', ')}`
 				: ` in this guild is set to: \`${prefix}\``
 			}`,
@@ -61,7 +61,7 @@ export default class extends Language {
 			INHIBITOR_MISSING_BOT_PERMS: (missing): string => `Insufficient permissions, missing: **${missing}**`,
 			INHIBITOR_NSFW: 'You can only use NSFW commands in NSFW channels.',
 			INHIBITOR_PERMISSIONS: 'You do not have permission to use this command.',
-			INHIBITOR_REQUIRED_SETTINGS: (settings): string => `The guild is missing the **${settings.join(', ')}** guild setting${settings.length !== 1 ? 's' : ''} and thus the command cannot run.`,
+			INHIBITOR_REQUIRED_SETTINGS: (settings): string => `The guild is missing the **${settings.join(', ')}** guild setting${settings.length === 1 ? '' : 's'} and thus the command cannot run.`,
 			INHIBITOR_RUNIN: (types): string => `This command is only available in ${types} channels.`,
 			INHIBITOR_RUNIN_NONE: (name): string => `The ${name} command is not configured to run in any channel.`,
 			COMMAND_BLACKLIST_DESCRIPTION: 'Blacklists or un-blacklists users and guilds from the bot.',
@@ -107,7 +107,7 @@ export default class extends Language {
 			COMMAND_PING_DESCRIPTION: 'Runs a connection test to Discord.',
 			COMMAND_PINGPONG: (diff, ping): string => `Pong! (Roundtrip took: ${diff}ms. Heartbeat: ${ping}ms.)`,
 			COMMAND_INVITE: (): string[] => [
-				`To add ${this.client.user.username} to your discord guild:`,
+				`To add ${this.client.user!.username} to your discord guild:`,
 				`<${this.client.invite}>`,
 				util.codeBlock('', [
 					'The above link is generated requesting the minimum permissions required to use every command currently.',
@@ -176,7 +176,7 @@ export default class extends Language {
 	}
 
 
-	async init(): Promise<any> { // eslint-disable-line @typescript-eslint/no-explicit-any
+	public async init(): Promise<any> { // eslint-disable-line @typescript-eslint/no-explicit-any
 		await super.init();
 	}
 
