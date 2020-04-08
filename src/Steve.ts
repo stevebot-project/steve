@@ -5,4 +5,5 @@ import { SteveClient } from '@lib/SteveClient';
 
 const bot = new SteveClient(CLIENT_OPTIONS);
 
-bot.login(TOKENS.BOT_TOKEN);
+bot.login(TOKENS.BOT_TOKEN)
+	.catch(error => bot.console.error(error));

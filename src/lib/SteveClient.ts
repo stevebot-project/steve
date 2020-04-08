@@ -15,13 +15,15 @@ export class SteveClient extends KlasaClient {
 	public constructor(options: KlasaClientOptions = {}) {
 		super(options);
 
-		this.lavalink = LAVALINK_ENABLE ? new Lavalink({
-			send: (guildID: string, packet: object): void => {
-				const guild = this.guilds.cache.get(guildID);
-				this.ws.shards.get(guild.shardID).send(packet);
-			},
-			...this.options.lavalink
-		}) : null;
+		this.lavalink = LAVALINK_ENABLE
+			? new Lavalink({
+				send: (guildID: string, packet: object): void => {
+					const guild = this.guilds.cache.get(guildID);
+					this.ws.shards.get(guild!.shardID)!.send(packet);
+				},
+				...this.options.lavalink
+			})
+			: null;
 
 		this.permissionLevels = permissionLevels;
 
