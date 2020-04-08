@@ -31,19 +31,20 @@ export abstract class ModerationCommand extends SteveCommand {
 	}
 
 	public async run(msg: KlasaMessage, [target, reason, duration]: [GuildMember | User, string, number]): Promise<Message> {
-		if (target instanceof GuildMember) await this.checkModeratable(target, msg.member);
+		if (target instanceof GuildMember) await this.checkModeratable(target, msg.member!);
 
 		const type: string = await this.handle(msg, target, reason = reason || '');
-		if (duration && type) await this.createModerationTask(msg.guild, target, type, duration);
+		if (duration && type) await this.createModerationTask(msg.guild!, target, type, duration);
 
 		return this.posthandle(msg.channel as TextChannel, target);
 	}
 
 	public abstract handle(msg: KlasaMessage, target: GuildMember | User, reason: string): Promise<string>;
-	public abstract posthandle(channel: TextChannel, target: GuildMember | User): Promise<Message>
+	public abstract posthandle(channel: TextChannel, target: GuildMember | User): Promise<Message>;
 
+	// eslint-disable-next-line @typescript-eslint/require-await
 	private async checkModeratable(target: GuildMember, moderator: GuildMember): Promise<boolean> {
-		if (target.id === target.guild.me.id) throw 'hahahahaha... no.';
+		if (target.id === target.guild.me!.id) throw 'hahahahaha... no.';
 		if (target.id === moderator.id) throw 'Come on fam, don\'t do that to yourself.';
 		if (target.roles.highest.comparePositionTo(moderator.roles.highest) > 0) throw `${target.user.tag} has a higher role than you.`;
 		return true;

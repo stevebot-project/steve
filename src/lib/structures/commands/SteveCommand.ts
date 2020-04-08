@@ -7,8 +7,8 @@ export interface SteveCommandOptions extends CommandOptions {
 
 export abstract class SteveCommand extends Command {
 
-	public examples: string[];
-	public helpUsage: string;
+	public examples: string[] | undefined;
+	public helpUsage: string | undefined;
 
 	protected constructor(store: CommandStore, file: string[], directory: string, options: SteveCommandOptions) {
 		super(store, file, directory, util.mergeDefault({ usageDelim: '|' }, options));
