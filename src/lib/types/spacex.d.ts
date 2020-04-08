@@ -5,7 +5,7 @@ export interface APIInfo {
 	version: string;
 	project_link: string;
 	organization: string;
-	organization_link;
+	organization_link: string;
 	description: string;
 }
 

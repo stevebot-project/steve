@@ -9,14 +9,14 @@ export class ModerationManager {
 
 	public get deafenedRole(): Role | null {
 		const snowflake = this.guild.settings.get(GuildSettings.Roles.Deafened);
-		return snowflake ? this.guild.roles.cache.get(snowflake) : null;
+		return snowflake && this.guild.roles.cache.has(snowflake) ? this.guild.roles.cache.get(snowflake) as Role : null;
 	}
 
 	public get lockedChannels(): Snowflake[] {
 		const filter = (channel: GuildChannel): boolean => {
 			if (channel instanceof TextChannel) {
 				if (!channel.permissionOverwrites.has(this.guild.id)) return false;
-				if (channel.permissionOverwrites.get(this.guild.id).deny.has('SEND_MESSAGES')) return true;
+				if (channel.permissionOverwrites.get(this.guild.id)!.deny.has('SEND_MESSAGES')) return true;
 			}
 			return false;
 		};
@@ -26,7 +26,7 @@ export class ModerationManager {
 
 	public get mutedRole(): Role | null {
 		const snowflake = this.guild.settings.get(GuildSettings.Roles.Muted);
-		return snowflake ? this.guild.roles.cache.get(snowflake) : null;
+		return snowflake && this.guild.roles.cache.has(snowflake) ? this.guild.roles.cache.get(snowflake) as Role : null;
 	}
 
 	public constructor(guild: Guild) {
@@ -36,7 +36,7 @@ export class ModerationManager {
 
 	public async ban(target: GuildMember, reason: string): Promise<ModerationManager> {
 		if (target.bannable) {
-			await this.guild.members.ban(target, { reason: reason });
+			await this.guild.members.ban(target, { reason });
 		}
 		return this;
 	}

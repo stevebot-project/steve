@@ -19,7 +19,10 @@ export abstract class CreateDeleteEvent extends Event {
 
 		let objName = obj.constructor.name;
 		objName = objName === 'TextChannel' || objName === 'VoiceChannel' || objName === 'NewsChannel' || objName === 'CategoryChannel'
-			? 'Channel' : objName === 'GuildEmoji' ? 'Emoji' : objName;
+			? 'Channel'
+			: objName === 'GuildEmoji'
+				? 'Emoji'
+				: objName;
 
 		const executor = await getExecutor(obj.guild, this.getAuditLogAction(this.name) as GuildAuditLogsAction);
 
@@ -40,7 +43,7 @@ export abstract class CreateDeleteEvent extends Event {
 	public abstract handle(obj: TextChannel | VoiceChannel | NewsChannel | CategoryChannel | GuildEmoji | Role, embed: MessageEmbed): Promise<MessageEmbed>;
 
 	private getAuditLogAction(name: string): string {
-		return name.replace(/[\w]([A-Z])/g, (m) => `${m[0]}_${m[1]}`).toUpperCase();
+		return name.replace(/[\w]([A-Z])/g, m => `${m[0]}_${m[1]}`).toUpperCase();
 	}
 
 }

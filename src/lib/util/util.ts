@@ -15,10 +15,10 @@ export function friendlyDuration(duration: number): string {
 }
 
 export async function getExecutor(guild: Guild, type: GuildAuditLogsAction | number): Promise<User> {
-	const logs = await guild.fetchAuditLogs({ limit: 1, type: type });
-	return logs.entries.first().executor;
+	const logs = await guild.fetchAuditLogs({ limit: 1, type });
+	return logs.entries.first()!.executor;
 }
 
 export function newEmbed(): MessageEmbed {
-	return new MessageEmbed;
+	return new MessageEmbed; // eslint-disable-line new-parens
 }
