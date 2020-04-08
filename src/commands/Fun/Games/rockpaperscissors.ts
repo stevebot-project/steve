@@ -26,11 +26,8 @@ export default class extends SteveCommand {
 
 	private checkWinner(playerNum: number, steveNum: number): string {
 		if (playerNum === steveNum) return 'Nobody';
-		if ((playerNum > steveNum && playerNum - steveNum === 1) || (steveNum > playerNum && steveNum - playerNum === 2)) {
-			return 'You';
-		} else {
-			return NAME;
-		}
+		if ((playerNum > steveNum && playerNum - steveNum === 1) || (steveNum > playerNum && steveNum - playerNum === 2)) return 'You';
+		return NAME;
 	}
 
 }

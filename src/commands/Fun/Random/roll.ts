@@ -41,25 +41,25 @@ export default class extends SteveCommand {
 		this.createCustomResolver('dice', (arg): RollSpec => {
 			const match = DICE_REGEX.exec(arg);
 
-			let count = parseInt(match.groups.count, 10) ?? 1;
+			let count = parseInt(match!.groups!.count, 10) ?? 1;
 			if (isNaN(count)) count = 1;
 			else if (count > 10) count = 10;
 
-			let sides = parseInt(match.groups.sides, 10);
+			let sides = parseInt(match!.groups!.sides, 10);
 			if (sides > 1000) sides = 1000;
 
-			const explodes = match.groups.explode === '!';
+			const explodes = match!.groups!.explode === '!';
 
 			let keep: KeepType = false;
-			if (match.groups.keep) {
-				const keepLowest = match.groups.keep.includes('l');
+			if (match!.groups!.keep) {
+				const keepLowest = match!.groups!.keep.includes('l');
 				if (keepLowest) keep = 'lowest';
 				else keep = 'highest';
 			}
 
-			const keepCount = parseInt(match.groups.keepCount, 10);
+			const keepCount = parseInt(match!.groups!.keepCount, 10);
 
-			return { input: match.input, count, sides, explodes, keep, keepCount };
+			return { input: match!.input, count, sides, explodes, keep, keepCount };
 		});
 	}
 
@@ -82,7 +82,7 @@ export default class extends SteveCommand {
 			results.push({ spec, rolls });
 		}
 
-		const getEmoji = (spec): string => {
+		const getEmoji = (spec: RollSpec): string => {
 			if (spec.keep === 'highest') return '👍';
 			if (spec.keep === 'lowest') return '👎';
 			if (spec.explodes) return '💥';
@@ -94,14 +94,14 @@ export default class extends SteveCommand {
 			const emoji = getEmoji(result.spec);
 			const message = `${emoji} You rolled: \`${result.rolls.join(', ')}\` ${emoji}`;
 			return msg.channel.send(message);
-		} else {
-			let message = 'You rolled:';
-			for (const result of results) {
-				const emoji = getEmoji(result.spec);
-				message += `\n${emoji} ${result.spec.input}: \`${result.rolls.join(', ')}\``;
-			}
-			return msg.channel.send(message);
 		}
+
+		let message = 'You rolled:';
+		for (const result of results) {
+			const emoji = getEmoji(result.spec);
+			message += `\n${emoji} ${result.spec.input}: \`${result.rolls.join(', ')}\``;
+		}
+		return msg.channel.send(message);
 	}
 
 	private rollOnce(sides: number): number {
@@ -122,9 +122,9 @@ export default class extends SteveCommand {
 				&& roll < 1e6 // prevent an infinite loop, just in case
 			);
 			return total;
-		} else {
-			return this.rollOnce(sides);
 		}
+
+		return this.rollOnce(sides);
 	}
 
 }

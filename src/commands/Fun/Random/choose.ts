@@ -16,7 +16,7 @@ export default class extends SteveCommand {
 	}
 
 	public async run(msg: KlasaMessage, choices: string[]): Promise<Message> {
-		return msg.channel.send(`${this.client.user.username} chooses... ${choices[Math.floor(Math.random() * choices.length)]}!`);
+		return msg.channel.send(`${this.client.user!.username} chooses... ${choices[Math.floor(Math.random() * choices.length)]}!`);
 	}
 
 }
