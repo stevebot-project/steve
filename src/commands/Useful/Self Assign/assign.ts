@@ -35,13 +35,13 @@ export default class extends SteveCommand {
 	}
 
 	public async list(msg: KlasaMessage): Promise<Message> {
-		const assignable = msg.guild.settings.get(GuildSettings.Roles.Assignable) as Snowflake[];
-		if (assignable.length < 1) throw `This server does not have any self-assignable roles.`;
+		const assignableRoles = msg.guild.settings.get(GuildSettings.Roles.Assignable) as Snowflake[];
+		if (assignableRoles.length < 1) throw `This server does not have any self-assignable roles.`;
 
 		let list = '';
 
-		for (let i = 0; i < assignable.length; i++) {
-			const role = msg.guild.roles.cache.get(assignable[i]);
+		for (const assignableRole of assignableRoles) {
+			const role = msg.guild.roles.cache.get(assignableRole);
 			list += `${role.name}\n`;
 		}
 
