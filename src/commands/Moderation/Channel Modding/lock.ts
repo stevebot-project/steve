@@ -25,13 +25,20 @@ export default class extends SteveCommand {
 		if (duration) {
 			prettyDuration = friendlyDuration(duration);
 
-			this.client.schedule.create('unlock', Date.now() + duration, {
-				data: {
-					channel: msg.channel.id,
-					guild: msg.guild.id
-				},
-				catchUp: true
-			});
+			try {
+				await this.client.schedule.create('unlock', Date.now() + duration, {
+					data: {
+						channel: msg.channel.id,
+						guild: msg.guild.id
+					},
+					catchUp: true
+				});
+			} catch (error) {
+				msg.channel.send(`Unable to schedule channel unlock.`).catch(() => {
+					// noop
+				});
+				throw this.client.console.log(`Unable to schedule channel unlock in ${msg.guild.name}: ${error}`);
+			}
 		}
 
 		return msg.channel.send(`This channel has been locked${duration ? ` for ${prettyDuration}` : ''}.`);

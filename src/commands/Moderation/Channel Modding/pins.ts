@@ -31,7 +31,7 @@ export default class extends SteveCommand {
 			return channel.send(`${pins.size} messages unpinned in ${channel.name}.`);
 		}
 
-		return channel.send(oneLine`There ${pins.size !== 1 ? 'are' : 'is'} ${pins.size} message${pins.size !== 1 ? 's' : ''}
+		return channel.send(oneLine`There ${pins.size === 1 ? 'is' : 'are'} ${pins.size} message${pins.size === 1 ? '' : 's'}
 			pinned in ${channel.name}.`);
 	}
 

@@ -33,17 +33,26 @@ export default class extends SteveCommand {
 		if (duration && ratelimit > 0) {
 			prettyDuration = friendlyDuration(duration);
 
-			this.client.schedule.create('slow', Date.now() + duration, {
-				data: {
-					guild: msg.guild.id,
-					channel: msg.channel.id
-				},
-				catchUp: true
-			});
+			try {
+				await this.client.schedule.create('slow', Date.now() + duration, {
+					data: {
+						guild: msg.guild.id,
+						channel: msg.channel.id
+					},
+					catchUp: true
+				});
+			} catch (error) {
+				msg.channel.send(`Unable to schedule ratelimit change for this channel.`).catch(() => {
+					// noop
+				});
+				throw this.client.console.log(`Unable to schedule ratelimit change in ${msg.guild.name}: ${error}`);
+			}
 		}
 
-		return msg.channel.send(oneLine`The message ratelimit in this channel has been ${ratelimit > 0 ? `set to ${ratelimit}
-			seconds${duration ? ` for ${prettyDuration}` : ''}` : 'reset'}.`);
+		const ratelimitDescription = ratelimit > 0
+			? `set to ${ratelimit} seconds${duration ? ` for ${prettyDuration}` : ''}`
+			: 'reset';
+		return msg.channel.send(`The message ratelimit in this channel has been ${ratelimitDescription}.`);
 	}
 
 }
