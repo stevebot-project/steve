@@ -59,8 +59,8 @@ export default class extends SteveCommand {
 
 			if (Array.isArray(examples)) {
 				const helpExamples = [];
-				for (let i = 0; i < examples.length; i++) {
-					helpExamples.push(`>> Steve, ${examples[i]}`);
+				for (const example of examples) {
+					helpExamples.push(`>> Steve, ${example}`);
 				}
 
 				embed.addFields({ name: `${Emojis.SteveFaceDark} | *Examples*`, value: helpExamples.join('\n') });
@@ -73,16 +73,16 @@ export default class extends SteveCommand {
 			const help = await this.buildHelp(msg);
 			const categories = Object.keys(help);
 			const helpMessage = ['You can do `s;help <command>` to get more info about a specific command!'];
-			for (let cat = 0; cat < categories.length; cat++) {
-				helpMessage.push(`**${categories[cat]} Commands**:`, '```asciidoc');
-				const subCategories = Object.keys(help[categories[cat]]);
-				for (let subCat = 0; subCat < subCategories.length; subCat++) helpMessage.push(`= ${subCategories[subCat]} =`, `${help[categories[cat]][subCategories[subCat]].join('\n')}\n`);
+			for (const category of categories) {
+				helpMessage.push(`**${category} Commands**:`, '```asciidoc');
+				const subcategories = Object.keys(help[category]);
+				for (const subcategory of subcategories) helpMessage.push(`= ${subcategory} =`, `${help[category][subcategory].join('\n')}\n`);
 				helpMessage.push('```', '\u200b');
 			}
 
-			return msg.author.send(helpMessage, { split: { char: '\u200b' } })
-				.then(() => { if (msg.channel.type !== 'dm') msg.sendLocale('COMMAND_HELP_DM'); })
-				.catch(() => { if (msg.channel.type !== 'dm') msg.sendLocale('COMMAND_HELP_NODM'); });
+			return msg.author.send(helpMessage, { split: { 'char': '\u200b' } })
+				.then(() => { if (msg.channel.type !== 'dm') return msg.sendLocale('COMMAND_HELP_DM'); })
+				.catch(() => { if (msg.channel.type !== 'dm') return msg.sendLocale('COMMAND_HELP_NODM'); });
 		}
 	}
 
@@ -93,7 +93,7 @@ export default class extends SteveCommand {
 		const commandNames = [...this.client.commands.keys()];
 		const longest = commandNames.reduce((long, str) => Math.max(long, str.length), 0);
 
-		await Promise.all(this.client.commands.map((cmd) =>
+		await Promise.all(this.client.commands.map(cmd =>
 			this.client.inhibitors.run(msg, cmd, true)
 				.then(() => {
 					if (!has(help, cmd.category)) help[cmd.category] = {};
@@ -103,8 +103,7 @@ export default class extends SteveCommand {
 				})
 				.catch(() => {
 					// noop
-				})
-		));
+				})));
 
 		return help;
 	}

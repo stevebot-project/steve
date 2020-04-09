@@ -31,7 +31,9 @@ export default class extends SteveCommand {
 		const fetchedMember = await msg.guild.members.fetch(targetMember);
 
 		const fetchedMemberRoles = fetchedMember.roles.cache.size > 1
-			? fetchedMember.roles.cache.filter(r => r.id !== r.guild.id).sort().array().join(' ') : 'None';
+			? fetchedMember.roles.cache.filter(r => r.id !== r.guild.id).sort().array()
+				.join(' ')
+			: 'None';
 
 		const fetchedMemberAccountAge = oneLine`${friendlyDuration(Date.now() - fetchedMember.user.createdTimestamp)} ago
 			(${formatDate(fetchedMember.user.createdTimestamp)})`;

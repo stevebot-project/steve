@@ -45,17 +45,18 @@ export default class extends SteveCommand {
 
 		if (launch.details !== null) embed.setDescription(launch.details);
 
-		if (!launch.is_tentative) {
+		if (launch.is_tentative) {
+			embed
+				.addFields([
+					{ name: 'NET Launch Date', value: formatDate(launch.launch_date_utc) }
+				]);
+
+		} else {
 			embed
 				.setFooter(`Launched from ${launch.launch_site.site_name}`)
 				.setTimestamp(launch.launch_date_utc)
 				.addFields([
 					{ name: 'First Stage Cores', value: launch.rocket.first_stage.cores.map(core => core.core_serial).join(', '), inline: true }
-				]);
-		} else {
-			embed
-				.addFields([
-					{ name: 'NET Launch Date', value: formatDate(launch.launch_date_utc) }
 				]);
 		}
 
