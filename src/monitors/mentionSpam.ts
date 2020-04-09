@@ -14,7 +14,7 @@ export default class extends Monitor {
 			if (msg.mentions.users.size > maxMentions) {
 				const spamMsg = await msg.delete();
 
-				spamMsg.reply(`you tagged more than ${maxMentions} people. Chill out please.`);
+				return spamMsg.reply(`you tagged more than ${maxMentions} people. Chill out please.`);
 			}
 		}
 	}
