@@ -37,7 +37,7 @@ export default class extends Event {
 				if (newMember.roles.cache.size === 2 && roleUpdateType === 'Added to') {
 					if (!newMember.guild.settings.get(GuildSettings.Roles.Private).includes(role.id)) {
 						if (newMember.guild.trustedRole && !newMember.roles.cache.has(newMember.guild.trustedRole.id)) {
-							newMember.roles.add(newMember.guild.trustedRole);
+							await newMember.roles.add(newMember.guild.trustedRole);
 						}
 					}
 				}

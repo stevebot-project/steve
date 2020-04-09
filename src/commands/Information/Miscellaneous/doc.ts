@@ -30,7 +30,7 @@ export default class extends SteveCommand {
 	public async list(msg: KlasaMessage): Promise<Message> {
 		let list = '';
 
-		for (const doc in DOCS) { list += `${doc}\n`; }
+		for (const doc of DOCS) list += `${doc}\n`;
 
 		return msg.channel.send(list);
 	}

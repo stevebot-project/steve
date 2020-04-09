@@ -58,8 +58,10 @@ export default class extends SteveCommand {
 		targetUserReminders.forEach((reminder: ScheduledTask) => {
 			embed
 				.addFields([
-					{ name: `**${targetUserReminders.indexOf(reminder) + 1}: ${reminder.data.content}**`,
-						value: `${friendlyDuration(reminder.time.getTime() - Date.now())} left!` }
+					{
+						name: `**${targetUserReminders.indexOf(reminder) + 1}: ${reminder.data.content}**`,
+						value: `${friendlyDuration(reminder.time.getTime() - Date.now())} left!`
+					}
 				]);
 		});
 

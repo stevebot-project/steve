@@ -8,7 +8,7 @@ import { newEmbed } from '@utils/util';
 
 module.exports = class extends SteveCommand {
 
-	constructor(store: CommandStore, file: string[], directory: string) {
+	public constructor(store: CommandStore, file: string[], directory: string) {
 		super(store, file, directory, {
 			aliases: ['genius'],
 			description: 'Search Genius for lyrics to a song.',

@@ -26,15 +26,14 @@ export default class extends SteveCommand {
 			.setColor(Colors.GoogleYellow)
 			.setTitle(`Google results for ${search}`);
 
-		for (let i = 0; i < results.length; i++) {
-			const currentResult = results[i];
+		for (const result of results) {
 			embed
 				.addFields([
-					{ name: `**${currentResult.title}**\n${currentResult.link}`, value: currentResult.snippet }
+					{ name: `**${result.title}**\n${result.link}`, value: result.snippet }
 				]);
 		}
 
-		return res.edit('', { embed: embed });
+		return res.edit('', { embed });
 	}
 
 }

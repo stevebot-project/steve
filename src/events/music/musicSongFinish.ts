@@ -10,7 +10,7 @@ export default class extends Event {
 			await handler.player.play(handler.song!.track);
 			this.client.emit(Events.MusicSongReplay, handler.textChannel);
 		} else if (handler.queue.length < 1) {
-			handler.textChannel!.setTopic('');
+			await handler.textChannel!.setTopic('');
 			await handler.textChannel!.send(`${Emojis.Empty} No more songs in the queue!`);
 			return handler.reset();
 		} else {

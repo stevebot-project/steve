@@ -24,7 +24,7 @@ module.exports = class extends Event {
 					{ name: 'New Username', value: newUser.username }
 				]);
 
-			memberlog.send(embed);
+			await memberlog.send(embed);
 		}
 
 		return this.client.console.log('finished logging username changes');

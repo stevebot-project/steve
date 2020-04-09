@@ -18,9 +18,7 @@ export default class extends Monitor {
 		const filtered = await this.filter(msg.content, blacklist);
 
 		if (filtered) {
-			return msg.delete().then(() => {
-				msg.reply('you used a word that is on the word blacklist. Please refrain from doing that again.');
-			});
+			return msg.delete().then(() => msg.reply('you used a word that is on the word blacklist. Please refrain from doing that again.'));
 		}
 	}
 

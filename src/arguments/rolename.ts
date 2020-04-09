@@ -19,7 +19,9 @@ export default class extends Argument {
 
 		const results = [];
 		const reg = new RegExp(util.regExpEsc(arg), 'i');
-		for (const role of msg.guild.roles.cache.values()) { if (reg.test(role.name)) results.push(role); }
+		for (const role of msg.guild.roles.cache.values()) {
+			if (reg.test(role.name)) results.push(role);
+		}
 
 		let querySearch;
 		if (results.length > 0) {

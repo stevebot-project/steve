@@ -23,7 +23,7 @@ export default class extends SteveCommand {
 
 		setTimeout(() => confirmMsg.delete(), 5000);
 
-		return;
+
 	}
 
 }
