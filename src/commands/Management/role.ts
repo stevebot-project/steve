@@ -30,7 +30,9 @@ export default class extends SteveCommand {
 				await targetMember.roles.add(targetRole);
 			}
 		} catch (error) {
-			msg.channel.send(`Unable to edit ${targetMember.user.tag}'s roles.`);
+			msg.channel.send(`Unable to edit ${targetMember.user.tag}'s roles.`).catch(() => {
+				// noop
+			});
 			throw this.client.console.log(`Unable to edit member roles in ${msg.guild.name}: ${error}`);
 		}
 
@@ -38,10 +40,17 @@ export default class extends SteveCommand {
 		if (duration) {
 			prettyDuration = friendlyDuration(duration);
 
-			this.client.schedule.create('role', Date.now() + duration, {
-				data: { user: targetMember.user.id, guild: targetMember.guild.id, role: targetRole.id },
-				catchUp: true
-			});
+			try {
+				await this.client.schedule.create('role', Date.now() + duration, {
+					data: { user: targetMember.user.id, guild: targetMember.guild.id, role: targetRole.id },
+					catchUp: true
+				});
+			} catch (error) {
+				msg.channel.send(`Unable to schedule role change for ${targetMember.user.tag}.`).catch(() => {
+					// noop
+				});
+				throw this.client.console.log(`Unable to schedule member role change in ${msg.guild.name}: ${error}`);
+			}
 		}
 
 		return msg.channel.send(oneLine`The ${targetRole.name} role has been ${toggle ? 'removed from' : 'added to'}
