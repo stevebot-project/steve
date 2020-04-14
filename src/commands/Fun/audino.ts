@@ -15,7 +15,7 @@ export default class extends SteveCommand {
 		});
 	}
 
-	async run(msg: KlasaMessage): Promise<Message> {
+	public async run(msg: KlasaMessage): Promise<Message> {
 		return msg.channel.send({ files: [{ attachment: './assets/images/john_screech.png', name: 'john_screech.png' }] });
 	}
 
