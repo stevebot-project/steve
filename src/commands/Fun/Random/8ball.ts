@@ -7,8 +7,8 @@ export default class extends SteveCommand {
 
 	public constructor(store: CommandStore, file: string[], directory: string) {
 		super(store, file, directory, {
-			description: 'Ask the 8ball a question and you shall get an answer.',
-			extendedHelp: 'This command requires you to put a question mark at the end of your question.',
+			description: lang => lang.get('COMMAND_8BALL_DESCRIPTION'),
+			extendedHelp: lang => lang.get('COMMAND_8BALL_EXTENDEDHELP'),
 			examples: ['8ball will the jonathans ever stop being annoying?'],
 			usage: '<question:reg/^[A-Za-z0-9_ ]+\\?/>',
 			helpUsage: 'question?'

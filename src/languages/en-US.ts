@@ -171,7 +171,17 @@ export default class extends Language {
 			],
 			COMMAND_STATS_DESCRIPTION: 'Provides some details about the bot and stats.',
 			MESSAGE_PROMPT_TIMEOUT: 'The prompt has timed out.',
-			TEXT_PROMPT_ABORT_OPTIONS: ['abort', 'stop', 'cancel']
+			TEXT_PROMPT_ABORT_OPTIONS: ['abort', 'stop', 'cancel'],
+			COMMAND_MODERATION_TARGET_STEVE: 'hahahahaha... no.',
+			COMMAND_MODERATION_TARGET_SELF: 'Come on fam, don\'t do that to yourself.',
+			COMMAND_MODERATION_TARGET_HIGHER_ROLE: (userTag): string => `${userTag} has a higher role than you.`,
+			COMMAND_RPS_DESCRIPTION: (name): string => `Play rock, paper, scissors against ${name}.`,
+			COMMAND_RPS_MOVES: (playerMove, steveMove, name): string => `You threw ${playerMove} and ${name} threw ${steveMove}.`,
+			COMMAND_RPS_WINNER_PLAYER: 'You won!',
+			COMMAND_RPS_WINNER_NOBODY: 'Nobody won!',
+			COMMAND_RPS_WINNER_STEVE: (name): string => `${name} won!`,
+			COMMAND_8BALL_DESCRIPTION: 'Ask the 8ball a question and you shall get an answer.',
+			COMMAND_8BALL_EXTENDEDHELP: 'This command requires you to put a question mark at the end of your question.'
 		};
 	}
 

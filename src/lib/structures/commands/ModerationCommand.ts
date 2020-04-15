@@ -31,7 +31,7 @@ export abstract class ModerationCommand extends SteveCommand {
 	}
 
 	public async run(msg: KlasaMessage, [target, reason, duration]: [GuildMember | User, string, number]): Promise<Message> {
-		if (target instanceof GuildMember) await this.checkModeratable(target, msg.member);
+		if (target instanceof GuildMember) await this.checkModeratable(target, msg.member, msg);
 
 		const type: string = await this.handle(msg, target, reason = reason || '');
 		if (duration && type) await this.createModerationTask(msg.guild, target, type, duration);
@@ -42,10 +42,10 @@ export abstract class ModerationCommand extends SteveCommand {
 	public abstract handle(msg: KlasaMessage, target: GuildMember | User, reason: string): Promise<string>;
 	public abstract posthandle(channel: TextChannel, target: GuildMember | User): Promise<Message>
 
-	private async checkModeratable(target: GuildMember, moderator: GuildMember): Promise<boolean> {
-		if (target.id === target.guild.me.id) throw 'hahahahaha... no.';
-		if (target.id === moderator.id) throw 'Come on fam, don\'t do that to yourself.';
-		if (target.roles.highest.comparePositionTo(moderator.roles.highest) > 0) throw `${target.user.tag} has a higher role than you.`;
+	private async checkModeratable(target: GuildMember, moderator: GuildMember, msg: KlasaMessage): Promise<boolean> {
+		if (target.id === target.guild.me.id) throw msg.language.get('COMMAND_MODERATION_TARGET_STEVE');
+		if (target.id === moderator.id) throw msg.language.get('COMMAND_MODERATION_TARGET_SELF');
+		if (target.roles.highest.comparePositionTo(moderator.roles.highest) > 0) throw msg.language.get('COMMAND_MODERATION_TARGET_HIGHER_ROLE', target.user.tag);
 		return true;
 	}
 
