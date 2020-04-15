@@ -26,7 +26,7 @@ export default class extends SteveCommand {
 	public constructor(store: CommandStore, file: string[], directory: string) {
 		super(store, file, directory, {
 			aliases: ['dice'],
-			description: 'Roll dice!',
+			description: lang => lang.get('COMMAND_ROLL_DESCRIPTION'),
 			examples: ['roll 1d6', 'roll d20', 'roll 5d10!', 'roll 1d8|4d6', 'roll 6d12k1', 'roll 6d12kl2'],
 			extendedHelp: oneLine`Use standard dice notation. You can roll up to 10 dice with up to 1,000 sides each.
 				Add a \`!\` at the end of your roll to use exploding dice.
@@ -36,7 +36,7 @@ export default class extends SteveCommand {
 			helpUsage: '<number of dice>d<number of sides>'
 		});
 
-		this.customizeResponse('roll', 'You can roll up to 10 dice with up to 1,000 sides each.');
+		this.customizeResponse('roll', msg => msg.language.get('COMMAND_ROLL_PROMPT'));
 
 		this.createCustomResolver('dice', (arg): RollSpec => {
 			const match = DICE_REGEX.exec(arg);

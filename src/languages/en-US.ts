@@ -1,4 +1,5 @@
 import { Language, LanguageStore, util } from 'klasa';
+import { NAME as botName } from '@root/config';
 
 export default class extends Language {
 
@@ -172,16 +173,36 @@ export default class extends Language {
 			COMMAND_STATS_DESCRIPTION: 'Provides some details about the bot and stats.',
 			MESSAGE_PROMPT_TIMEOUT: 'The prompt has timed out.',
 			TEXT_PROMPT_ABORT_OPTIONS: ['abort', 'stop', 'cancel'],
+			/* steve specific stuff starts here */
 			COMMAND_MODERATION_TARGET_STEVE: 'hahahahaha... no.',
 			COMMAND_MODERATION_TARGET_SELF: 'Come on fam, don\'t do that to yourself.',
-			COMMAND_MODERATION_TARGET_HIGHER_ROLE: (userTag): string => `${userTag} has a higher role than you.`,
-			COMMAND_RPS_DESCRIPTION: (name): string => `Play rock, paper, scissors against ${name}.`,
-			COMMAND_RPS_MOVES: (playerMove, steveMove, name): string => `You threw ${playerMove} and ${name} threw ${steveMove}.`,
+			COMMAND_MODERATION_TARGET_HIGHER_ROLE: (tag): string => `${tag} has a higher role than you.`,
+			COMMAND_RPS_DESCRIPTION: `Play rock, paper, scissors against ${botName}.`,
+			COMMAND_RPS_MOVES: (playerMove, steveMove): string => `You threw ${playerMove} and ${botName} threw ${steveMove}.`,
 			COMMAND_RPS_WINNER_PLAYER: 'You won!',
 			COMMAND_RPS_WINNER_NOBODY: 'Nobody won!',
-			COMMAND_RPS_WINNER_STEVE: (name): string => `${name} won!`,
+			COMMAND_RPS_WINNER_STEVE: `${botName} won!`,
 			COMMAND_8BALL_DESCRIPTION: 'Ask the 8ball a question and you shall get an answer.',
-			COMMAND_8BALL_EXTENDEDHELP: 'This command requires you to put a question mark at the end of your question.'
+			COMMAND_8BALL_EXTENDEDHELP: 'This command requires you to put a question mark at the end of your question.',
+			COMMAND_8BALL_QUESTION_PROMPT: 'The 8ball only responds to questions smh',
+			COMMAND_8BALL_RESPONSES: [
+				'The eucalyptus says yes.',
+				'I guess so...',
+				'Not today, satan.',
+				'Hahahaha... no.',
+				'Lemme finish my eucalyptus, then try asking me again.',
+				'Yes? No? Maybe so? I don\'t care, to be honest.',
+				'Everything is burning lol go do something productive instead of asking me this.'
+			],
+			COMMAND_CHOOSE_DESCRIPTION: `Have ${botName} make a random choice for you.`,
+			COMMAND_CHOOSE_EXTENDEDHELP: 'This command requires at least two choices.',
+			COMMAND_CHOOSE_CHOICE: (choice): string => `${botName} chooses... ${choice}!`,
+			COMMAND_RATE_DESCRIPTION: `${botName} will rate something of your choosing.`,
+			COMMAND_RATE_RATING: (thing: string, rating: number): string => `${botName} gives ${thing} a ${rating}!`,
+			COMMAND_ROLL_DESCRIPTION: 'Roll dice!',
+			COMMAND_ROLL_PROMPT: 'You can roll up to 10 dice with up to 1,000 sides each.',
+			COMMAND_AUDINO_DESCRIPTION: 'When your audio just won\'t work and you must screm!!!',
+			COMMAND_AUDINO_EXTENDEDHELP: 'The image this command displays came from a reading livestream John did; it\'s the face he made when his audio cut out *again*.'
 		};
 	}
 

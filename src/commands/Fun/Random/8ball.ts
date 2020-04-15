@@ -1,7 +1,6 @@
 import { CommandStore, KlasaMessage } from 'klasa';
 import { SteveCommand } from '@lib/structures/commands/SteveCommand';
 import { Message } from 'discord.js';
-import { MAGIC8BALL_RESPONSES } from '@root/config';
 
 export default class extends SteveCommand {
 
@@ -15,11 +14,12 @@ export default class extends SteveCommand {
 		});
 
 		this
-			.customizeResponse('question', 'The 8ball only responds to questions smh');
+			.customizeResponse('question', msg => msg.language.get('COMMAND_8BALL_QUESTION_PROMPT'));
 	}
 
 	public async run(msg: KlasaMessage): Promise<Message> {
-		return msg.channel.send(MAGIC8BALL_RESPONSES[Math.floor(Math.random() * MAGIC8BALL_RESPONSES.length)]);
+		const responses = msg.language.get('COMMAND_8BALL_RESPONSES') as string[];
+		return msg.channel.send(responses[Math.floor(Math.random() * responses.length)]);
 	}
 
 }

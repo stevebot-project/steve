@@ -1,13 +1,12 @@
 import { SteveCommand } from '@lib/structures/commands/SteveCommand';
 import { CommandStore, KlasaMessage } from 'klasa';
 import { Message } from 'discord.js';
-import { NAME } from '@root/config';
 
 export default class extends SteveCommand {
 
 	public constructor(store: CommandStore, file: string[], directory: string) {
 		super(store, file, directory, {
-			description: `Have ${NAME} rate something of your choosing.`,
+			description: lang => lang.get('COMMAND_RATE_DESCRIPTION'),
 			examples: ['rate eucalyptus leaves'],
 			usage: '<thing:string>',
 			helpUsage: 'thing'
@@ -15,7 +14,7 @@ export default class extends SteveCommand {
 	}
 
 	public async run(msg: KlasaMessage, [thing]: [string]): Promise<Message> {
-		return msg.channel.send(`${NAME} gives ${thing} a ${Math.floor(Math.random() * 10) + 1}!`);
+		return msg.channel.send(msg.language.get('COMMAND_RATE_RATING', thing, Math.floor(Math.random() * 10) + 1));
 	}
 
 }
