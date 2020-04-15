@@ -6,7 +6,7 @@ export default class extends MusicCommand {
 
 	public constructor(store: CommandStore, file: string[], directory: string) {
 		super(store, file, directory, {
-			description: 'Pauses playback.',
+			description: lang => lang.get('COMMAND_PAUSE_DESCRIPTION'),
 			examples: ['pause'],
 			music: ['VOICE_PLAYING', 'SAME_VOICE_CHANNEL', 'MANAGEABLE']
 		});

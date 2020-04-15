@@ -1,6 +1,5 @@
 import { MusicCommand } from '@lib/structures/commands/MusicCommand';
 import { CommandStore, KlasaMessage } from 'klasa';
-import { NAME } from '@root/config';
 import { MusicHandler } from '@lib/structures/music/MusicHandler';
 
 export default class extends MusicCommand {
@@ -8,7 +7,7 @@ export default class extends MusicCommand {
 	public constructor(store: CommandStore, file: string[], directory: string) {
 		super(store, file, directory, {
 			aliases: ['connect', 'music'],
-			description: `Connects ${NAME} to a voice channel.`,
+			description: lang => lang.get('COMMAND_JOIN_DESCRIPTION'),
 			examples: ['join'],
 			music: ['USER_VOICE_CHANNEL']
 		});

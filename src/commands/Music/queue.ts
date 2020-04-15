@@ -6,7 +6,7 @@ export default class extends MusicCommand {
 
 	public constructor(store: CommandStore, file: string[], directory: string) {
 		super(store, file, directory, {
-			description: 'Display the current queue.',
+			description: lang => lang.get('COMMAND_QUEUE_DESCRIPTION'),
 			examples: ['queue']
 		});
 	}

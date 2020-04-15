@@ -202,7 +202,22 @@ export default class extends Language {
 			COMMAND_ROLL_DESCRIPTION: 'Roll dice!',
 			COMMAND_ROLL_PROMPT: 'You can roll up to 10 dice with up to 1,000 sides each.',
 			COMMAND_AUDINO_DESCRIPTION: 'When your audio just won\'t work and you must screm!!!',
-			COMMAND_AUDINO_EXTENDEDHELP: 'The image this command displays came from a reading livestream John did; it\'s the face he made when his audio cut out *again*.'
+			COMMAND_AUDINO_EXTENDEDHELP: 'The image this command displays came from a reading livestream John did; it\'s the face he made when his audio cut out *again*.',
+			COMMAND_ADD_DESCRIPTION: 'Add a song to the queue.',
+			COMMAND_ADD_MAXENTRIES: 'You\'ve already added the maximum amount of songs!',
+			COMMAND_ADD_MAXLENGTH: 'This song is too long to add to the queue!',
+			COMMAND_CLEAR_DESCRIPTION: 'Clears the queue.',
+			COMMAND_DISCONNECT_DESCRIPTION: `Disconnect ${botName} from the voice channel.`,
+			COMMAND_JOIN_DESCRIPTION: `Connect ${botName} to a voice channel.`,
+			COMMAND_PAUSE_DESCRIPTION: 'Pause the music playback.',
+			COMMAND_PLAY_DESCRIPTION: 'Play the next song in the queue.',
+			COMMAND_PLAY_EXTENDEDHELP: 'Plays the specified song or, if none specified, the songs in the queue.',
+			COMMAND_PLAY_QUEUE_EMPTY: 'I can\'t start the music session with nothing in the queue!',
+			COMMAND_PLAY_ALREADYPLAYING: 'I\'m already playing!',
+			COMMAND_QUEUE_DESCRIPTION: 'Display the music queue.',
+			COMMAND_REMOVE_DESCRIPTION: 'Remove a song from the queue.',
+			COMMAND_REMOVE_EXTENDEDHELP: 'You can remove a song that you added at any time, but in order to remove another person\'s song you must be a DJ.',
+			COMMAND_REMOVE_UNABLE: 'You can\'t remove that song without being a DJ!'
 		};
 	}
 

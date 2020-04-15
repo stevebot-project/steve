@@ -6,9 +6,9 @@ export default class extends MusicCommand {
 
 	public constructor(store: CommandStore, file: string[], directory: string) {
 		super(store, file, directory, {
-			description: 'Play songs from the queue.',
+			description: lang => lang.get('COMMAND_PLAY_DESCRIPTION'),
 			examples: ['play', 'play accio deathly hallows'],
-			extendedHelp: 'Play the specified song or, if none specified, the songs in the queue.',
+			extendedHelp: lang => lang.get('COMMAND_PLAY_EXTENDEDHELP'),
 			music: ['USER_VOICE_CHANNEL'],
 			usage: '(song:song)',
 			helpUsage: '(song name)'
@@ -30,11 +30,11 @@ export default class extends MusicCommand {
 			await this.store.get('add').run(msg, [song]);
 			if (music.playing) return;
 		} else if (!music.canPlay) {
-			throw 'Nothing in the queue!';
+			throw msg.language.get('COMMAND_PLAY_QUEUE_EMPTY');
 		}
 
 		if (music.playing) {
-			throw 'I\'m already playing!';
+			throw msg.language.get('COMMAND_PLAY_ALREADYPLAYING');
 		} else if (music.paused) {
 			if (music.manageable(msg)) await music.resume(channel);
 		} else {

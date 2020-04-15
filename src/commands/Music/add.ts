@@ -9,7 +9,7 @@ export default class extends MusicCommand {
 
 	public constructor(store: CommandStore, file: string[], directory: string) {
 		super(store, file, directory, {
-			description: 'Add a song to the queue.',
+			description: lang => lang.get('COMMAND_ADD_DESCRIPTION'),
 			examples: ['add accio deathly hallows'],
 			usage: '<song:song>',
 			helpUsage: 'song name',
@@ -20,8 +20,8 @@ export default class extends MusicCommand {
 	public async run(msg: KlasaMessage, [song]: [Song]): Promise<Message> {
 		const { music } = msg.guild;
 
-		if (!this.maxEntries(music, song)) throw 'You\'ve already added the maximum amount of songs!';
-		if (!this.maxLength(music, song)) throw 'This song is too long to add to the queue!';
+		if (!this.maxEntries(music, song)) throw msg.language.get('COMMAND_ADD_MAXENTRIES');
+		if (!this.maxLength(music, song)) throw msg.language.get('COMMAND_ADD_MAXLENGTH');
 
 		return msg.guild.music.add(song, this.getChannel(msg));
 	}

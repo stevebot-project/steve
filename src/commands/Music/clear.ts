@@ -6,7 +6,7 @@ export default class extends MusicCommand {
 
 	public constructor(store: CommandStore, file: string[], directory: string) {
 		super(store, file, directory, {
-			description: 'Clears the queue.',
+			description: lang => lang.get('COMMAND_CLEAR_DESCRIPTION'),
 			examples: ['clear'],
 			music: ['MANAGEABLE']
 		});
