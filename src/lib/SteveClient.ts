@@ -4,6 +4,7 @@ import { Node as Lavalink } from 'lavalink';
 import { LAVALINK_ENABLE } from '@root/config';
 
 import '@lib/extensions/SteveGuild';
+import '@lib/extensions/SteveUser';
 import '@lib/schemas/client';
 import '@lib/schemas/guild';
 import '@lib/schemas/user';
