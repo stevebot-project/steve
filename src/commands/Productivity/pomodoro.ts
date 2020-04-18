@@ -51,21 +51,29 @@ export default class extends SteveCommand {
 		return msg.author.pomodoro.reset();
 	}
 
-	public async set(msg: KlasaMessage, [pomType, duration]: [string, number]): Promise<SettingsUpdateResult> {
+	public async set(msg: KlasaMessage, [pomType, duration]: [string, number]): Promise<[SettingsUpdateResult, Message]> {
 		let update: string;
+		let friendlySegmentName: string;
 
 		switch (pomType) {
 			case 'work':
 				update = UserSettings.Pomodoro.WorkTime;
+				friendlySegmentName = 'work period';
 				break;
 			case 'long':
 				update = UserSettings.Pomodoro.LongBreakTime;
+				friendlySegmentName = 'long break';
 				break;
 			case 'short':
 				update = UserSettings.Pomodoro.ShortBreakTime;
+				friendlySegmentName = 'short break';
+				break;
 		}
 
-		return msg.author.settings.update(update, duration);
+		return Promise.all([
+			msg.author.settings.update(update, duration),
+			msg.channel.send(`You've updated your ${friendlySegmentName} length to ${friendlyDuration(duration)}.`)
+		]);
 	}
 
 }
