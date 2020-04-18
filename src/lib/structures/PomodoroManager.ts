@@ -49,7 +49,7 @@ export class PomodoroManager {
 	}
 
 	public async createPomodoroTask(segmentLength: number): Promise<ScheduledTask> {
-		return this.client.schedule.create('pomodoroSegmentEnd', Date.now() + segmentLength, {
+		return this.client.schedule.create('pomodoro', Date.now() + segmentLength, {
 			catchUp: true,
 			data: { user: this.user.id }
 		});
@@ -57,7 +57,7 @@ export class PomodoroManager {
 
 	public getPomodoroTask(): ScheduledTask {
 		// eslint-disable-next-line id-length
-		const task = this.client.schedule.tasks.filter(t => t.taskName === 'pomodoroSegmentEnd' && t.data.user === this.user.id)[0];
+		const task = this.client.schedule.tasks.filter(t => t.taskName === 'pomodoro' && t.data.user === this.user.id)[0];
 		return task || null;
 	}
 
