@@ -75,14 +75,6 @@ export class PomodoroManager {
 		]);
 	}
 
-	public async updateCurrentSegment(): Promise<SettingsUpdateResult> {
-		return this.currentSegment === null
-			? this.user.settings.update(UserSettings.Pomodoro.CurrentSegment, 'work')
-			: this.currentSegment === 'work' && this.workRoundNumber <= 3
-				? this.user.settings.update(UserSettings.Pomodoro.CurrentSegment, 'short')
-				: this.user.settings.update(UserSettings.Pomodoro.CurrentSegment, 'long');
-	}
-
 	public async reset(): Promise<SettingsUpdateResult[]> {
 		const task = this.getPomodoroTask();
 		await task.delete();
