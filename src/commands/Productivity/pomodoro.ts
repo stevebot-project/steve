@@ -9,11 +9,11 @@ export default class extends SteveCommand {
 
 	public constructor(store: CommandStore, file: string[], directory: string) {
 		super(store, file, directory, {
-			aliases: ['pom'],
+			aliases: ['pomo'],
 			description: 'Be productive with the pomodoro technique!',
-			examples: ['pom start', 'pom end', 'pom check', 'pom set|work|5m', 'pom set|short|5m', 'pom set|long|15m'],
-			extendedHelp: 'This command helps faciliate use of the pomodoro technique (link it, asshole). bla bla bla this is how you use it',
-			helpUsage: 'bla bla bla do it later',
+			examples: ['pomo start', 'pomo end', 'pomo check', 'pomo set|work|25m', 'pomo set|short|5m', 'pomo set|long|15m'],
+			extendedHelp: 'This command helps faciliate use of the [pomodoro technique](https://en.wikipedia.org/wiki/Pomodoro_Technique).',
+			helpUsage: '*start* OR *check* OR *end* OR *set* (segment|duration)',
 			subcommands: true,
 			usage: '<start|check|end|set> (segment:pomSegment) (duration:timespan)'
 		});
@@ -22,7 +22,7 @@ export default class extends SteveCommand {
 			.createCustomResolver('pomSegment', (str, possible, msg, [action]) => {
 				if (action !== 'set') return null;
 				const beefsteak = ['work', 'long', 'short']; // thank allison for the variable name
-				if (!beefsteak.includes(str)) throw `**${str}** is not a valid pom segment name.`;
+				if (!beefsteak.includes(str)) throw `**${str}** is not a valid segment name.`;
 				return str;
 			})
 			.createCustomResolver('timespan', (str, possible, msg, [action]) =>
