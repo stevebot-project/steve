@@ -46,9 +46,10 @@ export default class extends SteveCommand {
 			${msg.author.pomodoro.friendlyCurrentSegment}!`);
 	}
 
-	public async end(msg: KlasaMessage): Promise<SettingsUpdateResult[]> {
-		await msg.channel.send('Your pomodoro timer is stopped. Great job!');
-		return msg.author.pomodoro.reset();
+	public async end(msg: KlasaMessage): Promise<Message> {
+		if (!msg.author.pomodoro.running) throw 'You\'re not currently pomodoroing!';
+		await msg.author.pomodoro.reset();
+		return msg.channel.send('Your pomodoro timer is stopped. Great job!');
 	}
 
 	public async set(msg: KlasaMessage, [pomType, duration]: [string, number]): Promise<[SettingsUpdateResult, Message]> {
