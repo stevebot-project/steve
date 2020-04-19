@@ -1,21 +1,24 @@
 import { SteveCommand } from '@lib/structures/commands/SteveCommand';
 import { CommandStore, KlasaMessage, ScheduledTask, SettingsUpdateResult } from 'klasa';
-import { Message } from 'discord.js';
+import { Message, ColorResolvable } from 'discord.js';
 import { UserSettings } from '@lib/types/settings/UserSettings';
-import { friendlyDuration } from '@lib/util/util';
+import { friendlyDuration, newEmbed } from '@lib/util/util';
 import { oneLine } from 'common-tags';
+import { Colors } from '@lib/types/enums';
 
 export default class extends SteveCommand {
 
 	public constructor(store: CommandStore, file: string[], directory: string) {
 		super(store, file, directory, {
-			aliases: ['pomo'],
+			aliases: ['pomo', 'pom'],
 			description: 'Be productive with the pomodoro technique!',
-			examples: ['pomo start', 'pomo end', 'pomo check', 'pomo set|work|25m', 'pomo set|short|5m', 'pomo set|long|15m'],
-			extendedHelp: 'This command helps faciliate use of the [pomodoro technique](https://en.wikipedia.org/wiki/Pomodoro_Technique).',
-			helpUsage: '*start* OR *check* OR *end* OR *set* (segment|duration)',
+			examples: ['pomo start', 'pomo end', 'pomo check', 'pomo show', 'pomo set|work|25m', 'pomo set|short|5m', 'pomo set|long|15m'],
+			extendedHelp: oneLine`This command helps faciliate use of the
+				[pomodoro technique](https://en.wikipedia.org/wiki/Pomodoro_Technique). Note that if you change the length of a work cycle
+				or break while that cycle is happening, the change will not take effect until that next time that cycle occurs.`,
+			helpUsage: '*start*/*check*/*end*/*show*/*set*  (segment|duration)',
 			subcommands: true,
-			usage: '<start|check|end|set> (segment:pomSegment) (duration:timespan)'
+			usage: '<start|check|end|show|set> (segment:pomSegment) (duration:timespan)'
 		});
 
 		this
@@ -50,6 +53,23 @@ export default class extends SteveCommand {
 		if (!msg.author.pomodoro.running) throw 'You\'re not currently pomodoroing!';
 		await msg.author.pomodoro.reset();
 		return msg.channel.send('Your pomodoro timer is stopped. Great job!');
+	}
+
+	public async show(msg: KlasaMessage): Promise<Message> {
+		const workLength = friendlyDuration(msg.author.pomodoro.workSegmentLength);
+		const shortLength = friendlyDuration(msg.author.pomodoro.shortBreakSegmentLength);
+		const longLength = friendlyDuration(msg.author.pomodoro.longBreakSegmentLength);
+
+		const embed = newEmbed()
+			.addFields(
+				{ name: 'Work Cycle', value: workLength, inline: true },
+				{ name: 'Short Break', value: shortLength, inline: true },
+				{ name: 'Long Break', value: longLength, inline: true }
+			)
+			.setColor(msg.author.settings.get(UserSettings.EmbedColor) as ColorResolvable || Colors.YellowGreen)
+			.setTitle(`Pomodoro Settings for ${msg.author.tag}`);
+
+		return msg.channel.send(embed);
 	}
 
 	public async set(msg: KlasaMessage, [pomType, duration]: [string, number]): Promise<[SettingsUpdateResult, Message]> {
