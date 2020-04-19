@@ -3,6 +3,7 @@ import { Snowflake, Guild, GuildMember, UserResolvable, TextChannel } from 'disc
 import { Node as Lavalink, BaseNodeOptions } from 'lavalink';
 import { ModerationManager } from '@lib/structures/moderation/ModerationManager';
 import { MusicHandler } from '@lib/structures/music/MusicHandler';
+import { PomodoroManager } from '@lib/structures/PomodoroManager';
 
 declare module 'discord.js' {
 	interface Guild {
@@ -20,6 +21,10 @@ declare module 'discord.js' {
 
 	interface Role {
 		private: boolean;
+	}
+
+	interface User {
+		readonly pomodoro: PomodoroManager;
 	}
 }
 
