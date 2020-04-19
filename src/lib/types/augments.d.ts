@@ -1,5 +1,5 @@
 import { ScheduledTask } from 'klasa';
-import { Snowflake } from 'discord.js';
+import { Snowflake, Guild, GuildMember, UserResolvable, TextChannel } from 'discord.js';
 import { Node as Lavalink, BaseNodeOptions } from 'lavalink';
 import { ModerationManager } from '@lib/structures/moderation/ModerationManager';
 import { MusicHandler } from '@lib/structures/music/MusicHandler';
@@ -24,15 +24,20 @@ declare module 'discord.js' {
 }
 
 declare module 'klasa' {
-	interface Schedule {
-		getUserReminders(snowflake: Snowflake): Promise<ScheduledTask[]>;
-	}
-
 	interface KlasaClient {
 		lavalink: Lavalink | null;
 	}
 
 	interface KlasaClientOptions {
 		lavalink?: BaseNodeOptions;
+	}
+
+	interface Schedule {
+		createModerationTask(guild: Guild, target: GuildMember | UserResolvable | TextChannel, taskType: string, time: number): Promise<ScheduledTask>;
+		createReminderTask(user: string, content: string, duration: number, channel: string): Promise<ScheduledTask>;
+		createRoleTask(duration: number, user: string, guild: string, role: string): Promise<ScheduledTask>;
+		createSlowmodeTask(duration: number, guild: string, channel: string): Promise<ScheduledTask>;
+		createUnlockTask(duration: number, channel: string, guild: string): Promise<ScheduledTask>;
+		getUserReminders(snowflake: Snowflake): Promise<ScheduledTask[]>;
 	}
 }

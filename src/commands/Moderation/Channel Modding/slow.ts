@@ -33,13 +33,7 @@ export default class extends SteveCommand {
 		if (duration && ratelimit > 0) {
 			prettyDuration = friendlyDuration(duration);
 
-			this.client.schedule.create('slow', Date.now() + duration, {
-				data: {
-					guild: msg.guild.id,
-					channel: msg.channel.id
-				},
-				catchUp: true
-			});
+			this.client.schedule.createSlowmodeTask(duration, msg.guild.id, msg.channel.id);
 		}
 
 		return msg.channel.send(oneLine`The message ratelimit in this channel has been ${ratelimit > 0 ? `set to ${ratelimit}

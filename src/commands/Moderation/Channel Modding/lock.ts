@@ -25,13 +25,7 @@ export default class extends SteveCommand {
 		if (duration) {
 			prettyDuration = friendlyDuration(duration);
 
-			this.client.schedule.create('unlock', Date.now() + duration, {
-				data: {
-					channel: msg.channel.id,
-					guild: msg.guild.id
-				},
-				catchUp: true
-			});
+			this.client.schedule.createUnlockTask(duration, msg.channel.id, msg.guild.id);
 		}
 
 		return msg.channel.send(`This channel has been locked${duration ? ` for ${prettyDuration}` : ''}.`);

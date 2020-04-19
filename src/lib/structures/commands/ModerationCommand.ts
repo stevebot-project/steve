@@ -1,7 +1,7 @@
 import { SteveCommand, SteveCommandOptions } from './SteveCommand';
 import { CommandStore, util, KlasaMessage } from 'klasa';
 import { PermissionLevels } from '@lib/types/enums';
-import { GuildMember, User, TextChannel, Guild, UserResolvable, Snowflake, Message } from 'discord.js';
+import { GuildMember, User, TextChannel, Snowflake, Message } from 'discord.js';
 
 export interface ModerationCommandOptions extends SteveCommandOptions {
 	duration?: boolean;
@@ -34,7 +34,7 @@ export abstract class ModerationCommand extends SteveCommand {
 		if (target instanceof GuildMember) await this.checkModeratable(target, msg.member);
 
 		const type: string = await this.handle(msg, target, reason = reason || '');
-		if (duration && type) await this.createModerationTask(msg.guild, target, type, duration);
+		if (duration && type) await this.client.schedule.createModerationTask(msg.guild, target, type, duration);
 
 		return this.posthandle(msg.channel as TextChannel, target);
 	}
@@ -47,20 +47,6 @@ export abstract class ModerationCommand extends SteveCommand {
 		if (target.id === moderator.id) throw 'Come on fam, don\'t do that to yourself.';
 		if (target.roles.highest.comparePositionTo(moderator.roles.highest) > 0) throw `${target.user.tag} has a higher role than you.`;
 		return true;
-	}
-
-	private async createModerationTask(guild: Guild, target: GuildMember | UserResolvable | TextChannel, taskType: string, time: number): Promise<void> {
-		await this.client.schedule.create(taskType, Date.now() + time, {
-			catchUp: true,
-			data: {
-				guild: guild.id,
-				target: target instanceof GuildMember || target instanceof User
-					? target.id
-					: target instanceof Message
-						? target.author.id
-						: target
-			}
-		});
 	}
 
 }
