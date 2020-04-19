@@ -52,7 +52,7 @@ export default class extends SteveCommand {
 	public async end(msg: KlasaMessage): Promise<Message> {
 		if (!msg.author.pomodoro.running) throw 'You\'re not currently pomodoroing!';
 		await msg.author.pomodoro.reset();
-		return msg.channel.send('Your pomodoro timer is stopped. Great job!');
+		return msg.channel.send('Your pomodoro timer has ended. Great job!');
 	}
 
 	public async show(msg: KlasaMessage): Promise<Message> {
