@@ -15,7 +15,7 @@ export default class extends SteveCommand {
 			examples: ['pomo start', 'pomo end', 'pomo check', 'pomo show', 'pomo set|work|25m', 'pomo set|short|5m', 'pomo set|long|15m'],
 			extendedHelp: oneLine`This command helps faciliate use of the
 				[pomodoro technique](https://en.wikipedia.org/wiki/Pomodoro_Technique). Note that if you change the length of a work cycle
-				or break while that cycle is happening, the change will not take effect until that next time that cycle occurs.`,
+				or break while that cycle is happening, the change will not take effect until the next time that cycle occurs.`,
 			helpUsage: '*start*/*check*/*end*/*show*/*set*  (segment|duration)',
 			subcommands: true,
 			usage: '<start|check|end|show|set> (segment:pomSegment) (duration:timespan)'
