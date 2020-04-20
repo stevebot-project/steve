@@ -19,4 +19,5 @@ export default Client.defaultGuildSchema
 		.add('maxEntries', 'Integer', { default: 50 })
 		.add('maxLength', 'Integer', { default: 450000 }))
 	.add('maxMentions', 'Integer', { default: 25 })
+	.add('snippets', 'any', { array: true })
 	.add('wordBlacklist', 'Boolean', { default: true });
