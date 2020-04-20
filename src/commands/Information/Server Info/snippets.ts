@@ -10,7 +10,9 @@ export default class extends SteveCommand {
 		super(store, file, directory, {
 			aliases: ['snippet', 'snip'],
 			description: 'Easily access useful bits of information about the server.',
+			helpUsage: '<add|remove|list|edit|view> (snippetName) (snippetContent)',
 			examples: ['snippets rule1', 'snippet add|rule1|the word of the jonathans is law', 'snip remove|rule1'],
+			runIn: ['text'],
 			subcommands: true,
 			usage: '<add|remove|list|edit|view:default> (snippetName:snippetName) (snippetContent:snippetContent{,1900})'
 		});
@@ -21,6 +23,8 @@ export default class extends SteveCommand {
 	}
 
 	public async add(msg: KlasaMessage, [snipName, snipContent]: [string, string]): Promise<Message> {
+		if (!msg.member.isStaff) throw 'You do not have permission to do this!';
+
 		const newSnip: Snippet = { name: snipName, content: snipContent };
 		const snips: Snippet[] = msg.guild.settings.get(GuildSettings.Snippets);
 		if (snips.filter(s => s.name === newSnip.name).length > 0) throw `There is already a snippet with the name ${snipName}!`;
@@ -31,6 +35,8 @@ export default class extends SteveCommand {
 	}
 
 	public async edit(msg: KlasaMessage, [snipName, snipContent]: [string, string]): Promise<Message> {
+		if (!msg.member.isStaff) throw 'You do not have permission to do this!';
+
 		const snips: Snippet[] = msg.guild.settings.get(GuildSettings.Snippets);
 		const snipsClone = snips.slice();
 		const index = snipsClone.map(s => s.name).indexOf(snipName);
@@ -42,6 +48,8 @@ export default class extends SteveCommand {
 	}
 
 	public async remove(msg: KlasaMessage, [snipName]: [string]): Promise<Message> {
+		if (!msg.member.isStaff) throw 'You do not have permission to do this!';
+
 		const snips: Snippet[] = msg.guild.settings.get(GuildSettings.Snippets);
 		const snipsClone = snips.slice();
 		const index = snipsClone.map(s => s.name).indexOf(snipName);
