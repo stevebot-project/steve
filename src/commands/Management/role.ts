@@ -38,10 +38,7 @@ export default class extends SteveCommand {
 		if (duration) {
 			prettyDuration = friendlyDuration(duration);
 
-			this.client.schedule.create('role', Date.now() + duration, {
-				data: { user: targetMember.user.id, guild: targetMember.guild.id, role: targetRole.id },
-				catchUp: true
-			});
+			this.client.schedule.createRoleTask(duration, targetMember.user.id, targetMember.guild.id, targetRole.id);
 		}
 
 		return msg.channel.send(oneLine`The ${targetRole.name} role has been ${toggle ? 'removed from' : 'added to'}

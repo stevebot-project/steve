@@ -19,6 +19,9 @@ export const NAME = 'Steve';
 
 export const TUATARIA = true;
 
+export const FEEDBACK_GUILD = ''; // guild snowflake
+export const FEEDBACK_CHANNEL = ''; // text channel snowflake
+
 export const CLIENT_OPTIONS: KlasaClientOptions = {
 	commandEditing: true,
 	createPiecesFolders: false,

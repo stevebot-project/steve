@@ -7,6 +7,7 @@ export namespace GuildSettings {
 	export const Language = 'language';
 	export const MaxMentions = 'maxMentions';
 	export const Prefix = 'prefix';
+	export const Snippets = 'snippets';
 	export const WordBlacklist = 'wordBlacklist';
 
 	export namespace Channels {

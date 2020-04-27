@@ -25,18 +25,9 @@ export default class extends SteveCommand {
 
 		const reminderChannel = msg.guild ? msg.guild.settings.get(GuildSettings.Channels.ReminderChannel) : null;
 
-		this.client.schedule.create('reminder', Date.now() + duration, {
-			data: {
-				user: msg.author.id,
-				content: reminder,
-				channel: msg.channel instanceof TextChannel && reminderChannel ? reminderChannel : msg.channel.id
-			},
-			catchUp: true
-		});
+		await this.client.schedule.createReminderTask(msg.author.id, reminder, duration, msg.channel instanceof TextChannel && reminderChannel ? reminderChannel : msg.channel.id);
 
-		const prettyDuration = friendlyDuration(duration);
-
-		return msg.channel.send(`${msg.author}, I'll remind you about that in ${prettyDuration}.`);
+		return msg.channel.send(`${msg.author}, I'll remind you about that in ${friendlyDuration(duration)}.`);
 	}
 
 }
