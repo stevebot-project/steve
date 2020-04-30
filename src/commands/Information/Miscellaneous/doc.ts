@@ -7,9 +7,9 @@ export default class extends SteveCommand {
 
 	public constructor(store: CommandStore, file: string[], directory: string) {
 		super(store, file, directory, {
-			description: 'Retrieves the links to certain Google Docs.',
+			description: lang => lang.get('COMMAND_DOC_DESCRIPTION'),
 			examples: ['doc list', 'doc tuatara report'],
-			extendedHelp: 'Use "list" as the argument to get a list of all retrievable docs.',
+			extendedHelp: lang => lang.get('COMMAND_DOC_EXTENDEDHELP'),
 			subcommands: true,
 			usage: '<list|get:default> (doc:doc)',
 			helpUsage: '*list* OR name'
@@ -20,7 +20,7 @@ export default class extends SteveCommand {
 			.createCustomResolver('doc', (str: string, possible: Possible, msg: KlasaMessage, [action]: [any]) => {
 				if (action === 'list') return null;
 
-				if (!DOCS[str]) throw `**${str}** is not a valid doc name.`;
+				if (!DOCS[str]) throw msg.language.get('COMMAND_DOC_INVALIDDOC', str);
 
 				return DOCS[str];
 			})
