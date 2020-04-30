@@ -9,9 +9,9 @@ export default class extends SteveCommand {
 	public constructor(store: CommandStore, file: string[], directory: string) {
 		super(store, file, directory, {
 			aliases: ['membersin'],
-			description: 'Gives information about a role, including a list of the members who have it.',
+			description: lang => lang.get('COMMAND_ROLEINFO_DESCRIPTION'),
 			examples: ['roleinfo gmt-4', 'roleinfo cygnus'],
-			extendedHelp: 'You cannot use this command on roles that have been designated as private by a mod or admin.',
+			extendedHelp: lang => lang.get('COMMAND_ROLEINFO_EXTENDEDHELP'),
 			runIn: ['text'],
 			usage: '<role:publicrole>',
 			helpUsage: 'role'
@@ -22,7 +22,7 @@ export default class extends SteveCommand {
 				const role = await this.client.arguments.get('rolename').run(str, possible, msg) as Role;
 
 				if (role.private && !msg.member.isStaff) {
-					throw `This role is private; you do not have permission to see info about it.`;
+					throw msg.language.get('COMMAND_ROLEINFO_PRIVATE_ROLE');
 				}
 
 				return role;
@@ -31,16 +31,16 @@ export default class extends SteveCommand {
 
 	public async run(msg: KlasaMessage, [role]: [Role]): Promise<Message> {
 		let membersList = role.members.map(m => m.user.username).join(', ');
-		membersList = membersList.length < 1 ? 'No members in this role.'
-			: membersList.length > 1024 ? 'There\'s too many members in this role to display.' : membersList;
+		membersList = membersList.length < 1 ? msg.language.get('COMMAND_ROLEINFO_NO_MEMBERS')
+			: membersList.length > 1024 ? msg.language.get('COMMAND_ROLEINFO_TOO_MANY') : membersList;
 
 		const assignable = msg.guild.settings.get(GuildSettings.Roles.Assignable).includes(role.id);
 		const created = formatDate(role.createdTimestamp);
 
 		const embed = newEmbed()
-			.setDescription(`The ${role.name} role was created on ${created}.`)
+			.setDescription(msg.language.get('COMMAND_ROLENAME_EMBED_DESCRIPTION', role.name, created))
 			.setColor(role.hexColor)
-			.setFooter(`This role is ${assignable ? '' : 'not'} self-assignable.`)
+			.setFooter(msg.language.get('COMMAND_ROLENAME_EMBED_FOOTER', assignable))
 			.setTimestamp()
 			.addFields([
 				{ name: `${role.members.size}`, value: membersList }

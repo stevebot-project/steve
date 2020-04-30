@@ -10,7 +10,7 @@ export default class extends SteveCommand {
 	public constructor(store: CommandStore, file: string[], directory: string) {
 		super(store, file, directory, {
 			aliases: ['serverstats'],
-			description: 'Gives useful information about the server.',
+			description: lang => lang.get('COMMAND_SERVERINFO_DESCRIPTION'),
 			examples: ['serverinfo'],
 			runIn: ['text']
 		});
