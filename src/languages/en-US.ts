@@ -208,6 +208,7 @@ export default class extends Language {
 			COMMAND_ADD_MAXLENGTH: 'This song is too long to add to the queue!',
 			COMMAND_CLEAR_DESCRIPTION: 'Clears the queue.',
 			COMMAND_DISCONNECT_DESCRIPTION: `Disconnect ${botName} from the voice channel.`,
+			COMMAND_F_DESCRIPTION: 'Press F to pay respects.',
 			COMMAND_JOIN_DESCRIPTION: `Connect ${botName} to a voice channel.`,
 			COMMAND_PAUSE_DESCRIPTION: 'Pause the music playback.',
 			COMMAND_PLAY_DESCRIPTION: 'Play the next song in the queue.',

@@ -8,7 +8,7 @@ export default class extends SteveCommand {
 		super(store, file, directory, {
 			cooldown: 60,
 			cooldownLevel: 'channel',
-			description: 'Press F to pay respects.'
+			description: lang => lang.get('COMMAND_F_DESCRIPTION')
 		});
 	}
 
