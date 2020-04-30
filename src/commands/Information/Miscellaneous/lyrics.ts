@@ -11,7 +11,7 @@ module.exports = class extends SteveCommand {
 	constructor(store: CommandStore, file: string[], directory: string) {
 		super(store, file, directory, {
 			aliases: ['genius'],
-			description: 'Search Genius for lyrics to a song.',
+			description: lang => lang.get('COMMAND_LYRICS_DESCRIPTION'),
 			examples: ['lyrics accio deathly hallows'],
 			usage: '<song:string>',
 			helpUsage: 'song'
@@ -23,11 +23,11 @@ module.exports = class extends SteveCommand {
 		const search = await Genius.findTrack(song);
 		const { hits } = search.response;
 
-		if (!hits || hits.length < 1) throw 'I couldn\'t find any lyrics on Genius!';
+		if (!hits || hits.length < 1) throw msg.language.get("COMMAND_LYRICS_NOLYRICS");
 
 		const embed = newEmbed()
 			.setColor(Colors.BrightGreen)
-			.setTitle('Genius Results');
+			.setTitle(msg.language.get('COMMAND_LYRICS_EMBEDTITLE'));
 
 		for (let i = 0; i < 5; i++) {
 			if (!hits[i]) break;
