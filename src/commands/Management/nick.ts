@@ -7,9 +7,9 @@ export default class extends SteveCommand {
 
 	public constructor(store: CommandStore, file: string[], directory: string) {
 		super(store, file, directory, {
-			description: 'Changes a member\'s nickname.',
+			description: lang => lang.get('COMMAND_NICK_DESCRIPTION'),
 			examples: ['nick stevebot|stevey', 'nick stevebot'],
-			extendedHelp: 'Using this command without providing a new nickname will reset the member\'s nickname to their username.',
+			extendedHelp: lang => lang.get('COMMAND_NICK_EXTENDEDHELP'),
 			permissionLevel: PermissionLevels.MODERATOR,
 			requiredPermissions: ['MANAGE_NICKNAMES'],
 			usage: '<targetMember:membername> [newNickname:string{,32}]',

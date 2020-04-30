@@ -9,7 +9,7 @@ export default class extends SteveCommand {
 
 	public constructor(store: CommandStore, file: string[], directory: string) {
 		super(store, file, directory, {
-			description: 'Adds or removes a role from a member.',
+			description: lang => lang.get('COMMAND_ROLE_DESCRIPTION'),
 			examples: ['role enchtest|gmt-4', 'role enchtest|emcee|1 hour'],
 			permissionLevel: PermissionLevels.MODERATOR,
 			requiredPermissions: ['MANAGE_ROLES'],
@@ -19,7 +19,7 @@ export default class extends SteveCommand {
 	}
 
 	public async run(msg: KlasaMessage, [targetMember, targetRole, duration]: [GuildMember, Role, number]): Promise<Message> {
-		if (msg.member.roles.highest.comparePositionTo(targetRole) < 0) throw `The ${targetRole.name} role is a higher rank than you.`;
+		if (msg.member.roles.highest.comparePositionTo(targetRole) < 0) throw msg.language.get('COMMAND_ROLE_HIGHER_RANK', targetRole.name);
 
 		const toggle = targetMember.roles.cache.has(targetRole.id);
 

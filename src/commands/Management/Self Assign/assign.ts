@@ -8,9 +8,9 @@ export default class extends SteveCommand {
 
 	public constructor(store: CommandStore, file: string[], directory: string) {
 		super(store, file, directory, {
-			description: 'Assign or unassign roles to yourself!',
+			description: lang => lang.get('COMMAND_ASSIGN_DESCRIPTION'),
 			examples: ['assign list', 'assign notification squad', 'assign gmt-4|gmt-5'],
-			extendedHelp: 'You can use "list" as the argument to get a list of all self-assignable roles in the server. Use `|` to (un)assign multiple roles.',
+			extendedHelp: lang => lang.get('COMMAND_ASSIGN_EXTENDEDHELP'),
 			permissionLevel: PermissionLevels.TRUSTED,
 			requiredPermissions: ['MANAGE_ROLES'],
 			requiredSettings: ['roles.trusted'],
@@ -23,12 +23,12 @@ export default class extends SteveCommand {
 		this
 			.createCustomResolver('assignableRole', async (str, possible, msg, [action]: string[]): Promise<Role> => {
 				if (action === 'list') return null;
-				if (!str) throw 'You must supply a valid role.';
+				if (!str) throw msg.language.get('COMMAND_ASSIGN_INVALID_ROLE');
 
 				const role: Role = await this.client.arguments.get('rolename').run(str, possible, msg);
 				const assignable = msg.guild.settings.get(GuildSettings.Roles.Assignable) as Snowflake[];
 
-				if (!assignable.includes(role.id)) throw `The ${role.name} role is not self-assignable!`;
+				if (!assignable.includes(role.id)) throw msg.language.get('COMMAND_ASSIGN_NOT_SELF_ASSIGNABLE', role.name);
 
 				return role;
 			});
@@ -36,7 +36,7 @@ export default class extends SteveCommand {
 
 	public async list(msg: KlasaMessage): Promise<Message> {
 		const assignable = msg.guild.settings.get(GuildSettings.Roles.Assignable) as Snowflake[];
-		if (assignable.length < 1) throw `This server does not have any self-assignable roles.`;
+		if (assignable.length < 1) throw msg.language.get('COMMAND_ASSIGN_NO_ROLES');
 
 		let list = '';
 
