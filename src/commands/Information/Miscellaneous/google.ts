@@ -9,16 +9,16 @@ export default class extends SteveCommand {
 
 	public constructor(store: CommandStore, file: string[], directory: string) {
 		super(store, file, directory, {
-			description: 'Search Google for a phrase.',
+			description: lang => lang.get('COMMAND_GOOGLE_DESCRIPTION'),
 			examples: ['google john green'],
-			extendedHelp: 'The maximum character length for Google searches is 200.',
+			extendedHelp: lang => lang.get('COMMAND_GOOGLE_EXTENDEDHELP'),
 			usage: '<search:string{,200}>',
 			helpUsage: 'query'
 		});
 	}
 
 	public async run(msg: KlasaMessage, [search]: [string]): Promise<Message> {
-		const res = await msg.channel.send('Using mad Google skillz...');
+		const res = await msg.channel.send(msg.language.get('COMMAND_GOOGLE_WAITING'));
 
 		const results = await googleIt({ query: search, limit: 5, disableConsole: true });
 
