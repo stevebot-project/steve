@@ -11,9 +11,9 @@ export default class extends SteveCommand {
 	public constructor(store: CommandStore, file: string[], directory: string) {
 		super(store, file, directory, {
 			aliases: ['member'],
-			description: 'Gives an overview of a member\'s info.',
+			description: lang => lang.get('COMMAND_WHOIS_DESCRIPTION'),
 			examples: ['whois', 'whois jonathan', 'whois boedj#5476'],
-			extendedHelp: 'Doing this command without providing a member will show info about yourself.',
+			extendedHelp: lang => lang.get('COMMAND_WHOIS_EXTENDEDHELP'),
 			runIn: ['text'],
 			usage: '[member:membername]',
 			helpUsage: 'member'
@@ -27,7 +27,7 @@ export default class extends SteveCommand {
 	}
 
 	public async run(msg: KlasaMessage, [targetMember]: [GuildMember]): Promise<Message> {
-		if (!targetMember) throw `You must provide either a valid member's name, their long ID, or tag them.`;
+		if (!targetMember) throw msg.language.get('COMMAND_WHOIS_INVALIDMEMBER');
 		const fetchedMember = await msg.guild.members.fetch(targetMember);
 
 		const fetchedMemberRoles = fetchedMember.roles.cache.size > 1

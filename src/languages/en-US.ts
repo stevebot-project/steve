@@ -218,7 +218,10 @@ export default class extends Language {
 			COMMAND_QUEUE_DESCRIPTION: 'Display the music queue.',
 			COMMAND_REMOVE_DESCRIPTION: 'Remove a song from the queue.',
 			COMMAND_REMOVE_EXTENDEDHELP: 'You can remove a song that you added at any time, but in order to remove another person\'s song you must be a DJ.',
-			COMMAND_REMOVE_UNABLE: 'You can\'t remove that song without being a DJ!'
+			COMMAND_REMOVE_UNABLE: 'You can\'t remove that song without being a DJ!',
+			COMMAND_WHOIS_DESCRIPTION: `Gives an overview of a member's info.`,
+			COMMAND_WHOIS_EXTENDEDHELP: 'Doing this command without providing a member will show info about yourself.',
+			COMMAND_WHOIS_INVALIDMEMBER: `You must provide either a valid member's name, their long ID, or tag them.`
 		};
 	}
 
