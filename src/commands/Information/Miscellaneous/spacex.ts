@@ -11,7 +11,7 @@ export default class extends SteveCommand {
 
 	public constructor(store: CommandStore, file: string[], directory: string) {
 		super(store, file, directory, {
-			description: 'Get info on SpaceX launches!',
+			description: lang => lang.get('COMMAND_SPACEX_DESCRIPTION'),
 			examples: ['spacex launch|55', 'spacex core|B1033'],
 			subcommands: true,
 			usage: '<launch|core> (launchNumber:integer) (coreSerial:string)',
@@ -23,7 +23,7 @@ export default class extends SteveCommand {
 				if (action === 'core') return undefined;
 
 				const num = parseInt(str, 10);
-				if (!num) throw 'You must provide a valid integer.';
+				if (!num) throw msg.language.get('COMMAND_SPACEX_INVALID_INT');
 				return num;
 			})
 			.createCustomResolver('string', (str, possible, msg, [action]) => action === 'launch' ? undefined : str);
@@ -32,7 +32,7 @@ export default class extends SteveCommand {
 	public async launch(msg: KlasaMessage, [num]: [number]): Promise<Message> {
 		const res = await fetch(`${api}/launches/${num}`);
 		const resJson = await res.json();
-		if (resJson.error) throw 'That\'s not a valid launch number!';
+		if (resJson.error) throw msg.language.get('COMMAND_SPACEX_INVALID_LAUNCH_NUMBER');
 		const launch = resJson as Launch;
 
 		const embed = newEmbed()
@@ -65,7 +65,7 @@ export default class extends SteveCommand {
 	public async core(msg: KlasaMessage, [num, serial]: [number, string]): Promise<Message> { // eslint-disable-line @typescript-eslint/no-unused-vars
 		const res = await fetch(`${api}/cores/${serial}`);
 		const resJson = await res.json();
-		if (resJson.error) throw 'That\'s not a valid core serial!';
+		if (resJson.error) throw msg.language.get('COMMAND_SPACEX_INVALID_CORE_SERIAL');
 		const core = resJson as Core;
 
 		const embed = newEmbed()

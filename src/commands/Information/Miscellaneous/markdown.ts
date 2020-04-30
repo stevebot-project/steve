@@ -1,5 +1,4 @@
 import { SteveCommand } from '@lib/structures/commands/SteveCommand';
-import { oneLine } from 'common-tags';
 import { Markdown, Colors } from '@lib/types/enums';
 import { CommandStore, KlasaMessage } from 'klasa';
 import { Message } from 'discord.js';
@@ -9,9 +8,9 @@ export default class extends SteveCommand {
 
 	public constructor(store: CommandStore, file: string[], directory: string) {
 		super(store, file, directory, {
-			description: 'Gives information on how to use Markdown in Discord.',
+			description: lang => lang.get('COMMAND_MARKDOWN_DESCRIPTION'),
 			examples: ['markdown', 'markdown italics'],
-			extendedHelp: 'Doing this command without providing an argument will return a concise explanation of Markdown',
+			extendedHelp: lang => lang.get('COMMAND_MARKDOWN_EXTENDEDHELP'),
 			usage: '[italics|bold|underline|strikeout|spoiler|quote]',
 			helpUsage: '*italics* OR *bold* OR *underline* OR *strikeout* OR *spoiler* OR *quote*'
 		});
@@ -22,12 +21,9 @@ export default class extends SteveCommand {
 
 		if (!type) {
 			res = newEmbed()
-				.setTitle('Markdown Info')
+				.setTitle(msg.language.get('COMMAND_MARKDOWN_EMBED_TITLE'))
 				.setColor(Colors.Orange)
-				.setDescription(oneLine`Discord uses Markdown, a simple way to format text. This embed explains how to use
-					Markdown. You can combine formatting techniques! For example, \`***text***\` will display as ***bold
-					italics***. For single-line code blocks, put one backtick around both sides of your text. For a multi-line
-					code block, put three backticks around both sides of your text.`)
+				.setDescription(msg.language.get('COMMAND_MARKDOWN_EMBED_DESCRIPTION'))
 				.addFields([
 					{ name: 'Italics', value: Markdown.ITALICS, inline: true },
 					{ name: 'Bold', value: Markdown.BOLD, inline: true },

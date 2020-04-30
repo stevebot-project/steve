@@ -1,4 +1,5 @@
 import { Language, LanguageStore, util } from 'klasa';
+import { oneLine } from 'common-tags';
 import { NAME as botName } from '@root/config';
 
 export default class extends Language {
@@ -217,8 +218,15 @@ export default class extends Language {
 			COMMAND_GOOGLE_WAITING: 'Using mad Google skillz...',
 			COMMAND_JOIN_DESCRIPTION: `Connect ${botName} to a voice channel.`,
 			COMMAND_LYRICS_DESCRIPTION: 'Search Genius for lyrics to a song.',
-			COMMAND_LYRICS_EMBEDTITLE: 'Genius Results',
+			COMMAND_LYRICS_EMBED_TITLE: 'Genius Results',
 			COMMAND_LYRICS_NOLYRICS: `I couldn't find any lyrics on Genius!`,
+			COMMAND_MARKDOWN_DESCRIPTION: 'Gives information on how to use Markdown in Discord.',
+			COMMAND_MARKDOWN_EMBED_TITLE: 'Markdown Info',
+			COMMAND_MARKDOWN_EMBED_DESCRIPTION: oneLine`Discord uses Markdown, a simple way to format text. This embed explains how to use
+			Markdown. You can combine formatting techniques! For example, \`***text***\` will display as ***bold
+			italics***. For single-line code blocks, put one backtick around both sides of your text. For a multi-line
+			code block, put three backticks around both sides of your text.`,
+			COMMAND_MARKDOWN_EXTENDEDHELP: 'Doing this command without providing an argument will return a concise explanation of Markdown',
 			COMMAND_PAUSE_DESCRIPTION: 'Pause the music playback.',
 			COMMAND_PLAY_DESCRIPTION: 'Play the next song in the queue.',
 			COMMAND_PLAY_EXTENDEDHELP: 'Plays the specified song or, if none specified, the songs in the queue.',
@@ -228,6 +236,15 @@ export default class extends Language {
 			COMMAND_REMOVE_DESCRIPTION: 'Remove a song from the queue.',
 			COMMAND_REMOVE_EXTENDEDHELP: 'You can remove a song that you added at any time, but in order to remove another person\'s song you must be a DJ.',
 			COMMAND_REMOVE_UNABLE: `You can't remove that song without being a DJ!`,
+			COMMAND_SIDESERVERS_DESCRIPTION: `Get invite links to Tuataria's sideservers.`,
+			COMMAND_SIDESERVERS_EMBED_TITLE: 'Official Sideservers',
+			COMMAND_SIDESERVERS_EMBED_DESCRIPTION: oneLine`Tuataria has 3 official sideservers: Gamataria (for all your video game discussion needs),
+			Hogwartaria (for Harry Potter-related things), and Bibliotaria (our official book club). You can find links to them
+			below. Click or tap the emojis!`,
+			COMMAND_SPACEX_DESCRIPTION: 'Get info on SpaceX launches!',
+			COMMAND_SPACEX_INVALID_CORE_SERIAL: `That's not a valid core serial!`,
+			COMMAND_SPACEX_INVALID_INT: 'You must provide a valid integer.',
+			COMMAND_SPACEX_INVALID_LAUNCH_NUMBER: `That's not a valid launch number!`,
 			COMMAND_WHOIS_DESCRIPTION: `Gives an overview of a member's info.`,
 			COMMAND_WHOIS_EXTENDEDHELP: 'Doing this command without providing a member will show info about yourself.',
 			COMMAND_WHOIS_INVALIDMEMBER: `You must provide either a valid member's name, their long ID, or tag them.`

@@ -27,7 +27,7 @@ module.exports = class extends SteveCommand {
 
 		const embed = newEmbed()
 			.setColor(Colors.BrightGreen)
-			.setTitle(msg.language.get('COMMAND_LYRICS_EMBEDTITLE'));
+			.setTitle(msg.language.get('COMMAND_LYRICS_EMBED_TITLE'));
 
 		for (let i = 0; i < 5; i++) {
 			if (!hits[i]) break;
