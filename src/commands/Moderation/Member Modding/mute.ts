@@ -6,7 +6,7 @@ export default class extends ModerationCommand {
 
 	public constructor(store: CommandStore, file: string[], directory: string) {
 		super(store, file, directory, {
-			description: 'Adds the server\'s muted role to the specified member.',
+			description: lang => lang.get('COMMAND_MUTE_DESCRIPTION'),
 			duration: true,
 			examples: ['mute enchtest', 'mute enchtest|spamming', 'mute enchtest|10 minutes'],
 			requiredPermissions: ['MANAGE_ROLES'],

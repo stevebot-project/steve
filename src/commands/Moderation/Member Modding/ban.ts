@@ -6,7 +6,7 @@ export default class extends ModerationCommand {
 
 	public constructor(store: CommandStore, file: string[], directory: string) {
 		super(store, file, directory, {
-			description: 'Bans a member from the server.',
+			description: lang => lang.get('COMMAND_BAN_DESCRIPTION'),
 			duration: true,
 			examples: ['ban enchtest', 'ban enchtest|using slurs', 'ban enchtest|trolling|1 day'],
 			requiredPermissions: ['BAN_MEMBERS'],

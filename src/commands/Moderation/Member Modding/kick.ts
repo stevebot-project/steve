@@ -6,7 +6,7 @@ export default class extends ModerationCommand {
 
 	public constructor(store: CommandStore, file: string[], directory: string) {
 		super(store, file, directory, {
-			description: 'Kicks a member from the server.',
+			description: lang => lang.get('COMMAND_KICK_DESCRIPTION'),
 			examples: ['kick enchtest', 'kick enchtest|link spamming'],
 			requiredPermissions: ['KICK_MEMBERS'],
 			targetType: 'member',

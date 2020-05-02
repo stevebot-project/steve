@@ -212,7 +212,9 @@ export default class extends Language {
 			COMMAND_ASSIGN_INVALID_ROLE: 'You must supply a valid role.',
 			COMMAND_ASSIGN_NO_ROLES: `This server does not have any self-assignable roles.`,
 			COMMAND_ASSIGN_NOT_SELF_ASSIGNABLE: (name: string): string => `The ${name} role is not self-assignable!`,
+			COMMAND_BAN_DESCRIPTION: 'Bans a member from the server.',
 			COMMAND_CLEAR_DESCRIPTION: 'Clears the queue.',
+			COMMAND_DEAFEN_DESCRIPTION: `Adds the server's deafened role to the specified member.`,
 			COMMAND_DOC_DESCRIPTION: 'Retrieves the links to certain Google Docs.',
 			COMMAND_DOC_EXTENDEDHELP: 'Use "list" as the argument to get a list of all retrievable docs.',
 			COMMAND_DOC_INVALIDDOC: (doc: string): string => `**${doc}** is not a valid doc name.`,
@@ -222,6 +224,7 @@ export default class extends Language {
 			COMMAND_GOOGLE_EXTENDEDHELP: 'The maximum character length for Google searches is 200.',
 			COMMAND_GOOGLE_WAITING: 'Using mad Google skillz...',
 			COMMAND_JOIN_DESCRIPTION: `Connect ${botName} to a voice channel.`,
+			COMMAND_KICK_DESCRIPTION: 'Kicks a member from the server.',
 			COMMAND_LOCK_DESCRIPTION: 'Locks a channel from public posting.',
 			COMMAND_LYRICS_DESCRIPTION: 'Search Genius for lyrics to a song.',
 			COMMAND_LYRICS_EMBED_TITLE: 'Genius Results',
@@ -233,6 +236,7 @@ export default class extends Language {
 			italics***. For single-line code blocks, put one backtick around both sides of your text. For a multi-line
 			code block, put three backticks around both sides of your text.`,
 			COMMAND_MARKDOWN_EXTENDEDHELP: 'Doing this command without providing an argument will return a concise explanation of Markdown',
+			COMMAND_MUTE_DESCRIPTION: `Adds the server's muted role to the specified member.`,
 			COMMAND_NICK_DESCRIPTION: `Changes a member's nickname.`,
 			COMMAND_NICK_EXTENDEDHELP: `Using this command without providing a new nickname will reset the member's nickname to their username.`,
 			COMMAND_PAUSE_DESCRIPTION: 'Pause the music playback.',
@@ -282,8 +286,11 @@ export default class extends Language {
 			COMMAND_WHOIS_DESCRIPTION: `Gives an overview of a member's info.`,
 			COMMAND_WHOIS_EXTENDEDHELP: 'Doing this command without providing a member will show info about yourself.',
 			COMMAND_WHOIS_INVALIDMEMBER: `You must provide either a valid member's name, their long ID, or tag them.`,
+			COMMAND_UNBAN_DESCRIPTION: 'Unbans a user.',
+			COMMAND_UNDEAFEN_DESCRIPTION: `Removes the server's deafened role from the specified member.`,
 			COMMAND_UNLOCK_DESCRIPTION: 'Unlocks a channel.',
-			COMMAND_UNLOCK_UNLOCKED: 'This channel has been unlocked.'
+			COMMAND_UNLOCK_UNLOCKED: 'This channel has been unlocked.',
+			COMMAND_UNMUTE_DESCRIPTION: `Removes the server's muted role from the specified member.`
 		};
 	}
 

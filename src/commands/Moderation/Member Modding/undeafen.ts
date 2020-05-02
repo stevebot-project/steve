@@ -6,7 +6,7 @@ export default class extends ModerationCommand {
 
 	public constructor(store: CommandStore, file: string[], directory: string) {
 		super(store, file, directory, {
-			description: 'Removes the server\'s deafened role from the specified member.',
+			description: lang => lang.get('COMMAND_UNDEAFEN_DESCRIPTION'),
 			duration: true,
 			examples: ['undeafen enchtest'],
 			requiredPermissions: ['MANAGE_ROLES'],
