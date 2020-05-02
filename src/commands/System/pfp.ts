@@ -8,7 +8,7 @@ export default class extends SteveCommand {
 
 	public constructor(store: CommandStore, file: string[], directory: string) {
 		super(store, file, directory, {
-			description: 'Change Steve\'s profile picture.',
+			description: lang => lang.get('COMMAND_PFP_DESCRIPTION'),
 			permissionLevel: PermissionLevels.OWNER,
 			examples: ['pfp fire'],
 			usage: '<cutegray|cutegreen|facelightblue|facedarkblue|fire|peace>',

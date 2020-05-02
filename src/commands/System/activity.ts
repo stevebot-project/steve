@@ -8,7 +8,7 @@ export default class extends SteveCommand {
 
 	public constructor(store: CommandStore, file: string[], directory: string) {
 		super(store, file, directory, {
-			description: `Change ${NAME}'s activity on Discord.`,
+			description: lang => lang.get('COMMAND_ACTIVITY_DESCRIPTION'),
 			permissionLevel: PermissionLevels.OWNER,
 			usage: '<PLAYING|WATCHING|LISTENING> <activity:string>'
 		});

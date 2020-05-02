@@ -8,7 +8,7 @@ export default class extends SteveCommand {
 
 	public constructor(store: CommandStore, file: string[], directory: string) {
 		super(store, file, directory, {
-			description: `Change ${NAME}'s status on Discord.`,
+			description: lang => lang.get('COMMAND_STATUS_DESCRIPTION'),
 			permissionLevel: PermissionLevels.OWNER,
 			usage: '<online|idle|dnd|invisible>'
 		});

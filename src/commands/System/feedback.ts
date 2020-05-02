@@ -11,7 +11,7 @@ export default class extends SteveCommand {
 			aliases: ['suggest', 'makeyourbotworkbetter'],
 			cooldown: 60,
 			cooldownLevel: 'author',
-			description: 'Send feedback or suggestions to the bot\'s developers.',
+			description: lang => lang.get('COMMAND_FEEDBACK_DESCRIPTION'),
 			helpUsage: '<your feedback>',
 			usage: '<feedback:string{,1900}>'
 		});
@@ -31,7 +31,7 @@ export default class extends SteveCommand {
 			.setTimestamp();
 
 		return Promise.all([
-			msg.channel.send('Your feedback has been sent, thanks!'),
+			msg.channel.send(msg.language.get('COMMAND_FEEDBACK_CONFIRMATION')),
 			feedbackChannel.send(embed)
 		]);
 	}
