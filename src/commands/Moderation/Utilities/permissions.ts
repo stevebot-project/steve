@@ -42,7 +42,7 @@ export default class extends SteveCommand {
 
 	public constructor(store: CommandStore, file: string[], directory: string) {
 		super(store, file, directory, {
-			description: 'View the permissions of the specified member.',
+			description: lang => lang.get('COMMAND_PERMISSIONS_DESCRIPTION'),
 			helpUsage: 'member',
 			permissionLevel: PermissionLevels.MODERATOR,
 			usage: '<member:membername>'
@@ -56,7 +56,7 @@ export default class extends SteveCommand {
 		const permList: string[] = [];
 
 		if (permissions.has(Permissions.FLAGS.ADMINISTRATOR)) {
-			permList.push('This member is an administrator; they have all permissions!');
+			permList.push(msg.language.get('COMMAND_PERMISSIONS_ADMIN'));
 		} else {
 			for (const flag of PERM_FLAGS) {
 				if (permissions.has(flag)) permList.push(`🔹 ${Perms[flag]}`);

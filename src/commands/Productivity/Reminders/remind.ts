@@ -9,9 +9,9 @@ export default class extends SteveCommand {
 	public constructor(store: CommandStore, file: string[], directory: string) {
 		super(store, file, directory, {
 			aliases: ['remindme'],
-			description: 'Set personal reminders for yourself.',
+			description: lang => lang.get('COMMAND_REMIND_DESCRIPTION'),
 			examples: ['remind make steve suck less|1 hour'],
-			extendedHelp: 'If you set a reminder in a DM with Steve, he will remind you in the DM.',
+			extendedHelp: lang => lang.get('COMMAND_REMIND_EXTENDEDHELP'),
 			usage: '<reminder:string{,140}> <duration:timespan>',
 			helpUsage: 'what | when'
 		});
@@ -20,7 +20,7 @@ export default class extends SteveCommand {
 	public async run(msg: KlasaMessage, [reminder, duration]: [string, number]): Promise<Message> {
 		const userReminders = await this.client.schedule.getUserReminders(msg.author.id);
 		if (userReminders.length > 25) {
-			throw 'There\'s a maximum of 25 reminders... and you\'ve got 25.';
+			throw msg.language.get('COMMAND_REMIND_TOO_MANY_REMINDERS');
 		}
 
 		const reminderChannel = msg.guild ? msg.guild.settings.get(GuildSettings.Channels.ReminderChannel) : null;
