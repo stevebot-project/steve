@@ -8,9 +8,9 @@ export default class extends SteveCommand {
 
 	public constructor(store: CommandStore, file: string[], directory: string) {
 		super(store, file, directory, {
-			description: 'Tells how many messages are currently pinned in a channel.',
+			description: lang => lang.get('COMMAND_PINS_DESCRIPTION'),
 			examples: ['pins', 'pins unpin'],
-			extendedHelp: 'Do `s;pins unpin` to unpin all messages.',
+			extendedHelp: lang => lang.get('COMMAND_PINS_EXTENDEDHELP'),
 			permissionLevel: PermissionLevels.MODERATOR,
 			runIn: ['text'],
 			usage: '[unpin]',
@@ -28,7 +28,7 @@ export default class extends SteveCommand {
 				await pinMsg.unpin();
 			}
 
-			return channel.send(`${pins.size} messages unpinned in ${channel.name}.`);
+			return channel.send(msg.language.get('COMMAND_PINS_UNPINNED', pins.size, channel.name));
 		}
 
 		return channel.send(oneLine`There ${pins.size !== 1 ? 'are' : 'is'} ${pins.size} message${pins.size !== 1 ? 's' : ''}

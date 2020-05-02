@@ -6,7 +6,7 @@ export default class extends SteveCommand {
 
 	public constructor(store: CommandStore, file: string[], directory: string) {
 		super(store, file, directory, {
-			description: 'Bulk deletes messages from a channel.',
+			description: lang => lang.get('COMMAND_PURGE_DESCRIPTION'),
 			examples: ['purge 20'],
 			permissionLevel: PermissionLevels.MODERATOR,
 			requiredPermissions: ['MANAGE_MESSAGES'],
@@ -19,7 +19,7 @@ export default class extends SteveCommand {
 	public async run(msg: KlasaMessage, [num]: [number]): Promise<void> {
 		const purgeCollect = await msg.channel.bulkDelete(num + 1, true);
 
-		const confirmMsg = await msg.channel.send(`${purgeCollect.size - 1} messages succesfully deleted.`);
+		const confirmMsg = await msg.channel.send(msg.language.get('COMMAND_PURGE_CONFIRM', purgeCollect.size));
 
 		setTimeout(() => confirmMsg.delete(), 5000);
 
