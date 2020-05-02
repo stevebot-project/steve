@@ -2,7 +2,7 @@
 
 **Status**
 - [ ] This PR has been tested and complies with this project's ESLint rules
-- [ ] This PR adds/modifes a command
+- [ ] This PR adds/modifies a command
 	- [ ] The `examples` and `helpUsage` options have been created/updated accordingly
 
 **Semantic Versioning**
