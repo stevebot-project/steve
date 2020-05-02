@@ -11,11 +11,9 @@ export default class extends SteveCommand {
 	public constructor(store: CommandStore, file: string[], directory: string) {
 		super(store, file, directory, {
 			aliases: ['pomo', 'pom'],
-			description: 'Be productive with the pomodoro technique!',
+			description: lang => lang.get('COMMAND_POMODORO_DESCRIPTION'),
 			examples: ['pomo start', 'pomo end', 'pomo check', 'pomo show', 'pomo set|work|25m', 'pomo set|short|5m', 'pomo set|long|15m'],
-			extendedHelp: oneLine`This command helps faciliate use of the
-				[pomodoro technique](https://en.wikipedia.org/wiki/Pomodoro_Technique). Note that if you change the length of a work cycle
-				or break while that cycle is happening, the change will not take effect until the next time that cycle occurs.`,
+			extendedHelp: lang => lang.get('COMMAND_POMODORO_EXTENDEDHELP'),
 			helpUsage: '*start*/*check*/*end*/*show*/*set*  (segment|duration)',
 			subcommands: true,
 			usage: '<start|check|end|show|set> (segment:pomSegment) (duration:timespan)'
@@ -25,7 +23,7 @@ export default class extends SteveCommand {
 			.createCustomResolver('pomSegment', (str, possible, msg, [action]) => {
 				if (action !== 'set') return null;
 				const beefsteak = ['work', 'long', 'short']; // thank allison for the variable name
-				if (!beefsteak.includes(str)) throw `**${str}** is not a valid segment name.`;
+				if (!beefsteak.includes(str)) throw msg.language.get('COMMAND_POMODORO_INVALID_SEGMENT', str);
 				return str;
 			})
 			.createCustomResolver('timespan', (str, possible, msg, [action]) =>
@@ -33,26 +31,26 @@ export default class extends SteveCommand {
 	}
 
 	public async start(msg: KlasaMessage): Promise<[[ScheduledTask, SettingsUpdateResult, SettingsUpdateResult], SettingsUpdateResult, Message]> {
-		if (msg.author.pomodoro.running) throw 'Your pomodoro timer is already running! Get back to work smh';
+		if (msg.author.pomodoro.running) throw msg.language.get('COMMAND_POMODORO_ALREADY_RUNNING');
 
 		return Promise.all([
 			msg.author.pomodoro.startPomodoroTimer(),
 			msg.author.pomodoro.incrementWorkRoundNumber(),
-			msg.channel.send('Starting your pomodoro timer. You got this; get after it!')]);
+			msg.channel.send(msg.language.get('COMMAND_POMODORO_STARTING_TIMER'))]);
 	}
 
 	public async check(msg: KlasaMessage): Promise<Message> {
 		const task = msg.author.pomodoro.getPomodoroTask();
-		if (!task) throw 'You\'re not currently pomodoroing!';
+		if (!task) throw msg.language.get('COMMAND_POMODORO_NO_TIMER');
 
 		return msg.channel.send(oneLine`You have ${friendlyDuration(task.time.getTime() - Date.now())} left in your
 			${msg.author.pomodoro.friendlyCurrentSegment}!`);
 	}
 
 	public async end(msg: KlasaMessage): Promise<Message> {
-		if (!msg.author.pomodoro.running) throw 'You\'re not currently pomodoroing!';
+		if (!msg.author.pomodoro.running) throw msg.language.get('COMMAND_POMODORO_NO_TIMER');
 		await msg.author.pomodoro.reset();
-		return msg.channel.send('Your pomodoro timer has ended. Great job!');
+		return msg.channel.send(msg.language.get('COMMAND_POMODORO_TIMER_ENDED'));
 	}
 
 	public async show(msg: KlasaMessage): Promise<Message> {

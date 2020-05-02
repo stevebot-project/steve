@@ -254,6 +254,15 @@ export default class extends Language {
 			COMMAND_PLAY_EXTENDEDHELP: 'Plays the specified song or, if none specified, the songs in the queue.',
 			COMMAND_PLAY_QUEUE_EMPTY: `I can't start the music session with nothing in the queue!`,
 			COMMAND_PLAY_ALREADYPLAYING: `I'm already playing!`,
+			COMMAND_POMODORO_ALREADY_RUNNING: 'Your pomodoro timer is already running! Get back to work smh',
+			COMMAND_POMODORO_DESCRIPTION: 'Be productive with the pomodoro technique!',
+			COMMAND_POMODORO_EXTENDEDHELP: oneLine`This command helps faciliate use of the
+			[pomodoro technique](https://en.wikipedia.org/wiki/Pomodoro_Technique). Note that if you change the length of a work cycle
+			or break while that cycle is happening, the change will not take effect until the next time that cycle occurs.`,
+			COMMAND_POMODORO_NO_TIMER: `You're not currently pomodoroing!`,
+			COMMAND_POMODORO_INVALID_SEGMENT: (segment: string): string => `**${segment}** is not a valid segment name.`,
+			COMMAND_POMODORO_STARTING_TIMER: 'Starting your pomodoro timer. You got this; get after it!',
+			COMMAND_POMODORO_TIMER_ENDED: 'Your pomodoro timer has ended. Great job!',
 			COMMAND_PURGE_CONFIRM: (msgs: number): string => `${msgs - 1} messages succesfully deleted.`,
 			COMMAND_PURGE_DESCRIPTION: 'Bulk deletes messages from a channel.',
 			COMMAND_QUEUE_DESCRIPTION: 'Display the music queue.',
