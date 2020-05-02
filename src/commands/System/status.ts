@@ -1,5 +1,4 @@
 import { SteveCommand } from '@lib/structures/commands/SteveCommand';
-import { NAME } from '@root/config';
 import { PermissionLevels } from '@lib/types/enums';
 import { CommandStore, KlasaMessage } from 'klasa';
 import { Presence } from 'discord.js';

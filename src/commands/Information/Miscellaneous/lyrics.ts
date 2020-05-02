@@ -23,7 +23,7 @@ module.exports = class extends SteveCommand {
 		const search = await Genius.findTrack(song);
 		const { hits } = search.response;
 
-		if (!hits || hits.length < 1) throw msg.language.get("COMMAND_LYRICS_NOLYRICS");
+		if (!hits || hits.length < 1) throw msg.language.get('COMMAND_LYRICS_NOLYRICS');
 
 		const embed = newEmbed()
 			.setColor(Colors.BrightGreen)
