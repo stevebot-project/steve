@@ -7,7 +7,7 @@ export default class extends SteveCommand {
 
 	public constructor(store: CommandStore, file: string[], directory: string) {
 		super(store, file, directory, {
-			description: 'Unlocks a channel.',
+			description: lang => lang.get('COMMAND_UNLOCK_DESCRIPTION'),
 			examples: ['unlock'],
 			permissionLevel: PermissionLevels.MODERATOR,
 			requiredPermissions: ['MANAGE_CHANNELS'],
@@ -21,7 +21,7 @@ export default class extends SteveCommand {
 		});
 
 
-		return msg.channel.send(`This channel has been unlocked.`);
+		return msg.channel.send(msg.language.get('COMMAND_UNLOCK_UNLOCKED'));
 	}
 
 }

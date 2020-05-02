@@ -264,6 +264,9 @@ export default class extends Language {
 			COMMAND_SIDESERVERS_EMBED_DESCRIPTION: oneLine`Tuataria has 3 official sideservers: Gamataria (for all your video game discussion needs),
 			Hogwartaria (for Harry Potter-related things), and Bibliotaria (our official book club). You can find links to them
 			below. Click or tap the emojis!`,
+			COMMAND_SLOW_DESCRIPTION: 'Sets the message ratelimit for a channel.',
+			COMMAND_SLOW_EXTENDEDHELP: oneLine`This command sets the number of seconds a member must wait in between sending messages. The maximum
+			number of seconds is 120. Setting the ratelimit to 0 will turn off slowmode.`,
 			COMMAND_SNIPPETS_ACCESS_DENIED: 'You do not have permission to do this!',
 			COMMAND_SNIPPETS_ADDED_SNIPPET: (name: string): string => `Added snippet with name: ${name}.`,
 			COMMAND_SNIPPETS_ALREADY_EXISTS: (name: string): string => `There is already a snippet with the name ${name}!`,
@@ -278,7 +281,9 @@ export default class extends Language {
 			COMMAND_SPACEX_INVALID_LAUNCH_NUMBER: `That's not a valid launch number!`,
 			COMMAND_WHOIS_DESCRIPTION: `Gives an overview of a member's info.`,
 			COMMAND_WHOIS_EXTENDEDHELP: 'Doing this command without providing a member will show info about yourself.',
-			COMMAND_WHOIS_INVALIDMEMBER: `You must provide either a valid member's name, their long ID, or tag them.`
+			COMMAND_WHOIS_INVALIDMEMBER: `You must provide either a valid member's name, their long ID, or tag them.`,
+			COMMAND_UNLOCK_DESCRIPTION: 'Unlocks a channel.',
+			COMMAND_UNLOCK_UNLOCKED: 'This channel has been unlocked.'
 		};
 	}
 

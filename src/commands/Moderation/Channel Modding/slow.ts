@@ -10,10 +10,9 @@ export default class extends SteveCommand {
 	public constructor(store: CommandStore, file: string[], directory: string) {
 		super(store, file, directory, {
 			aliases: ['slowmode'],
-			description: 'Sets the message ratelimit for a channel.',
+			description: lang => lang.get('COMMAND_SLOW_DESCRIPTION'),
 			examples: ['slow 10', 'slowmode 0'],
-			extendedHelp: oneLine`This command sets the number of seconds a member must wait in between sending messages. The maximum
-			number of seconds is 120. Setting the ratelimit to 0 will turn off slowmode.`,
+			extendedHelp: lang => lang.get('COMMAND_SLOW_EXTENDEDHELP'),
 			permissionLevel: PermissionLevels.MODERATOR,
 			requiredPermissions: ['MANAGE_CHANNELS'],
 			runIn: ['text'],
