@@ -1,11 +1,37 @@
 import { SteveClient } from '@lib/SteveClient';
-import { Guild, Role, GuildMember, TextChannel, Snowflake, GuildChannel, User } from 'discord.js';
+import { Guild, Role, GuildMember, TextChannel, Snowflake, GuildChannel, User, MessageEmbed } from 'discord.js';
 import { GuildSettings } from '@lib/types/settings/GuildSettings';
+import { Events } from '@lib/types/enums';
+import { newEmbed } from '@lib/util/util';
+
+const ModerationActions = {
+	ban: 'Member Banned',
+	deafen: 'Member Deafened',
+	kick: 'Member Kicked',
+	mute: 'Member Muted',
+	unban: 'User Unbanned',
+	undeafen: 'Member Undeafened',
+	unmute: 'Member Unmuted'
+};
+
+export interface ModerationCase {
+	action: string;
+	duration: string;
+	moderator: string;
+	number: number;
+	reason: string;
+	target: string;
+	timestamp: number;
+}
 
 export class ModerationManager {
 
 	public client: SteveClient;
 	public guild: Guild;
+
+	public get cases(): ModerationCase[] {
+		return this.guild.settings.get(GuildSettings.ModerationCases);
+	}
 
 	public get deafenedRole(): Role | null {
 		const snowflake = this.guild.settings.get(GuildSettings.Roles.Deafened);
@@ -22,6 +48,11 @@ export class ModerationManager {
 		};
 
 		return this.guild.channels.cache.filter(filter).map(channel => channel.id);
+	}
+
+	public get modlog(): TextChannel | null {
+		const snowflake = this.guild.settings.get(GuildSettings.Channels.Modlog);
+		return snowflake ? this.guild.channels.cache.get(snowflake) as TextChannel : null;
 	}
 
 	public get mutedRole(): Role | null {
@@ -41,11 +72,67 @@ export class ModerationManager {
 		return this;
 	}
 
+	public async createCase(action: string, moderator: User, target: User, reason: string, duration: string): Promise<ModerationCase[]> {
+		const newCase: ModerationCase
+			= { action,
+				duration,
+				moderator: moderator.id,
+				number: this.cases.length + 1,
+				reason: reason || 'No reason provided.',
+				target: target.id,
+				timestamp: Date.now() };
+
+		await this.guild.settings.update(GuildSettings.ModerationCases, newCase, { action: 'add' });
+		this.client.emit(Events.ModerationCaseAdd, newCase, this);
+
+		return this.cases;
+	}
+
 	public async deafen(target: GuildMember, reason: string): Promise<ModerationManager> {
 		if (this.deafenedRole) {
 			await target.roles.add(this.deafenedRole, reason);
 		}
 		return this;
+	}
+
+	public async deleteCase(caseNumber: number): Promise<ModerationCase[]> {
+		const casesClone = this.cases.slice();
+		casesClone.splice(caseNumber - 1, 1);
+		await this.guild.settings.update(GuildSettings.ModerationCases, casesClone, { action: 'overwrite' });
+		return this.cases;
+	}
+
+	public displayCase(thisCase: ModerationCase): MessageEmbed {
+		const thisCaseTarget = this.client.users.cache.get(thisCase.target);
+		const thisCaseModerator = this.client.users.cache.get(thisCase.moderator);
+
+		return newEmbed()
+			.addFields(
+				{ name: 'Target', value: thisCaseTarget.tag, inline: true },
+				{ name: 'Moderator', value: thisCaseModerator.tag, inline: true },
+				{ name: 'Duration', value: thisCase.duration, inline: true },
+				{ name: 'Reason', value: thisCase.reason }
+			)
+			.setColor(0xffe16b)
+			.setFooter(`Case ${thisCase.number} (${thisCase.target})`)
+			.setTimestamp(thisCase.timestamp)
+			.setTitle(ModerationActions[thisCase.action]);
+	}
+
+	public async editCaseReason(caseNumber: number, newReason: string): Promise<ModerationCase> {
+		newReason = newReason || 'No reason provided.';
+		const casesClone = this.cases.slice();
+		casesClone[caseNumber - 1].reason = newReason;
+		await this.guild.settings.update(GuildSettings.ModerationCases, casesClone, { action: 'overwrite' });
+		return this.cases[caseNumber - 1];
+	}
+
+	public filterCasesByModerator(moderatorSnowflake: string): ModerationCase[] {
+		return this.cases.filter(c => c.moderator === moderatorSnowflake);
+	}
+
+	public filterCasesByTarget(targetSnowflake: string): ModerationCase[] {
+		return this.cases.filter(c => c.target === targetSnowflake);
 	}
 
 	public async kick(target: GuildMember, reason: string): Promise<ModerationManager> {

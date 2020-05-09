@@ -3,6 +3,7 @@ import { Client } from 'klasa';
 export default Client.defaultGuildSchema
 	.add('channels', channels => channels
 		.add('memberlog', 'TextChannel')
+		.add('modlog', 'TextChannel')
 		.add('reminderChannel', 'TextChannel')
 		.add('serverlog', 'TextChannel'))
 	.add('roles', roles => roles
@@ -19,5 +20,6 @@ export default Client.defaultGuildSchema
 		.add('maxEntries', 'Integer', { default: 50 })
 		.add('maxLength', 'Integer', { default: 450000 }))
 	.add('maxMentions', 'Integer', { default: 25 })
+	.add('moderationCases', 'any', { array: true, configurable: false })
 	.add('snippets', 'any', { array: true })
 	.add('wordBlacklist', 'Boolean', { default: true });

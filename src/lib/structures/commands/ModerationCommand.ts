@@ -2,6 +2,7 @@ import { SteveCommand, SteveCommandOptions } from './SteveCommand';
 import { CommandStore, util, KlasaMessage } from 'klasa';
 import { PermissionLevels } from '@lib/types/enums';
 import { GuildMember, User, TextChannel, Snowflake, Message } from 'discord.js';
+import { friendlyDuration } from '@lib/util/util';
 
 export interface ModerationCommandOptions extends SteveCommandOptions {
 	duration?: boolean;
@@ -35,6 +36,9 @@ export abstract class ModerationCommand extends SteveCommand {
 
 		const type: string = await this.handle(msg, target, reason = reason || '');
 		if (duration && type) await this.client.schedule.createModerationTask(msg.guild, target, type, duration);
+
+		await msg.guild.moderation.createCase(this.file[this.file.length - 1].split('.')[0], msg.author, target instanceof GuildMember
+			? target.user : target, reason, duration ? friendlyDuration(duration) : 'No duration specified.');
 
 		return this.posthandle(msg.channel as TextChannel, target);
 	}
