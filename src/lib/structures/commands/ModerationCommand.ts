@@ -35,10 +35,13 @@ export abstract class ModerationCommand extends SteveCommand {
 		if (target instanceof GuildMember) await this.checkModeratable(target, msg.member);
 
 		const type: string = await this.handle(msg, target, reason = reason || '');
-		if (duration && type) await this.client.schedule.createModerationTask(msg.guild, target, type, duration);
+		let task = null;
+		if (duration && type) {
+			task = await this.client.schedule.createModerationTask(msg.guild, target, type, duration);
+		}
 
 		await msg.guild.moderation.createCase(this.file[this.file.length - 1].split('.')[0], msg.author, target instanceof GuildMember
-			? target.user : target, reason, duration ? friendlyDuration(duration) : 'No duration specified.');
+			? target.user : target, reason, duration ? friendlyDuration(duration) : 'No duration specified.', task);
 
 		return this.posthandle(msg.channel as TextChannel, target);
 	}

@@ -2,7 +2,8 @@ import { SteveClient } from '@lib/SteveClient';
 import { Guild, Role, GuildMember, TextChannel, Snowflake, GuildChannel, User, MessageEmbed } from 'discord.js';
 import { GuildSettings } from '@lib/types/settings/GuildSettings';
 import { Events } from '@lib/types/enums';
-import { newEmbed } from '@lib/util/util';
+import { newEmbed, friendlyDuration } from '@lib/util/util';
+import { ScheduledTask } from 'klasa';
 
 const ModerationActions = {
 	ban: 'Member Banned',
@@ -21,6 +22,7 @@ export interface ModerationCase {
 	number: number;
 	reason: string;
 	target: string;
+	task: string;
 	timestamp: number;
 }
 
@@ -65,6 +67,15 @@ export class ModerationManager {
 		this.guild = guild;
 	}
 
+	public async attachTaskToCase(duration: number, taskID: string, caseNumber: number): Promise<ModerationCase> {
+		if (caseNumber > this.cases.length) throw `There is no case with the number ${caseNumber}.`;
+		const casesClone = this.cases.slice();
+		casesClone[caseNumber - 1].task = taskID;
+		casesClone[caseNumber - 1].duration = friendlyDuration(duration);
+		await this.guild.settings.update(GuildSettings.ModerationCases, casesClone, { action: 'overwrite' });
+		return this.cases[caseNumber - 1];
+	}
+
 	public async ban(target: GuildMember, reason: string): Promise<ModerationManager> {
 		if (target.bannable) {
 			await this.guild.members.ban(target, { reason: reason });
@@ -72,7 +83,7 @@ export class ModerationManager {
 		return this;
 	}
 
-	public async createCase(action: string, moderator: User, target: User, reason: string, duration: string): Promise<ModerationCase[]> {
+	public async createCase(action: string, moderator: User, target: User, reason: string, duration: string, task: ScheduledTask | null): Promise<ModerationCase[]> {
 		const newCase: ModerationCase
 			= { action,
 				duration,
@@ -80,6 +91,7 @@ export class ModerationManager {
 				number: this.cases.length + 1,
 				reason: reason || 'No reason provided.',
 				target: target.id,
+				task: task ? task.id : null,
 				timestamp: Date.now() };
 
 		await this.guild.settings.update(GuildSettings.ModerationCases, newCase, { action: 'add' });
@@ -106,11 +118,17 @@ export class ModerationManager {
 		const thisCaseTarget = this.client.users.cache.get(thisCase.target);
 		const thisCaseModerator = this.client.users.cache.get(thisCase.moderator);
 
+		let thisCaseTask = '';
+		if (this.client.schedule.get(thisCase.task)) {
+			// eslint-disable-next-line no-extra-parens
+			thisCaseTask = `(${friendlyDuration((this.client.schedule.get(thisCase.task) as ScheduledTask).time.getTime() - Date.now())} left)`;
+		}
+
 		return newEmbed()
 			.addFields(
 				{ name: 'Target', value: thisCaseTarget.tag, inline: true },
 				{ name: 'Moderator', value: thisCaseModerator.tag, inline: true },
-				{ name: 'Duration', value: thisCase.duration, inline: true },
+				{ name: 'Duration', value: `${thisCase.duration} ${thisCaseTask}`, inline: true },
 				{ name: 'Reason', value: thisCase.reason }
 			)
 			.setColor(0xffe16b)
