@@ -9,6 +9,7 @@ export default class extends SteveCommand {
 	public constructor(store: CommandStore, file: string[], directory: string) {
 		super(store, file, directory, {
 			description: 'View a specific case using the case number.',
+			helpUsage: 'case number',
 			permissionLevel: PermissionLevels.MODERATOR,
 			usage: '<caseNumber:casenumber>'
 		});

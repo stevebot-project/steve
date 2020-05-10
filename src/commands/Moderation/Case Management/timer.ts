@@ -15,6 +15,9 @@ export default class extends SteveCommand {
 	public constructor(store: CommandStore, file: string[], directory: string) {
 		super(store, file, directory, {
 			description: 'Add a timer to a moderation case.',
+			examples: ['timer 5|10m'],
+			extendedHelp: 'The timer will start when you run this command, it will *not* use the time when the case was created as the start time.',
+			helpUsage: 'case number|duration',
 			permissionLevel: PermissionLevels.MODERATOR,
 			usage: '<caseNumber:integer> <duration:timespan>'
 		});

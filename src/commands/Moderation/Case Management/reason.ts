@@ -8,6 +8,8 @@ export default class extends SteveCommand {
 	public constructor(store: CommandStore, file: string[], directory: string) {
 		super(store, file, directory, {
 			description: 'Edit the reason field for a case.',
+			examples: ['reason 1|trolling'],
+			helpUsage: 'case number|new reason',
 			permissionLevel: PermissionLevels.MODERATOR,
 			usage: '<caseNumber:integer> <newReason:string>'
 		});
