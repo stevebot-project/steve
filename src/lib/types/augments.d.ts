@@ -12,6 +12,13 @@ declare module 'discord.js' {
 		trustedRole: Role | null;
 	}
 
+	interface GuildChannelManager {
+		lock(target: TextChannel): Promise<TextChannel>;
+		lockedChannels: Snowflake[];
+		slow(target: TextChannel, ratelimit: number): Promise<TextChannel>;
+		unlock(target: TextChannel): Promise<TextChannel>;
+	}
+
 	interface GuildMember {
 		isAdmin: boolean;
 		isDJ: boolean;

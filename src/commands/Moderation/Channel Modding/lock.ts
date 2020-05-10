@@ -19,7 +19,7 @@ export default class extends SteveCommand {
 	}
 
 	public async run(msg: KlasaMessage, [duration]: [number]): Promise<Message> {
-		await msg.guild.moderation.lock(msg.channel as TextChannel);
+		await msg.guild.channels.lock(msg.channel as TextChannel);
 
 		let prettyDuration: string;
 		if (duration) {
