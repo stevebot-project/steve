@@ -1,5 +1,5 @@
 import { SteveCommand } from '@lib/structures/commands/SteveCommand';
-import { CommandStore, KlasaMessage } from 'klasa';
+import { CommandStore, KlasaMessage, ScheduledTask } from 'klasa';
 import { PermissionLevels } from '@lib/types/enums';
 import { Message } from 'discord.js';
 import { friendlyDuration } from '@lib/util/util';
@@ -25,6 +25,10 @@ export default class extends SteveCommand {
 	}
 
 	public async run(msg: KlasaMessage, [thisCase, duration]: [ModerationCase, number]): Promise<Message> {
+		if (this.client.schedule.get(thisCase.task)) {
+			await (this.client.schedule.get(thisCase.task) as ScheduledTask).delete(); // eslint-disable-line no-extra-parens
+		}
+
 		const task = await this.client.schedule.createModerationTask(msg.guild, thisCase.target, ModerationTaskNames[thisCase.action], duration);
 		await msg.guild.moderation.attachTaskToCase(duration, task.id, thisCase.number);
 
