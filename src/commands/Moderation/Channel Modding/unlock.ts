@@ -16,10 +16,7 @@ export default class extends SteveCommand {
 	}
 
 	public async run(msg: KlasaMessage): Promise<Message> {
-		await (msg.channel as TextChannel).updateOverwrite(msg.guild.id, { // eslint-disable-line no-extra-parens
-			SEND_MESSAGES: true
-		});
-
+		await msg.guild.channels.unlock(msg.channel as TextChannel);
 
 		return msg.channel.send(`This channel has been unlocked.`);
 	}

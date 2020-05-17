@@ -27,7 +27,7 @@ export default class extends SteveCommand {
 	}
 
 	public async run(msg: KlasaMessage, [ratelimit, duration]: [number, number]): Promise<Message> {
-		await msg.guild.moderation.slow(msg.channel as TextChannel, ratelimit);
+		await msg.guild.channels.slow(msg.channel as TextChannel, ratelimit);
 
 		let prettyDuration: string;
 		if (duration && ratelimit > 0) {
