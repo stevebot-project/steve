@@ -8,7 +8,7 @@ export default class extends Task {
 		const _channel = _guild.channels.cache.get(channel) as TextChannel;
 		if (!_channel) return;
 
-		await _guild.moderation.unlock(_channel);
+		await _guild.channels.unlock(_channel);
 
 		return _channel.send('This channel has been unlocked.');
 	}
