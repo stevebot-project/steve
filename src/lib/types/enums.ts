@@ -34,6 +34,7 @@ export const enum Events {
 	LavalinkDestroy = 'lavalinkDestroy',
 	LavalinkStuck = 'lavalinkStuck',
 	LavalinkWebsocketClosed = 'lavalinkWebsocketClosed',
+	ModerationCaseAdd = 'moderationCaseAdd',
 	MusicConnect = 'musicConnect',
 	MusicLeave = 'musicLeave',
 	MusicSongPlay = 'musicSongPlay',

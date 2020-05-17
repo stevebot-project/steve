@@ -6,12 +6,14 @@ export namespace GuildSettings {
 	export const DisableNaturalPrefix = 'disableNaturalPrefix';
 	export const Language = 'language';
 	export const MaxMentions = 'maxMentions';
+	export const ModerationCases = 'moderationCases';
 	export const Prefix = 'prefix';
 	export const Snippets = 'snippets';
 	export const WordBlacklist = 'wordBlacklist';
 
 	export namespace Channels {
 		export const Memberlog = 'channels.memberlog';
+		export const Modlog = 'channels.modlog';
 		export const ReminderChannel = 'channels.reminderChannel';
 		export const Serverlog = 'channels.serverlog';
 	}
