@@ -72,6 +72,7 @@ export default class extends SteveCommand {
 
 	private getReminderDisplayContent(msg: KlasaMessage, reminder: ScheduledTask): string {
 		const reminderUser = this.client.users.cache.get(reminder.data.user);
+		if (!reminderUser.dmChannel) return reminder.data.content;
 		return reminder.data.channel === reminderUser.dmChannel.id && msg.channel.id !== reminderUser.dmChannel.id ? 'Private reminder: content hidden' : reminder.data.content;
 	}
 
