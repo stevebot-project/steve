@@ -36,7 +36,7 @@ export default class extends SteveCommand {
 		const content = [];
 
 		reminders.forEach(async reminder => {
-			const reminderDisplayContent = this.getReminderDisplayContent(reminder);
+			const reminderDisplayContent = this.getReminderDisplayContent(msg, reminder);
 
 			content.push(`**${reminderDisplayContent}**`);
 
@@ -58,7 +58,7 @@ export default class extends SteveCommand {
 			.setThumbnail('attachment://alarmclock.png');
 
 		targetUserReminders.forEach((reminder: ScheduledTask) => {
-			const reminderDisplayContent = this.getReminderDisplayContent(reminder);
+			const reminderDisplayContent = this.getReminderDisplayContent(msg, reminder);
 
 			embed
 				.addFields([
@@ -70,9 +70,9 @@ export default class extends SteveCommand {
 		return msg.channel.send(embed);
 	}
 
-	private getReminderDisplayContent(reminder: ScheduledTask): string {
+	private getReminderDisplayContent(msg: KlasaMessage, reminder: ScheduledTask): string {
 		const reminderUser = this.client.users.cache.get(reminder.data.user);
-		return reminder.data.channel === reminderUser.dmChannel.id ? 'Private reminder: content hidden' : reminder.data.content;
+		return reminder.data.channel === reminderUser.dmChannel.id && msg.channel.id !== reminderUser.dmChannel.id ? 'Private reminder: content hidden' : reminder.data.content;
 	}
 
 }
