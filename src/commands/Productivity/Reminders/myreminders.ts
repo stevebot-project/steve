@@ -36,7 +36,9 @@ export default class extends SteveCommand {
 		const content = [];
 
 		reminders.forEach(async reminder => {
-			content.push(`**${reminder.data.content}**`);
+			const reminderDisplayContent = this.getReminderDisplayContent(reminder);
+
+			content.push(`**${reminderDisplayContent}**`);
 
 			await reminder.delete();
 		});
@@ -51,19 +53,26 @@ export default class extends SteveCommand {
 		const embed = newEmbed()
 			.attachFiles(['./assets/images/alarmclock.png'])
 			.setColor(msg.author.settings.get(UserSettings.EmbedColor) as ColorResolvable || Colors.YellowGreen)
-			.setFooter(`To cancel a reminder, do "s;myreminders cancel|<reminder number>".`)
+			.setFooter(`To cancel a reminder, do "s;reminders cancel|<reminder number>".`)
 			.setTitle('Pending Reminders')
 			.setThumbnail('attachment://alarmclock.png');
 
 		targetUserReminders.forEach((reminder: ScheduledTask) => {
+			const reminderDisplayContent = this.getReminderDisplayContent(reminder);
+
 			embed
 				.addFields([
-					{ name: `**${targetUserReminders.indexOf(reminder) + 1}: ${reminder.data.content}**`,
+					{ name: `**${targetUserReminders.indexOf(reminder) + 1}: ${reminderDisplayContent}**`,
 						value: `${friendlyDuration(reminder.time.getTime() - Date.now())} left!` }
 				]);
 		});
 
 		return msg.channel.send(embed);
+	}
+
+	private getReminderDisplayContent(reminder: ScheduledTask): string {
+		const reminderUser = this.client.users.cache.get(reminder.data.user);
+		return reminder.data.channel === reminderUser.dmChannel.id ? 'Private reminder: content hidden' : reminder.data.content;
 	}
 
 }
