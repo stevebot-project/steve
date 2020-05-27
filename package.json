@@ -30,7 +30,7 @@
     "discord.js": "^12.0.1",
     "genius-lyrics": "^1.0.9",
     "google-it": "^1.5.0",
-    "klasa": "github:dirigeants/klasa#v1.0.0-alpha",
+    "klasa": "github:dirigeants/klasa#v0.5.0",
     "lavalink": "^2.10.0",
     "module-alias": "^2.2.2",
     "moment": "^2.24.0",
