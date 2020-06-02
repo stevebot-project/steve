@@ -10,7 +10,12 @@
 			"@root/*": ["*"]
 		},
 		"composite": true,
-		"declaration": true
+		"declaration": true,
+		"types": [
+			"node",
+			"discord.js",
+			"klasa"
+		],
 	},
 	"include": ["."]
 }
