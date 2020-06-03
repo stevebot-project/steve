@@ -6,14 +6,14 @@
 		"@typescript-eslint/restrict-plus-operands": 0,
 		"@typescript-eslint/no-unnecessary-condition": 0,
 		"@typescript-eslint/naming-convention": 0,
-		"@typescript-eslint/camelcase": 0
+		"@typescript-eslint/camelcase": 0,
+		"@typescript-eslint/no-unsafe-member-access": 0,
+		"@typescript-eslint/no-unsafe-assignment": 0,
+		"@typescript-eslint/no-unsafe-call": 0
 	},
 	"env": {
 		"es6": true,
 		"node": true
-	},
-	"parserOptions": {
-		"project": "./tsconfig.eslint.json"
 	},
 	"overrides": [
 		{

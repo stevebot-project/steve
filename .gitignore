@@ -104,7 +104,4 @@ dist
 .tern-port
 
 # bot config
-src/config.ts
-
-# lavalink
-lavalink/application.yml
+config.ts
