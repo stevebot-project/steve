@@ -7,6 +7,7 @@ const builder = new HelpBuilder()
 	.setExplainedUsage('**Explained Usage**')
 	.setReminder('**Reminder**');
 
+
 export default class extends Language {
 
 	public constructor(store: LanguageStore, file: string[], directory: string) {
@@ -190,7 +191,9 @@ export default class extends Language {
 			COMMAND_STATS_DESCRIPTION: 'Provides some details about the bot and stats.',
 			MESSAGE_PROMPT_TIMEOUT: 'The prompt has timed out.',
 			TEXT_PROMPT_ABORT_OPTIONS: ['abort', 'stop', 'cancel'],
-
+			/*
+			FUN COMMANDS
+			*/
 			COMMAND_CHOOSE_DESCRIPTION: `Have ${botName} make a choice for you`,
 			COMMAND_CHOOSE_EXTENDED: builder.display('choose', {
 				examples: [
@@ -211,7 +214,36 @@ export default class extends Language {
 				extendedHelp: 'This command has a cooldown of 5 seconds per user.',
 				reminder: 'Things to be rated have a maximum length of 500 characters.'
 			}),
-			COMMAND_RATE_RESPONSE: (thing: string, rating: number) => `${botName} gives \`${thing}\` a ${rating}!`
+			COMMAND_RATE_RESPONSE: (thing: string, rating: number) => `${botName} gives \`${thing}\` a ${rating}!`,
+			COMMAND_ROCKPAPERSCISSORS_DESCRIPTION: `Play a game of rock, paper, scissors against ${botName}`,
+			COMMAND_ROCKPAPERSCISSORS_EXTENDED: builder.display('rps', {
+				examples: [
+					'rock',
+					'paper',
+					'scissors'
+				],
+				extendedHelp: 'This command has a cooldown of 5 seconds per user.'
+			}),
+			COMMAND_ROCKPAPERSCISSORS_WINNER: (playerMove: string, steveMove: string, winner: number) => `You threw ${playerMove} and ${botName} threw ${steveMove}. ${winner === 0 ? 'Nobody' : winner === -1 ? botName : 'You'} won!`,
+			COMMAND_AUDINO_DESCRIPTION: 'When the audio cuts out and you must screm',
+			COMMAND_AUDINO_EXTENDED: builder.display('audino', {
+				extendedHelp: 'This command has a cooldown of 60 seconds per channel. The image this command displays came from a reading livestream [John](https://en.wikipedia.org/wiki/John_Green_(author)) did; it\'s the face he made when his audio cut out *again*.'
+			}, true),
+			COMMAND_F_DESCRIPTION: 'Press F to pay respects',
+			COMMAND_F_EXTENDED: builder.display('f', {
+				extendedHelp: 'This command has a cooldown of 60 seconds per channel. [You can find an explanation of the meme here](https://knowyourmeme.com/memes/press-f-to-pay-respects).'
+			}),
+			COMMAND_8BALL_DESCRIPTION: 'Ask a question and get an answer... a sassy one, of course',
+			COMMAND_8BALL_EXTENDED: builder.display('8ball', {
+				examples: [
+					'will the jonathans ever stop being annoying?'
+				],
+				extendedHelp: 'This command has a cooldown of 5 seconds per user.'
+			}),
+			COMMAND_8BALL_RESPONSES: [
+				'test1',
+				'test2'
+			]
 		};
 	}
 
