@@ -1,5 +1,6 @@
 import { Language, LanguageStore, util } from 'klasa';
 import { HelpBuilder } from '@utils/HelpBuilder';
+import { NAME as botName } from '@root/config';
 
 const builder = new HelpBuilder()
 	.setExamples('**Examples**')
@@ -188,7 +189,29 @@ export default class extends Language {
 			],
 			COMMAND_STATS_DESCRIPTION: 'Provides some details about the bot and stats.',
 			MESSAGE_PROMPT_TIMEOUT: 'The prompt has timed out.',
-			TEXT_PROMPT_ABORT_OPTIONS: ['abort', 'stop', 'cancel']
+			TEXT_PROMPT_ABORT_OPTIONS: ['abort', 'stop', 'cancel'],
+
+			COMMAND_CHOOSE_DESCRIPTION: `Have ${botName} make a choice for you`,
+			COMMAND_CHOOSE_EXTENDED: builder.display('choose', {
+				examples: [
+					'real jonathan|fake jonathan'
+				],
+				extendedHelp: 'This command has a cooldown of 5 seconds per user.',
+				explainedUsage: [
+					['choice', 'You need to specify at least two choices for this command to work. Please don\'t make me sass you.']
+				],
+				 reminder: 'Choices have a maximum length of 500 characters.'
+			}),
+			COMMAND_CHOOSE_RESPONSE: (choice: string) => `${botName} chooses... \`${choice}\`!`,
+			COMMAND_RATE_DESCRIPTION: `Have ${botName} rate an item of your choosing`,
+			COMMAND_RATE_EXTENDED: builder.display('rate', {
+				examples: [
+					'the existence of eucalyptus'
+				],
+				extendedHelp: 'This command has a cooldown of 5 seconds per user.',
+				reminder: 'Things to be rated have a maximum length of 500 characters.'
+			}),
+			COMMAND_RATE_RESPONSE: (thing: string, rating: number) => `${botName} gives \`${thing}\` a ${rating}!`
 		};
 	}
 
