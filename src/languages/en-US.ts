@@ -3,9 +3,9 @@ import { HelpBuilder } from '@utils/HelpBuilder';
 import { NAME as botName } from '@root/config';
 
 const builder = new HelpBuilder()
-	.setExamples('**Examples**')
-	.setExplainedUsage('**Explained Usage**')
-	.setReminder('**Reminder**');
+	.setExamples('👀 | **Examples**')
+	.setExplainedUsage('🤔 | **Explained Usage**')
+	.setReminder('🔥 | **Reminder**');
 
 
 export default class extends Language {
