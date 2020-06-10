@@ -280,6 +280,19 @@ export default class extends Language {
 			MODERATION_CASE_DISPLAY_FIELD_REASON: 'Reason',
 			MODERATION_CASE_DISPLAY_FOOTER: (caseNumber: string, targetID: string) => `Case ${caseNumber} (${targetID})`,
 			MODERATION_CASE_DISPLAY_TIME_REMAINING: (time: string) => `(${time} left)`,
+			COMMAND_MUTE_DESCRIPTION: 'Adds the server\'s Muted role to the specified user.',
+			COMMAND_MUTE_EXTENDED: builder.display('mute', {
+				examples: [
+					'jonathan|being insensitive',
+					'enchtest|being annoying|5m'
+				],
+				explainedUsage: [
+					['username', 'You can use a member\'s username or snowflake (long ID number) with this command. You can also tag them.']
+				],
+				reminder: 'You must set up the server\'s Muted role before this command can be used.'
+			}),
+			COMMAND_MUTE_SUCCESS: (target: string, caseNumber: number) => `Muted ${target} and created case number ${caseNumber}.`,
+			COMMAND_MUTE_UNABLE: (target: string) => `Unable to mute ${target}.`
 		};
 	}
 
