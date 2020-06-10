@@ -7,8 +7,20 @@ const builder = new HelpBuilder()
 	.setExplainedUsage('🤔 | **Explained Usage**')
 	.setReminder('🔥 | **Reminder**');
 
+const caseActions = {
+	ban: 'Member Banned',
+	deafen: 'Member Deafened',
+	kick: 'Member Kicked',
+	mute: 'Member Muted',
+	unban: 'User Unbanned',
+	undeafen: 'Member Undeafened',
+	unmute: 'Member Unmuted'
+};
+
 
 export default class extends Language {
+
+	public caseActions = caseActions;
 
 	public constructor(store: LanguageStore, file: string[], directory: string) {
 		super(store, file, directory);
@@ -191,6 +203,16 @@ export default class extends Language {
 			COMMAND_STATS_DESCRIPTION: 'Provides some details about the bot and stats.',
 			MESSAGE_PROMPT_TIMEOUT: 'The prompt has timed out.',
 			TEXT_PROMPT_ABORT_OPTIONS: ['abort', 'stop', 'cancel'],
+			/* #####
+			GENERAL STUFF
+			##### */
+			USER_NOT_IN_GUILD: (user: string) => `${user} is not in this server.`,
+			/* #####
+			ARGUMENTS
+			##### */
+			ARGUMENT_TIMESPAN_INVALID: (arg: string) => `**${arg}** is an invalid timespan.`,
+			ARGUMENT_USERNAME_CANNOTFIND: (search: string) => `Could not find a user by searching with **${search}**.`,
+			ARGUMENT_USERNAME_MULTIPLE: (users: string) => `Found multiple users: \`${users}\`.`,
 			/*
 			FUN COMMANDS
 			*/
@@ -243,7 +265,21 @@ export default class extends Language {
 			COMMAND_8BALL_RESPONSES: [
 				'test1',
 				'test2'
-			]
+			],
+			/* #####
+			MODERATION COMMMANDS
+			##### */
+			MODERATION_NODURATION: 'No duration provided.',
+			MODERATION_NOREASON: 'No reason provided.',
+			MODERATION_NOSTEVE: 'hahahahaha... no.',
+			MODERATION_NOSELF: 'Come on fam, don\'t do that to yourself.',
+			MODERATION_HIGHERROLE: (user: string) => `${user} has a higher role than you.`,
+			MODERATION_CASE_DISPLAY_FIELD_TARGET: 'Target',
+			MODERATION_CASE_DISPLAY_FIELD_MODERATOR: 'Moderator',
+			MODERATION_CASE_DISPLAY_FIELD_DURATION: 'Duration',
+			MODERATION_CASE_DISPLAY_FIELD_REASON: 'Reason',
+			MODERATION_CASE_DISPLAY_FOOTER: (caseNumber: string, targetID: string) => `Case ${caseNumber} (${targetID})`,
+			MODERATION_CASE_DISPLAY_TIME_REMAINING: (time: string) => `(${time} left)`,
 		};
 	}
 

@@ -5,6 +5,7 @@ import { LAVALINK_ENABLE } from '@root/config';
 import { Guild } from 'discord.js';
 
 import '@lib/schemas/Guild';
+import '@lib/extensions/SteveGuild';
 
 
 export class SteveClient extends KlasaClient {
