@@ -31,6 +31,8 @@ export default class extends Command {
 
 			const embed = buildEmbed()
 				.setTimestamp()
+				.attachFiles(['./assets/images/steve_dab.png'])
+				.setThumbnail('attachment://steve_dab.png')
 				.setColor(0x71adcf)
 				.setFooter(DATA.FOOTER(cmd.name))
 				.setTitle(DATA.TITLE(util.isFunction(cmd.description) ? cmd.description(msg.language) : cmd.description))
