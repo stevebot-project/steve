@@ -23,8 +23,8 @@ Steve is an all-purpose Discord bot originally developed for [Tuataria] and its 
 - Once all that's done, you should be good to go!
 - If you've not run a Discord bot before that means:
     1. `npm install`
-	2. `npm run build`
-	3. `npm start`
+    2. `npm run build`
+    3. `npm start`
 
 ##### Notes
 - Having the EditorConfig extension installed in whatever editor you use is recommended (we recommend using Visual Studio Code).
