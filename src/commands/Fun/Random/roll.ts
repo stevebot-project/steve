@@ -20,10 +20,27 @@ interface RollSpec {
 	keepCount?: number;
 }
 
+interface ExplodingResult {
+	roll: number;
+	msgText: string;
+}
+
 interface DiceResult {
 	spec: RollSpec;
 	rolls: number[];
 	message: string;
+}
+
+function Comparator(a, b): number {
+	if (a[0] < b[0]) return -1;
+	if (a[0] > b[0]) return 1;
+	return 0;
+}
+
+function NumComparator(a, b): number {
+	if (a < b) return -1;
+	if (a > b) return 1;
+	return 0;
 }
 
 export default class extends SteveCommand {
@@ -82,6 +99,7 @@ export default class extends SteveCommand {
 
 		for (const spec of specs) {
 			let rolls = [];
+			let msgs = [];
 			let lost = [];
 			let message = '';
 			let operator = '';
@@ -90,39 +108,66 @@ export default class extends SteveCommand {
 			const shift = this.getMod(spec.operator, spec.mod);
 
 			for (let i = 0; i < spec.count; i++) {
-				const roll = this.roll(spec.sides, spec.explodes);
-				rolls.push(roll);
+				if (spec.explodes) {
+					const { roll, msgText } = this.explodingRoll(spec.sides);
+					msgs.push([roll, msgText]);
+					rolls.push(roll);
+				} else {
+					const roll = this.roll(spec.sides);
+					rolls.push(roll);
+				}
 			}
 
 			const len = rolls.length;
 
 			if (spec.keep) {
-				rolls.sort();
+				rolls.sort(NumComparator);
 				if (spec.keep === 'highest') rolls.reverse();
 				lost = rolls.slice(spec.keepCount);
 				rolls = rolls.slice(0, spec.keepCount);
+				if (spec.explodes) {
+					msgs.sort(Comparator);
+					if (spec.keep === 'highest') msgs.reverse();
+					msgs = msgs.slice(0, spec.keepCount);
+				}
 			}
 
 			if (len === 1) {
 				const roll = rolls[0];
-				message = `**${roll}**`;
+				if (spec.explodes) {
+					const msgText = msgs[0][1];
+					message += msgText;
+				} else {
+					message += `${roll}`;
+				}
 				if (shift !== 0) {
 					const sum = roll + shift;
-					message = `_${message} ${operator} ${shift}_ = **${sum}**`;
+					message = `_${message}_${operator}${shift} = **${sum}**`;
+				} else {
+					message = `**${message}**`;
 				}
 			} else {
 				let sum = 0;
-				for (const roll of rolls) {
-					sum += roll;
-				}
 				if (lost.length !== 0) {
-					message = `(~~${lost.join(',')}~~ ${rolls.join('+')})`;
-				} else {
-					message = `(${rolls.join('+')})`;
+					message += `~~${lost.join(',')}~~ `;
+				}
+				const checkLen = rolls.length - 1;
+				for (const [index, roll] of rolls.entries()) {
+					if (spec.explodes) {
+						const msgText = msgs[index][1];
+						sum += msgs[index][0];
+						message += msgText;
+					} else {
+						sum += roll;
+						message += `${roll}`;
+					}
+					if (index !== checkLen) {
+						message += ' + ';
+					}
 				}
 				if (shift !== 0) {
 					sum += shift;
-					message = `_${message} ${operator} ${shift}_`;
+					message = `_(${message})_${operator}${shift}`;
 				} else {
 					message = `_${message}_`;
 				}
@@ -148,7 +193,7 @@ export default class extends SteveCommand {
 			let message = 'You rolled:';
 			for (const result of results) {
 				const emoji = getEmoji(result.spec);
-				message += `\n${emoji} ${result.spec.input}: ${result.message}`;
+				message += `\n${emoji} \`${result.spec.input}\` = ${result.message}`;
 			}
 			return msg.channel.send(message);
 		}
@@ -169,27 +214,46 @@ export default class extends SteveCommand {
 		return modifier;
 	}
 
-	private roll(sides: number, explodes: boolean): number {
+	private roll(sides: number): number {
 		let total = 0;
-		let roll = 0;
 
 		if (sides <= 1) {
 			total = 1;
-		}
-
-		if (explodes) {
-			do {
-				roll = this.rollOnce(sides);
-				total += roll;
-			} while (
-				roll === sides
-				&& roll < 1e6 // prevent an infinite loop, just in case
-			);
 		} else {
 			total = this.rollOnce(sides);
 		}
 
 		return total;
+	}
+
+	private explodingRoll(sides: number): ExplodingResult {
+		let total = 0;
+		let roll = 0;
+		let msgText = '';
+
+		if (sides <= 1) {
+			total = 1;
+		} else {
+			do {
+				roll = this.rollOnce(sides);
+				total += roll;
+				if (roll === sides && msgText === '') {
+					msgText += '[💥';
+					msgText += `**${roll}**+`;
+				} else if (roll === sides) {
+					msgText += `**${roll}**+`;
+				} else if (msgText !== '') {
+					msgText += `${roll}=${total}]`;
+				} else {
+					msgText = `${total}`;
+				}
+			} while (
+				roll === sides
+				&& roll < 1e6 // prevent an infinite loop, just in case
+			);
+		}
+
+		return { roll: total, msgText };
 	}
 
 }
