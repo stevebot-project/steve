@@ -31,6 +31,7 @@ interface DiceResult {
 	message: string;
 }
 
+// TypeScript sort() was not working correctly for our arrays
 function Comparator(a, b): number {
 	if (a[0] < b[0]) return -1;
 	if (a[0] > b[0]) return 1;
@@ -105,68 +106,100 @@ export default class extends SteveCommand {
 			let message = '';
 			let operator = '';
 
+			// The minus sign is correctly prepended anyway but we need to prepend '+'
+			// when we have a static, positive modifier
 			if (spec.operator === '+') { operator = '+'; }
+			// get the value of the static modifier
 			const shift = this.getMod(spec.operator, spec.mod);
 
 			for (let i = 0; i < spec.count; i++) {
+				// in order to correctly print all values in an exploding number we
+				// need to formulate a message, this uses a different roll function
 				if (spec.explodes) {
 					const { roll, msgText } = this.explodingRoll(spec.sides);
+					// array of messages tied to total values
 					msgs.push([roll, msgText]);
 					rolls.push(roll);
 				} else {
 					const roll = this.roll(spec.sides);
+					// just an array of rolls
 					rolls.push(roll);
 				}
 			}
 
+			// Rolls length can change below so store this value for reference
 			const len = rolls.length;
 
 			if (spec.keep) {
+				// sort using our better comparator
 				rolls.sort(NumComparator);
 				if (spec.keep === 'highest') rolls.reverse();
+				// store 'lost' values prior to removing them from rolls
 				lost = rolls.slice(spec.keepCount);
 				rolls = rolls.slice(0, spec.keepCount);
+				// exploding dice are a special case
 				if (spec.explodes) {
+					// Special array sort
 					msgs.sort(Comparator);
 					if (spec.keep === 'highest') msgs.reverse();
+					// we could do 'lost' here but you don't want a big
+					// list of ~~struck through~~ rolls being ignored
 					msgs = msgs.slice(0, spec.keepCount);
 				}
 			}
 
 			if (len === 1) {
+				// single roll case
 				const roll = rolls[0];
 				if (spec.explodes) {
+					// exploding rolls already have a pre-formatted message
 					const msgText = msgs[0][1];
 					message += msgText;
 				} else {
 					message += `${roll}`;
 				}
 				if (shift !== 0) {
+					// calculate the final roll value
 					const sum = roll + shift;
+					// rolls are _italicised_, static modifier is plain, sum is **bold**
 					message = `_${message}_${operator}${shift} = **${sum}**`;
 				} else {
+					// a signle roll is a **bold** result
 					message = `**${message}**`;
 				}
 			} else {
 				let sum = 0;
 				if (lost.length !== 0) {
+					// ~~struck through~~ list of ignored values
+					// this is for completeness
 					message += `~~${lost.join(',')}~~ `;
 				}
+				// length !== to final array index (so take 1 away)
 				const checkLen = rolls.length - 1;
+				// iterate over all rolls but get an index too
 				for (const [index, roll] of rolls.entries()) {
 					if (spec.explodes) {
+						// exploding rolls already have a pre-formatted message
 						const msgText = msgs[index][1];
+						// sum values as we go
 						sum += msgs[index][0];
 						message += msgText;
 					} else {
+						// sum values as we go
 						sum += roll;
 						message += `${roll}`;
 					}
 					if (index !== checkLen) {
+						// show we are adding dice except on the final roll
+						// (where we optional display a static mod)
 						message += ' + ';
 					}
 				}
 				if (shift !== 0) {
+					// add the static modifier
+					// in D&D you cannot roll lower than a 1 but this may not
+					// be true _in general_ so we can cope with returning a
+					// negative sum
 					sum += shift;
 					message = `_(${message})_${operator}${shift}`;
 				} else {
@@ -179,6 +212,8 @@ export default class extends SteveCommand {
 		}
 
 		const getEmoji = (spec): string => {
+			// as we use the explosion emoji in formatted
+			// roll messages anyway it has lowwest priority
 			if (spec.keep === 'highest') return '👍';
 			if (spec.keep === 'lowest') return '👎';
 			if (spec.explodes) return '💥';
@@ -188,12 +223,15 @@ export default class extends SteveCommand {
 		if (results.length === 1) {
 			const result = results[0];
 			const emoji = getEmoji(result.spec);
+			// just display the message when a single roll is made
 			const message = `${emoji} You rolled: ${result.message} ${emoji}`;
 			return msg.channel.send(message);
 		} else {
 			let message = 'You rolled:';
 			for (const result of results) {
 				const emoji = getEmoji(result.spec);
+				// for multiple rolls we want to make the input clear
+				// backticks so it doesn't distract from results
 				message += `\n${emoji} \`${result.spec.input}\` = ${result.message}`;
 			}
 			return msg.channel.send(message);
@@ -217,7 +255,7 @@ export default class extends SteveCommand {
 
 	private roll(sides: number): number {
 		let total = 0;
-
+		// assume the minimum roll of any die is 1
 		if (sides <= 1) {
 			total = 1;
 		} else {
@@ -232,20 +270,29 @@ export default class extends SteveCommand {
 		let roll = 0;
 		let msgText = '';
 
+		// assume the minimum roll of any die is 1
+		// don't explode because that would be infinite
 		if (sides <= 1) {
 			total = 1;
 		} else {
 			do {
 				roll = this.rollOnce(sides);
 				total += roll;
+				// format message here
 				if (roll === sides && msgText === '') {
+					// we explode for the first time and
+					// start the explosion format
 					msgText += '[💥';
 					msgText += `**${roll}**+`;
 				} else if (roll === sides) {
+					// we exploded again and append
 					msgText += `**${roll}**+`;
 				} else if (msgText !== '') {
+					// we stopped exploding, final roll is
+					// plainly formatted and display total
 					msgText += `${roll}=${total}]`;
 				} else {
+					// didn't explode, boring message
 					msgText = `${total}`;
 				}
 			} while (
