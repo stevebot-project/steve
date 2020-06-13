@@ -49,10 +49,11 @@ export default class extends SteveCommand {
 		super(store, file, directory, {
 			aliases: ['dice'],
 			description: 'Roll dice!',
-			examples: ['roll 1d6', 'roll d20', 'roll 5d10!', 'roll 1d8|4d6', 'roll 6d12k1', 'roll 6d12kl2'],
+			examples: ['roll 1d6', 'roll d20', 'roll 4d6-5', 'roll 5d10!', 'roll 1d8|4d6', 'roll 6d12k1', 'roll 6d12kl2'],
 			extendedHelp: oneLine`Use standard dice notation. You can roll up to 10 dice with up to 1,000 sides each.
 				Add a \`!\` at the end of your roll to use exploding dice.
 				To keep the highest n, add \`k<n>\`; to keep the lowest n, add \`kl<n>\` (with n < amount of dice).
+				You can add a static positive or negative modifier to the sum of the roll using \`+<n>\` or \`-<n>\`.
 				You can do multiple rolls at once, separated by \`|\`.`,
 			usage: '<spec:dice> [...]',
 			helpUsage: '<number of dice>d<number of sides>'
