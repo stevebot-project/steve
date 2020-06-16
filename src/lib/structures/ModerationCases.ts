@@ -5,7 +5,7 @@ import { friendlyDuration, buildEmbed } from '@utils/util';
 import { User, MessageEmbed } from 'discord.js';
 import { ScheduledTask } from 'klasa';
 
-interface ModerationCase {
+export interface ModerationCase {
 	action: string;
 	duration: string;
 	moderator: string;
@@ -31,11 +31,11 @@ export class ModerationCases {
 		this.manager = manager;
 	}
 
-	public async createCase(action: string, moderator: User, target: User, reason: string, duration: string, task: ScheduledTask | null): Promise<ModerationCase> {
+	public async createCase(action: string, moderator: User, target: User, reason: string, duration: number | undefined, task: ScheduledTask | null): Promise<ModerationCase> {
 		const newCase: ModerationCase
 			= {
 				action,
-				duration,
+				duration: typeof duration === 'number' ? friendlyDuration(duration) : this.manager.guild.language.get('MODERATION_NODURATION'),
 				moderator: moderator.id,
 				number: this.caseArray.length + 1,
 				reason,

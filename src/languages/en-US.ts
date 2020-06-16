@@ -1,6 +1,7 @@
 import { Language, LanguageStore, util } from 'klasa';
 import { HelpBuilder } from '@utils/HelpBuilder';
 import { NAME as botName } from '@root/config';
+import { ModerationCase } from '@lib/structures/ModerationCases';
 
 const builder = new HelpBuilder()
 	.setExamples('👀 | **Examples**')
@@ -267,7 +268,7 @@ export default class extends Language {
 				'test2'
 			],
 			/* #####
-			MODERATION COMMMANDS
+			MODERATION SYSTEM
 			##### */
 			MODERATION_NODURATION: 'No duration provided.',
 			MODERATION_NOREASON: 'No reason provided.',
@@ -280,19 +281,97 @@ export default class extends Language {
 			MODERATION_CASE_DISPLAY_FIELD_REASON: 'Reason',
 			MODERATION_CASE_DISPLAY_FOOTER: (caseNumber: string, targetID: string) => `Case ${caseNumber} (${targetID})`,
 			MODERATION_CASE_DISPLAY_TIME_REMAINING: (time: string) => `(${time} left)`,
-			COMMAND_MUTE_DESCRIPTION: 'Adds the server\'s Muted role to the specified user.',
+			COMMAND_MUTE_DESCRIPTION: 'Add the server\'s Muted role to the specified user',
 			COMMAND_MUTE_EXTENDED: builder.display('mute', {
 				examples: [
 					'jonathan|being insensitive',
 					'enchtest|being annoying|5m'
 				],
 				explainedUsage: [
-					['username', 'You can use a member\'s username or snowflake (long ID number) with this command. You can also tag them.']
+					['username', 'This argument is required. You can use a member\'s username or snowflake (long ID number) with this command. You can also tag them.'],
+					['reason', 'You can specify a reason for this action, to be used in the server\'s audit log and in my case log.']
 				],
 				reminder: 'You must set up the server\'s Muted role before this command can be used.'
 			}),
-			COMMAND_MUTE_SUCCESS: (target: string, caseNumber: number) => `Muted ${target} and created case number ${caseNumber}.`,
-			COMMAND_MUTE_UNABLE: (target: string) => `Unable to mute ${target}.`
+			COMMAND_MUTE_SUCCESS: (target: string, thisCase: ModerationCase) => `Muted ${target} and created case number ${thisCase.number} with reason: *${thisCase.reason}*.`,
+			COMMAND_MUTE_UNABLE: (target: string) => `Unable to mute ${target}.`,
+			COMMAND_DEAFEN_DESCRIPTION: 'Add the server\'s Deafened role to the specified user',
+			COMMAND_DEAFEN_EXTENDED: builder.display('deafen', {
+				examples: [
+					'enchtest|harassment',
+					'jonathan|general assholery|10m'
+				],
+				explainedUsage: [
+					['username', 'This argument is required. You can use a member\'s username or snowflake (long ID number) with this command. You can also tag them.'],
+					['reason', 'You can specify a reason for this action, to be used in the server\'s audit log and in my case log.']
+				],
+				reminder: 'You must set up the server\'s Deafened role before you can use this command. The Deafened role should prevent users from seeing most (or all) channels in the server.'
+			}, true),
+			COMMAND_DEAFEN_UNABLE: (target: string) => `Unable to deafen ${target}.`,
+			COMMAND_DEAFEN_SUCCESS: (target: string, thisCase: ModerationCase) => `Deafened ${target} and created case number ${thisCase.number} with reason: *${thisCase.reason}*.`,
+			COMMAND_BAN_DESCRIPTION: 'Ban a user from the server',
+			COMMAND_BAN_EXTENDED: builder.display('ban', {
+				examples: [
+					'enchtest|being a tool|3d',
+					'jonathan|testing my patience'
+				],
+				explainedUsage: [
+					['username', 'This argument is required. You can use a member\'s username or snowflake (long ID number) with this command. You can also tag them.'],
+					['reason', 'You can specify a reason for this action, to be used in the server\'s audit log and in my case log.']
+				],
+				reminder: 'You can change the `moderation.banDeleteDays` setting to control how many days worth of messages from the banned user are deleted.'
+			}),
+			COMMAND_BAN_UNABLE: (target: string) => `Unable to ban ${target}.`,
+			COMMAND_BAN_SUCCESS: (target: string, thisCase: ModerationCase) => `Banned ${target} and created case number ${thisCase.number} with reason: *${thisCase.reason}*.`,
+			COMMAND_KICK_DESCRIPTION: 'Kick a user from the server',
+			COMMAND_KICK_EXTENDED: builder.display('kick', {
+				examples: [
+					'jonathan|paying too much attention to spacex launches'
+				],
+				explainedUsage: [
+					['username', 'This argument is required. You can use a member\'s username or snowflake (long ID number) with this command. You can also tag them.'],
+					['reason', 'You can specify a reason for this action, to be used in the server\'s audit log and in my case log.']
+				]
+			}),
+			COMMAND_KICK_UNABLE: (target: string) => `Unable to kick ${target}.`,
+			COMMAND_KICK_SUCCESS: (target: string, thisCase: ModerationCase) => `Kicked ${target} and created case number ${thisCase.number} with reason: *${thisCase.reason}*.`,
+			COMMAND_UNBAN_DESCRIPTION: 'Unban a user from the server',
+			COMMAND_UNBAN_EXTENDED: builder.display('unban', {
+				examples: [
+					'273707798670344192',
+					'273707798670344192|he\'s learned his lesson'
+				],
+				explainedUsage: [
+					['user', 'This argument is required. For this command, you must use the user\'s snowflake (long ID number).'],
+					['reason', 'You can specify a reason for this action, to be used in the server\'s audit log and in my case log.']
+				]
+			}),
+			COMMAND_UNBAN_UNABLE: (target: string) => `Unable to unban ${target}.`,
+			COMMAND_UNBAN_SUCCESS: (target: string, thisCase: ModerationCase) => `Unbanned ${target} and created case number ${thisCase.number} with reason: *${thisCase.reason}*.`,
+			COMMAND_UNMUTE_DESCRIPTION: 'Remove a member from the server\'s Muted role',
+			COMMAND_UNMUTE_EXTENDED: builder.display('unmute', {
+				examples: [
+					'enchtest|2 more strikes and you\'re out'
+				],
+				explainedUsage: [
+					['username', 'This argument is required. You can use a member\'s username or snowflake (long ID number) with this command. You can also tag them.']
+				],
+				reminder: 'You must set up the server\'s Muted role before using this command.'
+			}),
+			COMMAND_UNMUTE_UNABLE: (target: string) => `Unable to unmute ${target}.`,
+			COMMAND_UNMUTE_SUCCESS: (target: string, thisCase: ModerationCase) => `Unmuted ${target} and created case number ${thisCase.number} with reason: *${thisCase.reason}*.`,
+			COMMAND_UNDEAFEN_DESCRIPTION: 'Remove a member from the server\'s Deafened role',
+			COMMAND_UNDEAFEN_EXTENDED: builder.display('undeafen', {
+				examples: [
+					'enchtest|come back to the world of the living'
+				],
+				explainedUsage: [
+					['username', 'This argument is required. You can use a member\'s username or snowflake (long ID number) with this command. You can also tag them.']
+				],
+				reminder: 'You must set up the server\'s Deafened role before using this command.'
+			}),
+			COMMAND_UNDEAFEN_UNABLE: (target: string) => `Unable to undeafen ${target}.`,
+			COMMAND_UNDEAFEN_SUCCESS: (target: string, thisCase: ModerationCase) => `Undeafened ${target} and created case number ${thisCase.number} with reason: *${thisCase.reason}*.`
 		};
 	}
 

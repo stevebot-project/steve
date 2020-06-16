@@ -1,7 +1,7 @@
 import { SteveCommand } from './SteveCommand';
 import { CommandOptions, CommandStore, util, KlasaMessage } from 'klasa';
 import { PermissionsLevels } from '@lib/types/Enums';
-import { GuildMember, User, TextChannel, Message, Guild } from 'discord.js';
+import { GuildMember, User, Message, Guild } from 'discord.js';
 
 export interface ModerationCommandOptions extends CommandOptions {
 	duration?: boolean;
@@ -31,12 +31,12 @@ export abstract class ModerationCommand extends SteveCommand {
 
 		await this.handle(msg, prehandledTarget, reason);
 
-		return this.posthandle(msg.channel as TextChannel, prehandledTarget, msg.author, reason, duration);
+		return this.posthandle(msg, prehandledTarget, reason, duration);
 	}
 
 	public abstract prehandle(target: User, guild: Guild): Promise<GuildMember | User>; // choose target type
 	public abstract handle(msg: KlasaMessage, target: GuildMember | User, reason: string): Promise<GuildMember | User>; // do the thing
-	public abstract posthandle(channel: TextChannel, target: GuildMember | User, moderator: User, reason: string, duration: number | undefined): Promise<Message>; // handle modlog and case
+	public abstract posthandle(msg: KlasaMessage, target: GuildMember | User, reason: string, duration: number | undefined): Promise<Message>; // handle modlog and case
 
 	private checkModeratable(target: GuildMember, moderator: GuildMember): boolean {
 		if (target.id === target.guild.me!.id) throw target.guild.language.get('MODERATION_NOSTEVE');

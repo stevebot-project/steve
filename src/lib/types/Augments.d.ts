@@ -1,5 +1,7 @@
 import { BaseNodeOptions, Node as Lavalink } from 'lavalink';
 import { ModerationManager } from '@lib/structures/ModerationManager';
+import { ScheduledTask } from 'klasa';
+import { ModerationTaskData } from '../../extendables/Schedule';
 
 declare module 'discord.js' {
 	interface Guild {
@@ -18,5 +20,9 @@ declare module 'klasa' {
 
 	interface Language {
 		caseActions: any;
+	}
+
+	interface Schedule {
+		createModerationTask(taskName: 'unmute' | 'undeafen' | 'unban', duration: number, taskData: ModerationTaskData): Promise<ScheduledTask>;
 	}
 }

@@ -6,10 +6,10 @@ export default class extends ModerationCommand {
 
 	public constructor(store: CommandStore, file: string[], directory: string) {
 		super(store, file, directory, {
-			description: lang => lang.get('COMMAND_MUTE_DESCRIPTION'),
+			description: lang => lang.get('COMMAND_DEAFEN_DESCRIPTION'),
 			duration: true,
-			extendedHelp: lang => lang.get('COMMAND_MUTE_EXTENDED'),
-			requiredSettings: ['roles.muted']
+			extendedHelp: lang => lang.get('COMMAND_DEAFEN_EXTENDED'),
+			requiredSettings: ['roles.deafened']
 		});
 	}
 
@@ -21,10 +21,10 @@ export default class extends ModerationCommand {
 
 	public async handle(msg: KlasaMessage, target: GuildMember, reason: string): Promise<GuildMember> {
 		try {
-			await msg.guild!.moderation.mute(target, reason);
+			await msg.guild!.moderation.deafen(target, reason);
 		} catch (err) {
 			this.client.console.error(err);
-			throw msg.language.get('COMMAND_MUTE_UNABLE', target.user.tag);
+			throw msg.language.get('COMMAND_DEAFEN_UNABLE', target.user.tag);
 		}
 
 		return target;
@@ -32,12 +32,13 @@ export default class extends ModerationCommand {
 
 	public async posthandle(msg: KlasaMessage, target: GuildMember, reason: string, duration: number | undefined): Promise<Message> {
 		const modTask = duration
-			? await this.client.schedule.createModerationTask('unmute', duration, { targetID: target.id, guildID: msg.guild!.id })
+			? await this.client.schedule.createModerationTask('undeafen', duration, { targetID: target.id, guildID: msg.guild!.id })
 			: null;
 
-		const thisCase = await msg.guild!.moderation.cases.createCase('mute', msg.author, target.user, reason, duration, modTask);
+		const thisCase = await msg.guild!.moderation.cases.createCase('deafen', msg.author, target.user, reason, duration, modTask);
 
-		return msg.channel.send(msg.language.get('COMMAND_MUTE_SUCCESS', target.user.tag, thisCase));
+		return msg.channel.send(msg.language.get('COMMAND_DEAFEN_SUCCESS', target.user.tag, thisCase));
 	}
+
 
 }
