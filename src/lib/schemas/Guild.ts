@@ -9,4 +9,5 @@ export default Client.defaultGuildSchema
 		.add('deafened', 'Role')
 		.add('moderator', 'Role')
 		.add('muted', 'Role')
-		.add('trusted', 'Role'));
+		.add('trusted', 'Role'))
+	.add('snippets', 'any', { array: true, configurable: false });

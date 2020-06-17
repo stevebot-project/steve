@@ -6,6 +6,7 @@ export namespace GuildSettings {
 	export const DisableNaturalPrefix = 'disableNaturalPrefix';
 	export const Language = 'language';
 	export const Prefix = 'prefix';
+	export const Snippets = 'snippets';
 
 	export namespace Moderation {
 		export const BanDeleteDays = 'moderation.banDeleteDays';

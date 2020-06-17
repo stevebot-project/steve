@@ -7,6 +7,12 @@ declare module 'discord.js' {
 	interface Guild {
 		readonly moderation: ModerationManager;
 	}
+
+	interface GuildMember {
+		isAdmin: boolean;
+		isMod: boolean;
+		isStaff: boolean;
+	}
 }
 
 declare module 'klasa' {
