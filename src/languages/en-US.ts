@@ -2,6 +2,7 @@ import { Language, LanguageStore, util } from 'klasa';
 import { HelpBuilder } from '@utils/HelpBuilder';
 import { NAME as botName } from '@root/config';
 import { ModerationCase } from '@lib/structures/ModerationCases';
+import { oneLine } from 'common-tags';
 
 const builder = new HelpBuilder()
 	.setExamples('👀 | **Examples**')
@@ -371,7 +372,35 @@ export default class extends Language {
 				reminder: 'You must set up the server\'s Deafened role before using this command.'
 			}),
 			COMMAND_UNDEAFEN_UNABLE: (target: string) => `Unable to undeafen ${target}.`,
-			COMMAND_UNDEAFEN_SUCCESS: (target: string, thisCase: ModerationCase) => `Undeafened ${target} and created case number ${thisCase.number} with reason: *${thisCase.reason}*.`
+			COMMAND_UNDEAFEN_SUCCESS: (target: string, thisCase: ModerationCase) => `Undeafened ${target} and created case number ${thisCase.number} with reason: *${thisCase.reason}*.`,
+			/* #####
+			SNIPPETS
+			#### */
+			COMMAND_SNIPPET_DESCRIPTION: 'Create/edit/remove/view snippets of information about the server',
+			COMMAND_SNIPPET_EXTENDED: builder.display('snippet', {
+				examples: [
+					'add|jonathans|jonathans have the best name',
+					'edit|jonathans|jonathans have the BEST name --embed',
+					'remove|jonathans',
+					'jonathans',
+					'list'
+				],
+				extendedHelp: oneLine`This command allows users to easily access bits of information about the server. Adding, editing, and
+				removing snippets is restricted to server staff, but any member can view the list of snippets, or view individual snips.
+				When creating/editing a snip, staff can use the \`--embed\` flag to display the content of the snip in an embed. The content
+				will be displayed in the embed description, which means that Markdown will display properly (including masked links).`,
+				explainedUsage: [
+					['name', 'The name of a snip has a maximum length of 100 characters.'],
+					['content', 'The content of a snip has a maximum length of 1900 characters.']
+				]
+			}, true),
+			COMMAND_SNIPPET_ADD: (name: string) => `Added a snippet with the name: ${name}.`,
+			COMMAND_SNIPPET_EDIT: (name: string) => `Edited the ${name} snippet.`,
+			COMMAND_SNIPPET_REMOVE: (name: string) => `Removed the ${name} snippet.`,
+			COMMAND_SNIPPET_NOPERMISSION: 'You do not have permissions to edit snippets for this server.',
+			COMMAND_SNIPPET_ALREADYEXISTS: (name: string) => `There is already a snippet named ${name}.`,
+			COMMAND_SNIPPET_INVALID: (name: string) => `There is no snippet with the name: ${name}.`,
+			COMMAND_SNIPPET_NOSNIPS: 'This server has no snippets!'
 		};
 	}
 
