@@ -17,21 +17,22 @@ export default class extends SteveCommand {
 	}
 
 	public async run(msg: KlasaMessage, choices: string[]): Promise<Message> {
-		if(choices.length>11)
+		if (choices.length > 11) {
 			return msg.channel.send(`You have too many choices! The max is 10!`);
-		
-		const emotes = ['1️⃣','2️⃣','3️⃣','4️⃣','5️⃣','6️⃣','7️⃣','8️⃣','9️⃣','🔟'];
-		
-		let out = `**`+ choices[0] + `**`+`\n`;
-		for(var i = 1; i < choices.length; i++)
-			out +=emotes[i-1] + ` ` + choices[i] +`\n`;
-		
-		msg.channel.send(out).then(function(message){
-			for(var i = 0; i < choices.length - 1; i++)
-				message.react(emotes[i]);
+		}
+		const emotes = ['1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6️⃣', '7️⃣', '8️⃣', '9️⃣', '🔟'];
+
+		let out = `**${choices[0]}**\n`;
+		for (let i = 1; i < choices.length; i++) {
+			out += `${emotes[i - 1]} ${choices[i]}\n`;
+		}
+		msg.channel.send(out).then((message) => {
+			for (let j = 0; j < choices.length - 1; j++) {
+				message.react(emotes[j]);
+			}
 		});
 
-		return ;
+		return;
 	}
 
 }
