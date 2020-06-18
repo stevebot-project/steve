@@ -20,7 +20,7 @@ export default class extends SteveCommand {
 		if(choices.length>11)
 			return msg.channel.send(`You have too many choices! The max is 10!`);
 		
-			const emotes = ['1️⃣','2️⃣','3️⃣','4️⃣','5️⃣','6️⃣','7️⃣','8️⃣','9️⃣','🔟'];
+		const emotes = ['1️⃣','2️⃣','3️⃣','4️⃣','5️⃣','6️⃣','7️⃣','8️⃣','9️⃣','🔟'];
 		
 		let out = `**`+ choices[0] + `**`+`\n`;
 		for(var i = 1; i < choices.length; i++)
