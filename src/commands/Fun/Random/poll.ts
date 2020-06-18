@@ -7,6 +7,7 @@ export default class extends SteveCommand {
 
 	public constructor(store: CommandStore, file: string[], directory: string) {
 		super(store, file, directory, {
+			aliases: ['vote'],
 			description: `Have ${NAME} create a poll for you`,
 			extendedHelp: 'This command requires you to have at least two options and no more than ten.',
 			examples: ['poll Is butt legs?|Butt is legs|Butt is butt'],
