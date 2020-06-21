@@ -1,6 +1,6 @@
 import { MessageEmbed } from 'discord.js';
 import { Client, util } from 'klasa';
-import prettyMilliseconds from 'pretty-ms';
+import prettyMilliseconds = require('pretty-ms');
 
 export function buildEmbed(): MessageEmbed {
 	return new MessageEmbed; // eslint-disable-line new-parens
