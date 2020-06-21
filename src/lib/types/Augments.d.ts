@@ -30,5 +30,7 @@ declare module 'klasa' {
 
 	interface Schedule {
 		createModerationTask(taskName: 'unmute' | 'undeafen' | 'unban', duration: number, taskData: ModerationTaskData): Promise<ScheduledTask>;
+		createReminder(duration: number, userID: string, content: string, channelID: string): Promise<ScheduledTask>;
+		getUserReminders(userID: string): ScheduledTask[];
 	}
 }

@@ -1,6 +1,8 @@
 import { Client } from 'klasa';
 
 export default Client.defaultGuildSchema
+	.add('channels', channels => channels
+		.add('reminderChannel', 'TextChannel'))
 	.add('moderation', moderation => moderation
 		.add('banDeleteDays', 'Integer', { 'default': 0 })
 		.add('cases', 'any', { array: true, configurable: false }))

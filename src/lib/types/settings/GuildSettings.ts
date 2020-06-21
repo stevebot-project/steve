@@ -8,6 +8,10 @@ export namespace GuildSettings {
 	export const Prefix = 'prefix';
 	export const Snippets = 'snippets';
 
+	export namespace Channels {
+		export const ReminderChannel = 'channels.reminderChannel';
+	}
+
 	export namespace Moderation {
 		export const BanDeleteDays = 'moderation.banDeleteDays';
 		export const Cases = 'moderation.cases';
