@@ -383,6 +383,8 @@ export default class extends Language {
 					'edit|jonathans|jonathans have the BEST name --embed',
 					'remove|jonathans',
 					'jonathans',
+					'source|jonathans',
+					'reset',
 					'list'
 				],
 				extendedHelp: oneLine`This command allows users to easily access bits of information about the server. Adding, editing, and
@@ -401,6 +403,7 @@ export default class extends Language {
 			COMMAND_SNIPPET_ALREADYEXISTS: (name: string) => `There is already a snippet named ${name}.`,
 			COMMAND_SNIPPET_INVALID: (name: string) => `There is no snippet with the name: ${name}.`,
 			COMMAND_SNIPPET_NOSNIPS: 'This server has no snippets!',
+			COMMAND_SNIPPET_RESET: 'This server\'s snippets have been reset.',
 			/* #####
 			REMINDERS
 			#### */
