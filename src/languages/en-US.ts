@@ -3,6 +3,7 @@ import { HelpBuilder } from '@utils/HelpBuilder';
 import { NAME as botName } from '@root/config';
 import { ModerationCase } from '@lib/structures/ModerationCases';
 import { oneLine } from 'common-tags';
+import { Emojis } from '@lib/types/Enums';
 
 const builder = new HelpBuilder()
 	.setExamples('👀 | **Examples**')
@@ -419,7 +420,27 @@ export default class extends Language {
 			RESOLVER_REMINDER_INVALID: (arg: string | number) => `**${arg}** is not a valid reminder number.`,
 			COMMAND_REMIND_CREATED: (duration: string) => `I'll remind you about that in ${duration}.`,
 			COMMAND_REMIND_NOREMINDERS: 'You have no reminders currently set.',
-			COMMAND_REMINDER_DISPLAY_HIDDEN: 'Private reminder: content hidden'
+			COMMAND_REMINDER_DISPLAY_HIDDEN: 'Private reminder: content hidden',
+			/* #####
+			REMINDERS
+			#### */
+			COMMAND_ASSIGN_DESCRIPTION: `Assign roles to yourself using ${botName}`,
+			COMMAND_ASSIGN_EXTENDED: builder.display('assign', {
+				examples: [
+					'edit|gmt-4',
+					'list',
+					'gmt-4'
+				],
+				extendedHelp: oneLine`This command allows server staff to edit the list of roles that can be self-assigned by members;
+				and allows members to view the list of self-assignable roles, and add/remove the roles from themselves.`,
+				reminder: 'Only roles that have been designated as self-assignable by server staff can be used with this command.'
+			}),
+			COMMAND_ASSIGN_EDIT_ADD: (roles: string) => `Added to the list of self-assignable roles: \`${roles}\``,
+			COMMAND_ASSIGN_EDIT_REMOVE: (roles: string) => `Removed from the list of self-assignable roles: \`${roles}\``,
+			COMMAND_ASSIGN_NOTSTAFF: 'Only server staff can edit the list of self-assignable roles!',
+			COMMAND_ASSIGN_NOTASSIGNABLE: (role: string) => `${Emojis.REDX} The ${role} role is not self-assignable.`,
+			COMMAND_ASSIGN_ROLE_ADD: (roles: string) => `${Emojis.PLUS} Added role(s): \`${roles}\``,
+			COMMAND_ASSIGN_ROLE_REMOVE: (roles: string) => `${Emojis.MINUS} Removed role(s): \`${roles}\``
 		};
 	}
 

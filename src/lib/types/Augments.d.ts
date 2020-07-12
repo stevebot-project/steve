@@ -13,6 +13,10 @@ declare module 'discord.js' {
 		isMod: boolean;
 		isStaff: boolean;
 	}
+
+	interface Role {
+		isAssignable: boolean;
+	}
 }
 
 declare module 'klasa' {

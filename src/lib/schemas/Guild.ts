@@ -8,6 +8,7 @@ export default Client.defaultGuildSchema
 		.add('cases', 'any', { array: true, configurable: false }))
 	.add('roles', roles => roles
 		.add('administrator', 'Role')
+		.add('assignable', 'Role', { array: true })
 		.add('deafened', 'Role')
 		.add('moderator', 'Role')
 		.add('muted', 'Role')
