@@ -9,7 +9,9 @@ export namespace GuildSettings {
 	export const Snippets = 'snippets';
 
 	export namespace Channels {
+		export const Memberlog = 'channels.memberlog';
 		export const ReminderChannel = 'channels.reminderChannel';
+		export const Serverlog = 'channels.serverlog';
 	}
 
 	export namespace Moderation {

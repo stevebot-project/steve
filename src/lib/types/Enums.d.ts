@@ -4,6 +4,15 @@ export const enum Emojis {
 	REDX = '<:red_x:688365693485187072>'
 }
 
+export const enum LogColors {
+	PINK = 0xfc0ce8,
+	PURPLE = 0xb942f4,
+	RED = 0xe83535,
+	REDORANGE = 0xf49e42,
+	TURQUOISE = 0x61e3f9,
+	YELLOW = 0xffd944
+}
+
 export const enum PermissionsLevels {
 	EVERYONE = 0,
 	TRUSTED = 1,

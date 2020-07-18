@@ -422,7 +422,7 @@ export default class extends Language {
 			COMMAND_REMIND_NOREMINDERS: 'You have no reminders currently set.',
 			COMMAND_REMINDER_DISPLAY_HIDDEN: 'Private reminder: content hidden',
 			/* #####
-			REMINDERS
+			SELF-ASSIGN
 			#### */
 			COMMAND_ASSIGN_DESCRIPTION: `Assign roles to yourself using ${botName}`,
 			COMMAND_ASSIGN_EXTENDED: builder.display('assign', {
@@ -440,7 +440,19 @@ export default class extends Language {
 			COMMAND_ASSIGN_NOTSTAFF: 'Only server staff can edit the list of self-assignable roles!',
 			COMMAND_ASSIGN_NOTASSIGNABLE: (role: string) => `${Emojis.REDX} The ${role} role is not self-assignable.`,
 			COMMAND_ASSIGN_ROLE_ADD: (roles: string) => `${Emojis.PLUS} Added role(s): \`${roles}\``,
-			COMMAND_ASSIGN_ROLE_REMOVE: (roles: string) => `${Emojis.MINUS} Removed role(s): \`${roles}\``
+			COMMAND_ASSIGN_ROLE_REMOVE: (roles: string) => `${Emojis.MINUS} Removed role(s): \`${roles}\``,
+			/* #####
+			LOG EVENTS
+			#### */
+			EVENT_CHANNELCREATE_TITLE: (type: string, name: string) => `${type} Channel Created | ${name}`,
+			EVENT_CHANNELDELETE_TITLE: (type: string, name: string) => `${type} Channel Deleted | ${name}`,
+			EVENT_CHANNEL_FOOTER: (id: string) => `Channel ID: ${id}`,
+			EVENT_EMOJICREATE_TITLE: (name: string) => `Emoji Created | ${name}`,
+			EVENT_EMOJIDELETE_TITLE: (name: string) => `Emoji Deleted | ${name}`,
+			EVENT_EMOJI_FOOTER: (id: string) => `Emoji ID: ${id}`,
+			EVENT_ROLECREATE_TITLE: (name: string) => `Role Created | ${name}`,
+			EVENT_ROLEDELETE_TITLE: (name: string) => `Role Deleted | ${name}`,
+			EVENT_ROLE_FOOTER: (id: string) => `Role ID: ${id}`
 		};
 	}
 
