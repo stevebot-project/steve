@@ -1,17 +1,19 @@
 import { Event } from 'klasa';
 import { DMChannel, GuildChannel, Message, MessageEmbed, TextChannel } from 'discord.js';
 import { LogColors } from '@lib/types/Enums';
-import { getExecutor, toTitleCase } from '@utils/Util';
+import { getExecutor, toTitleCase, floatPromise } from '@utils/Util';
 import { GuildSettings } from '@lib/types/settings/GuildSettings';
 
 export default class extends Event {
 
-	public async run(channel: DMChannel | GuildChannel): Promise<Message | undefined> {
+	public run(channel: DMChannel | GuildChannel): void {
 		if (channel instanceof DMChannel) return;
 
 		const serverlog = channel.guild.channels.cache.get(channel.guild.settings.get(GuildSettings.Channels.Serverlog)) as TextChannel;
-		if (!serverlog) return;
+		if (serverlog) floatPromise(this, this.handleLog(channel, serverlog));
+	}
 
+	private async handleLog(channel: GuildChannel, serverlog: TextChannel): Promise<Message> {
 		const executor = await getExecutor(channel.guild, 'CHANNEL_CREATE');
 
 		const embed = new MessageEmbed()

@@ -1,15 +1,17 @@
 import { Event } from 'klasa';
 import { Message, MessageEmbed, TextChannel, GuildEmoji } from 'discord.js';
 import { LogColors } from '@lib/types/Enums';
-import { getExecutor } from '@utils/Util';
+import { getExecutor, floatPromise } from '@utils/Util';
 import { GuildSettings } from '@lib/types/settings/GuildSettings';
 
 export default class extends Event {
 
-	public async run(emoji: GuildEmoji): Promise<Message | undefined> {
+	public run(emoji: GuildEmoji): void {
 		const serverlog = emoji.guild.channels.cache.get(emoji.guild.settings.get(GuildSettings.Channels.Serverlog)) as TextChannel;
-		if (!serverlog) return;
+		if (serverlog) floatPromise(this, this.handleLog(emoji, serverlog));
+	}
 
+	private async handleLog(emoji: GuildEmoji, serverlog: TextChannel): Promise<Message> {
 		const executor = await getExecutor(emoji.guild, 'EMOJI_DELETE');
 
 		const embed = new MessageEmbed()
