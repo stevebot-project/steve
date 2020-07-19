@@ -452,7 +452,11 @@ export default class extends Language {
 			EVENT_EMOJI_FOOTER: (id: string) => `Emoji ID: ${id}`,
 			EVENT_ROLECREATE_TITLE: (name: string) => `Role Created | ${name}`,
 			EVENT_ROLEDELETE_TITLE: (name: string) => `Role Deleted | ${name}`,
-			EVENT_ROLE_FOOTER: (id: string) => `Role ID: ${id}`
+			EVENT_ROLE_FOOTER: (id: string) => `Role ID: ${id}`,
+			EVENT_GUILDMEMBER_ADD_HUMANTITLE: 'Member Joined Server',
+			EVENT_GUILDMEMBERADD_ACCOUNTCREATED: 'Account Created',
+			EVENT_GUILDMEMBERADD_BOTTITLE: (executor: string) => `Bot added by ${executor}`,
+			EVENT_GUILDMEMBER_FOOTER: (id: string) => `Member ID: ${id}`
 		};
 	}
 
