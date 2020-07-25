@@ -1,19 +1,39 @@
-import { Event, KlasaMessage } from 'klasa';
+import { Event, KlasaMessage, Stopwatch } from 'klasa';
 import { GuildSettings } from '@lib/types/settings/GuildSettings';
 import { Snippet } from '../commands/Snippets/snippet';
 import { SteveCommand } from '@lib/structures/commands/SteveCommand';
+import { floatPromise } from '@utils/util';
 
 export default class extends Event {
 
-	public run(msg: KlasaMessage, cmd: string): Promise<KlasaMessage> | undefined {
+	public run(msg: KlasaMessage, cmd: string): Promise<void> | undefined {
 		if (!msg.guild) return;
 
 		cmd = cmd.toLowerCase();
 
-		const snipCommand = this.client.commands.get('snippet') as SnippetCommand;
 		const snips: Snippet[] = msg.guild.settings.get(GuildSettings.Snippets);
 		const snip = snips.some(s => s.name === cmd);
-		if (snip) return snipCommand.view(msg, [cmd]);
+		if (snip) return this.runSnippet(msg, cmd);
+	}
+
+	private async runSnippet(msg: KlasaMessage, cmd: string): Promise<void> {
+		const snipCommand = this.client.commands.get('snippet') as SnippetCommand;
+		const timer = new Stopwatch();
+
+		try {
+			await this.client.inhibitors.run(msg, snipCommand);
+
+			try {
+				const commandRun = snipCommand.view(msg, [cmd]);
+				timer.stop();
+				const response = await commandRun;
+				floatPromise(this, this.client.finalizers.run(msg, snipCommand, response, timer));
+			} catch (err) {
+				this.client.console.error(err);
+			}
+		} catch (response) {
+			this.client.emit('commandInhibited', msg, snipCommand, response);
+		}
 	}
 
 }
