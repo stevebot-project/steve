@@ -20,3 +20,11 @@ export const enum PermissionsLevels {
 	ADMINISTRATOR = 8,
 	OWNER = 10
 }
+
+export const enum Time {
+	MILLISECOND = 1,
+	SECOND = 1 * 1000,
+	MINUTE = 1 * 1000 * 60,
+	HOUR = 1 * 1000 * 60 * 60,
+	DAY = 1 * 1000 * 60 * 60 * 24
+}

@@ -442,6 +442,40 @@ export default class extends Language {
 			COMMAND_ASSIGN_ROLE_ADD: (roles: string) => `${Emojis.PLUS} Added role(s): \`${roles}\``,
 			COMMAND_ASSIGN_ROLE_REMOVE: (roles: string) => `${Emojis.MINUS} Removed role(s): \`${roles}\``,
 			/* #####
+			MEMBER INFO
+			#### */
+			COMMAND_WHOIS_DESCRIPTION: 'Get basic information about a member of the server',
+			COMMAND_WHOIS_EXTENDED: builder.display('whois', {
+				examples: [
+					'boedj'
+				],
+				extendedHelp: `Displayed information: Display Name, Account Age, Server Join Date, List of Roles`,
+				reminder: 'Not providing a username for this command will display information about yourself.'
+			}),
+			COMMAND_WHOIS_DATE: (duration: string, date: string) => `${duration} ago (${date})`,
+			COMMAND_WHOIS_JOINEDGUILD_HOURS: (hours: number, date: string) => `${hours} hours ago (${date})`,
+			COMMAND_WHOIS_EMBED_DISPLAYNAME: 'Display Name',
+			COMMAND_WHOIS_EMBED_ACCOUNTCREATED: 'Account Created',
+			COMMAND_WHOIS_EMBED_JOINEDGUILD: 'Joined Server',
+			COMMAND_WHOIS_EMBED_ROLES: 'Roles',
+			/* #####
+			SERVER INFO
+			#### */
+			COMMAND_SERVERINFO_DESCRIPTION: 'See useful information about the server',
+			COMMAND_SERVERINFO_EXTENDED: builder.display('serverinfo', {
+				extendedHelp: oneLine`Displayed stats: Total Members, # of Humans vs # of Bots, # of Text Channels vs # of Voice Channels,
+				# of Roles, # of Emojis, and the percentage of members with roles.`
+			}),
+			COMMAND_SERVERINFO_GUILDCREATION: (date: string, duration: string) => `Created ${date} (${duration} ago)`,
+			COMMAND_SERVERINFO_EMBED_TOTALMEMBERS: 'Total Members',
+			COMMAND_SERVERINFO_EMBED_HUMANS: 'Humans',
+			COMMAND_SERVERINFO_EMBED_BOTS: 'Bots',
+			COMMAND_SERVERINFO_EMBED_TEXTCHANNELS: 'Text Channels',
+			COMMAND_SERVERINFO_EMBED_VOICECHANNELS: 'Voice Channels',
+			COMMAND_SERVERINFO_EMBED_ROLES: 'Roles',
+			COMMAND_SERVERINFO_EMBED_EMOJIS: 'Emojis',
+			COMMAND_SERVERINFO_EMBED_PERCENTAGE: 'Members with Roles',
+			/* #####
 			LOG EVENTS
 			#### */
 			EVENT_CHANNELCREATE_TITLE: (type: string, name: string) => `${type} Channel Created | ${name}`,
