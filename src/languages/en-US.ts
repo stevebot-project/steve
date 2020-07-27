@@ -475,6 +475,18 @@ export default class extends Language {
 			COMMAND_SERVERINFO_EMBED_ROLES: 'Roles',
 			COMMAND_SERVERINFO_EMBED_EMOJIS: 'Emojis',
 			COMMAND_SERVERINFO_EMBED_PERCENTAGE: 'Members with Roles',
+			COMMAND_ROLEINFO_DESCRIPTION: 'Display basic information about a role, along with a list of members who have it',
+			COMAMND_ROLEINFO_EXTENDED: builder.display('roleinfo', {
+				examples: [
+					'gmt-4'
+				],
+				extendedHelp: 'Roles which have been designated as restricted by the server staff cannot be viewed with this command.'
+			}),
+			COMMAND_ROLEINFO_RESTRICTED: 'This role is restricted; you cannot view information about it.',
+			COMMAND_ROLEINFO_NOMEMBERS: 'There are no members in this role.',
+			COMMAND_ROLEINFO_TOOMANY: 'There are too many members in this role to display.',
+			COMMAND_ROLEINFO_CREATED: (role: string, date: string) => `The ${role} role was created on ${date}.`,
+			COMMAND_ROLEINFO_ASSIGNABLE: (assignable: boolean) => `This role is ${assignable ? '' : 'not '}self-assignable.`,
 			/* #####
 			LOG EVENTS
 			#### */

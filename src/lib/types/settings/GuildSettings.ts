@@ -25,6 +25,7 @@ export namespace GuildSettings {
 		export const Deafened = 'roles.deafened';
 		export const Moderator = 'roles.moderator';
 		export const Muted = 'roles.muted';
+		export const Restricted = 'roles.restricted';
 		export const Trusted = 'roles.trusted';
 		export const GiveTrustedRoleOn = 'roles.giveTrustedRoleOn';
 	}

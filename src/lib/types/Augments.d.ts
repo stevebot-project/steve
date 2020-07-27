@@ -16,6 +16,7 @@ declare module 'discord.js' {
 
 	interface Role {
 		isAssignable: boolean;
+		isRestricted: boolean;
 	}
 }
 
