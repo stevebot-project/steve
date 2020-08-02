@@ -179,6 +179,8 @@ export interface LanguageKeys {
 	COMMAND_UNDEAFEN_EXTENDED: string;
 	COMMAND_UNDEAFEN_UNABLE: (target: string) => string;
 	COMMAND_UNDEAFEN_SUCCESS: (target: string, thisCase: ModerationCase) => string;
+	COMMAND_PERMISSIONS_DESCRIPTION: string;
+	COMMAND_PERMISSIONS_HAS_ALL: (user: string) => string;
 	COMMAND_SNIPPET_DESCRIPTION: string;
 	COMMAND_SNIPPET_EXTENED: string;
 	COMMAND_SNIPPET_ADD: (name: string) => string;

@@ -20,10 +20,45 @@ const caseActions = {
 	unmute: 'Member Unmuted'
 };
 
+const Perms = {
+	ADMINISTRATOR: 'Administrator',
+	CREATE_INSTANT_INVITE: 'Create Instant Invite',
+	KICK_MEMBERS: 'Kick Members',
+	BAN_MEMBERS: 'Ban Members',
+	MANAGE_CHANNELS: 'Manage Channels',
+	MANAGE_GUILD: 'Manage Guild',
+	ADD_REACTIONS: 'Add Reactions',
+	VIEW_AUDIT_LOG: 'View Audit Log',
+	VIEW_GUILD_INSIGHTS: 'View Guild Insights',
+	PRIORITY_SPEAKER: 'Priority Speaker',
+	STREAM: 'Stream',
+	VIEW_CHANNEL: 'View Channel',
+	SEND_MESSAGES: 'Send Messages',
+	SEND_TTS_MESSAGES: 'Send TTS Messages',
+	MANAGE_MESSAGES: 'Manage Messages',
+	EMBED_LINKS: 'Embed Links',
+	ATTACH_FILES: 'Attach Files',
+	READ_MESSAGE_HISTORY: 'Read Message History',
+	MENTION_EVERYONE: 'Mention Everyone',
+	USE_EXTERNAL_EMOJIS: 'Use External Emojis',
+	CONNECT: 'Connect',
+	SPEAK: 'Speak',
+	MUTE_MEMBERS: 'Mute Members',
+	DEAFEN_MEMBERS: 'Deafen Members',
+	MOVE_MEMBERS: 'Move Members',
+	USE_VAD: 'Use VAD',
+	CHANGE_NICKNAME: 'Change Nickname',
+	MANAGE_NICKNAMES: 'Manage Nicknames',
+	MANAGE_ROLES: 'Manage Roles',
+	MANAGE_WEBHOOKS: 'Manage Webhooks',
+	MANAGE_EMOJIS: 'Manage Emojis'
+};
+
 
 export default class extends Language {
 
 	public caseActions = caseActions;
+	public PERMISSIONS = Perms;
 
 	public constructor(store: LanguageStore, file: string[], directory: string) {
 		super(store, file, directory);
@@ -375,6 +410,8 @@ export default class extends Language {
 			}),
 			COMMAND_UNDEAFEN_UNABLE: (target: string) => `Unable to undeafen ${target}.`,
 			COMMAND_UNDEAFEN_SUCCESS: (target: string, thisCase: ModerationCase) => `Undeafened ${target} and created case number ${thisCase.number} with reason: *${thisCase.reason}*.`,
+			COMMAND_PERMISSIONS_DESCRIPTION: 'View the permissions of the specified user.',
+			COMMAND_PERMISSIONS_HAS_ALL: (user: string) => `${user} has the Administrator permission; they have all permissions by default.`,
 			/* #####
 			SNIPPETS
 			#### */

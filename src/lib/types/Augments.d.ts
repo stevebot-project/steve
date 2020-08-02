@@ -3,6 +3,7 @@ import { ModerationManager } from '@lib/structures/ModerationManager';
 import { ScheduledTask } from 'klasa';
 import { ModerationTaskData } from '../../extendables/Schedule';
 import { LanguageKeys } from './Languages';
+import { PermissionString } from 'discord.js';
 
 declare module 'discord.js' {
 	interface Guild {
@@ -33,6 +34,7 @@ declare module 'klasa' {
 
 	interface Language {
 		caseActions: any;
+		PERMISSIONS: Record<PermissionString, string>;
 		tget<T extends SimpleLanguageKeys>(term: T): LanguageKeys[T];
 		tget<T extends ComplexLanguageKeys>(term: T, ...args: Parameters<LanguageKeys[T]>): ReturnType<LanguageKeys[T]>;
 	}
