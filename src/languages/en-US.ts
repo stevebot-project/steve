@@ -489,6 +489,19 @@ export default class extends Language {
 			COMMAND_ROLEINFO_CREATED: (role: string, date: string) => `The ${role} role was created on ${date}.`,
 			COMMAND_ROLEINFO_ASSIGNABLE: (assignable: boolean) => `This role is ${assignable ? '' : 'not '}self-assignable.`,
 			/* #####
+			SYSTEM COMMANDS
+			#### */
+			COMMAND_FEEDBACK_DESCRIPTION: 'Send feedback or suggestions to the bot\'s developers.',
+			COMMAND_FEEDBACK_EXTENDED: builder.display('feedback', {
+				examples: [
+					'GIB MORE NEW FEATURES'
+				],
+				extendedHelp: 'This command has a cooldown of 60 seconds per user.'
+			}),
+			COMMAND_FEEDBACK_NO_GUILD: 'The specified feedback server for this bot does not exist; contact a bot owner.',
+			COMMAND_FEEDBACK_NO_CHANNEL: 'The specified feedback channel for this bot does not exist; contact a bot owner.',
+			COMMAND_FEEDBACK_SENT: 'Your feedback has been sent, thanks!',
+			/* #####
 			LOG EVENTS
 			#### */
 			EVENT_CHANNELCREATE_TITLE: (type: string, name: string) => `${type} Channel Created | ${name}`,

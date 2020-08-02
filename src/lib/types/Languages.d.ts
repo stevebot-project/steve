@@ -230,6 +230,11 @@ export interface LanguageKeys {
 	COMMAND_ROLEINFO_TOOMANY: string;
 	COMMAND_ROLEINFO_CREATED: (role: string, date: string) => string;
 	COMMAND_ROLEINFO_ASSIGNABLE: (assignable: boolean) => string;
+	COMMAND_FEEDBACK_DESCRIPTION: string;
+	COMMAND_FEEDBACK_EXTENDED: string;
+	COMMAND_FEEDBACK_NO_GUILD: string;
+	COMMAND_FEEDBACK_NO_CHANNEL: string;
+	COMMAND_FEEDBACK_SENT: string;
 	EVENT_CHANNELCREATE_TITLE: (type: string, name: string) => string;
 	EVENT_CHANNELDELETE_TITLE: (type: string, name: string) => string;
 	EVENT_CHANNEL_FOOTER: (id: string) => string;
