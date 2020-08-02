@@ -27,7 +27,7 @@ export abstract class ModerationCommand extends SteveCommand {
 		const prehandledTarget = await this.prehandle(target, msg.guild!);
 		if (prehandledTarget instanceof GuildMember) this.checkModeratable(prehandledTarget, msg.member!);
 
-		if (typeof reason === 'undefined') reason = msg.language.tget('MODERATION_NOREASON') as string;
+		if (typeof reason === 'undefined') reason = msg.guild!.language.tget('MODERATION_NOREASON') as string;
 
 		await this.handle(msg, prehandledTarget, reason);
 

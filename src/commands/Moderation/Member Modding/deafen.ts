@@ -24,7 +24,7 @@ export default class extends ModerationCommand {
 			await msg.guild!.moderation.deafen(target, reason);
 		} catch (err) {
 			this.client.console.error(err);
-			throw msg.language.tget('COMMAND_DEAFEN_UNABLE', target.user.tag);
+			throw msg.guild!.language.tget('COMMAND_DEAFEN_UNABLE', target.user.tag);
 		}
 
 		return target;
@@ -37,7 +37,7 @@ export default class extends ModerationCommand {
 
 		const thisCase = await msg.guild!.moderation.cases.createCase('deafen', msg.author, target.user, reason, duration, modTask);
 
-		return msg.channel.send(msg.language.tget('COMMAND_DEAFEN_SUCCESS', target.user.tag, thisCase));
+		return msg.channel.send(msg.guild!.language.tget('COMMAND_DEAFEN_SUCCESS', target.user.tag, thisCase));
 	}
 
 
