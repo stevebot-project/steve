@@ -41,9 +41,9 @@ module.exports = class extends Argument {
 		}
 
 		switch (querySearch.length) {
-			case 0: throw msg.language.get('ARGUMENT_USERNAME_CANNOTFIND', possible.name);
+			case 0: throw msg.language.tget('ARGUMENT_USERNAME_CANNOTFIND', possible.name);
 			case 1: return querySearch[0];
-			default: throw msg.language.get('ARGUMENT_USERNAME_MULTIPLE', querySearch.map(user => user.tag).join('`, `'));
+			default: throw msg.language.tget('ARGUMENT_USERNAME_MULTIPLE', querySearch.map(user => user.tag).join('`, `'));
 		}
 	}
 

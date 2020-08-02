@@ -13,7 +13,7 @@ export default class extends ModerationCommand {
 
 	public async prehandle(target: User, guild: Guild): Promise<GuildMember> {
 		const member = await guild.members.fetch(target);
-		if (!member) throw guild.language.get('USER_NOT_IN_GUILD', target.tag);
+		if (!member) throw guild.language.tget('USER_NOT_IN_GUILD', target.tag);
 		return member;
 	}
 
@@ -22,7 +22,7 @@ export default class extends ModerationCommand {
 			await msg.guild!.moderation.kick(target, reason);
 		} catch (err) {
 			this.client.console.error(err);
-			throw msg.language.get('COMMAND_KICK_UNABLE', target.user.tag);
+			throw msg.language.tget('COMMAND_KICK_UNABLE', target.user.tag);
 		}
 
 		return target;
@@ -31,7 +31,7 @@ export default class extends ModerationCommand {
 	public async posthandle(msg: KlasaMessage, target: GuildMember, reason: string, duration: number | undefined): Promise<Message> {
 		const thisCase = await msg.guild!.moderation.cases.createCase('kick', msg.author, target.user, reason, duration, null);
 
-		return msg.channel.send(msg.language.get('COMMAND_KICK_SUCCESS', target.user.tag, thisCase));
+		return msg.channel.send(msg.language.tget('COMMAND_KICK_SUCCESS', target.user.tag, thisCase));
 	}
 
 }

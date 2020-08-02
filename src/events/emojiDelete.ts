@@ -17,9 +17,9 @@ export default class extends Event {
 		const embed = new MessageEmbed()
 			.setAuthor(executor.tag, executor.displayAvatarURL())
 			.setColor(LogColors.PINK)
-			.setFooter(emoji.guild.language.get('EVENT_EMOJI_FOOTER', emoji.id))
+			.setFooter(emoji.guild.language.tget('EVENT_EMOJI_FOOTER', emoji.id))
 			.setTimestamp()
-			.setTitle(emoji.guild.language.get('EVENT_EMOJIDELETE_TITLE', emoji.name));
+			.setTitle(emoji.guild.language.tget('EVENT_EMOJIDELETE_TITLE', emoji.name));
 
 		return serverlog.send(embed);
 	}

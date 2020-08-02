@@ -2,6 +2,7 @@ import { BaseNodeOptions, Node as Lavalink } from 'lavalink';
 import { ModerationManager } from '@lib/structures/ModerationManager';
 import { ScheduledTask } from 'klasa';
 import { ModerationTaskData } from '../../extendables/Schedule';
+import { LanguageKeys } from './Languages';
 
 declare module 'discord.js' {
 	interface Guild {
@@ -32,6 +33,8 @@ declare module 'klasa' {
 
 	interface Language {
 		caseActions: any;
+		tget<T extends SimpleLanguageKeys>(term: T): LanguageKeys[T];
+		tget<T extends ComplexLanguageKeys>(term: T, ...args: Parameters<LanguageKeys[T]>): ReturnType<LanguageKeys[T]>;
 	}
 
 	interface Schedule {
@@ -40,3 +43,15 @@ declare module 'klasa' {
 		getUserReminders(userID: string): ScheduledTask[];
 	}
 }
+
+interface Fn {
+	(...args: readonly any[]): unknown;
+}
+
+export type SimpleLanguageKeys = {
+	[K in keyof LanguageKeys]: LanguageKeys[K] extends Fn ? never : K;
+}[keyof LanguageKeys];
+
+export type ComplexLanguageKeys = {
+	[K in keyof LanguageKeys]: LanguageKeys[K] extends Fn ? K : never;
+}[keyof LanguageKeys];

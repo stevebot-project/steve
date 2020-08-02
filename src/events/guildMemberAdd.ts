@@ -17,18 +17,18 @@ export default class extends Event {
 		const embed = new MessageEmbed()
 			.addFields(
 				{
-					name: member.guild.language.get('EVENT_GUILDMEMBER_ADD_HUMANTITLE'),
-					value: member.guild.language.get('EVENT_GUILDMEMBERADD_ACCOUNTCREATED', accountCreatedTime)
+					name: member.guild.language.tget('EVENT_GUILDMEMBER_ADD_HUMANTITLE'),
+					value: member.guild.language.tget('EVENT_GUILDMEMBERADD_ACCOUNTCREATED', accountCreatedTime)
 				}
 			)
 			.setAuthor(member.user.tag, member.user.displayAvatarURL())
 			.setColor(LogColors.TURQUOISE)
-			.setFooter(member.guild.language.get('EVENT_GUILDMEMBER_FOOTER', member.id))
+			.setFooter(member.guild.language.tget('EVENT_GUILDMEMBER_FOOTER', member.id))
 			.setTimestamp();
 
 		if (member.user.bot) {
 			const executor = await getExecutor(member.guild, 'BOT_ADD');
-			embed.fields[0].name = member.guild.language.get('EVENT_GUILDMEMBERADD_BOTTITLE', executor.tag);
+			embed.fields[0].name = member.guild.language.tget('EVENT_GUILDMEMBERADD_BOTTITLE', executor.tag);
 		}
 
 		return memberlog.send(embed);

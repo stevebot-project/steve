@@ -19,7 +19,7 @@ export default class extends SteveCommand {
 	public async run(msg: KlasaMessage, [playerMove]: [string]): Promise<Message> {
 		const steveMove = rps[Math.floor(Math.random() * rps.length)];
 		const winner = this.checkWinner(rps.indexOf(playerMove), rps.indexOf(steveMove));
-		return msg.channel.send(msg.language.get('COMMAND_ROCKPAPERSCISSORS_WINNER', playerMove, steveMove, winner));
+		return msg.channel.send(msg.language.tget('COMMAND_ROCKPAPERSCISSORS_WINNER', playerMove, steveMove, winner));
 	}
 
 	private checkWinner(playerNum: number, steveNum: number): number {

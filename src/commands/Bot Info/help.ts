@@ -27,7 +27,7 @@ export default class extends Command {
 	// eslint-disable-next-line @typescript-eslint/no-invalid-void-type
 	public async run(msg: KlasaMessage, [cmd]: [Command]): Promise<Message | void> {
 		if (cmd) {
-			const DATA: any = msg.language.get('COMMAND_HELP_DATA');
+			const DATA: any = msg.language.tget('COMMAND_HELP_DATA');
 
 			const embed = buildEmbed()
 				.setTimestamp()

@@ -25,18 +25,18 @@ export default class extends SteveCommand {
 	public async run(msg: KlasaMessage, [user]: [User]): Promise<Message> {
 		user = await this.client.users.fetch(user.id);
 		const member = await msg.guild!.members.fetch(user);
-		if (!member) throw msg.guild!.language.get('USER_NOT_IN_GUILD', user.tag);
+		if (!member) throw msg.guild!.language.tget('USER_NOT_IN_GUILD', user.tag);
 
-		const accountCreated = msg.guild!.language.get('COMMAND_WHOIS_DATE',
+		const accountCreated = msg.guild!.language.tget('COMMAND_WHOIS_DATE',
 			friendlyDuration(Date.now() - user.createdTimestamp), formatDate(user.createdTimestamp));
 
 		const joinedGuild = this.getJoinDateString(member.joinedTimestamp!, msg.guild!);
 
 		const embed = new MessageEmbed()
 			.addFields([
-				{ name: msg.guild!.language.get('COMMAND_WHOIS_EMBED_DISPLAYNAME'), value: member.displayName, inline: true },
-				{ name: msg.guild!.language.get('COMMAND_WHOIS_EMBED_ACCOUNTCREATED'), value: accountCreated, inline: true },
-				{ name: msg.guild!.language.get('COMMAND_WHOIS_EMBED_JOINEDGUILD'), value: joinedGuild, inline: true }
+				{ name: msg.guild!.language.tget('COMMAND_WHOIS_EMBED_DISPLAYNAME'), value: member.displayName, inline: true },
+				{ name: msg.guild!.language.tget('COMMAND_WHOIS_EMBED_ACCOUNTCREATED'), value: accountCreated, inline: true },
+				{ name: msg.guild!.language.tget('COMMAND_WHOIS_EMBED_JOINEDGUILD'), value: joinedGuild, inline: true }
 			])
 			.setAuthor(user.tag, user.displayAvatarURL())
 			.setFooter(msg.guild!.language!.get('EVENT_GUILDMEMBER_FOOTER', member.id))
@@ -45,7 +45,7 @@ export default class extends SteveCommand {
 		if (member.roles.cache.size > 1) {
 			embed.addFields([
 				{
-					name: msg.guild!.language.get('COMMAND_WHOIS_EMBED_ROLES'),
+					name: msg.guild!.language.tget('COMMAND_WHOIS_EMBED_ROLES'),
 					// eslint-disable-next-line newline-per-chained-call
 					value: member.roles.cache.filter(r => r.id !== r.guild.id).sort().array().join(' ')
 				}
@@ -60,10 +60,10 @@ export default class extends SteveCommand {
 		const joinDate = formatDate(timestamp);
 
 		if (timeSinceJoin > Time.DAY && timeSinceJoin < Time.HOUR * 31) {
-			return guild.language.get('COMMAND_WHOIS_JOINEDGUILD_HOURS', Math.floor(timeSinceJoin / Time.HOUR), joinDate);
+			return guild.language.tget('COMMAND_WHOIS_JOINEDGUILD_HOURS', Math.floor(timeSinceJoin / Time.HOUR), joinDate);
 		}
 
-		return guild.language.get('COMMAND_WHOIS_DATE', friendlyDuration(timeSinceJoin), joinDate);
+		return guild.language.tget('COMMAND_WHOIS_DATE', friendlyDuration(timeSinceJoin), joinDate);
 	}
 
 }

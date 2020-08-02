@@ -8,7 +8,7 @@ export default class extends Task {
 		const target = this.client.users.cache.get(targetID);
 
 		if (guild && target) {
-			await guild.moderation.unban(target, guild.language.get('MODERATION_NOREASON'));
+			await guild.moderation.unban(target, guild.language.tget('MODERATION_NOREASON'));
 		}
 	}
 

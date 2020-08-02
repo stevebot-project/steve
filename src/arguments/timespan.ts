@@ -6,7 +6,7 @@ export default class extends Argument {
 		const duration = new Duration(arg);
 
 		if (duration.offset > 0 && util.isNumber(duration.fromNow.getTime())) return duration.offset;
-		throw msg.language.get('ARGUMENT_TIMESPAN_INVALID', arg);
+		throw msg.language.tget('ARGUMENT_TIMESPAN_INVALID', arg);
 	}
 
 }

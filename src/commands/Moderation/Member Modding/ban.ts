@@ -14,7 +14,7 @@ export default class extends ModerationCommand {
 
 	public async prehandle(target: User, guild: Guild): Promise<GuildMember> {
 		const member = await guild.members.fetch(target);
-		if (!member) throw guild.language.get('USER_NOT_IN_GUILD', target.tag);
+		if (!member) throw guild.language.tget('USER_NOT_IN_GUILD', target.tag);
 		return member;
 	}
 
@@ -23,7 +23,7 @@ export default class extends ModerationCommand {
 			await msg.guild!.moderation.ban(target, reason);
 		} catch (err) {
 			this.client.console.error(err);
-			throw msg.language.get('COMMAND_BAN_UNABLE', target.user.tag);
+			throw msg.language.tget('COMMAND_BAN_UNABLE', target.user.tag);
 		}
 
 		return target;
@@ -36,7 +36,7 @@ export default class extends ModerationCommand {
 
 		const thisCase = await msg.guild!.moderation.cases.createCase('ban', msg.author, target.user, reason, duration, modTask);
 
-		return msg.channel.send(msg.language.get('COMMAND_BAN_SUCCESS', target.user.tag, thisCase));
+		return msg.channel.send(msg.language.tget('COMMAND_BAN_SUCCESS', target.user.tag, thisCase));
 	}
 
 }

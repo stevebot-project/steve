@@ -231,6 +231,7 @@ export default class extends Language {
 				 reminder: 'Choices have a maximum length of 500 characters.'
 			}),
 			COMMAND_CHOOSE_RESPONSE: (choice: string) => `${botName} chooses... \`${choice}\`!`,
+			COMMAND_CHOOSE_TOOFEW: 'You must provide at least two choices!',
 			COMMAND_RATE_DESCRIPTION: `Have ${botName} rate an item of your choosing`,
 			COMMAND_RATE_EXTENDED: builder.display('rate', {
 				examples: [
@@ -500,7 +501,7 @@ export default class extends Language {
 			EVENT_ROLEDELETE_TITLE: (name: string) => `Role Deleted | ${name}`,
 			EVENT_ROLE_FOOTER: (id: string) => `Role ID: ${id}`,
 			EVENT_GUILDMEMBER_ADD_HUMANTITLE: 'Member Joined Server',
-			EVENT_GUILDMEMBERADD_ACCOUNTCREATED: 'Account Created',
+			EVENT_GUILDMEMBERADD_ACCOUNTCREATED: (duration: string) => `Account created ${duration} ago`,
 			EVENT_GUILDMEMBERADD_BOTTITLE: (executor: string) => `Bot added by ${executor}`,
 			EVENT_GUILDMEMBER_FOOTER: (id: string) => `Member ID: ${id}`
 		};

@@ -17,9 +17,9 @@ export default class extends Event {
 		const embed = new MessageEmbed()
 			.setAuthor(executor.tag, executor.displayAvatarURL())
 			.setColor(LogColors.YELLOW)
-			.setFooter(role.guild.language.get('EVENT_ROLE_FOOTER', role.id))
+			.setFooter(role.guild.language.tget('EVENT_ROLE_FOOTER', role.id))
 			.setTimestamp()
-			.setTitle(role.guild.language.get('EVENT_ROLEDELETE_TITLE', role.name));
+			.setTitle(role.guild.language.tget('EVENT_ROLEDELETE_TITLE', role.name));
 
 		return serverlog.send(embed);
 	}

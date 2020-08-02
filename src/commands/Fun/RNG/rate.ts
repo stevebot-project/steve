@@ -15,7 +15,7 @@ export default class extends SteveCommand {
 	}
 
 	public async run(msg: KlasaMessage, [thing]: [string]): Promise<Message> {
-		return msg.channel.send(msg.language.get('COMMAND_RATE_RESPONSE', thing, Math.floor((Math.random() * 10) + 1)));
+		return msg.channel.send(msg.language.tget('COMMAND_RATE_RESPONSE', thing, Math.floor((Math.random() * 10) + 1)));
 	}
 
 }

@@ -20,12 +20,12 @@ export default class extends SteveCommand {
 				if (action === 'view') return null;
 				if (action === 'create') {
 					if (str.length <= 140) return str;
-					throw msg.language.get('RESOLVER_REMINDER_LENGTH');
+					throw msg.language.tget('RESOLVER_REMINDER_LENGTH');
 				}
 
 				const reminders = this.client.schedule.getUserReminders(msg.author.id);
 				const reminderNum = parseInt(str, 10);
-				if (isNaN(reminderNum) || reminders.length < reminderNum) throw msg.language.get('RESOLVER_REMINDER_INVALID', str);
+				if (isNaN(reminderNum) || reminders.length < reminderNum) throw msg.language.tget('RESOLVER_REMINDER_INVALID', str);
 				return reminderNum;
 			})
 			.createCustomResolver('timespan', (str, possible, msg, [action]) => {
@@ -39,13 +39,13 @@ export default class extends SteveCommand {
 
 		await this.client.schedule.createReminder(duration, msg.author.id, reminder, msg.channel instanceof TextChannel && reminderChannel ? reminderChannel : msg.channel.id);
 
-		return msg.channel.send(msg.language.get('COMMAND_REMIND_CREATED', friendlyDuration(duration)));
+		return msg.channel.send(msg.language.tget('COMMAND_REMIND_CREATED', friendlyDuration(duration)));
 	}
 
 	public async view(msg: KlasaMessage): Promise<Message> {
 		let output = '';
 		const reminders = this.client.schedule.getUserReminders(msg.author.id);
-		if (reminders.length < 1) throw msg.language.get('COMMAND_REMIND_NOREMIDNERS');
+		if (reminders.length < 1) throw msg.guild!.language.tget('COMMAND_REMIND_NOREMINDERS');
 
 		for (let i = 0; i < reminders.length; i++) {
 			const reminder = reminders[i];
@@ -60,7 +60,7 @@ export default class extends SteveCommand {
 		const reminderUser = await this.client.users.fetch(msg.author.id);
 		if (!reminderUser.dmChannel) return reminder.data.content;
 		return reminder.data.channel === reminderUser.dmChannel.id && msg.channel.id !== reminderUser.dmChannel.id
-			? msg.language.get('COMMAND_REMINDER_DISPLAY_HIDDEN')
+			? msg.language.tget('COMMAND_REMINDER_DISPLAY_HIDDEN')
 			: reminder.data.content;
 	}
 

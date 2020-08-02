@@ -16,7 +16,7 @@ export default class extends SteveCommand {
 	}
 
 	public async run(msg: KlasaMessage): Promise<Message> {
-		const responses = msg.language.get('COMMAND_8BALL_RESPONSES') as string[];
+		const responses = msg.language.tget('COMMAND_8BALL_RESPONSES') as string[];
 		return msg.channel.send(responses[Math.floor(Math.random() * responses.length)]);
 	}
 

@@ -35,7 +35,7 @@ export class ModerationCases {
 		const newCase: ModerationCase
 			= {
 				action,
-				duration: typeof duration === 'number' ? friendlyDuration(duration) : this.manager.guild.language.get('MODERATION_NODURATION'),
+				duration: typeof duration === 'number' ? friendlyDuration(duration) : this.manager.guild.language.tget('MODERATION_NODURATION'),
 				moderator: moderator.id,
 				number: this.caseArray.length + 1,
 				reason,
@@ -61,13 +61,13 @@ export class ModerationCases {
 
 		return buildEmbed()
 			.addFields(
-				{ name: this.manager.guild.language.get('MODERATION_CASE_DISPLAY_FIELD_TARGET'), value: thisCaseTarget.tag, inline: true },
-				{ name: this.manager.guild.language.get('MODERATION_CASE_DISPLAY_FIELD_MODERATOR'), value: thisCaseModerator.tag, inline: true },
-				{ name: this.manager.guild.language.get('MODERATION_CASE_DISPLAY_FIELD_DURATION'), value: `${thisCase.duration} ${thisCaseTask}`, inline: true },
-				{ name: this.manager.guild.language.get('MODERATION_CASE_DISPLAY_FIELD_REASON'), value: thisCase.reason }
+				{ name: this.manager.guild.language.tget('MODERATION_CASE_DISPLAY_FIELD_TARGET'), value: thisCaseTarget.tag, inline: true },
+				{ name: this.manager.guild.language.tget('MODERATION_CASE_DISPLAY_FIELD_MODERATOR'), value: thisCaseModerator.tag, inline: true },
+				{ name: this.manager.guild.language.tget('MODERATION_CASE_DISPLAY_FIELD_DURATION'), value: `${thisCase.duration} ${thisCaseTask}`, inline: true },
+				{ name: this.manager.guild.language.tget('MODERATION_CASE_DISPLAY_FIELD_REASON'), value: thisCase.reason }
 			)
 			.setColor(0xffe16b)
-			.setFooter(this.manager.guild.language.get('MODERATION_CASE_DISPLAY_FOOTER', thisCase.number, thisCase.target))
+			.setFooter(this.manager.guild.language.tget('MODERATION_CASE_DISPLAY_FOOTER', thisCase.number, thisCase.target))
 			.setTimestamp(thisCase.timestamp)
 			.setTitle(this.manager.guild.language.caseActions[thisCase.action]);
 	}

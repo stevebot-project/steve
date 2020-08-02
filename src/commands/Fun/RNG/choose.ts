@@ -15,8 +15,8 @@ export default class extends SteveCommand {
 	}
 
 	public async run(msg: KlasaMessage, choices: string[]): Promise<Message> {
-		if (choices.length < 2) throw msg.language.get('COMMAND_CHOOSE_TOOFEW');
-		return msg.channel.send(msg.language.get('COMMAND_CHOOSE_RESPONSE', choices[Math.floor(Math.random() * choices.length)]));
+		if (choices.length < 2) throw msg.language.tget('COMMAND_CHOOSE_TOOFEW');
+		return msg.channel.send(msg.language.tget('COMMAND_CHOOSE_RESPONSE', choices[Math.floor(Math.random() * choices.length)]));
 	}
 
 }

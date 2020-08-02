@@ -19,9 +19,9 @@ export default class extends Event {
 		const embed = new MessageEmbed()
 			.setAuthor(executor.tag, executor.displayAvatarURL())
 			.setColor(LogColors.PURPLE)
-			.setFooter(channel.guild.language.get('EVENT_CHANNEL_FOOTER', channel.id))
+			.setFooter(channel.guild.language.tget('EVENT_CHANNEL_FOOTER', channel.id))
 			.setTimestamp()
-			.setTitle(channel.guild.language.get('EVENT_CHANNELDELETE_TITLE', toTitleCase(channel.type), channel.name));
+			.setTitle(channel.guild.language.tget('EVENT_CHANNELDELETE_TITLE', toTitleCase(channel.type), channel.name));
 
 		return serverlog.send(embed);
 	}

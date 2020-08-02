@@ -24,53 +24,53 @@ export default class extends SteveCommand {
 	}
 
 	public async add(msg: KlasaMessage, [snipName, snipContent]: [string, string]): Promise<Message> {
-		if (!msg.member!.isStaff) throw msg.language.get('COMMAND_SNIPPET_NOPERMISSION');
+		if (!msg.member!.isStaff) throw msg.language.tget('COMMAND_SNIPPET_NOPERMISSION');
 
 		const snips: Snippet[] = msg.guild!.settings.get(GuildSettings.Snippets);
-		if (snips.some(snip => snip.name === snipName)) throw msg.language.get('COMMAND_SNIPPET_ALREADYEXISTS', snipName);
+		if (snips.some(snip => snip.name === snipName)) throw msg.language.tget('COMMAND_SNIPPET_ALREADYEXISTS', snipName);
 
 		const newSnip = this.createSnip(msg, snipName, snipContent);
 		await msg.guild!.settings.update(GuildSettings.Snippets, newSnip, { action: 'add' });
 
-		return msg.channel.send(msg.language.get('COMMAND_SNIPPET_ADD', newSnip.name));
+		return msg.channel.send(msg.language.tget('COMMAND_SNIPPET_ADD', newSnip.name));
 	}
 
 	public async edit(msg: KlasaMessage, [snipName, snipContent]: [string, string]): Promise<Message> {
-		if (!msg.member!.isStaff) throw msg.language.get('COMMAND_SNIPPET_NOPERMISSION');
+		if (!msg.member!.isStaff) throw msg.language.tget('COMMAND_SNIPPET_NOPERMISSION');
 
 		const snips: Snippet[] = msg.guild!.settings.get(GuildSettings.Snippets);
 		const index = snips.findIndex(snip => snip.name === snipName);
-		if (index === -1) throw msg.language.get('COMMAND_SNIPPET_INVALID', snipName);
+		if (index === -1) throw msg.language.tget('COMMAND_SNIPPET_INVALID', snipName);
 
 		await msg.guild!.settings.update(GuildSettings.Snippets, this.createSnip(msg, snipName, snipContent), { arrayPosition: index });
 
-		return msg.channel.send(msg.language.get('COMMAND_SNIPPET_EDIT', snipName));
+		return msg.channel.send(msg.language.tget('COMMAND_SNIPPET_EDIT', snipName));
 	}
 
 	public async remove(msg: KlasaMessage, [snipName]: [string]): Promise<Message> {
-		if (!msg.member!.isStaff) throw msg.language.get('COMMAND_SNIPPET_NOPERMISSION');
+		if (!msg.member!.isStaff) throw msg.language.tget('COMMAND_SNIPPET_NOPERMISSION');
 
 		const snips: Snippet[] = msg.guild!.settings.get(GuildSettings.Snippets);
 		const snip = snips.find(snip => snip.name === snipName.toLowerCase());
-		if (!snip) throw msg.language.get('COMMAND_SNIP_INVALID', snipName);
+		if (!snip) throw msg.language.tget('COMMAND_SNIPPET_INVALID', snipName);
 
 		await msg.guild!.settings.update(GuildSettings.Snippets, snip, { action: 'remove' });
 
-		return msg.channel.send(msg.language.get('COMMAND_SNIPPET_REMOVE', snipName));
+		return msg.channel.send(msg.language.tget('COMMAND_SNIPPET_REMOVE', snipName));
 	}
 
 	public async view(msg: KlasaMessage, [snipName]: [string]): Promise<Message> {
 		const snips: Snippet[] = msg.guild!.settings.get(GuildSettings.Snippets);
 
 		const snip = snips.find(s => s.name === snipName.toLowerCase());
-		if (!snip) throw msg.language.get('COMMAND_SNIPPET_INVALID', snipName);
+		if (!snip) throw msg.language.tget('COMMAND_SNIPPET_INVALID', snipName);
 
 		return msg.channel.send(snip.embed ? buildEmbed().setDescription(snip.content) : snip.content);
 	}
 
 	public async list(msg: KlasaMessage): Promise<Message> {
 		const snips: Snippet[] = msg.guild!.settings.get(GuildSettings.Snippets);
-		if (!snips.length) throw msg.language.get('COMMAND_SNIPPET_NOSNIPS');
+		if (!snips.length) throw msg.language.tget('COMMAND_SNIPPET_NOSNIPS');
 
 		const response = await msg.send(new MessageEmbed()
 			.setDescription('Loading...'));
@@ -88,11 +88,11 @@ export default class extends SteveCommand {
 	}
 
 	public async reset(msg: KlasaMessage): Promise<Message> {
-		if (!msg.member!.isStaff) throw msg.language.get('COMMAND_SNIPPET_NOPERMISSION');
+		if (!msg.member!.isStaff) throw msg.language.tget('COMMAND_SNIPPET_NOPERMISSION');
 
 		await msg.guild!.settings.reset(GuildSettings.Snippets);
 
-		return msg.channel.send(msg.language.get('COMMAND_SNIPPET_RESET'));
+		return msg.channel.send(msg.language.tget('COMMAND_SNIPPET_RESET'));
 	}
 
 	public source(msg: KlasaMessage, [snipName]: string): Promise<Message> | null {

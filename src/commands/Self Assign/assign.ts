@@ -21,7 +21,7 @@ export default class extends SteveCommand {
 	}
 
 	public async edit(msg: KlasaMessage, roles: Role[]): Promise<Message> {
-		if (!msg.member!.isStaff) throw msg.language.get('COMMAND_ASSIGN_NOTSTAFF');
+		if (!msg.member!.isStaff) throw msg.language.tget('COMMAND_ASSIGN_NOTSTAFF');
 		const removed: string[] = [];
 		const added: string[] = [];
 
@@ -36,8 +36,8 @@ export default class extends SteveCommand {
 		}
 
 		let output = '';
-		if (added.length) output += `${msg.language.get('COMMAND_ASSIGN_EDIT_ADD', added.join(', '))}\n`;
-		if (removed.length) output += `${msg.language.get('COMMAND_ASSIGN_EDIT_REMOVE', removed.join(', '))}\n`;
+		if (added.length) output += `${msg.language.tget('COMMAND_ASSIGN_EDIT_ADD', added.join(', '))}\n`;
+		if (removed.length) output += `${msg.language.tget('COMMAND_ASSIGN_EDIT_REMOVE', removed.join(', '))}\n`;
 
 		return msg.channel.send(output);
 	}
@@ -72,7 +72,7 @@ export default class extends SteveCommand {
 
 		for (const role of roles) {
 			if (!role.isAssignable) {
-				floatPromise(this, msg.channel.send(msg.language.get('COMMAND_ASSIGN_NOTASSIGNABLE', role.name)));
+				floatPromise(this, msg.channel.send(msg.language.tget('COMMAND_ASSIGN_NOTASSIGNABLE', role.name)));
 				continue;
 			}
 
@@ -86,8 +86,8 @@ export default class extends SteveCommand {
 		}
 
 		let output = '';
-		if (added.length) output += `${msg.language.get('COMMAND_ASSIGN_ROLE_ADD', added.join(', '))}\n`;
-		if (removed.length) output += `${msg.language.get('COMMAND_ASSIGN_ROLE_REMOVE', removed.join(', '))}\n`;
+		if (added.length) output += `${msg.language.tget('COMMAND_ASSIGN_ROLE_ADD', added.join(', '))}\n`;
+		if (removed.length) output += `${msg.language.tget('COMMAND_ASSIGN_ROLE_REMOVE', removed.join(', '))}\n`;
 
 		return output ? msg.channel.send(output) : null;
 	}
