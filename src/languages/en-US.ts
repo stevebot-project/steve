@@ -1,4 +1,5 @@
 import { Language, LanguageStore, util } from 'klasa';
+import { oneLine } from 'common-tags';
 
 export default class extends Language {
 
@@ -171,7 +172,21 @@ export default class extends Language {
 			],
 			COMMAND_STATS_DESCRIPTION: 'Provides some details about the bot and stats.',
 			MESSAGE_PROMPT_TIMEOUT: 'The prompt has timed out.',
-			TEXT_PROMPT_ABORT_OPTIONS: ['abort', 'stop', 'cancel']
+			TEXT_PROMPT_ABORT_OPTIONS: ['abort', 'stop', 'cancel'],
+
+			COMMAND_SNIPPET_DESCRIPTION: 'Create/edit/remove/view snippets of information about the server',
+			COMMAND_SNIPPET_EXTENDED: oneLine`This command allows users to easily access bits of information about the server. Adding, editing, and
+			removing snippets is restricted to server staff, but any member can view the list of snippets, or view individual snips.
+			When creating/editing a snip, staff can use the \`--embed\` flag to display the content of the snip in an embed. The content
+			will be displayed in the embed description, which means that Markdown will display properly (including masked links).`,
+			COMMAND_SNIPPET_ADD: (name: string) => `Added a snippet with the name: ${name}.`,
+			COMMAND_SNIPPET_EDIT: (name: string) => `Edited the ${name} snippet.`,
+			COMMAND_SNIPPET_REMOVE: (name: string) => `Removed the ${name} snippet.`,
+			COMMAND_SNIPPET_NOPERMISSION: 'You do not have permissions to edit snippets for this server.',
+			COMMAND_SNIPPET_ALREADYEXISTS: (name: string) => `There is already a snippet named ${name}.`,
+			COMMAND_SNIPPET_INVALID: (name: string) => `There is no snippet with the name: ${name}.`,
+			COMMAND_SNIPPET_NOSNIPS: 'This server has no snippets!',
+			COMMAND_SNIPPET_RESET: 'This server\'s snippets have been reset.',
 		};
 	}
 

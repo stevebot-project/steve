@@ -1,6 +1,11 @@
 import { Guild, GuildAuditLogsAction, User, MessageEmbed } from 'discord.js';
+import { Client, util } from 'klasa';
 import prettyMilliseconds from 'pretty-ms';
 import moment from 'moment';
+
+export function floatPromise(ctx: { client: Client }, promise: Promise<unknown>): void {
+	if (util.isThenable(promise)) promise.catch(error => ctx.client.emit('error', error));
+}
 
 export function formatDate(date: number | Date, format = 'YYYY MMM Do'): string {
 	return moment(date).format(format);

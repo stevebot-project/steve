@@ -37,6 +37,7 @@ declare module 'discord.js' {
 
 declare module 'klasa' {
 	interface KlasaClient {
+		emit(eventName: string, ...args: any[]): boolean;
 		lavalink: Lavalink | null;
 	}
 
