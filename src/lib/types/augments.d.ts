@@ -37,6 +37,7 @@ declare module 'discord.js' {
 
 declare module 'klasa' {
 	interface KlasaClient {
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		emit(eventName: string, ...args: any[]): boolean;
 		lavalink: Lavalink | null;
 	}

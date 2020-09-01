@@ -179,14 +179,14 @@ export default class extends Language {
 			removing snippets is restricted to server staff, but any member can view the list of snippets, or view individual snips.
 			When creating/editing a snip, staff can use the \`--embed\` flag to display the content of the snip in an embed. The content
 			will be displayed in the embed description, which means that Markdown will display properly (including masked links).`,
-			COMMAND_SNIPPET_ADD: (name: string) => `Added a snippet with the name: ${name}.`,
-			COMMAND_SNIPPET_EDIT: (name: string) => `Edited the ${name} snippet.`,
-			COMMAND_SNIPPET_REMOVE: (name: string) => `Removed the ${name} snippet.`,
+			COMMAND_SNIPPET_ADD: (name: string): string => `Added a snippet with the name: ${name}.`,
+			COMMAND_SNIPPET_EDIT: (name: string): string => `Edited the ${name} snippet.`,
+			COMMAND_SNIPPET_REMOVE: (name: string): string => `Removed the ${name} snippet.`,
 			COMMAND_SNIPPET_NOPERMISSION: 'You do not have permissions to edit snippets for this server.',
-			COMMAND_SNIPPET_ALREADYEXISTS: (name: string) => `There is already a snippet named ${name}.`,
-			COMMAND_SNIPPET_INVALID: (name: string) => `There is no snippet with the name: ${name}.`,
+			COMMAND_SNIPPET_ALREADYEXISTS: (name: string): string => `There is already a snippet named ${name}.`,
+			COMMAND_SNIPPET_INVALID: (name: string): string => `There is no snippet with the name: ${name}.`,
 			COMMAND_SNIPPET_NOSNIPS: 'This server has no snippets!',
-			COMMAND_SNIPPET_RESET: 'This server\'s snippets have been reset.',
+			COMMAND_SNIPPET_RESET: 'This server\'s snippets have been reset.'
 		};
 	}
 
