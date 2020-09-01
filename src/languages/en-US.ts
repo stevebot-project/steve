@@ -1,5 +1,11 @@
 import { Language, LanguageStore, util } from 'klasa';
 import { oneLine } from 'common-tags';
+import { HelpBuilder } from '@lib/util/HelpBuilder';
+
+const builder = new HelpBuilder()
+	.setExamples('👀 | **Examples**')
+	.setExplainedUsage('🤔 | **Explained Usage**')
+	.setReminder('🔥 | **Reminder**');
 
 export default class extends Language {
 
@@ -135,6 +141,14 @@ export default class extends Language {
 			],
 			COMMAND_INFO_DESCRIPTION: 'Provides some information about this bot.',
 			COMMAND_HELP_DESCRIPTION: 'Display help for a command.',
+			COMMAND_HELP_DATA: {
+				// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+				// @ts-ignore 2322
+				TITLE: (description: string): string => `${description}`,
+				USAGE: (usage: string): string => `📝 | ***Command Usage***\n\`${usage}\`\n`,
+				EXTENDED: (extendedHelp: string): string => `🔍 | ***Extended Help***\n${extendedHelp}`,
+				FOOTER: (name: string): string => `Command help for ${name}`
+			},
 			COMMAND_HELP_NO_EXTENDED: 'No extended help available.',
 			COMMAND_HELP_DM: '📥 | The list of commands you have access to has been sent to your DMs.',
 			COMMAND_HELP_NODM: '❌ | You have DMs disabled, I couldn\'t send you the commands in DMs.',
@@ -175,10 +189,25 @@ export default class extends Language {
 			TEXT_PROMPT_ABORT_OPTIONS: ['abort', 'stop', 'cancel'],
 
 			COMMAND_SNIPPET_DESCRIPTION: 'Create/edit/remove/view snippets of information about the server',
-			COMMAND_SNIPPET_EXTENDED: oneLine`This command allows users to easily access bits of information about the server. Adding, editing, and
-			removing snippets is restricted to server staff, but any member can view the list of snippets, or view individual snips.
-			When creating/editing a snip, staff can use the \`--embed\` flag to display the content of the snip in an embed. The content
-			will be displayed in the embed description, which means that Markdown will display properly (including masked links).`,
+			COMMAND_SNIPPET_EXTENDED: builder.display('snippet', {
+				examples: [
+					'add|jonathans|jonathans have the best name',
+					'edit|jonathans|jonathans have the BEST name --embed',
+					'remove|jonathans',
+					'jonathans',
+					'source|jonathans',
+					'reset',
+					'list'
+				],
+				extendedHelp: oneLine`This command allows users to easily access bits of information about the server. Adding, editing, and
+				removing snippets is restricted to server staff, but any member can view the list of snippets, or view individual snips.
+				When creating/editing a snip, staff can use the \`--embed\` flag to display the content of the snip in an embed. The content
+				will be displayed in the embed description, which means that Markdown will display properly (including masked links).`,
+				explainedUsage: [
+					['name', 'The name of a snip has a maximum length of 100 characters.'],
+					['content', 'The content of a snip has a maximum length of 1900 characters.']
+				]
+			}, true),
 			COMMAND_SNIPPET_ADD: (name: string): string => `Added a snippet with the name: ${name}.`,
 			COMMAND_SNIPPET_EDIT: (name: string): string => `Edited the ${name} snippet.`,
 			COMMAND_SNIPPET_REMOVE: (name: string): string => `Removed the ${name} snippet.`,

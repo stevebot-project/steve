@@ -1,21 +1,21 @@
-import { SteveCommand } from '@lib/structures/commands/SteveCommand';
-import { CommandStore, util, KlasaMessage } from 'klasa';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable new-cap */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+// @ts-nocheck
+import { Command, CommandStore, util, KlasaMessage } from 'klasa';
 import { Message, TextChannel } from 'discord.js';
-import { NAME, CLIENT_OPTIONS } from '@root/config';
-import { newEmbed } from '@lib/util/util';
-import { Colors, Emojis } from '@lib/types/enums';
-const has = (obj, key): any => Object.prototype.hasOwnProperty.call(obj, key); // eslint-disable-line @typescript-eslint/no-explicit-any
+import { NAME } from '@root/config';
+import { newEmbed, floatPromise } from '@lib/util/util';
+const has = (obj: any, key: any): any => Object.prototype.hasOwnProperty.call(obj, key);
 
-export default class extends SteveCommand {
+export default class extends Command {
 
 	public constructor(store: CommandStore, file: string[], directory: string) {
 		super(store, file, directory, {
 			aliases: ['commands', 'howthefuckdoiusethisbot'],
 			guarded: true,
 			description: `Shows info about ${NAME}'s commands.`,
-			examples: ['help', 'help roll'],
-			usage: '(command:command)',
-			helpUsage: 'command'
+			usage: '(command:command)'
 		});
 
 		this
@@ -26,45 +26,21 @@ export default class extends SteveCommand {
 			});
 	}
 
-	public async run(msg: KlasaMessage, [cmd]: [SteveCommand]): Promise<Message | void> {
+	public async run(msg: KlasaMessage, [cmd]: [Command]): Promise<Message | void> {
 		if (cmd) {
-			const examples: string[] | string = cmd.examples ? cmd.examples : 'No examples provided.';
-			const helpUsage = [];
-
-			cmd.helpUsage // eslint-disable-line no-unused-expressions
-				? helpUsage.push(`• ${CLIENT_OPTIONS.prefix}${cmd.name} ${cmd.helpUsage}`)
-				: helpUsage.push(`• ${CLIENT_OPTIONS.prefix}${cmd.name}`);
-
-			if (cmd.aliases.length) {
-				for (const alias of cmd.aliases) {
-					cmd.helpUsage // eslint-disable-line no-unused-expressions
-						? helpUsage.push(`• ${CLIENT_OPTIONS.prefix}${alias} ${cmd.helpUsage}`)
-						: helpUsage.push(`• ${CLIENT_OPTIONS.prefix}${alias}`);
-				}
-			}
-
-			const description = util.isFunction(cmd.description) ? cmd.description(msg.language) : cmd.description || 'No description provided.';
-			const extendedHelp = util.isFunction(cmd.extendedHelp) ? cmd.extendedHelp(msg.language) : cmd.extendedHelp || 'No extended help provided.';
+			const DATA: any = msg.language.get('COMMAND_HELP_DATA');
 
 			const embed = newEmbed()
-				.setColor(Colors.SteveFireBlue)
-				.setFooter(`Help for the ${cmd.name} command`)
-				.setThumbnail(this.client.user.displayAvatarURL())
 				.setTimestamp()
-				.setTitle(description)
-				.addFields(
-					{ name: `${Emojis.SteveFaceLight} | *Usage*`, value: helpUsage.join('\n') },
-					{ name: `${Emojis.StevePeace} | *Extended Help*`, value: extendedHelp }
-				);
-
-			if (Array.isArray(examples)) {
-				const helpExamples = [];
-				for (let i = 0; i < examples.length; i++) {
-					helpExamples.push(`>> Steve, ${examples[i]}`);
-				}
-
-				embed.addFields({ name: `${Emojis.SteveFaceDark} | *Examples*`, value: helpExamples.join('\n') });
-			}
+				.attachFiles(['./assets/images/steve_dab.png'])
+				.setThumbnail('attachment://steve_dab.png')
+				.setColor(0x71adcf)
+				.setFooter(DATA.FOOTER(cmd.name))
+				.setTitle(DATA.TITLE(util.isFunction(cmd.description) ? cmd.description(msg.language) : cmd.description))
+				.setDescription([
+					DATA.USAGE(cmd.usage.fullUsage(msg)),
+					DATA.EXTENDED(util.isFunction(cmd.extendedHelp) ? cmd.extendedHelp(msg.language) : cmd.extendedHelp)
+				].join('\n'));
 
 			return msg.channel.send(embed);
 		}
@@ -81,11 +57,12 @@ export default class extends SteveCommand {
 			}
 
 			return msg.author.send(helpMessage, { split: { char: '\u200b' } })
-				.then(() => { if (msg.channel.type !== 'dm') msg.sendLocale('COMMAND_HELP_DM'); })
-				.catch(() => { if (msg.channel.type !== 'dm') msg.sendLocale('COMMAND_HELP_NODM'); });
+				.then(() => { if (msg.channel.type !== 'dm') floatPromise(this, msg.sendLocale('COMMAND_HELP_DM')); })
+				.catch(() => { if (msg.channel.type !== 'dm') floatPromise(this, msg.sendLocale('COMMAND_HELP_NODM')); });
 		}
 	}
 
+	// eslint-disable-next-line @typescript-eslint/ban-types
 	private async buildHelp(msg: KlasaMessage): Promise<{}> {
 		const help = {};
 
@@ -93,7 +70,7 @@ export default class extends SteveCommand {
 		const commandNames = [...this.client.commands.keys()];
 		const longest = commandNames.reduce((long, str) => Math.max(long, str.length), 0);
 
-		await Promise.all(this.client.commands.map((cmd) =>
+		await Promise.all(this.client.commands.map(cmd =>
 			this.client.inhibitors.run(msg, cmd, true)
 				.then(() => {
 					if (!has(help, cmd.category)) help[cmd.category] = {};
@@ -103,8 +80,7 @@ export default class extends SteveCommand {
 				})
 				.catch(() => {
 					// noop
-				})
-		));
+				})));
 
 		return help;
 	}
