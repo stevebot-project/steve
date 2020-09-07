@@ -14,12 +14,14 @@ export default class extends Event {
 	private async handleLog(role: Role, serverlog: TextChannel): Promise<Message> {
 		const executor = await getExecutor(role.guild, 'ROLE_CREATE');
 
+		const EMBED_DATA = role.guild.language.tget('EVENT_ROLECREATE_EMBED');
+
 		const embed = new MessageEmbed()
 			.setAuthor(executor.tag, executor.displayAvatarURL())
 			.setColor(LogColors.YELLOW)
-			.setFooter(role.guild.language.tget('EVENT_ROLE_FOOTER', role.id))
+			.setFooter(EMBED_DATA.FOOTER(role.id))
 			.setTimestamp()
-			.setTitle(role.guild.language.tget('EVENT_ROLECREATE_TITLE', role.name));
+			.setTitle(EMBED_DATA.TITLE(role.name));
 
 		return serverlog.send(embed);
 	}

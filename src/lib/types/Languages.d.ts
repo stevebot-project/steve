@@ -242,15 +242,30 @@ declare module 'klasa' {
 		COMMAND_FEEDBACK_NO_GUILD: string;
 		COMMAND_FEEDBACK_NO_CHANNEL: string;
 		COMMAND_FEEDBACK_SENT: string;
-		EVENT_CHANNELCREATE_TITLE: (type: string, name: string) => string;
-		EVENT_CHANNELDELETE_TITLE: (type: string, name: string) => string;
-		EVENT_CHANNEL_FOOTER: (id: string) => string;
-		EVENT_EMOJICREATE_TITLE: (name: string) => string;
-		EVENT_EMOJIDELETE_TITLE: (name: string) => string;
-		EVENT_EMOJI_FOOTER: (id: string) => string;
-		EVENT_ROLECREATE_TITLE: (name: string) => string;
-		EVENT_ROLEDELETE_TITLE: (name: string) => string;
-		EVENT_ROLE_FOOTER: (id: string) => string;
+		EVENT_CHANNELCREATE_EMBED: {
+			FOOTER: (id: string) => string;
+			TITLE: (type: string, name: string) => string;
+		};
+		EVENT_CHANNELDELETE_EMBED: {
+			FOOTER: (id: string) => string;
+			TITLE: (type: string, name: string) => string;
+		};
+		EVENT_EMOJICREATE_EMBED: {
+			FOOTER: (id: string) => string;
+			TITLE: (name: string) => string;
+		};
+		EVENT_EMOJIDELETE_EMBED: {
+			FOOTER: (id: string) => string;
+			TITLE: (name: string) => string;
+		};
+		EVENT_ROLECREATE_EMBED: {
+			FOOTER: (id: string) => string;
+			TITLE: (name: string) => string;
+		};
+		EVENT_ROLEDELETE_EMBED: {
+			FOOTER: (id: string) => string;
+			TITLE: (name: string) => string;
+		};
 		EVENT_GUILDMEMBERADD_EMBED: {
 			FIELD_TITLES: {
 				BOT: (executor: string) => string;

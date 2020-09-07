@@ -17,18 +17,20 @@ export default class extends Event {
 		let memberRoles = member.roles.cache.filter(r => r.id !== member.guild.id).map(r => r.name).join(', ');
 		memberRoles = memberRoles.length > 0 ? memberRoles : member.guild.language.tget('NONE');
 
+		const EMBED_DATA = member.guild.language.tget('EVENT_GUILDMEMBERREMOVE_EMBED');
+
 		const embed = new MessageEmbed()
 			.addFields(
 				{
-					name: member.guild.language.tget('EVENT_GUILDMEMBERREMOVE_LEFTGUILD', member.user.bot),
-					value: member.guild.language.tget('EVENT_GUILDMEMBERREMOVE_JOINEDGUILD', friendlyDuration(Date.now() - member.joinedTimestamp!)),
+					name: EMBED_DATA.FIELD_TITLES.JOIN_DATE(member.user.bot),
+					value: EMBED_DATA.FIELD_VALUES.JOIN_DATE(friendlyDuration(Date.now() - member.joinedTimestamp!)),
 					inline: true
 				},
-				{ name: member.guild.language.tget('ROLES'), value: memberRoles, inline: true }
+				{ name: EMBED_DATA.FIELD_TITLES.ROLES, value: memberRoles, inline: true }
 			)
 			.setAuthor(member.user.tag, member.user.displayAvatarURL())
 			.setColor(LogColors.TURQUOISE)
-			.setFooter(member.guild.language.tget('EVENT_GUILDMEMBER_FOOTER', member.id))
+			.setFooter(EMBED_DATA.FOOTER(member.id))
 			.setTimestamp();
 
 		return memberlog.send(embed);

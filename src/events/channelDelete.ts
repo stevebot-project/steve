@@ -1,7 +1,7 @@
 import { Event } from 'klasa';
 import { DMChannel, GuildChannel, Message, MessageEmbed, TextChannel } from 'discord.js';
 import { LogColors } from '@lib/types/Enums';
-import { getExecutor, toTitleCase, floatPromise } from '@utils/Util';
+import { getExecutor, floatPromise } from '@utils/Util';
 import { GuildSettings } from '@lib/types/settings/GuildSettings';
 
 export default class extends Event {
@@ -16,12 +16,14 @@ export default class extends Event {
 	private async handleLog(channel: GuildChannel, serverlog: TextChannel): Promise<Message> {
 		const executor = await getExecutor(channel.guild, 'CHANNEL_DELETE');
 
+		const EMBED_DATA = channel.guild.language.tget('EVENT_CHANNELDELETE_EMBED');
+
 		const embed = new MessageEmbed()
 			.setAuthor(executor.tag, executor.displayAvatarURL())
 			.setColor(LogColors.PURPLE)
-			.setFooter(channel.guild.language.tget('EVENT_CHANNEL_FOOTER', channel.id))
+			.setFooter(EMBED_DATA.FOOTER(channel.id))
 			.setTimestamp()
-			.setTitle(channel.guild.language.tget('EVENT_CHANNELDELETE_TITLE', toTitleCase(channel.type), channel.name));
+			.setTitle(EMBED_DATA.TITLE(channel.type, channel.name));
 
 		return serverlog.send(embed);
 	}

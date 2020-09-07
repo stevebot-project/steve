@@ -14,12 +14,14 @@ export default class extends Event {
 	private async handleLog(emoji: GuildEmoji, serverlog: TextChannel): Promise<Message> {
 		const executor = await getExecutor(emoji.guild, 'EMOJI_CREATE');
 
+		const EMBED_DATA = emoji.guild.language.tget('EVENT_EMOJICREATE_EMBED');
+
 		const embed = new MessageEmbed()
 			.setAuthor(executor.tag, executor.displayAvatarURL())
 			.setColor(LogColors.PINK)
-			.setFooter(emoji.guild.language.tget('EVENT_EMOJI_FOOTER', emoji.id))
+			.setFooter(EMBED_DATA.FOOTER(emoji.id))
 			.setTimestamp()
-			.setTitle(emoji.guild.language.tget('EVENT_EMOJICREATE_TITLE', emoji.name));
+			.setTitle(EMBED_DATA.TITLE(emoji.name));
 
 		return serverlog.send(embed);
 	}

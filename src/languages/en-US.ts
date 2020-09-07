@@ -5,6 +5,7 @@ import { NAME as botName } from '@root/config';
 import { ModerationCase } from '@lib/structures/ModerationCases';
 import { oneLine } from 'common-tags';
 import { Emojis } from '@lib/types/Enums';
+import { toTitleCase } from '@utils/util';
 
 const builder = new HelpBuilder()
 	.setExamples('👀 | **Examples**')
@@ -542,15 +543,30 @@ export default class extends Language {
 		/* #####
 				LOG EVENTS
 				#### */
-		EVENT_CHANNELCREATE_TITLE: (type: string, name: string) => `${type} Channel Created | ${name}`,
-		EVENT_CHANNELDELETE_TITLE: (type: string, name: string) => `${type} Channel Deleted | ${name}`,
-		EVENT_CHANNEL_FOOTER: (id: string) => `Channel ID: ${id}`,
-		EVENT_EMOJICREATE_TITLE: (name: string) => `Emoji Created | ${name}`,
-		EVENT_EMOJIDELETE_TITLE: (name: string) => `Emoji Deleted | ${name}`,
-		EVENT_EMOJI_FOOTER: (id: string) => `Emoji ID: ${id}`,
-		EVENT_ROLECREATE_TITLE: (name: string) => `Role Created | ${name}`,
-		EVENT_ROLEDELETE_TITLE: (name: string) => `Role Deleted | ${name}`,
-		EVENT_ROLE_FOOTER: (id: string) => `Role ID: ${id}`,
+		EVENT_CHANNELCREATE_EMBED: {
+			FOOTER: (id: string) => `Channel ID: ${id}`,
+			TITLE: (type: string, name: string) => `${toTitleCase(type)} Channel Created | ${name}`
+		},
+		EVENT_CHANNELDELETE_EMBED: {
+			FOOTER: (id: string) => `Channel ID: ${id}`,
+			TITLE: (type: string, name: string) => `${toTitleCase(type)} Channel Deleted | ${name}`
+		},
+		EVENT_EMOJICREATE_EMBED: {
+			FOOTER: (id: string) => `Emoji ID: ${id}`,
+			TITLE: (name: string) => `Emoji Created | ${name}`
+		},
+		EVENT_EMOJIDELETE_EMBED: {
+			FOOTER: (id: string) => `Emoji ID: ${id}`,
+			TITLE: (name: string) => `Emoji Deleted | ${name}`
+		},
+		EVENT_ROLECREATE_EMBED: {
+			FOOTER: (id: string) => `Role ID: ${id}`,
+			TITLE: (name: string) => `Role Created | ${name}`
+		},
+		EVENT_ROLEDELETE_EMBED: {
+			FOOTER: (id: string) => `Role ID: ${id}`,
+			TITLE: (name: string) => `Role Deleted | ${name}`
+		},
 		EVENT_GUILDMEMBERADD_EMBED: {
 			FIELD_TITLES: {
 				BOT: (executor: string) => `Bot added by ${executor}`,
