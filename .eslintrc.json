@@ -11,7 +11,8 @@
 		"@typescript-eslint/no-unsafe-assignment": 0,
 		"@typescript-eslint/no-unsafe-call": 0,
 		"@typescript-eslint/no-unsafe-return": 0,
-		"@typescript-eslint/prefer-for-of": 0
+		"@typescript-eslint/prefer-for-of": 0,
+		"@typescript-eslint/explicit-module-boundary-types": 0
 	},
 	"env": {
 		"es6": true,

@@ -1,6 +1,6 @@
 import { ComplexLanguageKeys, SimpleLanguageKeys } from '@lib/types/Augments';
-import { LanguageKeys } from '@lib/types/Languages';
-import { Extendable, ExtendableStore, Language } from 'klasa';
+
+import { Extendable, ExtendableStore, Language, LanguageKeys } from 'klasa';
 
 export default class extends Extendable {
 

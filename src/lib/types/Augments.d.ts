@@ -1,8 +1,7 @@
 import { BaseNodeOptions, Node as Lavalink } from 'lavalink';
 import { ModerationManager } from '@lib/structures/ModerationManager';
-import { ScheduledTask } from 'klasa';
+import { ScheduledTask, LanguageKeys } from 'klasa';
 import { ModerationTaskData } from '../../extendables/Schedule';
-import { LanguageKeys } from './Languages';
 import { PermissionString } from 'discord.js';
 
 declare module 'discord.js' {

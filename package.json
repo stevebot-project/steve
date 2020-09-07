@@ -49,8 +49,8 @@
     "@types/mongodb": "^3.3.16",
     "@types/node-fetch": "^2.5.4",
     "@types/ws": "^7.2.4",
-    "@typescript-eslint/eslint-plugin": "^3.0.0",
-    "@typescript-eslint/parser": "^3.0.0",
+    "@typescript-eslint/eslint-plugin": "^3.10.1",
+    "@typescript-eslint/parser": "^3.10.1",
     "eslint": "^7.0.0",
     "eslint-config-bamboo": "^5.0.0",
     "typescript": "^3.9.3"
