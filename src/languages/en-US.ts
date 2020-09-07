@@ -506,15 +506,19 @@ export default class extends Language {
 			extendedHelp: oneLine`Displayed stats: Total Members, # of Humans vs # of Bots, # of Text Channels vs # of Voice Channels,
 					# of Roles, # of Emojis, and the percentage of members with roles.`
 		}),
-		COMMAND_SERVERINFO_GUILDCREATION: (date: string, duration: string) => `Created ${date} (${duration} ago)`,
-		COMMAND_SERVERINFO_EMBED_TOTALMEMBERS: 'Total Members',
-		COMMAND_SERVERINFO_EMBED_HUMANS: 'Humans',
-		COMMAND_SERVERINFO_EMBED_BOTS: 'Bots',
-		COMMAND_SERVERINFO_EMBED_TEXTCHANNELS: 'Text Channels',
-		COMMAND_SERVERINFO_EMBED_VOICECHANNELS: 'Voice Channels',
-		COMMAND_SERVERINFO_EMBED_ROLES: 'Roles',
-		COMMAND_SERVERINFO_EMBED_EMOJIS: 'Emojis',
-		COMMAND_SERVERINFO_EMBED_PERCENTAGE: 'Members with Roles',
+		COMMAND_SERVERINFO_EMBED: {
+			FIELD_TITLES: {
+				TOTAL_MEMBERS: 'Total Members',
+				HUMANS: 'Humans',
+				BOTS: 'Bots',
+				TEXT_CHANNELS: 'Text Channels',
+				VOICE_CHANNELS: 'Voice Channels',
+				ROLES: 'Roles',
+				EMOJIS: 'Emojis',
+				MEMBERS_WITH_ROLES: 'Members with Roles'
+			},
+			FOOTER: (date: string, duration: string) => `Created ${date} (${duration} ago)`
+		},
 		COMMAND_ROLEINFO_DESCRIPTION: 'Display basic information about a role, along with a list of members who have it',
 		COMMAND_ROLEINFO_EXTENDED: builder.display('roleinfo', {
 			examples: [
@@ -525,8 +529,10 @@ export default class extends Language {
 		COMMAND_ROLEINFO_RESTRICTED: 'This role is restricted; you cannot view information about it.',
 		COMMAND_ROLEINFO_NOMEMBERS: 'There are no members in this role.',
 		COMMAND_ROLEINFO_TOOMANY: 'There are too many members in this role to display.',
-		COMMAND_ROLEINFO_CREATED: (role: string, date: string) => `The ${role} role was created on ${date}.`,
-		COMMAND_ROLEINFO_ASSIGNABLE: (assignable: boolean) => `This role is ${assignable ? '' : 'not '}self-assignable.`,
+		COMMAND_ROLEINFO_EMBED: {
+			DESCRIPTION: (role: string, date: string) => `The ${role} role was created on ${date}.`,
+			FOOTER: (assignable: boolean) => `This role is ${assignable ? '' : 'not '}self-assignable.`
+		},
 		/* #####
 				SYSTEM COMMANDS
 				#### */

@@ -8,8 +8,8 @@ export default class extends SteveCommand {
 	public constructor(store: CommandStore, file: string[], directory: string) {
 		super(store, file, directory, {
 			aliases: ['membersin'],
-			description: lang => lang.get('COMMAND_ROLEINFO_DESCRIPTION'),
-			extendedHelp: lang => lang.get('COMAMND_ROLEINFO_EXTENDED'),
+			description: lang => lang.tget('COMMAND_ROLEINFO_DESCRIPTION'),
+			extendedHelp: lang => lang.tget('COMMAND_ROLEINFO_EXTENDED'),
 			runIn: ['text'],
 			usage: '<role:rolename>'
 		});
@@ -26,13 +26,15 @@ export default class extends SteveCommand {
 				? msg.guild!.language.tget('COMMAND_ROLEINFO_TOOMANY')
 				: membersList;
 
+		const EMBED_DATA = msg.guild!.language.tget('COMMAND_ROLEINFO_EMBED');
+
 		const embed = new MessageEmbed()
 			.addFields([
 				{ name: role.members.size, value: membersList }
 			])
 			.setColor(role.hexColor)
-			.setDescription(msg.guild!.language.tget('COMMAND_ROLEINFO_CREATED', role.name, formatDate(role.createdTimestamp)))
-			.setFooter(msg.guild!.language.tget('COMMAND_ROLEINFO_ASSIGNABLE', role.isAssignable))
+			.setDescription(EMBED_DATA.DESCRIPTION(role.name, formatDate(role.createdTimestamp)))
+			.setFooter(EMBED_DATA.FOOTER(role.isAssignable))
 			.setTimestamp();
 
 		return msg.channel.send(embed);

@@ -221,22 +221,28 @@ declare module 'klasa' {
 		COMMAND_WHOIS_EMBED_ROLES: string;
 		COMMAND_SERVERINFO_DESCRIPTION: string;
 		COMMAND_SERVERINFO_EXTENDED: string;
-		COMMAND_SERVERINFO_GUILDCREATION: (date: string, duration: string) => string;
-		COMMAND_SERVERINFO_EMBED_TOTALMEMBERS: string;
-		COMMAND_SERVERINFO_EMBED_HUMANS: string;
-		COMMAND_SERVERINFO_EMBED_BOTS: string;
-		COMMAND_SERVERINFO_EMBED_TEXTCHANNELS: string;
-		COMMAND_SERVERINFO_EMBED_VOICECHANNELS: string;
-		COMMAND_SERVERINFO_EMBED_ROLES: string;
-		COMMAND_SERVERINFO_EMBED_EMOJIS: string;
-		COMMAND_SERVERINFO_EMBED_PERCENTAGE: string;
+		COMMAND_SERVERINFO_EMBED: {
+			FIELD_TITLES: {
+				TOTAL_MEMBERS: string;
+				HUMANS: string;
+				BOTS: string;
+				TEXT_CHANNELS: string;
+				VOICE_CHANNELS: string;
+				ROLES: string;
+				EMOJIS: string;
+				MEMBERS_WITH_ROLES: string;
+			};
+			FOOTER: (date: string, duration: string) => string;
+		};
 		COMMAND_ROLEINFO_DESCRIPTION: string;
 		COMMAND_ROLEINFO_EXTENDED: string;
 		COMMAND_ROLEINFO_RESTRICTED: string;
 		COMMAND_ROLEINFO_NOMEMBERS: string;
 		COMMAND_ROLEINFO_TOOMANY: string;
-		COMMAND_ROLEINFO_CREATED: (role: string, date: string) => string;
-		COMMAND_ROLEINFO_ASSIGNABLE: (assignable: boolean) => string;
+		COMMAND_ROLEINFO_EMBED: {
+			DESCRIPTION: (role: string, date: string) => string;
+			FOOTER: (assignable: boolean) => string;
+		};
 		COMMAND_FEEDBACK_DESCRIPTION: string;
 		COMMAND_FEEDBACK_EXTENDED: string;
 		COMMAND_FEEDBACK_NO_GUILD: string;
