@@ -494,10 +494,15 @@ export default class extends Language {
 		}),
 		COMMAND_WHOIS_DATE: (duration: string, date: string) => `${duration} ago (${date})`,
 		COMMAND_WHOIS_JOINEDGUILD_HOURS: (hours: number, date: string) => `${hours} hours ago (${date})`,
-		COMMAND_WHOIS_EMBED_DISPLAYNAME: 'Display Name',
-		COMMAND_WHOIS_EMBED_ACCOUNTCREATED: 'Account Created',
-		COMMAND_WHOIS_EMBED_JOINEDGUILD: 'Joined Server',
-		COMMAND_WHOIS_EMBED_ROLES: 'Roles',
+		COMMAND_WHOIS_EMBED: {
+			FIELD_TITLES: {
+				DISPLAY_NAME: 'Display Name',
+				ACCOUNT_CREATED: 'Account Created',
+				JOINED_GUILD: 'Joined Server',
+				ROLES: 'Roles'
+			},
+			FOOTER: (id: string) => `Member ID: ${id}`
+		},
 		/* #####
 				SERVER INFO
 				#### */

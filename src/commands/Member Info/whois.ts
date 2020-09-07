@@ -32,20 +32,22 @@ export default class extends SteveCommand {
 
 		const joinedGuild = this.getJoinDateString(member.joinedTimestamp!, msg.guild!);
 
+		const EMBED_DATA = msg.guild!.language.tget('COMMAND_WHOIS_EMBED');
+
 		const embed = new MessageEmbed()
 			.addFields([
-				{ name: msg.guild!.language.tget('COMMAND_WHOIS_EMBED_DISPLAYNAME'), value: member.displayName, inline: true },
-				{ name: msg.guild!.language.tget('COMMAND_WHOIS_EMBED_ACCOUNTCREATED'), value: accountCreated, inline: true },
-				{ name: msg.guild!.language.tget('COMMAND_WHOIS_EMBED_JOINEDGUILD'), value: joinedGuild, inline: true }
+				{ name: EMBED_DATA.FIELD_TITLES.DISPLAY_NAME, value: member.displayName, inline: true },
+				{ name: EMBED_DATA.FIELD_TITLES.ACCOUNT_CREATED, value: accountCreated, inline: true },
+				{ name: EMBED_DATA.FIELD_TITLES.JOINED_GUILD, value: joinedGuild, inline: true }
 			])
 			.setAuthor(user.tag, user.displayAvatarURL())
-			.setFooter(msg.guild!.language!.get('EVENT_GUILDMEMBER_FOOTER', member.id))
+			.setFooter(EMBED_DATA.FOOTER(member.id))
 			.setTimestamp();
 
 		if (member.roles.cache.size > 1) {
 			embed.addFields([
 				{
-					name: msg.guild!.language.tget('COMMAND_WHOIS_EMBED_ROLES'),
+					name: EMBED_DATA.FIELD_TITLES.ROLES,
 					// eslint-disable-next-line newline-per-chained-call
 					value: member.roles.cache.filter(r => r.id !== r.guild.id).sort().array().join(' ')
 				}

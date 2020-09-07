@@ -214,11 +214,16 @@ declare module 'klasa' {
 		COMMAND_WHOIS_DESCRIPTION: string;
 		COMMAND_WHOIS_EXTENDED: string;
 		COMMAND_WHOIS_DATE: (duration: string, date: string) => string;
-		COMMAND_WHOIS_EMBED_DISPLAYNAME: string;
-		COMMAND_WHOIS_EMBED_ACCOUNTCREATED: string;
-		COMMAND_WHOIS_EMBED_JOINEDGUILD: string;
 		COMMAND_WHOIS_JOINEDGUILD_HOURS: (hours: number, date: string) => string;
-		COMMAND_WHOIS_EMBED_ROLES: string;
+		COMMAND_WHOIS_EMBED: {
+			FIELD_TITLES: {
+				DISPLAY_NAME: string;
+				ACCOUNT_CREATED: string;
+				JOINED_GUILD: string;
+				ROLES: string;
+			};
+			FOOTER: (id: string) => string;
+		};
 		COMMAND_SERVERINFO_DESCRIPTION: string;
 		COMMAND_SERVERINFO_EXTENDED: string;
 		COMMAND_SERVERINFO_EMBED: {
