@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { Language, LanguageStore, util } from 'klasa';
 import { HelpBuilder } from '@utils/HelpBuilder';
 import { NAME as botName } from '@root/config';
@@ -196,7 +197,6 @@ export default class extends Language {
 			COMMAND_INFO_DESCRIPTION: 'Provides some information about this bot.',
 			COMMAND_HELP_DESCRIPTION: 'Display help for a command.',
 			COMMAND_HELP_DATA: {
-				// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 				// @ts-ignore 2322
 				TITLE: (description: string) => `${description}`,
 				USAGE: (usage: string) => `📝 | ***Command Usage***\n\`${usage}\`\n`,
@@ -245,6 +245,8 @@ export default class extends Language {
 			GENERAL STUFF
 			##### */
 			USER_NOT_IN_GUILD: (user: string) => `${user} is not in this server.`,
+			ROLES: 'Roles',
+			NONE: 'None',
 			/* #####
 			ARGUMENTS
 			##### */
@@ -553,7 +555,18 @@ export default class extends Language {
 			EVENT_GUILDMEMBER_ADD_HUMANTITLE: 'Member Joined Server',
 			EVENT_GUILDMEMBERADD_ACCOUNTCREATED: (duration: string) => `Account created ${duration} ago`,
 			EVENT_GUILDMEMBERADD_BOTTITLE: (executor: string) => `Bot added by ${executor}`,
-			EVENT_GUILDMEMBER_FOOTER: (id: string) => `Member ID: ${id}`
+			EVENT_GUILDMEMBER_FOOTER: (id: string) => `Member ID: ${id}`,
+			EVENT_GUILDMEMBERREMOVE_LEFTGUILD: (bot: boolean) => `${bot ? 'Bot' : 'Member'} Left Server`,
+			EVENT_GUILDMEMBERREMOVE_JOINEDGUILD: (duration: string) => `Joined ${duration} ago`,
+			EVENT_MESSAGEDELETE_UNABLE_TO_DISPLAY: 'Message is unable to be displayed.',
+			EVENT_MESSAGEDELETE_NO_CATEGORY: 'No Category',
+			EVENT_MESSAGEDELETE_EMBED: {
+				// @ts-ignore 2322
+				FIELD_TITLES: {
+					CHANNEL: (name: string, parent: string) => `Message Deleted in ${name} (${parent})`
+				},
+				FOOTER: (id: string, time: string) => `Message ID: ${id} | Message sent ${time} ago`
+			}
 		};
 	}
 

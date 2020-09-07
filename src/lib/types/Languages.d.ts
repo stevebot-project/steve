@@ -120,6 +120,8 @@ export interface LanguageKeys {
 	MESSAGE_PROMPT_TIMEOUT: string;
 	TEXT_PROMPT_ABORT_OPTIONS: string[];
 	USER_NOT_IN_GUILD: (user: string) => string;
+	ROLES: string;
+	NONE: string;
 	ARGUMENT_TIMESPAN_INVALID: (arg: string) => string;
 	ARGUMENT_USERNAME_CANNOTFIND: (search: string) => string;
 	ARGUMENT_USERNAME_MULTIPLE: (users: string) => string;
@@ -250,4 +252,14 @@ export interface LanguageKeys {
 	EVENT_GUILDMEMBERADD_ACCOUNTCREATED: (duration: string) => string;
 	EVENT_GUILDMEMBERADD_BOTTITLE: (executor: string) => string;
 	EVENT_GUILDMEMBER_FOOTER: (id: string) => string;
+	EVENT_GUILDMEMBERREMOVE_LEFTGUILD: (bot: boolean) => string;
+	EVENT_GUILDMEMBERREMOVE_JOINEDGUILD: (duration: string) => string;
+	EVENT_MESSAGEDELETE_UNABLE_TO_DISPLAY: string;
+	EVENT_MESSAGEDELETE_NO_CATEGORY: string;
+	EVENT_MESSAGEDELETE_EMBED: {
+		FIELD_TITLES: {
+			CHANNEL: (name: string, parent: string) => string;
+		};
+		FOOTER: (id: string, time: string) => string;
+	};
 }
