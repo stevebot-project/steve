@@ -21,7 +21,7 @@ export default class extends Event {
 
 		const parent = msg.channel.parent
 			? msg.channel.parent.name
-			: msg.guild!.language.tget('EVENT_MESSAGEDELETE_NO_CATEGORY');
+			: msg.guild!.language.tget('NO_PARENT_CATEGORY');
 
 		const msgSentTime = friendlyDuration(Date.now() - msg.createdTimestamp);
 

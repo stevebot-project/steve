@@ -65,9 +65,11 @@ export default class extends Language {
 	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 	// @ts-expect-error 2416
 	public language: LanguageKeys = {
-		/* *****
-				KLASA FRAMEWORK WORDS
-				***** */
+		/**
+		 * ################################
+		 * #      FRAMEWORK MESSAGES      #
+		 * ################################
+		 */
 		DEFAULT: (key): string => `${key} has not been localized for en-US yet.`,
 		DEFAULT_LANGUAGE: 'Default Language',
 		PREFIX_REMINDER: (prefix = `@${this.client.user!.tag}`): string => `The prefix${Array.isArray(prefix)
@@ -241,21 +243,30 @@ export default class extends Language {
 		COMMAND_STATS_DESCRIPTION: 'Provides some details about the bot and stats.',
 		MESSAGE_PROMPT_TIMEOUT: 'The prompt has timed out.',
 		TEXT_PROMPT_ABORT_OPTIONS: ['abort', 'stop', 'cancel'],
-		/* #####
-				GENERAL STUFF
-				##### */
+		/**
+		 * ################################
+		 * #      GENERAL STUFF           #
+		 * ################################
+		 */
 		USER_NOT_IN_GUILD: (user: string) => `${user} is not in this server.`,
 		ROLES: 'Roles',
 		NONE: 'None',
-		/* #####
-				ARGUMENTS
-				##### */
+		NO_PARENT_CATEGORY: 'No Category',
+		REMOVED_FROM: 'Removed from',
+		ADDED_TO: 'Added to',
+		/**
+		 * ################################
+		 * #      ARGUMENTS               #
+		 * ################################
+		 */
 		ARGUMENT_TIMESPAN_INVALID: (arg: string) => `**${arg}** is an invalid timespan.`,
 		ARGUMENT_USERNAME_CANNOTFIND: (search: string) => `Could not find a user by searching with **${search}**.`,
 		ARGUMENT_USERNAME_MULTIPLE: (users: string) => `Found multiple users: \`${users}\`.`,
-		/*
-				FUN COMMANDS
-				*/
+		/**
+		 * ################################
+		 * #      FUN COMMANDS            #
+		 * ################################
+		 */
 		COMMAND_CHOOSE_DESCRIPTION: `Have ${botName} make a choice for you`,
 		COMMAND_CHOOSE_EXTENDED: builder.display('choose', {
 			examples: [
@@ -307,9 +318,11 @@ export default class extends Language {
 			'test1',
 			'test2'
 		],
-		/* #####
-				MODERATION SYSTEM
-				##### */
+		/**
+		 * ################################
+		 * #      MODERATION SYSTEM       #
+		 * ################################
+		 */
 		MODERATION_NODURATION: 'No duration provided.',
 		MODERATION_NOREASON: 'No reason provided.',
 		MODERATION_NOSTEVE: 'hahahahaha... no.',
@@ -414,9 +427,11 @@ export default class extends Language {
 		COMMAND_UNDEAFEN_SUCCESS: (target: string, thisCase: ModerationCase) => `Undeafened ${target} and created case number ${thisCase.number} with reason: *${thisCase.reason}*.`,
 		COMMAND_PERMISSIONS_DESCRIPTION: 'View the permissions of the specified user.',
 		COMMAND_PERMISSIONS_HAS_ALL: (user: string) => `${user} has the Administrator permission; they have all permissions by default.`,
-		/* #####
-				SNIPPETS
-				#### */
+		/**
+		 * ################################
+		 * #      SNIPPETS                #
+		 * ################################
+		 */
 		COMMAND_SNIPPET_DESCRIPTION: 'Create/edit/remove/view snippets of information about the server',
 		COMMAND_SNIPPET_EXTENDED: builder.display('snippet', {
 			examples: [
@@ -445,9 +460,11 @@ export default class extends Language {
 		COMMAND_SNIPPET_INVALID: (name: string) => `There is no snippet with the name: ${name}.`,
 		COMMAND_SNIPPET_NOSNIPS: 'This server has no snippets!',
 		COMMAND_SNIPPET_RESET: 'This server\'s snippets have been reset.',
-		/* #####
-				REMINDERS
-				#### */
+		/**
+		 * ################################
+		 * #      REMINDERS               #
+		 * ################################
+		 */
 		COMMAND_REMIND_DESCRIPTION: 'Create, view, or cancel reminders',
 		COMMAND_REMIND_EXTENDED: builder.display('remind', {
 			examples: [
@@ -461,9 +478,11 @@ export default class extends Language {
 		COMMAND_REMIND_CREATED: (duration: string) => `I'll remind you about that in ${duration}.`,
 		COMMAND_REMIND_NOREMINDERS: 'You have no reminders currently set.',
 		COMMAND_REMINDER_DISPLAY_HIDDEN: 'Private reminder: content hidden',
-		/* #####
-				SELF-ASSIGN
-				#### */
+		/**
+		 * ################################
+		 * #      SELF-ASSIGN             #
+		 * ################################
+		 */
 		COMMAND_ASSIGN_DESCRIPTION: `Assign roles to yourself using ${botName}`,
 		COMMAND_ASSIGN_EXTENDED: builder.display('assign', {
 			examples: [
@@ -481,9 +500,11 @@ export default class extends Language {
 		COMMAND_ASSIGN_NOTASSIGNABLE: (role: string) => `${Emojis.REDX} The ${role} role is not self-assignable.`,
 		COMMAND_ASSIGN_ROLE_ADD: (roles: string) => `${Emojis.PLUS} Added role(s): \`${roles}\``,
 		COMMAND_ASSIGN_ROLE_REMOVE: (roles: string) => `${Emojis.MINUS} Removed role(s): \`${roles}\``,
-		/* #####
-				MEMBER INFO
-				#### */
+		/**
+		 * ################################
+		 * #      MEMBER INFO             #
+		 * ################################
+		 */
 		COMMAND_WHOIS_DESCRIPTION: 'Get basic information about a member of the server',
 		COMMAND_WHOIS_EXTENDED: builder.display('whois', {
 			examples: [
@@ -503,9 +524,11 @@ export default class extends Language {
 			},
 			FOOTER: (id: string) => `Member ID: ${id}`
 		},
-		/* #####
-				SERVER INFO
-				#### */
+		/**
+		 * ################################
+		 * #      SERVER INFO             #
+		 * ################################
+		 */
 		COMMAND_SERVERINFO_DESCRIPTION: 'See useful information about the server',
 		COMMAND_SERVERINFO_EXTENDED: builder.display('serverinfo', {
 			extendedHelp: oneLine`Displayed stats: Total Members, # of Humans vs # of Bots, # of Text Channels vs # of Voice Channels,
@@ -538,9 +561,11 @@ export default class extends Language {
 			DESCRIPTION: (role: string, date: string) => `The ${role} role was created on ${date}.`,
 			FOOTER: (assignable: boolean) => `This role is ${assignable ? '' : 'not '}self-assignable.`
 		},
-		/* #####
-				SYSTEM COMMANDS
-				#### */
+		/**
+		 * ################################
+		 * #      SYSTEM COMMANDS         #
+		 * ################################
+		 */
 		COMMAND_FEEDBACK_DESCRIPTION: 'Send feedback or suggestions to the bot\'s developers.',
 		COMMAND_FEEDBACK_EXTENDED: builder.display('feedback', {
 			examples: [
@@ -551,9 +576,11 @@ export default class extends Language {
 		COMMAND_FEEDBACK_NO_GUILD: 'The specified feedback server for this bot does not exist; contact a bot owner.',
 		COMMAND_FEEDBACK_NO_CHANNEL: 'The specified feedback channel for this bot does not exist; contact a bot owner.',
 		COMMAND_FEEDBACK_SENT: 'Your feedback has been sent, thanks!',
-		/* #####
-				LOG EVENTS
-				#### */
+		/**
+		 * ################################
+		 * #      LOG EVENTS              #
+		 * ################################
+		 */
 		EVENT_CHANNELCREATE_EMBED: {
 			FOOTER: (id: string) => `Channel ID: ${id}`,
 			TITLE: (type: string, name: string) => `${toTitleCase(type)} Channel Created | ${name}`
@@ -561,6 +588,10 @@ export default class extends Language {
 		EVENT_CHANNELDELETE_EMBED: {
 			FOOTER: (id: string) => `Channel ID: ${id}`,
 			TITLE: (type: string, name: string) => `${toTitleCase(type)} Channel Deleted | ${name}`
+		},
+		EVENT_CHANNELUPDATE_NAMECHANGE_EMBED: {
+			FOOTER: (id: string) => `Channel ID: ${id}`,
+			TITLE: (oldName: string, newName: string, type: string) => `${oldName} ${type} channel name changed to ${newName}`
 		},
 		EVENT_EMOJICREATE_EMBED: {
 			FOOTER: (id: string) => `Emoji ID: ${id}`,
@@ -570,6 +601,10 @@ export default class extends Language {
 			FOOTER: (id: string) => `Emoji ID: ${id}`,
 			TITLE: (name: string) => `Emoji Deleted | ${name}`
 		},
+		EVENT_EMOJIUPDATE_NAMECHANGE_EMBED: {
+			FOOTER: (id: string) => `Emoji ID: ${id}`,
+			TITLE: (oldName: string, newName: string, animated: boolean) => `${oldName} ${animated ? 'animated ' : ''}emoji name changed to ${newName}`
+		},
 		EVENT_ROLECREATE_EMBED: {
 			FOOTER: (id: string) => `Role ID: ${id}`,
 			TITLE: (name: string) => `Role Created | ${name}`
@@ -577,6 +612,10 @@ export default class extends Language {
 		EVENT_ROLEDELETE_EMBED: {
 			FOOTER: (id: string) => `Role ID: ${id}`,
 			TITLE: (name: string) => `Role Deleted | ${name}`
+		},
+		EVENT_ROLEUPDATE_NAMECHANGE_EMBED: {
+			FOOTER: (id: string) => `Role ID: ${id}`,
+			TITLE: (oldName: string, newName: string) => `${oldName} role name changed to ${newName}`
 		},
 		EVENT_GUILDMEMBERADD_EMBED: {
 			FIELD_TITLES: {
@@ -598,13 +637,34 @@ export default class extends Language {
 			},
 			FOOTER: (id: string) => `Member ID: ${id}`
 		},
+		EVENT_GUILDMEMBERUPDATE_ROLEUPDATE_EMBED: {
+			FOOTER: (id: string) => `Member ID: ${id}`,
+			TITLE: (type: string, role: string, executor: string) => `${type} the ${role} role by ${executor}`
+		},
+		EVENT_GUILDMEMBERUPDATE_DISPLAYNAMECHANGE_EMBED: {
+			FIELD_TITLES: {
+				NEW_DISPLAY_NAME: 'New Display Name'
+			},
+			FOOTER: (id: string) => `Member ID: ${id}`
+		},
 		EVENT_MESSAGEDELETE_UNABLE_TO_DISPLAY: 'Message is unable to be displayed.',
-		EVENT_MESSAGEDELETE_NO_CATEGORY: 'No Category',
 		EVENT_MESSAGEDELETE_EMBED: {
 			FIELD_TITLES: {
 				CHANNEL: (name: string, parent: string) => `Message Deleted in ${name} (${parent})`
 			},
 			FOOTER: (id: string, time: string) => `Message ID: ${id} | Message sent ${time} ago`
+		},
+		EVENT_MESSAGEDELETEBULK_EMBED: {
+			FOOTER: (id: string) => `Channel ID: ${id}`,
+			TITLE: (size: number, name: string, parent: string) => `${size} messages purged from ${name} (${parent})`
+		},
+		EVENT_GUILDBANADD_EMBED: {
+			FOOTER: (id: string) => `User ID: ${id}`,
+			TITLE: (executor: string) => `Banned by ${executor}`
+		},
+		EVENT_GUILDBANREMOVE_EMBED: {
+			FOOTER: (id: string) => `User ID: ${id}`,
+			TITLE: (executor: string) => `Unbanned by ${executor}`
 		}
 	};
 

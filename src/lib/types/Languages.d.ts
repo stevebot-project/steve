@@ -125,6 +125,9 @@ declare module 'klasa' {
 		USER_NOT_IN_GUILD: (user: string) => string;
 		ROLES: string;
 		NONE: string;
+		NO_PARENT_CATEGORY: string;
+		REMOVED_FROM: string;
+		ADDED_TO: string;
 		ARGUMENT_TIMESPAN_INVALID: (arg: string) => string;
 		ARGUMENT_USERNAME_CANNOTFIND: (search: string) => string;
 		ARGUMENT_USERNAME_MULTIPLE: (users: string) => string;
@@ -261,6 +264,10 @@ declare module 'klasa' {
 			FOOTER: (id: string) => string;
 			TITLE: (type: string, name: string) => string;
 		};
+		EVENT_CHANNELUPDATE_NAMECHANGE_EMBED: {
+			FOOTER: (id: string) => string;
+			TITLE: (oldName: string, newName: string, type: string) => string;
+		};
 		EVENT_EMOJICREATE_EMBED: {
 			FOOTER: (id: string) => string;
 			TITLE: (name: string) => string;
@@ -269,6 +276,10 @@ declare module 'klasa' {
 			FOOTER: (id: string) => string;
 			TITLE: (name: string) => string;
 		};
+		EVENT_EMOJIUPDATE_NAMECHANGE_EMBED: {
+			FOOTER: (id: string) => string;
+			TITLE: (oldName: string, newName: string, animated: boolean) => string;
+		};
 		EVENT_ROLECREATE_EMBED: {
 			FOOTER: (id: string) => string;
 			TITLE: (name: string) => string;
@@ -276,6 +287,10 @@ declare module 'klasa' {
 		EVENT_ROLEDELETE_EMBED: {
 			FOOTER: (id: string) => string;
 			TITLE: (name: string) => string;
+		};
+		EVENT_ROLEUPDATE_NAMECHANGE_EMBED: {
+			FOOTER: (id: string) => string;
+			TITLE: (oldName: string, newName: string) => string;
 		};
 		EVENT_GUILDMEMBERADD_EMBED: {
 			FIELD_TITLES: {
@@ -297,13 +312,34 @@ declare module 'klasa' {
 			};
 			FOOTER: (id: string) => string;
 		};
+		EVENT_GUILDMEMBERUPDATE_ROLEUPDATE_EMBED: {
+			FOOTER: (id: string) => string;
+			TITLE: (type: string, role: string, executor: string) => string;
+		};
+		EVENT_GUILDMEMBERUPDATE_DISPLAYNAMECHANGE_EMBED: {
+			FIELD_TITLES: {
+				NEW_DISPLAY_NAME: string;
+			};
+			FOOTER: (id: string) => string;
+		};
 		EVENT_MESSAGEDELETE_UNABLE_TO_DISPLAY: string;
-		EVENT_MESSAGEDELETE_NO_CATEGORY: string;
 		EVENT_MESSAGEDELETE_EMBED: {
 			FIELD_TITLES: {
 				CHANNEL: (name: string, parent: string) => string;
 			};
 			FOOTER: (id: string, time: string) => string;
+		};
+		EVENT_MESSAGEDELETEBULK_EMBED: {
+			FOOTER: (id: string) => string;
+			TITLE: (size: number, name: string, parent: string) => string;
+		};
+		EVENT_GUILDBANADD_EMBED: {
+			FOOTER: (id: string) => string;
+			TITLE: (executor: string) => string;
+		};
+		EVENT_GUILDBANREMOVE_EMBED: {
+			FOOTER: (id: string) => string;
+			TITLE: (executor: string) => string;
 		};
 	}
 }

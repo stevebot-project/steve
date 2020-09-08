@@ -15,5 +15,6 @@ export default Client.defaultGuildSchema
 		.add('moderator', 'Role')
 		.add('muted', 'Role')
 		.add('restricted', 'Role', { array: true })
-		.add('trusted', 'Role'))
+		.add('trusted', 'Role')
+		.add('giveTrustedRoleOn', 'TrustedRoleSetting', { 'default': 'none' }))
 	.add('snippets', 'any', { array: true, configurable: false });
