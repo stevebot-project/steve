@@ -471,7 +471,8 @@ export default class extends Language {
 				'put laundry away|1h',
 				'view',
 				'cancel|1'
-			]
+			],
+			reminder: 'Unfortunately, only one reminder can be deleted per command.'
 		}),
 		RESOLVER_REMINDER_LENGTH: 'Reminders have a maximum length of 140 characters.',
 		RESOLVER_REMINDER_INVALID: (arg: string | number) => `**${arg}** is not a valid reminder number.`,
