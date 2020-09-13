@@ -5,6 +5,7 @@ import { LAVALINK_ENABLE } from '@root/config';
 import { Guild } from 'discord.js';
 
 import '@lib/schemas/Guild';
+import '@lib/schemas/User';
 import '@lib/extensions/SteveGuild';
 
 

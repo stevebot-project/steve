@@ -1,8 +1,9 @@
 import { SteveCommand } from '@lib/structures/commands/SteveCommand';
 import { CommandStore, KlasaMessage } from 'klasa';
-import { User, Message, Guild, MessageEmbed } from 'discord.js';
+import { User, Message, Guild, MessageEmbed, ColorResolvable } from 'discord.js';
 import { friendlyDuration, formatDate } from '@utils/util';
 import { Time } from '@lib/types/Enums';
+import { UserSettings } from '@lib/types/settings/UserSettings';
 
 export default class extends SteveCommand {
 
@@ -41,6 +42,7 @@ export default class extends SteveCommand {
 				{ name: EMBED_DATA.FIELD_TITLES.JOINED_GUILD, value: joinedGuild, inline: true }
 			])
 			.setAuthor(user.tag, user.displayAvatarURL())
+			.setColor(user.settings.get(UserSettings.EmbedColor) as ColorResolvable || 0x61e3f9)
 			.setFooter(EMBED_DATA.FOOTER(member.id))
 			.setTimestamp();
 

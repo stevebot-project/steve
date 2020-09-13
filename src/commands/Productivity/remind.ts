@@ -1,9 +1,10 @@
 import { SteveCommand } from '@lib/structures/commands/SteveCommand';
 import { CommandStore, KlasaMessage } from 'klasa';
-import { Message, MessageEmbed, TextChannel } from 'discord.js';
+import { ColorResolvable, Message, MessageEmbed, TextChannel } from 'discord.js';
 import { GuildSettings } from '@lib/types/settings/GuildSettings';
 import { friendlyDuration } from '@utils/util';
 import { Reminder } from '@root/src/extendables/Schedule';
+import { UserSettings } from '@lib/types/settings/UserSettings';
 
 export default class extends SteveCommand {
 
@@ -58,6 +59,7 @@ export default class extends SteveCommand {
 
 		const embed = new MessageEmbed()
 			.attachFiles(['./assets/images/alarmclock.png'])
+			.setColor(msg.author.settings.get(UserSettings.EmbedColor) as ColorResolvable || 0xadcb27)
 			.setDescription(output)
 			.setTitle(EMBED_DATA.TITLE)
 			.setThumbnail('attachment://alarmclock.png');
