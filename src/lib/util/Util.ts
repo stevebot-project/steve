@@ -1,12 +1,7 @@
-import { MessageEmbed, Guild, GuildAuditLogsAction, User } from 'discord.js';
+import { Guild, GuildAuditLogsAction, User } from 'discord.js';
 import { Client, util } from 'klasa';
 import prettyMilliseconds = require('pretty-ms');
 import moment = require('moment');
-
-
-export function buildEmbed(): MessageEmbed {
-	return new MessageEmbed; // eslint-disable-line new-parens
-}
 
 export function floatPromise(ctx: { client: Client }, promise: Promise<unknown>): void {
 	if (util.isThenable(promise)) promise.catch(error => ctx.client.emit('error', error));

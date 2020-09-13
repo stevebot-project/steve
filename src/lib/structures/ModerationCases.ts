@@ -1,7 +1,7 @@
 import { SteveClient } from '@lib/SteveClient';
 import { ModerationManager } from './ModerationManager';
 import { GuildSettings } from '@lib/types/settings/GuildSettings';
-import { friendlyDuration, buildEmbed } from '@utils/util';
+import { friendlyDuration } from '@utils/util';
 import { User, MessageEmbed } from 'discord.js';
 import { ScheduledTask } from 'klasa';
 
@@ -59,7 +59,7 @@ export class ModerationCases {
 			thisCaseTask = `(${friendlyDuration((this.client.schedule.get(thisCase.task) as ScheduledTask).time.getTime() - Date.now())} left)`;
 		}
 
-		return buildEmbed()
+		return new MessageEmbed()
 			.addFields(
 				{ name: this.manager.guild.language.tget('MODERATION_CASE_DISPLAY_FIELD_TARGET'), value: thisCaseTarget.tag, inline: true },
 				{ name: this.manager.guild.language.tget('MODERATION_CASE_DISPLAY_FIELD_MODERATOR'), value: thisCaseModerator.tag, inline: true },

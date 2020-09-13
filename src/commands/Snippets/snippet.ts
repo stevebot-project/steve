@@ -3,7 +3,6 @@ import { SteveCommand } from '@lib/structures/commands/SteveCommand';
 import { CommandStore, KlasaMessage, RichDisplay } from 'klasa';
 import { GuildSettings } from '@lib/types/settings/GuildSettings';
 import { Message, MessageEmbed } from 'discord.js';
-import { buildEmbed } from '@utils/util';
 import { chunk, codeBlock } from '@klasa/utils';
 
 export default class extends SteveCommand {
@@ -65,7 +64,7 @@ export default class extends SteveCommand {
 		const snip = snips.find(s => s.name === snipName.toLowerCase());
 		if (!snip) throw msg.guild!.language.tget('COMMAND_SNIPPET_INVALID', snipName);
 
-		return msg.channel.send(snip.embed ? buildEmbed().setDescription(snip.content) : snip.content);
+		return msg.channel.send(snip.embed ? new MessageEmbed().setDescription(snip.content) : snip.content);
 	}
 
 	public async list(msg: KlasaMessage): Promise<Message> {

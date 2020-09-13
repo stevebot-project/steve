@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-nocheck
 import { Command, CommandStore, util, KlasaMessage } from 'klasa';
-import { Message, TextChannel } from 'discord.js';
+import { Message, TextChannel, MessageEmbed } from 'discord.js';
 import { NAME } from '@root/config';
-import { buildEmbed, floatPromise } from '@lib/util/util';
+import { floatPromise } from '@lib/util/util';
 const has = (obj: any, key: any): any => Object.prototype.hasOwnProperty.call(obj, key);
 
 export default class extends Command {
@@ -29,7 +29,7 @@ export default class extends Command {
 		if (cmd) {
 			const DATA: any = msg.language.tget('COMMAND_HELP_DATA');
 
-			const embed = buildEmbed()
+			const embed = new MessageEmbed()
 				.setTimestamp()
 				.attachFiles(['./assets/images/steve_dab.png'])
 				.setThumbnail('attachment://steve_dab.png')
