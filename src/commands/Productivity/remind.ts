@@ -1,8 +1,9 @@
 import { SteveCommand } from '@lib/structures/commands/SteveCommand';
-import { CommandStore, KlasaMessage, ScheduledTask } from 'klasa';
-import { Message, TextChannel } from 'discord.js';
+import { CommandStore, KlasaMessage } from 'klasa';
+import { Message, MessageEmbed, TextChannel } from 'discord.js';
 import { GuildSettings } from '@lib/types/settings/GuildSettings';
-import { friendlyDuration, buildEmbed } from '@utils/util';
+import { friendlyDuration } from '@utils/util';
+import { Reminder } from '@root/src/extendables/Schedule';
 
 export default class extends SteveCommand {
 
@@ -45,7 +46,7 @@ export default class extends SteveCommand {
 	public async view(msg: KlasaMessage): Promise<Message> {
 		let output = '';
 		const reminders = this.client.schedule.getUserReminders(msg.author.id);
-		if (reminders.length < 1) throw msg.guild!.language.tget('COMMAND_REMIND_NOREMINDERS');
+		if (reminders.length < 1) throw msg.language.tget('COMMAND_REMIND_NOREMINDERS');
 
 		for (let i = 0; i < reminders.length; i++) {
 			const reminder = reminders[i];
@@ -53,13 +54,30 @@ export default class extends SteveCommand {
 			output += `**${i + 1}**: ${display}\n\n`;
 		}
 
-		return msg.channel.send(buildEmbed().setDescription(output));
+		const EMBED_DATA = msg.language.tget('COMMAND_REMIND_VIEW_EMBED');
+
+		const embed = new MessageEmbed()
+			.attachFiles(['./assets/images/alarmclock.png'])
+			.setDescription(output)
+			.setTitle(EMBED_DATA.TITLE)
+			.setThumbnail('attachment://alarmclock.png');
+
+		return msg.channel.send(embed);
 	}
 
-	private async getReminderDisplayContent(msg: KlasaMessage, reminder: ScheduledTask): Promise<string> {
+	public async cancel(msg: KlasaMessage, [reminderNum]: [number]): Promise<Message> {
+		const reminders = this.client.schedule.getUserReminders(msg.author.id);
+		const reminder = reminders[reminderNum - 1];
+
+		await reminder.delete();
+
+		return msg.channel.send(msg.language.tget('COMMAND_REMIND_CANCELED', await this.getReminderDisplayContent(msg, reminder)));
+	}
+
+	private async getReminderDisplayContent(msg: KlasaMessage, reminder: Reminder): Promise<string> {
 		const reminderUser = await this.client.users.fetch(msg.author.id);
 		if (!reminderUser.dmChannel) return reminder.data.content;
-		return reminder.data.channel === reminderUser.dmChannel.id && msg.channel.id !== reminderUser.dmChannel.id
+		return reminder.data.channelID === reminderUser.dmChannel.id && msg.channel.id !== reminderUser.dmChannel.id
 			? msg.language.tget('COMMAND_REMINDER_DISPLAY_HIDDEN')
 			: reminder.data.content;
 	}

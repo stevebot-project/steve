@@ -476,8 +476,12 @@ export default class extends Language {
 		RESOLVER_REMINDER_LENGTH: 'Reminders have a maximum length of 140 characters.',
 		RESOLVER_REMINDER_INVALID: (arg: string | number) => `**${arg}** is not a valid reminder number.`,
 		COMMAND_REMIND_CREATED: (duration: string) => `I'll remind you about that in ${duration}.`,
+		COMMAND_REMIND_CANCELED: (content: string) => `I cancelled the reminder: **${content}**.`,
 		COMMAND_REMIND_NOREMINDERS: 'You have no reminders currently set.',
 		COMMAND_REMINDER_DISPLAY_HIDDEN: 'Private reminder: content hidden',
+		COMMAND_REMIND_VIEW_EMBED: {
+			TITLE: 'Pending Reminders'
+		},
 		/**
 		 * ################################
 		 * #      SELF-ASSIGN             #

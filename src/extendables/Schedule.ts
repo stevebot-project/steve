@@ -13,14 +13,14 @@ export default class extends Extendable {
 		});
 	}
 
-	public createReminder(this: Schedule, duration: number, userID: string, content: string, channelID: string): Promise<ScheduledTask> {
+	public createReminder(this: Schedule, duration: number, userID: string, content: string, channelID: string): Promise<Reminder> {
 		return this.create('reminder', Date.now() + duration, {
 			catchUp: true,
 			data: { userID, content, channelID }
 		});
 	}
 
-	public getUserReminders(this: Schedule, userID: string): ScheduledTask[] {
+	public getUserReminders(this: Schedule, userID: string): Reminder[] {
 		return this.tasks.filter(task => task.taskName === 'reminder' && task.data.userID === userID);
 	}
 
@@ -36,3 +36,8 @@ export interface ReminderData {
 	content: string;
 	channelID: string;
 }
+
+export interface Reminder extends ScheduledTask {
+	data: ReminderData;
+}
+

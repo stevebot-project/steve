@@ -204,8 +204,12 @@ declare module 'klasa' {
 		RESOLVER_REMINDER_LENGTH: string;
 		RESOLVER_REMINDER_INVALID: (arg: string | number) => string;
 		COMMAND_REMIND_CREATED: (duration: string) => string;
+		COMMAND_REMIND_CANCELED: (content: string) => string;
 		COMMAND_REMIND_NOREMINDERS: string;
 		COMMAND_REMINDER_DISPLAY_HIDDEN: string;
+		COMMAND_REMIND_VIEW_EMBED: {
+			TITLE: string;
+		};
 		COMMAND_ASSIGN_DESCRIPTION: string;
 		COMMAND_ASSIGN_EXTENDED: string;
 		COMMAND_ASSIGN_EDIT_ADD: (roles: string) => string;
