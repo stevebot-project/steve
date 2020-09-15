@@ -427,6 +427,53 @@ export default class extends Language {
 		COMMAND_UNDEAFEN_SUCCESS: (target: string, thisCase: ModerationCase) => `Undeafened ${target} and created case number ${thisCase.number} with reason: *${thisCase.reason}*.`,
 		COMMAND_PERMISSIONS_DESCRIPTION: 'View the permissions of the specified user.',
 		COMMAND_PERMISSIONS_HAS_ALL: (user: string) => `${user} has the Administrator permission; they have all permissions by default.`,
+		COMMAND_NICKNAME_DESCRIPTION: 'Set or clear a member\'s nickname',
+		COMMAND_NICKNAME_EXTENDED: builder.display('nickname', {
+			examples: [
+				'jonathan|vaguely evil chaos demon',
+				'jonathan'
+			],
+			extendedHelp: 'Not specifying a nickname for this command will clear the member\'s nickname.'
+		}),
+		COMMAND_NICKNAME_SET: (user: string) => `${user}'s nickname has been set.`,
+		COMMAND_NICKNAME_CLEARED: (user: string) => `${user}'s nickname has been cleared.`,
+		COMMAND_ROLE_DESCRIPTION: 'Add or remove a role from a member',
+		COMMAND_ROLE_EXTENDED: builder.display('role', {
+			examples: [
+				'jonathan|gmt-4'
+			],
+			extendedHelp: 'This command works on a toggle; there is no need to specify if you want to add or remove the command.'
+		}),
+		COMMAND_ROLE_REMOVE: (user: string, role: string) => `The ${role} role has been removed from ${user}.`,
+		COMMAND_ROLE_ADD: (user: string, role: string) => `The ${role} role has been added to ${user}.`,
+		COMMAND_LOCK_DESCRIPTION: 'Lock a channel from public posting',
+		COMMAND_LOCK_EXTENDED: builder.display('lock', {
+			extendedHelp: `This command takes away the ${this.PERMISSIONS.SEND_MESSAGES} permission from the everyone role in the channel.`
+		}),
+		COMMAND_LOCK_LOCKED: 'This channel has been locked.',
+		COMMAND_UNLOCK_DESCRIPTION: 'Opens a channel to public posting',
+		COMMAND_UNLOCK_EXTENDED: builder.display('unlock', {
+			extendedHelp: `This command gives the ${this.PERMISSIONS.SEND_MESSAGES} permission to the everyone role in the channel.`
+		}),
+		COMMAND_UNLOCK_UNLOCKED: 'This channel has been unlocked.',
+		COMMAND_SLOWMODE_DESCRIPTION: 'Set the message ratelimit in a channel',
+		COMMAND_SLOWMODE_EXTENDED: builder.display('slowmode', {
+			examples: [
+				'1 minute',
+				'reset'
+			],
+			extendedHelp: 'Using "reset" as the argument will turn slowmode off.'
+		}),
+		COMMAND_SLOWMODE_RESET: 'Slowmode has been turned off.',
+		COMMAND_SLOWMODE_SET: (duration: string) => `Slowmode has been set to 1 message per member per ${duration}.`,
+		COMMAND_PURGE_DESCRIPTION: 'Quickly delete a specified number of messages',
+		COMMAND_PURGE_EXTENDED: builder.display('purge', {
+			examples: [
+				'10'
+			],
+			extendedHelp: 'The command message is automatically counted towards the number of messages deleted, so there is no need to account for it when specifying a number.'
+		}),
+		COMMAND_PURGE_PURGED: (size: number) => `${size} messages were deleted.`,
 		/**
 		 * ################################
 		 * #      SNIPPETS                #
