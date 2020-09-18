@@ -615,6 +615,77 @@ export default class extends Language {
 		},
 		/**
 		 * ################################
+		 * #   SERVER SETTINGS COMMANDS   #
+		 * ################################
+		 */
+		COMMAND_SETMEMBERLOG_DESCRIPTION: `Set what channel ${botName} will use as the memberlog`,
+		COMMAND_SETMEMBERLOG_EXTENDED: builder.display('setmemberlog', {
+			explainedUsage: [
+				['channel', 'You must tag a text channel for this command to function properly.']
+			],
+			extendedHelp: [
+				'The memberlog will keep track of the following events:',
+				'- Member joins',
+				'- Member leaves',
+				'- Member role updates',
+				'- Display name changes',
+				'- Bans',
+				'- Unbans'
+			]
+		}),
+		COMMAND_SETMEMBERLOG_SET: (channel: string) => `<#${channel}> will be used as this server's memberlog.`,
+		COMMAND_SETSERVERLOG_DESCRIPTION: `Set what channel ${botName} will use as the serverlog`,
+		COMMAND_SETSERVERLOG_EXTENDED: builder.display('setserverlog', {
+			explainedUsage: [
+				['channel', 'You must tag a text channel for this command to function properly.']
+			],
+			extendedHelp: [
+				'The serverlog will keep track of the following events:',
+				'- Message deletes',
+				'- Message bulk deletes',
+				'- Channel creates, deletes, and name updates',
+				'- Emoji creates, deletes, and name updates',
+				'- Role creates, deletes, and name updates'
+			]
+		}),
+		COMMAND_SETSERVERLOG_SET: (channel: string) => `<#${channel}> will be used as this server's serverlog.`,
+		COMMAND_SETADMINISTRATORROLE_DESCRIPTION: 'Set the server\'s administrator role',
+		COMMAND_SETADMINISTRATORROLE_EXTENDED: builder.display('setadministratorrole', {
+			reminder: 'This command does not add any extra Discord permissions to the role, it just gives this role access to server staff commands.'
+		}),
+		COMMAND_SETADMINISTRATORROLE_SET: (role: string) => `The ${role} role will be used as this server's administrator role.`,
+		COMMAND_SETMODERATORROLE_DESCRIPTION: 'Set the server\'s moderator role',
+		COMMAND_SETMODERATORROLE_EXTENDED: builder.display('setmoderatorrole', {
+			reminder: 'This command does not add any extra Discord permissions to the role, it just gives this role access to server staff commands.'
+		}),
+		COMMAND_SETMODERATORROLE_SET: (role: string) => `The ${role} role will be used as this server's moderator role.`,
+		/**
+		 * ################################
+		 * #   USER SETTINGS COMMANDS     #
+		 * ################################
+		 */
+		COMMAND_SETEMBEDCOLOR_DESCRIPTION: 'Set the color of your personal embeds',
+		COMMAND_SETEMBEDCOLOR_EXTENDED: builder.display('setembecolor', {
+			examples: [
+				'#004953',
+				'#4cbb17',
+				'reset',
+				'show'
+			],
+			explainedUsage: [
+				['color', 'Use the hex code of the color you want to set.'],
+				['reset', 'Use this argument to reset your embed color.'],
+				['show', 'Use this argument to show your currently set embed color.']
+			],
+			extendedHelp: 'This command will set the color of the embeds for your list of pending reminders and the `whois` command.'
+		}),
+		RESOLVER_INVALID_COLOR: (hex: string) => `**${hex}** is not a valid hex code.`,
+		COMMAND_SETEMBEDCOLOR_RESET: 'Your embed color has been reset.',
+		COMMAND_SETEMBEDCOLOR_SHOW: (hex: string) => `Your embed color is currently set to: **${hex}**.`,
+		COMMAND_SETEMBEDCOLOR_SHOW_NONE: 'You do not currently have an embed color set.',
+		COMMAND_SETEMBEDCOLOR_SET: (hex: string) => `Your embed color has been set to **${hex}**.`,
+		/**
+		 * ################################
 		 * #      SYSTEM COMMANDS         #
 		 * ################################
 		 */
