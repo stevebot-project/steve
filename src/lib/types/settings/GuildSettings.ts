@@ -29,4 +29,9 @@ export namespace GuildSettings {
 		export const Trusted = 'roles.trusted';
 		export const GiveTrustedRoleOn = 'roles.giveTrustedRoleOn';
 	}
+
+	export namespace WordBlacklist {
+		export const Enabled = 'wordBlacklist.enabled';
+		export const List = 'wordBlacklist.wordList';
+	}
 }

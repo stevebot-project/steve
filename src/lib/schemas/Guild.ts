@@ -17,4 +17,7 @@ export default Client.defaultGuildSchema
 		.add('restricted', 'Role', { array: true })
 		.add('trusted', 'Role')
 		.add('giveTrustedRoleOn', 'TrustedRoleSetting', { 'default': 'none' }))
-	.add('snippets', 'any', { array: true, configurable: false });
+	.add('snippets', 'any', { array: true, configurable: false })
+	.add('wordBlacklist', wordBlacklist => wordBlacklist
+		.add('enabled', 'Boolean', { 'default': true })
+		.add('wordList', 'String', { array: true }));
