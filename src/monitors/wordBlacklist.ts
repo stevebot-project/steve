@@ -20,7 +20,7 @@ export default class extends Monitor {
 
 		if (filtered) {
 			return msg.delete().then(() => {
-				floatPromise(this, msg.reply('you used a word that is on the word blacklist. Please refrain from doing that again.'));
+				floatPromise(this, msg.channel.send(msg.guild!.language.tget('MONITOR_WORDBLACKLIST_FILTERED')));
 			});
 		}
 	}

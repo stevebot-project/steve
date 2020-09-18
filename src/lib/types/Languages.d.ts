@@ -385,5 +385,6 @@ declare module 'klasa' {
 			FOOTER: (id: string) => string;
 			TITLE: (executor: string) => string;
 		};
+		MONITOR_WORDBLACKLIST_FILTERED: string;
 	}
 }

@@ -788,7 +788,13 @@ export default class extends Language {
 		EVENT_GUILDBANREMOVE_EMBED: {
 			FOOTER: (id: string) => `User ID: ${id}`,
 			TITLE: (executor: string) => `Unbanned by ${executor}`
-		}
+		},
+		/**
+		 * ################################
+		 * #          MONITORS            #
+		 * ################################
+		 */
+		MONITOR_WORDBLACKLIST_FILTERED: 'Please refrain from using words that are blacklisted!'
 	};
 
 
