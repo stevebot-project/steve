@@ -659,6 +659,34 @@ export default class extends Language {
 			reminder: 'This command does not add any extra Discord permissions to the role, it just gives this role access to server staff commands.'
 		}),
 		COMMAND_SETMODERATORROLE_SET: (role: string) => `The ${role} role will be used as this server's moderator role.`,
+		COMMAND_SETTRUSTEDROLE_DESCRIPTION: 'Set the server\'s trusted role',
+		COMMAND_SETTRUSTEDROLE_EXTENDED: builder.display('settrustedrole', {
+			reminder: 'This command does not add any extra Discord permissions to the role.'
+		}),
+		COMMAND_SETTRUSTEDROLE_SET: (role: string) => `The ${role} role will be used as this server's trusted role.`,
+		COMMAND_SETMUTEDROLE_DESCRIPTION: 'Set the server\'s muted role',
+		COMMAND_SETMUTEDROLE_EXTENDED: builder.display('setmutedrole', {
+			reminder: 'This command does not add or remove any extra Discord permissions to the role.'
+		}),
+		COMMAND_SETMUTEDROLE_SET: (role: string) => `The ${role} role will be used as this server's muted role.`,
+		COMMAND_SETDEAFENEDROLE_DESCRIPTION: 'Set the server\'s deafened role',
+		COMMAND_SETDEAFENEDROLE_EXTENDED: builder.display('setdeafenedrole', {
+			reminder: 'This command does not add or remove any extra Discord permissions to the role.'
+		}),
+		COMMAND_SETDEAFENEDROLE_SET: (role: string) => `The ${role} role will be used as this server's deafened role.`,
+		COMMAND_MANAGEWORDBLACKLIST_DESCRIPTION: 'Manage the list of banned words for this server',
+		COMMAND_MANAGEWORDBLACKLIST_EXTENDED: builder.display('managewordblacklist', {
+			examples: [
+				'enable',
+				'disable',
+				'reset',
+				'fuckballs'
+			]
+		}),
+		COMMAND_MANAGEWORDBLACKLIST_ENABLED: 'The word blacklist feature has been enabled in this server.',
+		COMMAND_MANAGEWORDBLACKLIST_DISABLED: 'The word blacklist feature has been disabled in this server.',
+		COMMAND_MANAGEWORDBLACKLIST_RESET: 'The list of blacklisted words has been reset/cleared.',
+		COMMAND_MANAGEWORDBLACKLIST_UPDATE: (removing: boolean) => `Your word has been ${removing ? 'removed from' : 'added to'} the word blacklist.`,
 		/**
 		 * ################################
 		 * #   USER SETTINGS COMMANDS     #
