@@ -7,6 +7,7 @@ export function floatPromise(ctx: { client: Client }, promise: Promise<unknown>)
 	if (util.isThenable(promise)) promise.catch(error => ctx.client.emit('error', error));
 }
 
+/* TODO: internationalize date format (requires additonal languages to be added first) */
 export function formatDate(date: number | Date, format = 'YYYY MMM Do'): string {
 	return moment(date).format(format);
 }
