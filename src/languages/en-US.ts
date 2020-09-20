@@ -433,6 +433,9 @@ export default class extends Language {
 				'jonathan|vaguely evil chaos demon',
 				'jonathan'
 			],
+			explainedUsage: [
+				['string', 'Nicknames have a maximum length of 32 characters.']
+			],
 			extendedHelp: 'Not specifying a nickname for this command will clear the member\'s nickname.'
 		}),
 		COMMAND_NICKNAME_SET: (user: string) => `${user}'s nickname has been set.`,
@@ -441,6 +444,9 @@ export default class extends Language {
 		COMMAND_ROLE_EXTENDED: builder.display('role', {
 			examples: [
 				'jonathan|gmt-4'
+			],
+			explainedUsage: [
+				['rolename', 'You can use the name of a role, it\'s snowflake (long id), or tag the role (if it is taggable).']
 			],
 			extendedHelp: 'This command works on a toggle; there is no need to specify if you want to add or remove the command.'
 		}),
@@ -470,6 +476,9 @@ export default class extends Language {
 		COMMAND_PURGE_EXTENDED: builder.display('purge', {
 			examples: [
 				'10'
+			],
+			explainedUsage: [
+				['number', 'The maximum number of messages that can be purged at once is 99.']
 			],
 			extendedHelp: 'The command message is automatically counted towards the number of messages deleted, so there is no need to account for it when specifying a number.'
 		}),
@@ -519,6 +528,9 @@ export default class extends Language {
 				'view',
 				'cancel|1'
 			],
+			explainedUsage: [
+				['reminder', 'Reminders have a maxmum length of 140 characters.']
+			],
 			reminder: 'Unfortunately, only one reminder can be deleted per command.'
 		}),
 		RESOLVER_REMINDER_LENGTH: 'Reminders have a maximum length of 140 characters.',
@@ -541,6 +553,9 @@ export default class extends Language {
 				'edit|gmt-4',
 				'list',
 				'gmt-4'
+			],
+			explainedUsage: [
+				['rolename', 'You can use the name of a role, it\'s snowflake (long id), or tag the role (if it is taggable).']
 			],
 			extendedHelp: oneLine`This command allows server staff to edit the list of roles that can be self-assigned by members;
 					and allows members to view the list of self-assignable roles, and add/remove the roles from themselves.`,
@@ -604,6 +619,9 @@ export default class extends Language {
 			examples: [
 				'gmt-4'
 			],
+			explainedUsage: [
+				['rolename', 'You can use the name of a role, it\'s snowflake (long id), or tag the role (if it is taggable).']
+			],
 			extendedHelp: 'Roles which have been designated as restricted by the server staff cannot be viewed with this command.'
 		}),
 		COMMAND_ROLEINFO_RESTRICTED: 'This role is restricted; you cannot view information about it.',
@@ -651,26 +669,41 @@ export default class extends Language {
 		COMMAND_SETSERVERLOG_SET: (channel: string) => `<#${channel}> will be used as this server's serverlog.`,
 		COMMAND_SETADMINISTRATORROLE_DESCRIPTION: 'Set the server\'s administrator role',
 		COMMAND_SETADMINISTRATORROLE_EXTENDED: builder.display('setadministratorrole', {
+			explainedUsage: [
+				['rolename', 'You can use the name of a role, it\'s snowflake (long id), or tag the role (if it is taggable).']
+			],
 			reminder: 'This command does not add any extra Discord permissions to the role, it just gives this role access to server staff commands.'
 		}),
 		COMMAND_SETADMINISTRATORROLE_SET: (role: string) => `The ${role} role will be used as this server's administrator role.`,
 		COMMAND_SETMODERATORROLE_DESCRIPTION: 'Set the server\'s moderator role',
 		COMMAND_SETMODERATORROLE_EXTENDED: builder.display('setmoderatorrole', {
+			explainedUsage: [
+				['rolename', 'You can use the name of a role, it\'s snowflake (long id), or tag the role (if it is taggable).']
+			],
 			reminder: 'This command does not add any extra Discord permissions to the role, it just gives this role access to server staff commands.'
 		}),
 		COMMAND_SETMODERATORROLE_SET: (role: string) => `The ${role} role will be used as this server's moderator role.`,
 		COMMAND_SETTRUSTEDROLE_DESCRIPTION: 'Set the server\'s trusted role',
 		COMMAND_SETTRUSTEDROLE_EXTENDED: builder.display('settrustedrole', {
+			explainedUsage: [
+				['rolename', 'You can use the name of a role, it\'s snowflake (long id), or tag the role (if it is taggable).']
+			],
 			reminder: 'This command does not add any extra Discord permissions to the role.'
 		}),
 		COMMAND_SETTRUSTEDROLE_SET: (role: string) => `The ${role} role will be used as this server's trusted role.`,
 		COMMAND_SETMUTEDROLE_DESCRIPTION: 'Set the server\'s muted role',
 		COMMAND_SETMUTEDROLE_EXTENDED: builder.display('setmutedrole', {
+			explainedUsage: [
+				['rolename', 'You can use the name of a role, it\'s snowflake (long id), or tag the role (if it is taggable).']
+			],
 			reminder: 'This command does not add or remove any extra Discord permissions to the role.'
 		}),
 		COMMAND_SETMUTEDROLE_SET: (role: string) => `The ${role} role will be used as this server's muted role.`,
 		COMMAND_SETDEAFENEDROLE_DESCRIPTION: 'Set the server\'s deafened role',
 		COMMAND_SETDEAFENEDROLE_EXTENDED: builder.display('setdeafenedrole', {
+			explainedUsage: [
+				['rolename', 'You can use the name of a role, it\'s snowflake (long id), or tag the role (if it is taggable).']
+			],
 			reminder: 'This command does not add or remove any extra Discord permissions to the role.'
 		}),
 		COMMAND_SETDEAFENEDROLE_SET: (role: string) => `The ${role} role will be used as this server's deafened role.`,
@@ -681,6 +714,11 @@ export default class extends Language {
 				'disable',
 				'reset',
 				'fuckballs'
+			],
+			explainedUsage: [
+				['enable', 'Turns on the word blacklist feature in this server.'],
+				['disable', 'Turns off the word blacklist feature in this server.'],
+				['reset', 'Removes all words from this server\'s word blacklist.']
 			]
 		}),
 		COMMAND_MANAGEWORDBLACKLIST_ENABLED: 'The word blacklist feature has been enabled in this server.',
