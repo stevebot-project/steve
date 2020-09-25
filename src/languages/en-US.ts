@@ -561,9 +561,6 @@ export default class extends Language {
 					and allows members to view the list of self-assignable roles, and add/remove the roles from themselves.`,
 			reminder: 'Only roles that have been designated as self-assignable by server staff can be used with this command.'
 		}),
-		COMMAND_ASSIGN_EDIT_ADD: (roles: string) => `Added to the list of self-assignable roles: \`${roles}\``,
-		COMMAND_ASSIGN_EDIT_REMOVE: (roles: string) => `Removed from the list of self-assignable roles: \`${roles}\``,
-		COMMAND_ASSIGN_NOTSTAFF: 'Only server staff can edit the list of self-assignable roles!',
 		COMMAND_ASSIGN_NOTASSIGNABLE: (role: string) => `${Emojis.REDX} The ${role} role is not self-assignable.`,
 		COMMAND_ASSIGN_ROLE_ADD: (roles: string) => `${Emojis.PLUS} Added role(s): \`${roles}\``,
 		COMMAND_ASSIGN_ROLE_REMOVE: (roles: string) => `${Emojis.MINUS} Removed role(s): \`${roles}\``,
@@ -707,6 +704,44 @@ export default class extends Language {
 			reminder: 'This command does not add or remove any extra Discord permissions to the role.'
 		}),
 		COMMAND_SETDEAFENEDROLE_SET: (role: string) => `The ${role} role will be used as this server's deafened role.`,
+		COMMAND_MANAGERESTRICTEDROLES_DESCRIPTION: 'Manage the list of restricted roles for this server',
+		COMMAND_MANAGERESTRICTEDROLES_EXTENDED: builder.display('managerestrictedroles', {
+			examples: [
+				'muted|deafened',
+				'reset',
+				'show'
+			],
+			explainedUsage: [
+				['rolename', 'You can use the name of a role, it\'s snowflake (long id), or tag the role (if it is taggable).'],
+				['reset', 'Clears the list of restricted roles.'],
+				['show', 'Displays the list of restricted roles.']
+			],
+			extendedHelp: 'Restricted roles cannot be viewed with the `roleinfo` command, except for when a server staff member is the person using the command. Members who receive a restricted role as their first role will not be given the server\'s trusted role if one has been set.'
+		}),
+		COMMAND_MANAGERESTRICTEDROLES_MANAGE_REMOVED: (removedRoles: string) => `${Emojis.MINUS} Removed roles: ${removedRoles}\n`,
+		COMMAND_MANAGERESTRICTEDROLES_MANAGE_ADDED: (addedRoles: string) => `${Emojis.PLUS} Added roles: ${addedRoles}`,
+		COMMAND_MANAGERESTRICTEDROLES_RESET: 'The list of restricted roles has been cleared.',
+		COMMAND_MANAGERESTRICTEDROLES_SHOW_NOROLES: 'There are no restricted roles in this server.',
+		COMMAND_MANAGERESTRICTEDROLES_SHOW_ROLENOTFOUND: 'Role not found',
+		COMMAND_MANAGEASSIGNABLEROLES_DESCRIPTION: 'Manage the list of assignable roles for this server',
+		COMMAND_MANAGEASSIGNABLEROLES_EXTENDED: builder.display('manageassignableroles', {
+			examples: [
+				'gmt-4|notification squad',
+				'reset',
+				'show'
+			],
+			explainedUsage: [
+				['rolename', 'You can use the name of a role, it\'s snowflake (long id), or tag the role (if it is taggable).'],
+				['reset', 'Clears the list of assignable roles.'],
+				['show', 'Displays the list of assignable roles.']
+			],
+			extendedHelp: 'Adding a role to the list of assignable roles allows members to assign that role to themselves without staff intervention.'
+		}),
+		COMMAND_MANAGEASSIGNABLEROLES_MANAGE_REMOVED: (removedRoles: string) => `${Emojis.MINUS} Removed roles: ${removedRoles}\n`,
+		COMMAND_MANAGEASSIGNABLEROLES_MANAGE_ADDED: (addedRoles: string) => `${Emojis.PLUS} Added roles: ${addedRoles}`,
+		COMMAND_MANAGEASSIGNABLEROLES_RESET: 'The list of assignable roles has been cleared.',
+		COMMAND_MANAGEASSIGNABLEROLES_SHOW_NOROLES: 'There are no assignable roles in this server.',
+		COMMAND_MANAGEASSIGNABLEROLES_SHOW_ROLENOTFOUND: 'Role not found',
 		COMMAND_MANAGEWORDBLACKLIST_DESCRIPTION: 'Manage the list of banned words for this server',
 		COMMAND_MANAGEWORDBLACKLIST_EXTENDED: builder.display('managewordblacklist', {
 			examples: [

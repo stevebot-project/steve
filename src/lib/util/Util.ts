@@ -1,5 +1,6 @@
-import { Guild, GuildAuditLogsAction, User } from 'discord.js';
-import { Client, util } from 'klasa';
+import { Guild, GuildAuditLogsAction, MessageEmbed, User } from 'discord.js';
+import { Client, util, RichDisplay } from 'klasa';
+import { chunk } from '@klasa/utils';
 import prettyMilliseconds = require('pretty-ms');
 import moment = require('moment');
 
@@ -19,6 +20,17 @@ export function friendlyDuration(duration: number): string {
 export async function getExecutor(guild: Guild, type: GuildAuditLogsAction | number): Promise<User> {
 	const logs = await guild.fetchAuditLogs({ limit: 1, type });
 	return logs.entries.first()!.executor;
+}
+
+export function richDisplayList(items: string[], chunkSize: number, stringPrefix?: string): RichDisplay {
+	const display = new RichDisplay(new MessageEmbed());
+
+	for (const page of chunk(items, chunkSize)) {
+		const description = page.map(item => `\`${stringPrefix ?? ''}${item}\``).join(', ');
+		display.addPage((embed: MessageEmbed) => embed.setDescription(description));
+	}
+
+	return display;
 }
 
 export function toTitleCase(str: string): string {
