@@ -562,6 +562,7 @@ export default class extends Language {
 		COMMAND_ASSIGN_NOTASSIGNABLE: (role: string) => `${Emojis.REDX} The ${role} role is not self-assignable.`,
 		COMMAND_ASSIGN_ROLE_ADD: (roles: string) => `${Emojis.PLUS} Added role(s): \`${roles}\``,
 		COMMAND_ASSIGN_ROLE_REMOVE: (roles: string) => `${Emojis.MINUS} Removed role(s): \`${roles}\``,
+		COMMAND_ASSIGN_ROLE_NEEDTRUSTED: (role: string) => `You need to have the **${role}** role to do that!`,
 		/**
 		 * ################################
 		 * #      MEMBER INFO             #
@@ -758,6 +759,12 @@ export default class extends Language {
 		COMMAND_MANAGEWORDBLACKLIST_DISABLED: 'The word blacklist feature has been disabled in this server.',
 		COMMAND_MANAGEWORDBLACKLIST_RESET: 'The list of blacklisted words has been reset/cleared.',
 		COMMAND_MANAGEWORDBLACKLIST_UPDATE: (removing: boolean) => `Your word has been ${removing ? 'removed from' : 'added to'} the word blacklist.`,
+		COMMAND_TOGGLETRUSTEDROLEREQUIREMENT_DESCRIPTION: 'Choose whether the server\'s trusted role is required to self-assign roles',
+		COMMAND_TOGGLETRUSTEDROLEREQUIREMENT_EXTENDED: builder.display('toggletrustedrolerequirement', {
+			extendedHelp: 'The server must have a trusted role set before this command can be used.'
+		}),
+		COMMAND_TOGGLETRUSTEDROLEREQUIREMENT_DISABLE: 'The trusted role is no longer required to self-assign roles.',
+		COMMAND_TOGGLETRUSTEDROLEREQUIREMENT_ENABLE: 'The trusted role is now required to self-assign roles.',
 		/**
 		 * ################################
 		 * #   USER SETTINGS COMMANDS     #
