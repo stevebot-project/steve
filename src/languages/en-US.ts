@@ -224,9 +224,36 @@ export default class extends Language {
 		COMMAND_CONF_GET: (key, value): string => `The value for the key **${key}** is: \`${value}\``,
 		COMMAND_CONF_RESET: (key, response): string => `The key **${key}** has been reset to: \`${response}\``,
 		COMMAND_CONF_NOCHANGE: (key): string => `The value for **${key}** was already that value.`,
-		COMMAND_CONF_SERVER_DESCRIPTION: 'Define per-guild settings.',
+		COMMAND_CONF_SERVER_DESCRIPTION: 'Define per-server settings.',
+		COMMAND_CONF_SERVER_EXTENDED: builder.display('conf', {
+			examples: [
+				'set|roles.administrator|289120123628027904',
+				'remove|roles.restricted|512623553775009792',
+				'reset|roles.assignable',
+				'show|roles.administrator',
+				'show|roles',
+				'show'
+			],
+			explainedUsage: [
+				['key', 'The name of the setting that you would like to view or edit.']
+			],
+			extendedHelp: 'This command can control and show all server settings.',
+			reminder: 'It\'s probably easier to use the individual server settings commands rather than this one, unless you know what you\'re doing.'
+		}),
 		COMMAND_CONF_SERVER: (key, list): string => `**Guild Settings${key}**\n${list}`,
 		COMMAND_CONF_USER_DESCRIPTION: 'Define per-user settings.',
+		COMMAND_CONF_USER_EXTENDED: builder.display('userconf', {
+			examples: [
+				'set|embedColor|#004953',
+				'reset|embedColor',
+				'show|embedColor'
+			],
+			explainedUsage: [
+				['key', 'The name of the setting you would like to change or show.']
+			],
+			extendedHelp: 'This command can control and show all user settings (currently there is only one user setting).',
+			reminder: 'It\'s probably easier to use the individual user settings commands than this one, unless you know what you\'re doing.'
+		}),
 		COMMAND_CONF_USER: (key, list): string => `**User Settings${key}**\n${list}`,
 		COMMAND_STATS: (memUsage, uptime, users, guilds, channels, klasaVersion, discordVersion, processVersion): string[] => [
 			'= STATISTICS =',
@@ -689,6 +716,14 @@ export default class extends Language {
 			]
 		}),
 		COMMAND_SETSERVERLOG_SET: (channel: string) => `<#${channel}> will be used as this server's serverlog.`,
+		COMMAND_SETREMINDERCHANNEL_DESCRIPTION: `Set what channel ${botName} will use as the reminder channel`,
+		COMMAND_SETREMINDERCHANNEL_EXTENDED: builder.display('setreminderchannel', {
+			explainedUsage: [
+				['channel', 'You must tag a text channel for this command to function properly.']
+			],
+			extendedHelp: 'If a reminder channel is set, all reminder set in the server will go off in the specified channel.'
+		}),
+		COMMAND_SETREMINDERCHANNEL_SET: (channel: string) => `<#${channel}> will be used as this server's reminder channel.`,
 		COMMAND_SETADMINISTRATORROLE_DESCRIPTION: 'Set the server\'s administrator role',
 		COMMAND_SETADMINISTRATORROLE_EXTENDED: builder.display('setadministratorrole', {
 			explainedUsage: [
@@ -729,6 +764,14 @@ export default class extends Language {
 			reminder: 'This command does not add or remove any extra Discord permissions to the role.'
 		}),
 		COMMAND_SETDEAFENEDROLE_SET: (role: string) => `The ${role} role will be used as this server's deafened role.`,
+		COMMAND_SETBANDELETEDAYS_DESCRIPTION: 'Set how many days of messages from a banned user will be deleted',
+		COMMAND_SETBANDELETEDAYS_EXTENDED: builder.display('setbandeletedays', {
+			examples: [
+				'7'
+			],
+			reminder: `This setting will only function properly if a user is banned using ${botName}`
+		}),
+		COMMAND_SETBANDELETEDAYS_SET: (days: number) => `${days} days of messages will be deleted from a banned user.`,
 		COMMAND_MANAGERESTRICTEDROLES_DESCRIPTION: 'Manage the list of restricted roles for this server',
 		COMMAND_MANAGERESTRICTEDROLES_EXTENDED: builder.display('managerestrictedroles', {
 			examples: [

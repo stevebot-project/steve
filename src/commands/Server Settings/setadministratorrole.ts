@@ -11,7 +11,7 @@ export default class extends SteveCommand {
 			aliases: ['setadminrole'],
 			description: lang => lang.tget('COMMAND_SETADMINISTRATORROLE_DESCRIPTION'),
 			extendedHelp: lang => lang.tget('COMMAND_SETADMINISTRATORROLE_EXTENDED'),
-			permissionLevel: PermissionsLevels.MODERATOR,
+			permissionLevel: PermissionsLevels.ADMINISTRATOR,
 			runIn: ['text'],
 			usage: '<role:rolename>'
 		});

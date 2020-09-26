@@ -115,8 +115,10 @@ declare module 'klasa' {
 		COMMAND_CONF_RESET: (key: string, response: string) => string;
 		COMMAND_CONF_NOCHANGE: (key: string) => string;
 		COMMAND_CONF_SERVER_DESCRIPTION: string;
+		COMMAND_CONF_SERVER_EXTENDED: string;
 		COMMAND_CONF_SERVER: (key: string, list: string) => string;
 		COMMAND_CONF_USER_DESCRIPTION: string;
+		COMMAND_CONF_USER_EXTENDED: string;
 		COMMAND_CONF_USER: (key: string, list: string) => string;
 		COMMAND_STATS: (memUsage: number, uptime: string, users: number, guilds: number, channels: number, klasaVersion: string, discordVersion: string, processVersion: string) => string[];
 		COMMAND_STATS_DESCRIPTION: string;
@@ -292,6 +294,9 @@ declare module 'klasa' {
 		COMMAND_SETSERVERLOG_DESCRIPTION: string;
 		COMMAND_SETSERVERLOG_EXTENDED: string;
 		COMMAND_SETSERVERLOG_SET: (channel: string) => string;
+		COMMAND_SETREMINDERCHANNEL_DESCRIPTION: string;
+		COMMAND_SETREMINDERCHANNEL_EXTENDED: string;
+		COMMAND_SETREMINDERCHANNEL_SET: (channel: string) => string;
 		COMMAND_SETADMINISTRATORROLE_DESCRIPTION: string;
 		COMMAND_SETADMINISTRATORROLE_EXTENDED: string;
 		COMMAND_SETADMINISTRATORROLE_SET: (role: string) => string;
@@ -307,6 +312,9 @@ declare module 'klasa' {
 		COMMAND_SETDEAFENEDROLE_DESCRIPTION: string;
 		COMMAND_SETDEAFENEDROLE_EXTENDED: string;
 		COMMAND_SETDEAFENEDROLE_SET: (role: string) => string;
+		COMMAND_SETBANDELETEDAYS_DESCRIPTION: string;
+		COMMAND_SETBANDELETEDAYS_EXTENDED: string;
+		COMMAND_SETBANDELETEDAYS_SET: (days: number) => string;
 		COMMAND_MANAGERESTRICTEDROLES_DESCRIPTION: string;
 		COMMAND_MANAGERESTRICTEDROLES_EXTENDED: string;
 		COMMAND_MANAGERESTRICTEDROLES_MANAGE_REMOVED: (removedRoles: string) => string;
