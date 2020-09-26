@@ -264,6 +264,32 @@ export default class extends Language {
 		ARGUMENT_USERNAME_MULTIPLE: (users: string) => `Found multiple users: \`${users}\`.`,
 		/**
 		 * ################################
+		 * #      MISCELLANEOUS COMMANDS  #
+		 * ################################
+		 */
+		COMMAND_GOOGLE_DESCRIPTION: 'Search google for a phrase',
+		COMMAND_GOOGLE_EXTENDED: builder.display('google', {
+			examples: [
+				'john green'
+			],
+			extendedHelp: 'The maximum character length for Google searches is 200.'
+		}),
+		COMMAND_GOOGLE_INITIALRESPONSE: 'Using mad Google skillz...',
+		COMMAND_GOOGLE_EMBED: {
+			TITLE: (query: string) => `Google results for ${query}`
+		},
+		COMMAND_LYRICS_DESCRIPTION: 'Search Genius for lyrics to a song',
+		COMMAND_LYRICS_EXTENDED: builder.display('lyrics', {
+			examples: [
+				'accio deathly hallows'
+			]
+		}),
+		COMMAND_LYRICS_EMBED: {
+			TITLE: 'Genius Results'
+		},
+		COMMAND_LYRICS_NOLYRICS: `I couldn't find any lyrics on Genius!`,
+		/**
+		 * ################################
 		 * #      FUN COMMANDS            #
 		 * ################################
 		 */
