@@ -1,9 +1,8 @@
 import { SteveCommand } from '@lib/structures/commands/SteveCommand';
-import { CommandStore, KlasaMessage, RichDisplay } from 'klasa';
+import { CommandStore, KlasaMessage } from 'klasa';
 import { Role, Message, MessageEmbed } from 'discord.js';
 import { GuildSettings } from '@lib/types/settings/GuildSettings';
-import { chunk } from '@klasa/utils';
-import { floatPromise } from '@utils/util';
+import { floatPromise, richDisplayList } from '@utils/util';
 
 export default class extends SteveCommand {
 
@@ -33,18 +32,20 @@ export default class extends SteveCommand {
 		const response = await msg.send(new MessageEmbed()
 			.setDescription('Loading...'));
 
-		const display = new RichDisplay(new MessageEmbed());
-
-		for (const page of chunk(assignables, 30)) {
-			const description = `\`${page.join('`, `')}\``;
-			display.addPage((embed: MessageEmbed) => embed.setDescription(description));
-		}
+		const display = richDisplayList(assignables, 30);
 
 		await display.run(response);
 		return response;
 	}
 
 	public async role(msg: KlasaMessage, roles: Role[]): Promise<Message | null> {
+		const trustedRoleID = msg.guild!.settings.get(GuildSettings.Roles.Trusted);
+		const trustedRoleRequirement = msg.guild!.settings.get(GuildSettings.Roles.RequireTrustedRoleForSelfAssign) as boolean;
+
+		if (trustedRoleID && trustedRoleRequirement && !msg.member!.roles.cache.has(trustedRoleID)) {
+			throw msg.guild!.language.tget('COMMAND_ASSIGN_ROLE_NEEDTRUSTED', msg.guild!.roles.cache.get(trustedRoleID)!.name);
+		}
+
 		const removed: string[] = [];
 		const added: string[] = [];
 
