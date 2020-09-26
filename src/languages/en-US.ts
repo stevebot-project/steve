@@ -550,15 +550,13 @@ export default class extends Language {
 		COMMAND_ASSIGN_DESCRIPTION: `Assign roles to yourself using ${botName}`,
 		COMMAND_ASSIGN_EXTENDED: builder.display('assign', {
 			examples: [
-				'edit|gmt-4',
 				'list',
 				'gmt-4'
 			],
 			explainedUsage: [
 				['rolename', 'You can use the name of a role, it\'s snowflake (long id), or tag the role (if it is taggable).']
 			],
-			extendedHelp: oneLine`This command allows server staff to edit the list of roles that can be self-assigned by members;
-					and allows members to view the list of self-assignable roles, and add/remove the roles from themselves.`,
+			extendedHelp: 'This command allows members to view the list of self-assignable roles, and add/remove the roles from themselves.',
 			reminder: 'Only roles that have been designated as self-assignable by server staff can be used with this command.'
 		}),
 		COMMAND_ASSIGN_NOTASSIGNABLE: (role: string) => `${Emojis.REDX} The ${role} role is not self-assignable.`,
