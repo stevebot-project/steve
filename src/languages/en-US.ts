@@ -425,6 +425,7 @@ export default class extends Language {
 				['username', 'This argument is required. You can use a member\'s username or snowflake (long ID number) with this command. You can also tag them.'],
 				['reason', 'You can specify a reason for this action, to be used in the server\'s audit log and in my case log.']
 			],
+			extendedHelp: `This command requires me to have the **${this.PERMISSIONS.MANAGE_ROLES}** permission.`,
 			reminder: 'You must set up the server\'s Muted role before this command can be used.'
 		}),
 		COMMAND_MUTE_SUCCESS: (target: string, thisCase: ModerationCase) => `Muted ${target} and created case number ${thisCase.number} with reason: *${thisCase.reason}*.`,
@@ -439,8 +440,9 @@ export default class extends Language {
 				['username', 'This argument is required. You can use a member\'s username or snowflake (long ID number) with this command. You can also tag them.'],
 				['reason', 'You can specify a reason for this action, to be used in the server\'s audit log and in my case log.']
 			],
+			extendedHelp: `This command requires me to have the **${this.PERMISSIONS.MANAGE_ROLES}** permission.`,
 			reminder: 'You must set up the server\'s Deafened role before you can use this command. The Deafened role should prevent users from seeing most (or all) channels in the server.'
-		}, true),
+		}),
 		COMMAND_DEAFEN_UNABLE: (target: string) => `Unable to deafen ${target}.`,
 		COMMAND_DEAFEN_SUCCESS: (target: string, thisCase: ModerationCase) => `Deafened ${target} and created case number ${thisCase.number} with reason: *${thisCase.reason}*.`,
 		COMMAND_BAN_DESCRIPTION: 'Ban a user from the server',
@@ -453,6 +455,7 @@ export default class extends Language {
 				['username', 'This argument is required. You can use a member\'s username or snowflake (long ID number) with this command. You can also tag them.'],
 				['reason', 'You can specify a reason for this action, to be used in the server\'s audit log and in my case log.']
 			],
+			extendedHelp: `This command requires me to have the **${this.PERMISSIONS.BAN_MEMBERS}** permission.`,
 			reminder: 'You can change the `moderation.banDeleteDays` setting to control how many days worth of messages from the banned user are deleted.'
 		}),
 		COMMAND_BAN_UNABLE: (target: string) => `Unable to ban ${target}.`,
@@ -465,7 +468,8 @@ export default class extends Language {
 			explainedUsage: [
 				['username', 'This argument is required. You can use a member\'s username or snowflake (long ID number) with this command. You can also tag them.'],
 				['reason', 'You can specify a reason for this action, to be used in the server\'s audit log and in my case log.']
-			]
+			],
+			extendedHelp: `This command requires me to have the **${this.PERMISSIONS.KICK_MEMBERS}** permission.`
 		}),
 		COMMAND_KICK_UNABLE: (target: string) => `Unable to kick ${target}.`,
 		COMMAND_KICK_SUCCESS: (target: string, thisCase: ModerationCase) => `Kicked ${target} and created case number ${thisCase.number} with reason: *${thisCase.reason}*.`,
@@ -478,7 +482,8 @@ export default class extends Language {
 			explainedUsage: [
 				['user', 'This argument is required. For this command, you must use the user\'s snowflake (long ID number).'],
 				['reason', 'You can specify a reason for this action, to be used in the server\'s audit log and in my case log.']
-			]
+			],
+			extendedHelp: `This command requires me to have the **${this.PERMISSIONS.BAN_MEMBERS}** permission.`
 		}),
 		COMMAND_UNBAN_UNABLE: (target: string) => `Unable to unban ${target}.`,
 		COMMAND_UNBAN_SUCCESS: (target: string, thisCase: ModerationCase) => `Unbanned ${target} and created case number ${thisCase.number} with reason: *${thisCase.reason}*.`,
@@ -490,6 +495,7 @@ export default class extends Language {
 			explainedUsage: [
 				['username', 'This argument is required. You can use a member\'s username or snowflake (long ID number) with this command. You can also tag them.']
 			],
+			extendedHelp: `This command requires me to have the **${this.PERMISSIONS.MANAGE_ROLES}** permission.`,
 			reminder: 'You must set up the server\'s Muted role before using this command.'
 		}),
 		COMMAND_UNMUTE_UNABLE: (target: string) => `Unable to unmute ${target}.`,
@@ -502,6 +508,7 @@ export default class extends Language {
 			explainedUsage: [
 				['username', 'This argument is required. You can use a member\'s username or snowflake (long ID number) with this command. You can also tag them.']
 			],
+			extendedHelp: `This command requires me to have the **${this.PERMISSIONS.MANAGE_ROLES}** permission.`,
 			reminder: 'You must set up the server\'s Deafened role before using this command.'
 		}),
 		COMMAND_UNDEAFEN_UNABLE: (target: string) => `Unable to undeafen ${target}.`,
@@ -517,7 +524,8 @@ export default class extends Language {
 			explainedUsage: [
 				['string', 'Nicknames have a maximum length of 32 characters.']
 			],
-			extendedHelp: 'Not specifying a nickname for this command will clear the member\'s nickname.'
+			extendedHelp: `This command requires me to have the **${this.PERMISSIONS.MANAGE_NICKNAMES}** permisson.`,
+			reminder: 'Not specifying a nickname for this command will clear the member\'s nickname.'
 		}),
 		COMMAND_NICKNAME_SET: (user: string) => `${user}'s nickname has been set.`,
 		COMMAND_NICKNAME_CLEARED: (user: string) => `${user}'s nickname has been cleared.`,
@@ -529,18 +537,19 @@ export default class extends Language {
 			explainedUsage: [
 				['rolename', 'You can use the name of a role, it\'s snowflake (long id), or tag the role (if it is taggable).']
 			],
-			extendedHelp: 'This command works on a toggle; there is no need to specify if you want to add or remove the command.'
+			extendedHelp: `This command requires me to have the **${this.PERMISSIONS.MANAGE_ROLES}** permission.`,
+			reminder: 'This command works on a toggle; there is no need to specify if you want to add or remove the command.'
 		}),
 		COMMAND_ROLE_REMOVE: (user: string, role: string) => `The ${role} role has been removed from ${user}.`,
 		COMMAND_ROLE_ADD: (user: string, role: string) => `The ${role} role has been added to ${user}.`,
 		COMMAND_LOCK_DESCRIPTION: 'Lock a channel from public posting',
 		COMMAND_LOCK_EXTENDED: builder.display('lock', {
-			extendedHelp: `This command takes away the ${this.PERMISSIONS.SEND_MESSAGES} permission from the everyone role in the channel.`
+			extendedHelp: `This command takes away the **${this.PERMISSIONS.SEND_MESSAGES}** permission from the everyone role in the channel. I need the **${this.PERMISSIONS.MANAGE_CHANNELS}** permission to run it.`
 		}),
 		COMMAND_LOCK_LOCKED: 'This channel has been locked.',
 		COMMAND_UNLOCK_DESCRIPTION: 'Opens a channel to public posting',
 		COMMAND_UNLOCK_EXTENDED: builder.display('unlock', {
-			extendedHelp: `This command gives the ${this.PERMISSIONS.SEND_MESSAGES} permission to the everyone role in the channel.`
+			extendedHelp: `This command gives the ${this.PERMISSIONS.SEND_MESSAGES} permission to the everyone role in the channel. I need the **${this.PERMISSIONS.MANAGE_CHANNELS}** permission to run it.`
 		}),
 		COMMAND_UNLOCK_UNLOCKED: 'This channel has been unlocked.',
 		COMMAND_SLOWMODE_DESCRIPTION: 'Set the message ratelimit in a channel',
@@ -549,7 +558,8 @@ export default class extends Language {
 				'1 minute',
 				'reset'
 			],
-			extendedHelp: 'Using "reset" as the argument will turn slowmode off.'
+			extendedHelp: `This command requires me to have the **${this.PERMISSIONS.MANAGE_CHANNELS}** permission.`,
+			reminder: 'Using "reset" as the argument will turn slowmode off.'
 		}),
 		COMMAND_SLOWMODE_RESET: 'Slowmode has been turned off.',
 		COMMAND_SLOWMODE_SET: (duration: string) => `Slowmode has been set to 1 message per member per ${duration}.`,
@@ -561,7 +571,8 @@ export default class extends Language {
 			explainedUsage: [
 				['number', 'The maximum number of messages that can be purged at once is 99.']
 			],
-			extendedHelp: 'The command message is automatically counted towards the number of messages deleted, so there is no need to account for it when specifying a number.'
+			extendedHelp: `This command requires me to have the **${this.PERMISSIONS.MANAGE_MESSAGES}** permission to run it.`,
+			reminder: 'The command message is automatically counted towards the number of messages deleted, so there is no need to account for it when specifying a number.'
 		}),
 		COMMAND_PURGE_PURGED: (size: number) => `${size} messages were deleted.`,
 		/**
@@ -637,7 +648,7 @@ export default class extends Language {
 			explainedUsage: [
 				['rolename', 'You can use the name of a role, it\'s snowflake (long id), or tag the role (if it is taggable).']
 			],
-			extendedHelp: 'This command allows members to view the list of self-assignable roles, and add/remove the roles from themselves.',
+			extendedHelp: `This command allows members to view the list of self-assignable roles, and add/remove the roles from themselves. I need to have the **${this.PERMISSIONS.MANAGE_ROLES}** permission to use this command.`,
 			reminder: 'Only roles that have been designated as self-assignable by server staff can be used with this command.'
 		}),
 		COMMAND_ASSIGN_NOTASSIGNABLE: (role: string) => `${Emojis.REDX} The ${role} role is not self-assignable.`,
