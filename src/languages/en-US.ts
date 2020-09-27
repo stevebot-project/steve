@@ -5,7 +5,6 @@ import { NAME as botName } from '@root/config';
 import { ModerationCase } from '@lib/structures/ModerationCases';
 import { oneLine } from 'common-tags';
 import { Emojis } from '@lib/types/Enums';
-import { toTitleCase } from '@utils/util';
 
 const builder = new HelpBuilder()
 	.setExamples('👀 | **Examples**')
@@ -910,11 +909,11 @@ export default class extends Language {
 		 */
 		EVENT_CHANNELCREATE_EMBED: {
 			FOOTER: (id: string) => `Channel ID: ${id}`,
-			TITLE: (type: string, name: string) => `${toTitleCase(type)} Channel Created | ${name}`
+			TITLE: (type: string, name: string) => `${util.toTitleCase(type)} Channel Created | ${name}`
 		},
 		EVENT_CHANNELDELETE_EMBED: {
 			FOOTER: (id: string) => `Channel ID: ${id}`,
-			TITLE: (type: string, name: string) => `${toTitleCase(type)} Channel Deleted | ${name}`
+			TITLE: (type: string, name: string) => `${util.toTitleCase(type)} Channel Deleted | ${name}`
 		},
 		EVENT_CHANNELUPDATE_NAMECHANGE_EMBED: {
 			FOOTER: (id: string) => `Channel ID: ${id}`,
