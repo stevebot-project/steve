@@ -22,6 +22,32 @@ const caseActions = {
 	unmute: 'Member Unmuted'
 };
 
+const dftba = [
+	"Don't Forget to be Awesome",
+	'Darling, Fetch the Battle Axe',
+	'Definitely Fondue this Bot Always',
+	'Don\'t Fear the Bachelors of Arts',
+	'Democracy Fails Totally Before Apathy',
+	'Don\'t Forget To Buy Anoraks',
+	'Definitely Feeling The Balmy Avocados',
+	'Definitely Forge The Best Artichokes',
+	'Demons Feed The Best Anyway',
+	'Definitely Forge The Bees Armour',
+	'Dave: Forgotten Through Brotherly Adventures',
+	'Demons Find Turquoise Bears Attractive',
+	'Do Find Tea, Beat Apathy',
+	'Don\'t Forget That Brains Attract',
+	'Decepticons Fear This Brilliant Autobot',
+	'Darkened Forests Take Bravery Away',
+	'Drunk Fish Try Breathing Air',
+	'Dastardly Farmers Took Bessie Away',
+	'Damn Fine To Be Alive',
+	'Donate For The Blood Association',
+	'Dead Frogs Teach Bored Anatomists',
+	'Duel For The Best Acronym',
+	'Dandelions Fly Through Blue Air'
+];
+
 const Perms = {
 	ADMINISTRATOR: 'Administrator',
 	CREATE_INSTANT_INVITE: 'Create Instant Invite',
@@ -60,6 +86,7 @@ const Perms = {
 export default class extends Language {
 
 	public caseActions = caseActions;
+	public dftba = dftba;
 	public PERMISSIONS = Perms;
 
 	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -203,7 +230,7 @@ export default class extends Language {
 			TITLE: (description: string) => `${description}`,
 			USAGE: (usage: string) => `📝 | ***Command Usage***\n\`${usage}\`\n`,
 			EXTENDED: (extendedHelp: string) => `🔍 | ***Extended Help***\n${extendedHelp}`,
-			FOOTER: (name: string) => `Command help for ${name}`
+			FOOTER: (name: string) => `Command help for ${name} | ${this.dftba[Math.floor(Math.random() * this.dftba.length)]}`
 		},
 		COMMAND_HELP_NO_EXTENDED: 'No extended help available.',
 		COMMAND_HELP_DM: '📥 | The list of commands you have access to has been sent to your DMs.',
@@ -371,6 +398,11 @@ export default class extends Language {
 			'test1',
 			'test2'
 		],
+		COMMAND_DFTBA_DESCRIPTION: 'Don\'t Forget to be Awesome!',
+		COMMAND_DFTBA_EXTENDED: builder.display('dftba', {
+			extendedHelp: 'Darling, Fetch the Battle Axe!',
+			reminder: 'Decepticons Fear This Brilliant Autobot'
+		}),
 		/**
 		 * ################################
 		 * #      MODERATION SYSTEM       #
@@ -638,7 +670,7 @@ export default class extends Language {
 				JOINED_GUILD: 'Joined Server',
 				ROLES: 'Roles'
 			},
-			FOOTER: (id: string) => `Member ID: ${id}`
+			FOOTER: (id: string) => `Member ID: ${id} | ${this.dftba[Math.floor(Math.random() * this.dftba.length)]}`
 		},
 		/**
 		 * ################################
@@ -661,7 +693,7 @@ export default class extends Language {
 				EMOJIS: 'Emojis',
 				MEMBERS_WITH_ROLES: 'Members with Roles'
 			},
-			FOOTER: (date: string, duration: string) => `Created ${date} (${duration} ago)`
+			FOOTER: (date: string, duration: string) => `Created ${date} (${duration} ago) | ${this.dftba[Math.floor(Math.random() * this.dftba.length)]}`
 		},
 		COMMAND_ROLEINFO_DESCRIPTION: 'Display basic information about a role, along with a list of members who have it',
 		COMMAND_ROLEINFO_EXTENDED: builder.display('roleinfo', {

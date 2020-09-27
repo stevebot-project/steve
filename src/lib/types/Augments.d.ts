@@ -33,6 +33,7 @@ declare module 'klasa' {
 
 	interface Language {
 		caseActions: any;
+		dftba: string[];
 		PERMISSIONS: Record<PermissionString, string>;
 		tget<T extends SimpleLanguageKeys>(term: T): LanguageKeys[T];
 		tget<T extends ComplexLanguageKeys>(term: T, ...args: Parameters<LanguageKeys[T]>): ReturnType<LanguageKeys[T]>;
