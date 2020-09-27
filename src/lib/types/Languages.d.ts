@@ -125,11 +125,8 @@ declare module 'klasa' {
 		MESSAGE_PROMPT_TIMEOUT: string;
 		TEXT_PROMPT_ABORT_OPTIONS: string[];
 		USER_NOT_IN_GUILD: (user: string) => string;
-		ROLES: string;
 		NONE: string;
 		NO_PARENT_CATEGORY: string;
-		REMOVED_FROM: string;
-		ADDED_TO: string;
 		ARGUMENT_TIMESPAN_INVALID: (arg: string) => string;
 		ARGUMENT_USERNAME_CANNOTFIND: (search: string) => string;
 		ARGUMENT_USERNAME_MULTIPLE: (users: string) => string;
@@ -413,6 +410,8 @@ declare module 'klasa' {
 			FOOTER: (id: string) => string;
 			TITLE: (type: string, role: string, executor: string) => string;
 		};
+		EVENT_GUILDMEMBERUPDATE_ROLEUPDATE_REMOVEDFROM: string;
+		EVENT_GUILDMEMBERUPDATE_ROLEUPDATE_ADDEDTO: string;
 		EVENT_GUILDMEMBERUPDATE_DISPLAYNAMECHANGE_EMBED: {
 			FIELD_TITLES: {
 				NEW_DISPLAY_NAME: string;

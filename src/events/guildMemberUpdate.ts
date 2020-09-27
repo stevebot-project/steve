@@ -34,8 +34,8 @@ export default class extends Event {
 
 	private async logRoleUpdate(oldMember: GuildMember, newMember: GuildMember, memberlog: TextChannel): Promise<Message> {
 		const roleUpdateType = oldMember.roles.cache.size > newMember.roles.cache.size
-			? newMember.guild.language.tget('REMOVED_FROM')
-			: newMember.guild.language.tget('ADDED_TO');
+			? newMember.guild.language.tget('EVENT_GUILDMEMBERUPDATE_ROLEUPDATE_REMOVEDFROM')
+			: newMember.guild.language.tget('EVENT_GUILDMEMBERUPDATE_ROLEUPDATE_ADDEDTO');
 
 		const executor = await getExecutor(newMember.guild, 'MEMBER_ROLE_UPDATE');
 		const role = await this.getRoleFromAuditLogs(newMember.guild);

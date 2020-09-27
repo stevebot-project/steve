@@ -303,11 +303,8 @@ export default class extends Language {
 		 * ################################
 		 */
 		USER_NOT_IN_GUILD: (user: string) => `${user} is not in this server.`,
-		ROLES: 'Roles',
 		NONE: 'None',
 		NO_PARENT_CATEGORY: 'No Category',
-		REMOVED_FROM: 'Removed from',
-		ADDED_TO: 'Added to',
 		/**
 		 * ################################
 		 * #      ARGUMENTS               #
@@ -971,6 +968,8 @@ export default class extends Language {
 			FOOTER: (id: string) => `Member ID: ${id}`,
 			TITLE: (type: string, role: string, executor: string) => `${type} the ${role} role by ${executor}`
 		},
+		EVENT_GUILDMEMBERUPDATE_ROLEUPDATE_REMOVEDFROM: 'Removed from',
+		EVENT_GUILDMEMBERUPDATE_ROLEUPDATE_ADDEDTO: 'Added to',
 		EVENT_GUILDMEMBERUPDATE_DISPLAYNAMECHANGE_EMBED: {
 			FIELD_TITLES: {
 				NEW_DISPLAY_NAME: 'New Display Name'
