@@ -1,10 +1,8 @@
-import { CommandStore, KlasaMessage } from 'klasa';
 import genius from 'genius-lyrics';
+import { CommandStore, KlasaMessage } from 'klasa';
 import { SteveCommand } from '@lib/structures/commands/SteveCommand';
-import { Message } from 'discord.js';
+import { Message, MessageEmbed } from 'discord.js';
 import { TOKENS } from '@root/config';
-import { Colors } from '@lib/types/enums';
-import { newEmbed } from '@utils/util';
 
 export default class extends SteveCommand {
 
@@ -26,8 +24,7 @@ export default class extends SteveCommand {
 
 		const EMBED_DATA = msg.language.tget('COMMAND_LYRICS_EMBED');
 
-		const embed = newEmbed()
-			.setColor(Colors.BrightGreen)
+		const embed = new MessageEmbed()
 			.setTitle(EMBED_DATA.TITLE);
 
 		for (let i = 0; i < 5; i++) {

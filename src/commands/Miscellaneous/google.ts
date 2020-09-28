@@ -1,15 +1,13 @@
 import googleIt from 'google-it';
 import { SteveCommand } from '@lib/structures/commands/SteveCommand';
 import { CommandStore, KlasaMessage } from 'klasa';
-import { Message } from 'discord.js';
-import { Colors } from '@lib/types/enums';
-import { newEmbed } from '@utils/util';
+import { Message, MessageEmbed } from 'discord.js';
 
 export default class extends SteveCommand {
 
 	public constructor(store: CommandStore, file: string[], directory: string) {
 		super(store, file, directory, {
-			aliases: ['google, lmgtfy'],
+			aliases: ['lmgtfy'],
 			description: lang => lang.tget('COMMAND_GOOGLE_DESCRIPTION'),
 			extendedHelp: lang => lang.tget('COMMAND_GOOGLE_EXTENDED'),
 			usage: '<search:string{,200}>'
@@ -23,8 +21,7 @@ export default class extends SteveCommand {
 
 		const EMBED_DATA = msg.language.tget('COMMAND_GOOGLE_EMBED');
 
-		const embed = newEmbed()
-			.setColor(Colors.GoogleYellow)
+		const embed = new MessageEmbed()
 			.setTitle(EMBED_DATA.TITLE(search));
 
 		for (let i = 0; i < results.length; i++) {
@@ -35,7 +32,7 @@ export default class extends SteveCommand {
 				]);
 		}
 
-		return res.edit('', { embed: embed });
+		return res.edit('', { embed });
 	}
 
 }

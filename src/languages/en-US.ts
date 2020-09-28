@@ -332,7 +332,8 @@ export default class extends Language {
 		COMMAND_LYRICS_EXTENDED: builder.display('lyrics', {
 			examples: [
 				'accio deathly hallows'
-			]
+			],
+			extendedHelp: 'This command returns a list of Genius links, not the lyrics themselves.'
 		}),
 		COMMAND_LYRICS_EMBED: {
 			TITLE: 'Genius Results'
