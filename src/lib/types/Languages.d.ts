@@ -148,8 +148,10 @@ declare module 'klasa' {
 		COMMAND_ROCKPAPERSCISSORS_WINNER: (playerMove: string, steveMove: string, winner: number) => string;
 		COMMAND_AUDINO_DESCRIPTION: string;
 		COMMAND_AUDINO_EXTENDED: string;
+		COMMAND_AUDINO_ID: string;
 		COMMAND_F_DESCRIPTION: string;
 		COMMAND_F_EXTENDED: string;
+		COMMAND_F_ID: string;
 		COMMAND_8BALL_DESCRIPTION: string;
 		COMMAND_8BALL_EXTENDED: string;
 		COMMAND_8BALL_RESPONSES: string[];

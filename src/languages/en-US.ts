@@ -369,10 +369,12 @@ export default class extends Language {
 		COMMAND_AUDINO_EXTENDED: builder.display('audino', {
 			extendedHelp: 'This command has a cooldown of 60 seconds per channel. The image this command displays came from a reading livestream [John](https://en.wikipedia.org/wiki/John_Green_(author)) did; it\'s the face he made when his audio cut out *again*.'
 		}, true),
+		COMMAND_AUDINO_ID: '[Image Description: An image of John Green in front of a bookshelf, raising his hands to his head and making a face of fury because his audio just. Won\'t. Work.]',
 		COMMAND_F_DESCRIPTION: 'Press F to pay respects',
 		COMMAND_F_EXTENDED: builder.display('f', {
 			extendedHelp: 'This command has a cooldown of 60 seconds per channel. [You can find an explanation of the meme here](https://knowyourmeme.com/memes/press-f-to-pay-respects).'
 		}),
+		COMMAND_F_ID: '[Image Description: A screenshot of a cutscene from Call of Duty: Advanced Warfare, showing a US Marine\'s funeral. A quick-time-event prompt is showing, saying "Press F to pay respects."]',
 		COMMAND_8BALL_DESCRIPTION: 'Ask a question and get an answer... a sassy one, of course',
 		COMMAND_8BALL_EXTENDED: builder.display('8ball', {
 			examples: [
