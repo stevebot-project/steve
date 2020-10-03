@@ -130,12 +130,6 @@ declare module 'klasa' {
 		ARGUMENT_TIMESPAN_INVALID: (arg: string) => string;
 		ARGUMENT_USERNAME_CANNOTFIND: (search: string) => string;
 		ARGUMENT_USERNAME_MULTIPLE: (users: string) => string;
-		COMMAND_GOOGLE_DESCRIPTION: string;
-		COMMAND_GOOGLE_EXTENDED: string;
-		COMMAND_GOOGLE_INITIALRESPONSE: string;
-		COMMAND_GOOGLE_EMBED: {
-			TITLE: (query: string) => string;
-		};
 		COMMAND_LYRICS_DESCRIPTION: string;
 		COMMAND_LYRICS_EXTENDED: string;
 		COMMAND_LYRICS_EMBED: {
