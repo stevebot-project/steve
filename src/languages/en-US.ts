@@ -392,8 +392,13 @@ export default class extends Language {
 			extendedHelp: 'This command has a cooldown of 5 seconds per user.'
 		}),
 		COMMAND_8BALL_RESPONSES: [
-			'test1',
-			'test2'
+			'The eucalyptus says yes.',
+			'Hahahaha... no.',
+			'I guess so...',
+			'Everything is burning lol go do something productive instead of asking me this.',
+			'Not today, satan.',
+			'Yes? No? Maybe so? I don\'t care, to be honest.',
+			'Lemme finish my eucalyptus, then try asking me again.'
 		],
 		COMMAND_DFTBA_DESCRIPTION: 'Don\'t Forget to be Awesome!',
 		COMMAND_DFTBA_EXTENDED: builder.display('dftba', {
