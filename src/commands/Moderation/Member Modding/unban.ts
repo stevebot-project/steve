@@ -6,8 +6,8 @@ export default class extends ModerationCommand {
 
 	public constructor(store: CommandStore, file: string[], directory: string) {
 		super(store, file, directory, {
-			description: lang => lang.get('COMMAND_UNBAN_DESCRIPTION'),
-			extendedHelp: lang => lang.get('COMMAND_UNBAN_EXTENDED'),
+			description: lang => lang.tget('COMMAND_UNBAN_DESCRIPTION'),
+			extendedHelp: lang => lang.tget('COMMAND_UNBAN_EXTENDED'),
 			usage: '<user:user> [reason:string]'
 		});
 	}

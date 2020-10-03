@@ -6,9 +6,9 @@ export default class extends ModerationCommand {
 
 	public constructor(store: CommandStore, file: string[], directory: string) {
 		super(store, file, directory, {
-			description: lang => lang.get('COMMAND_MUTE_DESCRIPTION'),
+			description: lang => lang.tget('COMMAND_MUTE_DESCRIPTION'),
 			duration: true,
-			extendedHelp: lang => lang.get('COMMAND_MUTE_EXTENDED'),
+			extendedHelp: lang => lang.tget('COMMAND_MUTE_EXTENDED'),
 			requiredSettings: ['roles.muted']
 		});
 	}

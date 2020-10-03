@@ -6,8 +6,8 @@ export default class extends ModerationCommand {
 
 	public constructor(store: CommandStore, file: string[], directory: string) {
 		super(store, file, directory, {
-			description: lang => lang.get('COMMAND_UNDEAFEN_DESCRIPTION'),
-			extendedHelp: lang => lang.get('COMMAND_UNDEAFEN_EXTENDED'),
+			description: lang => lang.tget('COMMAND_UNDEAFEN_DESCRIPTION'),
+			extendedHelp: lang => lang.tget('COMMAND_UNDEAFEN_EXTENDED'),
 			requiredSettings: ['roles.deafened']
 		});
 	}

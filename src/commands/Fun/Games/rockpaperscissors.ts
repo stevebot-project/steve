@@ -10,8 +10,8 @@ export default class extends SteveCommand {
 			aliases: ['rps'],
 			cooldown: 5,
 			cooldownLevel: 'author',
-			description: lang => lang.get('COMMAND_ROCKPAPERSCISSORS_DESCRIPTION'),
-			extendedHelp: lang => lang.get('COMMAND_ROCKPAPERSCISSORS_EXTENDED'),
+			description: lang => lang.tget('COMMAND_ROCKPAPERSCISSORS_DESCRIPTION'),
+			extendedHelp: lang => lang.tget('COMMAND_ROCKPAPERSCISSORS_EXTENDED'),
 			usage: '<rock|paper|scissors>'
 		});
 	}

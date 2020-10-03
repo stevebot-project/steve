@@ -6,9 +6,9 @@ export default class extends ModerationCommand {
 
 	public constructor(store: CommandStore, file: string[], directory: string) {
 		super(store, file, directory, {
-			description: lang => lang.get('COMMAND_DEAFEN_DESCRIPTION'),
+			description: lang => lang.tget('COMMAND_DEAFEN_DESCRIPTION'),
 			duration: true,
-			extendedHelp: lang => lang.get('COMMAND_DEAFEN_EXTENDED'),
+			extendedHelp: lang => lang.tget('COMMAND_DEAFEN_EXTENDED'),
 			requiredSettings: ['roles.deafened']
 		});
 	}

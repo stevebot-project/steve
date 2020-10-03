@@ -10,8 +10,8 @@ export default class extends SteveCommand {
 	public constructor(store: CommandStore, file: string[], directory: string) {
 		super(store, file, directory, {
 			aliases: ['snippets', 'snip', 'customcommand'],
-			description: lang => lang.get('COMMAND_SNIPPET_DESCRIPTION'),
-			extendedHelp: lang => lang.get('COMMAND_SNIPPET_EXTENDED'),
+			description: lang => lang.tget('COMMAND_SNIPPET_DESCRIPTION'),
+			extendedHelp: lang => lang.tget('COMMAND_SNIPPET_EXTENDED'),
 			runIn: ['text'],
 			subcommands: true,
 			usage: '<add|remove|list|edit|reset|source|view:default> (name:name{,100}) (content:content{,1900})'

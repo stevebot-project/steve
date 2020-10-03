@@ -11,8 +11,8 @@ export default class extends SteveCommand {
 	public constructor(store: CommandStore, file: string[], directory: string) {
 		super(store, file, directory, {
 			aliases: ['remindme', 'reminders', 'myreminders'],
-			description: lang => lang.get('COMMAND_REMIND_DESCRIPTION'),
-			extendedHelp: lang => lang.get('COMMAND_REMIND_EXTENDED'),
+			description: lang => lang.tget('COMMAND_REMIND_DESCRIPTION'),
+			extendedHelp: lang => lang.tget('COMMAND_REMIND_EXTENDED'),
 			subcommands: true,
 			usage: '<view|cancel|create:default> (reminder:reminder) (duration:timespan)'
 		});

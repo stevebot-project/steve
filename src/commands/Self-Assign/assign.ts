@@ -8,8 +8,8 @@ export default class extends SteveCommand {
 
 	public constructor(store: CommandStore, file: string[], directory: string) {
 		super(store, file, directory, {
-			description: lang => lang.get('COMMAND_ASSIGN_DESCRIPTION'),
-			extendedHelp: lang => lang.get('COMMAND_ASSIGN_EXTENDED'),
+			description: lang => lang.tget('COMMAND_ASSIGN_DESCRIPTION'),
+			extendedHelp: lang => lang.tget('COMMAND_ASSIGN_EXTENDED'),
 			requiredPermissions: ['MANAGE_ROLES'],
 			runIn: ['text'],
 			subcommands: true,

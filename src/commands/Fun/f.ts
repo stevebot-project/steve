@@ -8,8 +8,8 @@ export default class extends SteveCommand {
 		super(store, file, directory, {
 			cooldown: 60,
 			cooldownLevel: 'channel',
-			description: lang => lang.get('COMMAND_F_DESCRIPTION'),
-			extendedHelp: lang => lang.get('COMMAND_F_EXTENDED')
+			description: lang => lang.tget('COMMAND_F_DESCRIPTION'),
+			extendedHelp: lang => lang.tget('COMMAND_F_EXTENDED')
 		});
 	}
 

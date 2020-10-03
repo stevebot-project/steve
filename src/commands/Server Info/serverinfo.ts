@@ -8,8 +8,8 @@ export default class extends SteveCommand {
 	public constructor(store: CommandStore, file: string[], directory: string) {
 		super(store, file, directory, {
 			aliases: ['serverstats'],
-			description: lang => lang.get('COMMAND_SERVERINFO_DESCRIPTION'),
-			extendedHelp: lang => lang.get('COMMAND_SERVERINFO_EXTENDED'),
+			description: lang => lang.tget('COMMAND_SERVERINFO_DESCRIPTION'),
+			extendedHelp: lang => lang.tget('COMMAND_SERVERINFO_EXTENDED'),
 			runIn: ['text']
 		});
 	}
