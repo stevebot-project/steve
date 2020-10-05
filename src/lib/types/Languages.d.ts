@@ -127,7 +127,7 @@ declare module 'klasa' {
 		USER_NOT_IN_GUILD: (user: string) => string;
 		NONE: string;
 		NO_PARENT_CATEGORY: string;
-		ARGUMENT_ROLENAME_COULDNOTFIND: (name: string) => string;
+		ARGUMENT_ROLENAME_COULDNOTFIND: (name: string, arg: string) => string;
 		ARGUMENT_ROLENAME_MULTIPLEMATCHES: (matches: string, name: string) => string;
 		ARGUMENT_TIMESPAN_INVALID: (arg: string) => string;
 		ARGUMENT_USERNAME_CANNOTFIND: (search: string) => string;

@@ -309,7 +309,7 @@ export default class extends Language {
 		 * #      ARGUMENTS               #
 		 * ################################
 		 */
-		ARGUMENT_ROLENAME_COULDNOTFIND: (name: string) => `The ${name} argument must be a valid role name, id, or mention.`,
+		ARGUMENT_ROLENAME_COULDNOTFIND: (name: string, arg: string) => `Could not find a role match for **${arg}**; the ${name} argument must be a valid role name, id, or mention.`,
 		ARGUMENT_ROLENAME_MULTIPLEMATCHES: (matches: string, name: string) => `Found multiple role matches for **${name}**: \`${matches}\``,
 		ARGUMENT_TIMESPAN_INVALID: (arg: string) => `**${arg}** is an invalid timespan.`,
 		ARGUMENT_USERNAME_CANNOTFIND: (search: string) => `Could not find a user by searching with **${search}**.`,

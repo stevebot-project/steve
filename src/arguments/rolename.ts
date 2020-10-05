@@ -33,7 +33,7 @@ export default class extends Argument {
 		}
 
 		switch (querySearch.length) {
-			case 0: throw msg.guild!.language.tget('ARGUMENT_ROLENAME_COULDNOTFIND', possible.name);
+			case 0: throw msg.guild!.language.tget('ARGUMENT_ROLENAME_COULDNOTFIND', possible.name, arg);
 			case 1: return querySearch[0];
 			default:
 				if (querySearch[0].name.toLowerCase() === arg.toLowerCase()) return querySearch[0];
