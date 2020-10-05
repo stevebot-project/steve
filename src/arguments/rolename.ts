@@ -33,7 +33,7 @@ export default class extends Argument {
 		}
 
 		switch (querySearch.length) {
-			case 0: throw `${possible.name} must be a valid name, id or role mention.`;
+			case 0: throw msg.guild!.language.tget('ARGUMENT_ROLENAME_COULDNOTFIND', possible.name);
 			case 1: return querySearch[0];
 			default:
 				if (querySearch[0].name.toLowerCase() === arg.toLowerCase()) return querySearch[0];
@@ -42,7 +42,7 @@ export default class extends Argument {
 						if (search.name.toLowerCase() === arg.toLowerCase()) return search;
 					}
 				}
-				throw `Found multiple matches: \`${querySearch.map(role => role.name).join('`, `')}\``;
+				throw msg.guild!.language.tget('ARGUMENT_ROLENAME_MULTIPLEMATCHES', querySearch.map(role => role.name).join('`, `'), arg);
 		}
 	}
 
