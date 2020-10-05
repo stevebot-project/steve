@@ -650,6 +650,7 @@ export default class extends Language {
 			extendedHelp: `This command allows members to view the list of self-assignable roles, and add/remove the roles from themselves. I need to have the **${this.PERMISSIONS.MANAGE_ROLES}** permission to use this command.`,
 			reminder: 'Only roles that have been designated as self-assignable by server staff can be used with this command.'
 		}),
+		COMMAND_ASSIGN_NOROLEPROVIDED: 'You must provide a role name, id, or mention.',
 		COMMAND_ASSIGN_NOTASSIGNABLE: (role: string) => `${Emojis.REDX} The ${role} role is not self-assignable.`,
 		COMMAND_ASSIGN_ROLE_ADD: (roles: string) => `${Emojis.PLUS} Added role(s): \`${roles}\``,
 		COMMAND_ASSIGN_ROLE_REMOVE: (roles: string) => `${Emojis.MINUS} Removed role(s): \`${roles}\``,

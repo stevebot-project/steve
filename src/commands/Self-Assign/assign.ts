@@ -10,35 +10,22 @@ export default class extends SteveCommand {
 		super(store, file, directory, {
 			description: lang => lang.tget('COMMAND_ASSIGN_DESCRIPTION'),
 			extendedHelp: lang => lang.tget('COMMAND_ASSIGN_EXTENDED'),
+			flagSupport: true,
 			requiredPermissions: ['MANAGE_ROLES'],
 			runIn: ['text'],
-			subcommands: true,
-			usage: '<list|role:default> (role:rolename) [...]'
+			usage: '(role:rolename) [...]'
 		});
 
-		this.createCustomResolver('rolename', (str, possible, msg, [action]) => action === 'list' ? null : this.client.arguments.get('rolename').run(str, possible, msg));
+		this.createCustomResolver('rolename', (str, possible, msg) => {
+			if (Reflect.has(msg.flagArgs, 'list')) return null;
+			if (str) return this.client.arguments.get('rolename').run(str, possible, msg);
+			throw msg.guild!.language.tget('COMMAND_ASSIGN_NOROLEPROVIDED');
+		});
 	}
 
-	public async list(msg: KlasaMessage): Promise<Message> {
-		let assignables = msg.guild!.settings.get(GuildSettings.Roles.Assignable) as string[];
-		assignables = assignables.slice(); // clone to avoid mutating cache
+	public async run(msg: KlasaMessage, roles: Role[]): Promise<Message | null> {
+		if (Reflect.has(msg.flagArgs, 'list')) return this.listAssignableRoles(msg);
 
-		// make assignables into an array of role names
-		for (let i = 0; i < assignables.length; i++) {
-			const role = msg.guild!.roles.cache.get(assignables[i]);
-			if (role) assignables.splice(i, 1, role.name);
-		}
-
-		const response = await msg.send(new MessageEmbed()
-			.setDescription('Loading...'));
-
-		const display = richDisplayList(assignables, 30);
-
-		await display.run(response);
-		return response;
-	}
-
-	public async role(msg: KlasaMessage, roles: Role[]): Promise<Message | null> {
 		const trustedRoleID = msg.guild!.settings.get(GuildSettings.Roles.Trusted);
 		const trustedRoleRequirement = msg.guild!.settings.get(GuildSettings.Roles.RequireTrustedRoleForSelfAssign) as boolean;
 
@@ -69,6 +56,25 @@ export default class extends SteveCommand {
 		if (removed.length) output += `${msg.guild!.language.tget('COMMAND_ASSIGN_ROLE_REMOVE', removed.join(', '))}\n`;
 
 		return output ? msg.channel.send(output) : null;
+	}
+
+	private async listAssignableRoles(msg: KlasaMessage): Promise<Message> {
+		let assignables = msg.guild!.settings.get(GuildSettings.Roles.Assignable) as string[];
+		assignables = assignables.slice(); // clone to avoid mutating cache
+
+		// make assignables into an array of role names
+		for (let i = 0; i < assignables.length; i++) {
+			const role = msg.guild!.roles.cache.get(assignables[i]);
+			if (role) assignables.splice(i, 1, role.name);
+		}
+
+		const response = await msg.send(new MessageEmbed()
+			.setDescription('Loading...'));
+
+		const display = richDisplayList(assignables, 30);
+
+		await display.run(response);
+		return response;
 	}
 
 }

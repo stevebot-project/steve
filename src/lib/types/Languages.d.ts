@@ -244,6 +244,7 @@ declare module 'klasa' {
 		};
 		COMMAND_ASSIGN_DESCRIPTION: string;
 		COMMAND_ASSIGN_EXTENDED: string;
+		COMMAND_ASSIGN_NOROLEPROVIDED: string;
 		COMMAND_ASSIGN_NOTASSIGNABLE: (role: string) => string;
 		COMMAND_ASSIGN_ROLE_ADD: (roles: string) => string;
 		COMMAND_ASSIGN_ROLE_REMOVE: (roles: string) => string;
