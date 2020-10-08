@@ -1,7 +1,7 @@
 import { Event } from 'klasa';
 import { Message, MessageEmbed, TextChannel, GuildEmoji } from 'discord.js';
 import { LogColors } from '@lib/types/Enums';
-import { getExecutor, floatPromise } from '@utils/Util';
+import { getExecutor, floatPromise } from '@utils/util';
 import { GuildSettings } from '@lib/types/settings/GuildSettings';
 
 export default class extends Event {

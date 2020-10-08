@@ -1,6 +1,6 @@
 import { Event, KlasaMessage } from 'klasa';
 import { MessageEmbed, DMChannel, TextChannel, Message } from 'discord.js';
-import { floatPromise, friendlyDuration } from '@utils/Util';
+import { floatPromise, friendlyDuration } from '@utils/util';
 import { GuildSettings } from '@lib/types/settings/GuildSettings';
 import { LogColors } from '@lib/types/Enums';
 
