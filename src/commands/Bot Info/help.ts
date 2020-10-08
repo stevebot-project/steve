@@ -1,18 +1,22 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-// @ts-nocheck
 import { Command, CommandStore, util, KlasaMessage } from 'klasa';
-import { Message, TextChannel, MessageEmbed } from 'discord.js';
-import { NAME } from '@root/config';
+import { Collection, Message, TextChannel, MessageEmbed } from 'discord.js';
 import { floatPromise } from '@lib/util/util';
-const has = (obj: any, key: any): any => Object.prototype.hasOwnProperty.call(obj, key);
+import { GuildSettings } from '@lib/types/settings/GuildSettings';
+import { SteveCommand } from '@lib/structures/commands/SteveCommand';
 
-export default class extends Command {
+function sortCommandsAlphabetically(_: Command[], __: Command[], firstCategory: string, secondCategory: string): 1 | -1 | 0 {
+	if (firstCategory > secondCategory) return 1;
+	if (secondCategory > firstCategory) return -1;
+	return 0;
+}
+
+export default class extends SteveCommand {
 
 	public constructor(store: CommandStore, file: string[], directory: string) {
 		super(store, file, directory, {
 			aliases: ['commands', 'howthefuckdoiusethisbot'],
 			guarded: true,
-			description: `Shows info about ${NAME}'s commands.`,
+			description: lang => lang.tget('COMMAND_HELP_DESCRIPTION'),
 			usage: '(command:command)'
 		});
 
@@ -46,42 +50,49 @@ export default class extends Command {
 
 		if (msg.channel instanceof TextChannel) {
 			const help = await this.buildHelp(msg);
-			const categories = Object.keys(help);
-			const helpMessage = ['You can do `s;help <command>` to get more info about a specific command!'];
-			for (let cat = 0; cat < categories.length; cat++) {
-				helpMessage.push(`**${categories[cat]} Commands**:`, '```asciidoc');
-				const subCategories = Object.keys(help[categories[cat]]);
-				for (let subCat = 0; subCat < subCategories.length; subCat++) helpMessage.push(`= ${subCategories[subCat]} =`, `${help[categories[cat]][subCategories[subCat]].join('\n')}\n`);
-				helpMessage.push('```', '\u200b');
-			}
 
-			return msg.author.send(helpMessage, { split: { 'char': '\u200b' } })
+			return msg.author.send(help, { split: { 'char': '\n' } })
 				.then(() => { if (msg.channel.type !== 'dm') floatPromise(this, msg.sendLocale('COMMAND_HELP_DM')); })
 				.catch(() => { if (msg.channel.type !== 'dm') floatPromise(this, msg.sendLocale('COMMAND_HELP_NODM')); });
 		}
 	}
 
-	// eslint-disable-next-line @typescript-eslint/ban-types
-	private async buildHelp(msg: KlasaMessage): Promise<{}> {
-		const help = {};
+	private async buildHelp(msg: KlasaMessage) {
+		const commands = await this._fetchCommands(msg);
+		const prefix = msg.guildSettings.get(GuildSettings.Prefix);
 
-		const prefix = msg.guildSettings.get('prefix');
-		const commandNames = [...this.client.commands.keys()];
-		const longest = commandNames.reduce((long, str) => Math.max(long, str.length), 0);
+		const helpMessage: string[] = [];
+		for (const [category, list] of commands) {
+			helpMessage.push(`**${category} Commands**:\n`, list.map(this.formatCommand.bind(this, msg, prefix)).join('\n'), '');
+		}
 
-		await Promise.all(this.client.commands.map(cmd =>
-			this.client.inhibitors.run(msg, cmd, true)
-				.then(() => {
-					if (!has(help, cmd.category)) help[cmd.category] = {};
-					if (!has(help[cmd.category], cmd.subCategory)) help[cmd.category][cmd.subCategory] = [];
-					const description = util.isFunction(cmd.description) ? cmd.description(msg.language) : cmd.description;
-					help[cmd.category][cmd.subCategory].push(`${prefix}${cmd.name.padEnd(longest)} :: ${description}`);
-				})
-				.catch(() => {
-					// noop
-				})));
+		return helpMessage.join('\n');
+	}
 
-		return help;
+	private formatCommand(message: KlasaMessage, prefix: string, command: Command) {
+		const description = util.isFunction(command.description) ? command.description(message.language) : command.description;
+		return `• **${prefix}${command.name}** ⇒ ${description}`;
+	}
+
+	private async _fetchCommands(message: KlasaMessage) {
+		const run = this.client.inhibitors.run.bind(this.client.inhibitors, message);
+		const commands = new Collection<string, Command[]>();
+		await Promise.all(
+			this.client.commands.map(cmd =>
+				run(cmd, true)
+					.then(() => {
+						const category = commands.get(cmd.fullCategory.join(' ⇒ '));
+						if (category) category.push(cmd);
+						else commands.set(cmd.fullCategory.join(' ⇒ '), [cmd]);
+						return null;
+					})
+					// eslint-disable-next-line @typescript-eslint/no-unused-vars
+					.catch(e => {
+						// noop
+					}))
+		);
+
+		return commands.sort(sortCommandsAlphabetically);
 	}
 
 }
