@@ -22,7 +22,7 @@ const caseActions = {
 };
 
 const dftba = [
-	"Don't Forget to be Awesome",
+	'Don\'t Forget to be Awesome',
 	'Darling, Fetch the Battle Axe',
 	'Definitely Fondue this Bot Always',
 	'Don\'t Fear the Bachelors of Arts',
@@ -87,6 +87,10 @@ export default class extends Language {
 	public caseActions = caseActions;
 	public dftba = dftba;
 	public PERMISSIONS = Perms;
+
+	public get randomDftba(): string {
+		return this.dftba[Math.floor(Math.random() * this.dftba.length)];
+	}
 
 	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 	// @ts-expect-error 2416
@@ -224,12 +228,12 @@ export default class extends Language {
 			'If you\'re interested in how Steve works, you can check his code out at <https://github.com/tuataria/steve>.'
 		],
 		COMMAND_INFO_DESCRIPTION: 'Provides some information about this bot.',
-		COMMAND_HELP_DESCRIPTION: 'Display help for a command.',
+		COMMAND_HELP_DESCRIPTION: `Show info about ${botName}'s commands`,
 		COMMAND_HELP_DATA: {
 			TITLE: (description: string) => `${description}`,
 			USAGE: (usage: string) => `📝 | ***Command Usage***\n\`${usage}\`\n`,
 			EXTENDED: (extendedHelp: string) => `🔍 | ***Extended Help***\n${extendedHelp}`,
-			FOOTER: (name: string) => `Command help for ${name} | ${this.dftba[Math.floor(Math.random() * this.dftba.length)]}`
+			FOOTER: (name: string) => `Command help for ${name} | ${this.randomDftba}`
 		},
 		COMMAND_HELP_NO_EXTENDED: 'No extended help available.',
 		COMMAND_HELP_DM: '📥 | The list of commands you have access to has been sent to your DMs.',
@@ -308,7 +312,7 @@ export default class extends Language {
 				DISCORDJS: 'Discord.js Version',
 				NODE: 'Node.js Version'
 			},
-			FOOTER: this.dftba[Math.floor(Math.random() * this.dftba.length)],
+			FOOTER: this.randomDftba,
 			TITLE: 'Statistics'
 		},
 		MESSAGE_PROMPT_TIMEOUT: 'The prompt has timed out.',
@@ -694,7 +698,7 @@ export default class extends Language {
 				JOINED_GUILD: 'Joined Server',
 				ROLES: 'Roles'
 			},
-			FOOTER: (id: string) => `Member ID: ${id} | ${this.dftba[Math.floor(Math.random() * this.dftba.length)]}`
+			FOOTER: (id: string) => `Member ID: ${id} | ${this.randomDftba}`
 		},
 		/**
 		 * ################################
@@ -717,7 +721,7 @@ export default class extends Language {
 				EMOJIS: 'Emojis',
 				MEMBERS_WITH_ROLES: 'Members with Roles'
 			},
-			FOOTER: (date: string, duration: string) => `Created ${date} (${duration} ago) | ${this.dftba[Math.floor(Math.random() * this.dftba.length)]}`
+			FOOTER: (date: string, duration: string) => `Created ${date} (${duration} ago) | ${this.randomDftba}`
 		},
 		COMMAND_ROLEINFO_DESCRIPTION: 'Display basic information about a role, along with a list of members who have it',
 		COMMAND_ROLEINFO_EXTENDED: builder.display('roleinfo', {
