@@ -684,8 +684,8 @@ export default class extends Language {
 		COMMAND_ASSIGN_DESCRIPTION: `Assign roles to yourself using ${botName}`,
 		COMMAND_ASSIGN_EXTENDED: builder.display('assign', {
 			examples: [
-				'list',
-				'gmt-4'
+				'gmt-4',
+				'--list'
 			],
 			explainedUsage: [
 				['rolename', 'You can use the name of a role, it\'s snowflake (long id), or tag the role (if it is taggable).']
