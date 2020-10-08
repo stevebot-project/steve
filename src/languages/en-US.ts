@@ -294,6 +294,23 @@ export default class extends Language {
 			`• Node.js    :: ${processVersion}`
 		],
 		COMMAND_STATS_DESCRIPTION: 'Provides some details about the bot and stats.',
+		COMMAND_STATS_EXTENDED: builder.display('stats', {
+			extendedHelp: `This command displays statistics about the currently running instance of ${botName}. The statistics displayed are: Memory Usage, Uptime, Users, Guilds, Channels, Klasa version, Discords.js version, and Node.js version.`
+		}),
+		COMMAND_STATS_EMBED: {
+			FIELD_TITLES: {
+				MEMORY_USAGE: 'Memory Usage',
+				UPTIME: 'Uptime',
+				USERS: 'Users',
+				GUILDS: 'Guilds',
+				CHANNELS: 'Channels',
+				KLASA: 'Klasa Version',
+				DISCORDJS: 'Discord.js Version',
+				NODE: 'Node.js Version'
+			},
+			FOOTER: this.dftba[Math.floor(Math.random() * this.dftba.length)],
+			TITLE: 'Statistics'
+		},
 		MESSAGE_PROMPT_TIMEOUT: 'The prompt has timed out.',
 		TEXT_PROMPT_ABORT_OPTIONS: ['abort', 'stop', 'cancel'],
 		/**

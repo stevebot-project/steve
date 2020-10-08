@@ -122,6 +122,21 @@ declare module 'klasa' {
 		COMMAND_CONF_USER: (key: string, list: string) => string;
 		COMMAND_STATS: (memUsage: number, uptime: string, users: number, guilds: number, channels: number, klasaVersion: string, discordVersion: string, processVersion: string) => string[];
 		COMMAND_STATS_DESCRIPTION: string;
+		COMMAND_STATS_EXTENDED: string;
+		COMMAND_STATS_EMBED: {
+			FIELD_TITLES: {
+				MEMORY_USAGE: string;
+				UPTIME: string;
+				USERS: string;
+				GUILDS: string;
+				CHANNELS: string;
+				KLASA: string;
+				DISCORDJS: string;
+				NODE: string;
+			};
+			FOOTER: string;
+			TITLE: string;
+		};
 		MESSAGE_PROMPT_TIMEOUT: string;
 		TEXT_PROMPT_ABORT_OPTIONS: string[];
 		USER_NOT_IN_GUILD: (user: string) => string;
