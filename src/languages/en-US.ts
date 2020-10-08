@@ -388,6 +388,18 @@ export default class extends Language {
 			extendedHelp: 'This command has a cooldown of 5 seconds per user.'
 		}),
 		COMMAND_ROCKPAPERSCISSORS_WINNER: (playerMove: string, steveMove: string, winner: number) => `You threw ${playerMove} and ${botName} threw ${steveMove}. ${winner === 0 ? 'Nobody' : winner === -1 ? botName : 'You'} won!`,
+		COMMAND_ROLL_DESCRIPTION: 'Roll dice!',
+		COMMAND_ROLL_EXTENDED: builder.display('roll', {
+			examples: [
+				'1d6',
+				'd20',
+				'5d10!',
+				'1d8|4d6',
+				'6d12k1',
+				'6d12kl2'
+			],
+			extendedHelp: 'Use standard dice notation. You can roll up to 10 dice with up to 1,000 sides each. Add a \`!\` at the end of your roll to use exploding dice. To keep the highest n, add `k<n>`; to keep the lowest n, add `kl<n>` (with n < amount of dice). You can do multiple rolls at once, separated by `|`.'
+		}),
 		COMMAND_AUDINO_DESCRIPTION: 'When the audio cuts out and you must screm',
 		COMMAND_AUDINO_EXTENDED: builder.display('audino', {
 			extendedHelp: 'This command has a cooldown of 60 seconds per channel. The image this command displays came from a reading livestream [John](https://en.wikipedia.org/wiki/John_Green_(author)) did; it\'s the face he made when his audio cut out *again*.'
