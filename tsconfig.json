@@ -1,36 +1,21 @@
 {
-    "compilerOptions": {
-        "allowJs": true,
-        "allowSyntheticDefaultImports": true,
-        "baseUrl": ".",
-        "esModuleInterop": true,
-        "outDir": "./dist",
-        "paths": {
-            "@lib/*": [
-                "src/lib/*"
-            ],
-            "@root/*": [
-                "*"
-            ],
-            "@utils/*": [
-                "src/lib/util/*"
-            ]
-        },
-        "resolveJsonModule": true,
-        "rootDir": "./",
+	"extends": "eslint-config-bamboo",
+	"compilerOptions": {
+		"outDir": "./dist",
+		"rootDir": ".",
+		"baseUrl": ".",
+		"paths": {
+			"@utils/*": ["src/lib/util/*"],
+			"@lib/*": ["src/lib/*"],
+			"@root/*": ["*"]
+		},
 		"target": "ES2019",
 		"types": [
 			"node",
 			"discord.js",
 			"klasa"
 		],
-        "module": "commonjs"
-    },
-    "exclude": [
-        "**/node_modules",
-        "**/dist"
-    ],
-    "include": [
-        "./src/**/*"
-    ]
+	},
+	"include": ["."],
+	"exclude": ["./config.example.ts"]
 }

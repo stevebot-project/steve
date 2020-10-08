@@ -12,7 +12,6 @@ export default class extends Event {
 		cmd = cmd.toLowerCase();
 
 		const snips: Snippet[] = msg.guild.settings.get(GuildSettings.Snippets);
-		// eslint-disable-next-line id-length
 		const snip = snips.some(s => s.name === cmd);
 		if (snip) return this.runSnippet(msg, cmd);
 	}

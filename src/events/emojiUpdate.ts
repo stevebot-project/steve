@@ -1,23 +1,30 @@
 import { Event } from 'klasa';
-import { GuildEmoji, Message, TextChannel } from 'discord.js';
+import { Message, MessageEmbed, TextChannel, GuildEmoji } from 'discord.js';
+import { LogColors } from '@lib/types/Enums';
+import { getExecutor, floatPromise } from '@utils/Util';
 import { GuildSettings } from '@lib/types/settings/GuildSettings';
-import { Colors } from '@lib/types/enums';
-import { getExecutor, newEmbed } from '@utils/util';
 
 export default class extends Event {
 
-	public async run(oldEmoji: GuildEmoji, newEmoji: GuildEmoji): Promise<Message | void> {
+	public run(oldEmoji: GuildEmoji, newEmoji: GuildEmoji): void {
 		const serverlog = newEmoji.guild.channels.cache.get(newEmoji.guild.settings.get(GuildSettings.Channels.Serverlog)) as TextChannel;
-		if (!serverlog) return;
 
+		if (serverlog) {
+			if (oldEmoji.name !== newEmoji.name) floatPromise(this, this.logEmojiNameChange(oldEmoji, newEmoji, serverlog));
+		}
+	}
+
+	private async logEmojiNameChange(oldEmoji: GuildEmoji, newEmoji: GuildEmoji, serverlog: TextChannel): Promise<Message> {
 		const executor = await getExecutor(newEmoji.guild, 'EMOJI_UPDATE');
 
-		const embed = newEmbed()
+		const EMBED_DATA = newEmoji.guild.language.tget('EVENT_EMOJIUPDATE_NAMECHANGE_EMBED');
+
+		const embed = new MessageEmbed()
 			.setAuthor(executor.tag, executor.displayAvatarURL())
-			.setColor(Colors.Pink)
-			.setFooter(`Emoji ID: ${newEmoji.id}`)
+			.setColor(LogColors.PINK)
+			.setFooter(EMBED_DATA.FOOTER(newEmoji.id))
 			.setTimestamp()
-			.setTitle(`${oldEmoji.name} ${newEmoji.animated ? 'animated ' : ''}emoji name changed to ${newEmoji.name}`);
+			.setTitle(EMBED_DATA.TITLE(oldEmoji.name, newEmoji.name, newEmoji.animated));
 
 		return serverlog.send(embed);
 	}

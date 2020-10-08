@@ -1,28 +1,38 @@
 import { ModerationCommand } from '@lib/structures/commands/ModerationCommand';
 import { CommandStore, KlasaMessage } from 'klasa';
-import { GuildMember, TextChannel, Message } from 'discord.js';
+import { User, GuildMember, Guild, Message } from 'discord.js';
 
 export default class extends ModerationCommand {
 
 	public constructor(store: CommandStore, file: string[], directory: string) {
 		super(store, file, directory, {
-			description: 'Removes the server\'s deafened role from the specified member.',
-			duration: true,
-			examples: ['undeafen enchtest'],
-			requiredPermissions: ['MANAGE_ROLES'],
-			requiredSettings: ['roles.deafened'],
-			targetType: 'member',
-			helpUsage: 'member'
+			description: lang => lang.tget('COMMAND_UNDEAFEN_DESCRIPTION'),
+			extendedHelp: lang => lang.tget('COMMAND_UNDEAFEN_EXTENDED'),
+			requiredSettings: ['roles.deafened']
 		});
 	}
 
-	public async handle(msg: KlasaMessage, target: GuildMember): Promise<string> {
-		await msg.guild.moderation.undeafen(target);
-		return 'undeafen';
+	public async prehandle(target: User, guild: Guild): Promise<GuildMember> {
+		const member = await guild.members.fetch(target);
+		if (!member) throw guild.language.tget('USER_NOT_IN_GUILD', target.tag);
+		return member;
 	}
 
-	public posthandle(channel: TextChannel, target: GuildMember): Promise<Message> {
-		return channel.send(`${target.user.tag} has been undeafened.`);
+	public async handle(msg: KlasaMessage, target: GuildMember, reason: string): Promise<GuildMember> {
+		try {
+			await msg.guild!.moderation.undeafen(target, reason);
+		} catch (err) {
+			this.client.console.error(err);
+			throw msg.guild!.language.tget('COMMAND_UNDEAFEN_UNABLE', target.user.tag);
+		}
+
+		return target;
+	}
+
+	public async posthandle(msg: KlasaMessage, target: GuildMember, reason: string, duration: number | undefined): Promise<Message> {
+		const thisCase = await msg.guild!.moderation.cases.createCase('deafen', msg.author, target.user, reason, duration, null);
+
+		return msg.channel.send(msg.guild!.language.tget('COMMAND_UNDEAFEN_SUCCESS', target.user.tag, thisCase));
 	}
 
 }

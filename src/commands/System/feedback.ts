@@ -1,8 +1,7 @@
 import { SteveCommand } from '@lib/structures/commands/SteveCommand';
 import { CommandStore, KlasaMessage } from 'klasa';
-import { Message, TextChannel } from 'discord.js';
+import { Message, MessageEmbed, TextChannel } from 'discord.js';
 import { FEEDBACK_GUILD, FEEDBACK_CHANNEL } from '@root/config';
-import { newEmbed } from '@utils/util';
 
 export default class extends SteveCommand {
 
@@ -11,19 +10,19 @@ export default class extends SteveCommand {
 			aliases: ['suggest', 'makeyourbotworkbetter'],
 			cooldown: 60,
 			cooldownLevel: 'author',
-			description: 'Send feedback or suggestions to the bot\'s developers.',
-			helpUsage: '<your feedback>',
+			description: lang => lang.tget('COMMAND_FEEDBACK_DESCRIPTION'),
+			extendedHelp: lang => lang.tget('COMMAND_FEEDBACK_EXTENDED'),
 			usage: '<feedback:string{,1900}>'
 		});
 	}
 
-	public run(msg: KlasaMessage, [feedback]: [string]): Promise<Message[]> {
+	public async run(msg: KlasaMessage, [feedback]: [string]): Promise<Message[] | undefined> {
 		const feedbackGuild = this.client.guilds.cache.get(FEEDBACK_GUILD);
-		if (!feedbackGuild) return;
+		if (!feedbackGuild) throw msg.language.tget('COMMAND_FEEDBACK_NO_GUILD');
 		const feedbackChannel = feedbackGuild.channels.cache.get(FEEDBACK_CHANNEL) as TextChannel;
-		if (!feedbackChannel) return;
+		if (!feedbackChannel) throw msg.language.tget('COMMAND_FEEDBACK_NO_CHANNEL');
 
-		const embed = newEmbed()
+		const embed = new MessageEmbed()
 			.addFields(
 				{ name: 'Feedback', value: feedback }
 			)
@@ -31,7 +30,7 @@ export default class extends SteveCommand {
 			.setTimestamp();
 
 		return Promise.all([
-			msg.channel.send('Your feedback has been sent, thanks!'),
+			msg.channel.send(msg.language.tget('COMMAND_FEEDBACK_SENT')),
 			feedbackChannel.send(embed)
 		]);
 	}

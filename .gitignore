@@ -105,6 +105,3 @@ dist
 
 # bot config
 config.ts
-
-# lavalink
-lavalink/application.yml

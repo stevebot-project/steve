@@ -1,29 +1,27 @@
-import { SteveCommand } from '@lib/structures/commands/SteveCommand';
 import { CommandStore, KlasaMessage } from 'klasa';
-import { PermissionLevels } from '@lib/types/enums';
+import { TextChannel } from 'discord.js';
+import { SteveCommand } from '@lib/structures/commands/SteveCommand';
+import { PermissionsLevels, Time } from '@lib/types/Enums';
 
 export default class extends SteveCommand {
 
 	public constructor(store: CommandStore, file: string[], directory: string) {
 		super(store, file, directory, {
-			description: 'Bulk deletes messages from a channel.',
-			examples: ['purge 20'],
-			permissionLevel: PermissionLevels.MODERATOR,
+			description: lang => lang.tget('COMMAND_PURGE_DESCRIPTION'),
+			extendedHelp: lang => lang.tget('COMMAND_PURGE_EXTENDED'),
+			permissionLevel: PermissionsLevels.MODERATOR,
 			requiredPermissions: ['MANAGE_MESSAGES'],
 			runIn: ['text'],
-			usage: '<num:integer{,99}>',
-			helpUsage: '[1-99]'
+			usage: '<number:number{,99}>'
 		});
 	}
 
-	public async run(msg: KlasaMessage, [num]: [number]): Promise<void> {
-		const purgeCollect = await msg.channel.bulkDelete(num + 1, true);
+	public async run(msg: KlasaMessage, [number]: [number]): Promise<void> {
+		const msgCollection = await (msg.channel as TextChannel).bulkDelete(number + 1, true);
 
-		const confirmMsg = await msg.channel.send(`${purgeCollect.size - 1} messages succesfully deleted.`);
+		const res = await msg.channel.send(msg.guild!.language.tget('COMMAND_PURGE_PURGED', msgCollection.size - 1));
 
-		setTimeout(() => confirmMsg.delete(), 5000);
-
-		return;
+		setTimeout(() => res.delete(), Time.SECOND * 10);
 	}
 
 }

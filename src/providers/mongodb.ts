@@ -1,3 +1,5 @@
+/* eslint-disable */
+// @ts-nocheck
 /* eslint-disable @typescript-eslint/no-use-before-define */
 // Copyright (c) 2017-2019 dirigeants. All rights reserved. MIT license.
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
@@ -26,7 +28,6 @@ module.exports = class extends Provider {
 			util.mergeObjects(connection.options, { useNewUrlParser: true, useUnifiedTopology: true })
 		);
 
-		/* eslint-disable-next-line @typescript-eslint/ban-ts-ignore */
 		// @ts-ignore 2339
 		this.db = mongoClient.db(connection.db);
 	}

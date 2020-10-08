@@ -1,38 +1,50 @@
 import { Event } from 'klasa';
-import { TextChannel, GuildMember, Message } from 'discord.js';
+import { GuildMember, Message, MessageEmbed, TextChannel } from 'discord.js';
 import { GuildSettings } from '@lib/types/settings/GuildSettings';
-import { Colors } from '@lib/types/enums';
-import { getExecutor, newEmbed, friendlyDuration } from '@utils/util';
+import { friendlyDuration, getExecutor, floatPromise } from '@utils/util';
+import { LogColors } from '@lib/types/Enums';
+import { TrustedRoleSetting } from './guildMemberUpdate';
 
 export default class extends Event {
 
-	public async run(member: GuildMember): Promise<Message | void> {
+	public run(member: GuildMember): void {
 		const memberlog = member.guild.channels.cache.get(member.guild.settings.get(GuildSettings.Channels.Memberlog)) as TextChannel;
-		if (!memberlog) return;
+		if (memberlog) floatPromise(this, this.handleLog(member, memberlog));
 
-		const joinedTime = friendlyDuration(Date.now() - member.user.createdTimestamp);
+		this.handleTrustedRole(member);
+	}
 
-		const embed = newEmbed()
+	private async handleLog(member: GuildMember, memberlog: TextChannel): Promise<Message> {
+		const accountCreatedTime = friendlyDuration(Date.now() - member.user.createdTimestamp);
+
+		const EMBED_DATA = member.guild.language.tget('EVENT_GUILDMEMBERADD_EMBED');
+
+		const embed = new MessageEmbed()
+			.addFields(
+				{
+					name: EMBED_DATA.FIELD_TITLES.HUMAN,
+					value: EMBED_DATA.FIELD_VALUES.ACCOUNT_AGE(accountCreatedTime)
+				}
+			)
 			.setAuthor(member.user.tag, member.user.displayAvatarURL())
-			.setColor(Colors.Turquoise)
-			.setFooter(`Member ID: ${member.id}`)
-			.setTimestamp()
-			.addFields([
-				{ name: 'Member Joined Server', value: `Account created ${joinedTime} ago` }
-			]);
+			.setColor(LogColors.TURQUOISE)
+			.setFooter(EMBED_DATA.FOOTER(member.id))
+			.setTimestamp();
 
 		if (member.user.bot) {
 			const executor = await getExecutor(member.guild, 'BOT_ADD');
-			embed.fields[0].name = `Bot added by ${executor.tag}`;
-		}
-
-		const { settings } = member.guild;
-		const trustedRoleSetting = settings.get(GuildSettings.Roles.GiveTrustedRoleOn);
-		if (member.guild.trustedRole && trustedRoleSetting === 'join' && !member.user.bot) {
-			await member.roles.add(member.guild.trustedRole);
+			embed.fields[0].name = EMBED_DATA.FIELD_TITLES.BOT(executor.tag);
 		}
 
 		return memberlog.send(embed);
+	}
+
+	private handleTrustedRole(member: GuildMember): void {
+		const { guild } = member;
+		const trustedRole = guild.roles.cache.get(guild.settings.get(GuildSettings.Roles.Trusted));
+		const trustedRoleSetting: TrustedRoleSetting = guild.settings.get(GuildSettings.Roles.GiveTrustedRoleOn);
+
+		if (trustedRole && trustedRoleSetting === 'join') floatPromise(this, member.roles.add(trustedRole));
 	}
 
 }

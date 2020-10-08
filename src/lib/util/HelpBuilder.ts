@@ -30,19 +30,19 @@ export class HelpBuilder {
 
 		// Examples
 		if (examples.length) {
-			output.push(this.examples, ...examples.map(example => `→ Steve, ${name}${example ? ` *${example}*` : ''}`), '');
+			output.push(this.examples!, ...examples.map(example => `→ Steve, ${name}${example ? ` *${example}*` : ''}`), '');
 		} else {
-			output.push(this.examples, `→ Steve, ${name}`, '');
+			output.push(this.examples!, `→ Steve, ${name}`, '');
 		}
 
 		// Explained usage
 		if (explainedUsage.length) {
-			output.push(this.explainedUsage, ...explainedUsage.map(([arg, desc]) => `→ **${arg}**: ${desc}`), '');
+			output.push(this.explainedUsage!, ...explainedUsage.map(([arg, desc]) => `→ **${arg}**: ${desc}`), '');
 		}
 
 		// Reminder
 		if (reminder) {
-			output.push(this.reminder, HelpBuilder.resolveMultilineString(reminder, multiline));
+			output.push(this.reminder!, HelpBuilder.resolveMultilineString(reminder, multiline));
 		}
 
 		return output.join('\n');

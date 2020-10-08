@@ -1,64 +1,48 @@
-import { SteveCommand, SteveCommandOptions } from './SteveCommand';
-import { CommandStore, util, KlasaMessage } from 'klasa';
-import { PermissionLevels } from '@lib/types/enums';
-import { GuildMember, User, TextChannel, Snowflake, Message } from 'discord.js';
-import { friendlyDuration } from '@lib/util/util';
+import { SteveCommand } from './SteveCommand';
+import { CommandOptions, CommandStore, util, KlasaMessage } from 'klasa';
+import { PermissionsLevels } from '@lib/types/Enums';
+import { GuildMember, User, Message, Guild } from 'discord.js';
 
-export interface ModerationCommandOptions extends SteveCommandOptions {
+export interface ModerationCommandOptions extends CommandOptions {
 	duration?: boolean;
-	targetType: 'member' | 'user';
 }
 
 export abstract class ModerationCommand extends SteveCommand {
 
 	public duration?: boolean;
-	public targetType: string;
 
 	protected constructor(store: CommandStore, file: string[], directory: string, options: ModerationCommandOptions) {
 		super(store, file, directory, util.mergeDefault({
-			permissionLevel: PermissionLevels.MODERATOR,
+			permissionLevel: PermissionsLevels.MODERATOR,
 			runIn: ['text'],
-			usage: options.targetType === 'member'
-				? options.duration
-					? '<targetMember:membername> [reason:string] [duration:timespan]'
-					: '<targetMember:membername> [reason:string]'
-				: options.duration
-					? '<targetUser:user> [reason:string] [duration:timespan]'
-					: '<targetUser:user> [reason:string]'
+			usage: options.duration
+				? '<user:username> [reason:string] [duration:timespan]'
+				: '<user:username> [reason:string]'
 		}, options));
 
 		this.duration = options.duration;
-		this.targetType = options.targetType;
 	}
 
-	public async run(msg: KlasaMessage, [target, reason, duration]: [GuildMember | User, string, number]): Promise<Message> {
-		if (target instanceof GuildMember) await this.checkModeratable(target, msg.member);
+	public async run(msg: KlasaMessage, [target, reason, duration]: [User, string | undefined, number | undefined]): Promise<Message> {
+		const prehandledTarget = await this.prehandle(target, msg.guild!);
+		if (prehandledTarget instanceof GuildMember) this.checkModeratable(prehandledTarget, msg.member!);
 
-		const type: string = await this.handle(msg, target, reason = reason || '');
-		let task = null;
-		if (duration && type) {
-			task = await this.client.schedule.createModerationTask(msg.guild, target, type, duration);
-		}
+		if (typeof reason === 'undefined') reason = msg.guild!.language.tget('MODERATION_NOREASON') as string;
 
-		await msg.guild.moderation.createCase(this.file[this.file.length - 1].split('.')[0], msg.author, target instanceof GuildMember
-			? target.user : target, reason, duration ? friendlyDuration(duration) : 'No duration specified.', task);
+		await this.handle(msg, prehandledTarget, reason);
 
-		return this.posthandle(msg.channel as TextChannel, target);
+		return this.posthandle(msg, prehandledTarget, reason, duration);
 	}
 
-	public abstract handle(msg: KlasaMessage, target: GuildMember | User, reason: string): Promise<string>;
-	public abstract posthandle(channel: TextChannel, target: GuildMember | User): Promise<Message>
+	public abstract prehandle(target: User, guild: Guild): Promise<GuildMember | User>; // choose target type
+	public abstract handle(msg: KlasaMessage, target: GuildMember | User, reason: string): Promise<GuildMember | User>; // do the thing
+	public abstract posthandle(msg: KlasaMessage, target: GuildMember | User, reason: string, duration: number | undefined): Promise<Message>; // handle modlog and case
 
-	private async checkModeratable(target: GuildMember, moderator: GuildMember): Promise<boolean> {
-		if (target.id === target.guild.me.id) throw 'hahahahaha... no.';
-		if (target.id === moderator.id) throw 'Come on fam, don\'t do that to yourself.';
-		if (target.roles.highest.comparePositionTo(moderator.roles.highest) > 0) throw `${target.user.tag} has a higher role than you.`;
+	private checkModeratable(target: GuildMember, moderator: GuildMember): boolean {
+		if (target.id === target.guild.me!.id) throw target.guild.language.tget('MODERATION_NOSTEVE');
+		if (target.id === moderator.id) throw target.guild.language.tget('MODERATION_NOSELF');
+		if (target.roles.highest.comparePositionTo(moderator.roles.highest) > 0) throw target.guild.language.tget('MODERATION_HIGHERROLE', target.user.tag);
 		return true;
 	}
 
-}
-
-export interface ModerationTaskData {
-	guild: Snowflake;
-	target: Snowflake;
 }
