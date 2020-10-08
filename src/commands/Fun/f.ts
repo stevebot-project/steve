@@ -1,7 +1,6 @@
 import { CommandStore, KlasaMessage } from 'klasa';
 import { SteveCommand } from '@lib/structures/commands/SteveCommand';
 import { Message } from 'discord.js';
-import { oneLine } from 'common-tags';
 
 export default class extends SteveCommand {
 
