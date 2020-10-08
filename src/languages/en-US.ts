@@ -656,6 +656,16 @@ export default class extends Language {
 		},
 		/**
 		 * ################################
+		 * #      POMODORO                #
+		 * ################################
+		 */
+		COMMAND_POMODORO_DESCRIPTION: 'Be productive using the Pomodoro technique!',
+		COMMAND_POMODORO_EXTENDED: builder.display('pomodoro', {
+			extendedHelp: 'This command helps facilitate use of the Pomodoro technique; it is currently under reconstruction and thus its functions are not available. Check back soon!'
+		}),
+		COMMAND_POMODORO_UNDERCONSTRUCTION: 'This command is under reconstruction and is not currently available. Check back soon!',
+		/**
+		 * ################################
 		 * #      SELF-ASSIGN             #
 		 * ################################
 		 */
