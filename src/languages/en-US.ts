@@ -1053,7 +1053,13 @@ export default class extends Language {
 		 * #          MONITORS            #
 		 * ################################
 		 */
-		MONITOR_WORDBLACKLIST_FILTERED: 'Please refrain from using words that are blacklisted!'
+		MONITOR_WORDBLACKLIST_FILTERED: 'Please refrain from using words that are blacklisted!',
+		/**
+		 * ################################
+		 * #         INHIBITORS           #
+		 * ################################
+		 */
+		INHIBITOR_ROLEPING_NO: 'It looks like you are trying to inject a role ping. I\'m not going to let you do that!'
 	};
 
 

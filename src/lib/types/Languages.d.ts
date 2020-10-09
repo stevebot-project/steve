@@ -457,5 +457,6 @@ declare module 'klasa' {
 			TITLE: (executor: string) => string;
 		};
 		MONITOR_WORDBLACKLIST_FILTERED: string;
+		INHIBITOR_ROLEPING_NO: string;
 	}
 }
