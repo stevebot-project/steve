@@ -31,25 +31,28 @@ export default class extends SteveCommand {
 	// eslint-disable-next-line @typescript-eslint/no-invalid-void-type
 	public async run(msg: KlasaMessage, [cmd]: [Command]): Promise<Message | void> {
 		if (cmd) {
-			const DATA: any = msg.language.tget('COMMAND_HELP_DATA');
+			const EMBED_DATA = msg.language.tget('COMMAND_HELP_DATA');
 
 			const embed = new MessageEmbed()
 				.setTimestamp()
 				.attachFiles(['./assets/images/help_embed_thumbnail.png'])
 				.setThumbnail('attachment://help_embed_thumbnail.png')
 				.setColor(0x71adcf)
-				.setFooter(DATA.FOOTER(cmd.name))
-				.setTitle(DATA.TITLE(util.isFunction(cmd.description) ? cmd.description(msg.language) : cmd.description))
+				.setFooter(EMBED_DATA.FOOTER(cmd.name))
+				.setTitle(EMBED_DATA.TITLE(util.isFunction(cmd.description) ? cmd.description(msg.language) : cmd.description))
 				.setDescription([
-					DATA.USAGE(cmd.usage.fullUsage(msg)),
-					DATA.EXTENDED(util.isFunction(cmd.extendedHelp) ? cmd.extendedHelp(msg.language) : cmd.extendedHelp)
+					EMBED_DATA.USAGE(cmd.usage.fullUsage(msg)),
+					EMBED_DATA.EXTENDED(util.isFunction(cmd.extendedHelp) ? cmd.extendedHelp(msg.language) : cmd.extendedHelp)
 				].join('\n'));
 
 			return msg.channel.send(embed);
 		}
 
 		if (msg.channel instanceof TextChannel) {
-			const help = await this.buildHelp(msg);
+			const prefix = msg.guildSettings.get(GuildSettings.Prefix);
+
+			let help = await this.buildHelp(msg);
+			help = `${msg.guild!.language.tget('COMMAND_HELP_BEGINNING', prefix)}\n\n${help}`;
 
 			return msg.author.send(help, { split: { 'char': '\n' } })
 				.then(() => { if (msg.channel.type !== 'dm') floatPromise(this, msg.sendLocale('COMMAND_HELP_DM')); })

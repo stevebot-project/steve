@@ -52,7 +52,7 @@ export default class extends SteveCommand {
 		for (let i = 0; i < reminders.length; i++) {
 			const reminder = reminders[i];
 			const display = await this.getReminderDisplayContent(msg, reminder);
-			output += `**${i + 1}**: ${display}\n\n`;
+			output += `**${i + 1}**: ${display} (${friendlyDuration(reminder.time.getTime() - Date.now())} left!)\n\n`;
 		}
 
 		const EMBED_DATA = msg.language.tget('COMMAND_REMIND_VIEW_EMBED');
@@ -79,7 +79,12 @@ export default class extends SteveCommand {
 	private async getReminderDisplayContent(msg: KlasaMessage, reminder: Reminder): Promise<string> {
 		const reminderUser = await this.client.users.fetch(msg.author.id);
 		if (!reminderUser.dmChannel) return reminder.data.content;
-		return reminder.data.channelID === reminderUser.dmChannel.id && msg.channel.id !== reminderUser.dmChannel.id
+
+		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+		// @ts-expect-error 2339
+		const channelID = reminder.data.channelID ?? reminder.data.channel;
+
+		return channelID === reminderUser.dmChannel.id && msg.channel.id !== reminderUser.dmChannel.id
 			? msg.language.tget('COMMAND_REMINDER_DISPLAY_HIDDEN')
 			: reminder.data.content;
 	}

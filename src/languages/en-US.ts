@@ -235,6 +235,7 @@ export default class extends Language {
 			EXTENDED: (extendedHelp: string) => `🔍 | ***Extended Help***\n${extendedHelp}`,
 			FOOTER: (name: string) => `Command help for ${name} | ${this.randomDftba}`
 		},
+		COMMAND_HELP_BEGINNING: (prefix: string) => `You can do \`${prefix}help <command>\` (without brackets) to get more information about an individual command!`,
 		COMMAND_HELP_NO_EXTENDED: 'No extended help available.',
 		COMMAND_HELP_DM: '📥 | The list of commands you have access to has been sent to your DMs.',
 		COMMAND_HELP_NODM: '❌ | You have DMs disabled, I couldn\'t send you the commands in DMs.',
@@ -367,7 +368,7 @@ export default class extends Language {
 			],
 					 reminder: 'Choices have a maximum length of 500 characters.'
 		}),
-		COMMAND_CHOOSE_RESPONSE: (choice: string) => `${botName} chooses... \`${choice}\`!`,
+		COMMAND_CHOOSE_RESPONSE: (choice: string) => `${botName} chooses... ${choice}!`,
 		COMMAND_CHOOSE_TOOFEW: 'You must provide at least two choices!',
 		COMMAND_RATE_DESCRIPTION: `Have ${botName} rate an item of your choosing`,
 		COMMAND_RATE_EXTENDED: builder.display('rate', {
