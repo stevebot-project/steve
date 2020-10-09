@@ -223,8 +223,8 @@ declare module 'klasa' {
 		COMMAND_NICKNAME_CLEARED: (user: string) => string;
 		COMMAND_ROLE_DESCRIPTION: string;
 		COMMAND_ROLE_EXTENDED: string;
-		COMMAND_ROLE_REMOVE: (user: string, role: string) => string;
-		COMMAND_ROLE_ADD: (user: string, role: string) => string;
+		COMMAND_ROLE_REMOVE: (roles: string) => string;
+		COMMAND_ROLE_ADD: (roles: string) => string;
 		COMMAND_LOCK_DESCRIPTION: string;
 		COMMAND_LOCK_EXTENDED: string;
 		COMMAND_LOCK_LOCKED: string;
@@ -456,6 +456,7 @@ declare module 'klasa' {
 			FOOTER: (id: string) => string;
 			TITLE: (executor: string) => string;
 		};
+		MONITOR_MENTIONSPAM_MAX: (maxMentions: number) => string;
 		MONITOR_WORDBLACKLIST_FILTERED: string;
 		INHIBITOR_PINGPROTECTION_ROLEPING: string;
 		INHIBITOR_PINGPROTECTION_EVERYONE: string;

@@ -5,6 +5,7 @@ export default Client.defaultGuildSchema
 		.add('memberlog', 'TextChannel')
 		.add('reminderChannel', 'TextChannel')
 		.add('serverlog', 'TextChannel'))
+	.add('maxMentions', 'Integer', { 'default': 25 })
 	.add('moderation', moderation => moderation
 		.add('banDeleteDays', 'Integer', { 'default': 0 })
 		.add('cases', 'any', { array: true, configurable: false }))

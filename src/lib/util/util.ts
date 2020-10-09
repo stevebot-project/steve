@@ -26,7 +26,7 @@ export function richDisplayList(items: string[], chunkSize: number, stringPrefix
 	const display = new RichDisplay(new MessageEmbed());
 
 	for (const page of chunk(items, chunkSize)) {
-		const description = page.map(item => `\`${stringPrefix ?? ''}${item}\``).join(', ');
+		const description = page.map(item => `${stringPrefix ?? ''}${item}`).join(' | ');
 		display.addPage((embed: MessageEmbed) => embed.setDescription(description));
 	}
 
