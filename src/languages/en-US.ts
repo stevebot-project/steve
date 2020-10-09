@@ -368,7 +368,7 @@ export default class extends Language {
 			],
 					 reminder: 'Choices have a maximum length of 500 characters.'
 		}),
-		COMMAND_CHOOSE_RESPONSE: (choice: string) => `${botName} chooses... \`${choice}\`!`,
+		COMMAND_CHOOSE_RESPONSE: (choice: string) => `${botName} chooses... ${choice}!`,
 		COMMAND_CHOOSE_TOOFEW: 'You must provide at least two choices!',
 		COMMAND_RATE_DESCRIPTION: `Have ${botName} rate an item of your choosing`,
 		COMMAND_RATE_EXTENDED: builder.display('rate', {
