@@ -95,6 +95,7 @@ declare module 'klasa' {
 			EXTENDED: (extendedHelp: string) => string;
 			FOOTER: (name: string) => string;
 		};
+		COMMAND_HELP_BEGINNING: (prefix: string) => string;
 		COMMAND_HELP_NO_EXTENDED: string;
 		COMMAND_HELP_DM: string;
 		COMMAND_HELP_NODM: string;
