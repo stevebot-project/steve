@@ -1059,7 +1059,8 @@ export default class extends Language {
 		 * #         INHIBITORS           #
 		 * ################################
 		 */
-		INHIBITOR_ROLEPING_NO: 'It looks like you are trying to inject a role ping. I\'m not going to let you do that!'
+		INHIBITOR_PINGPROTECTION_ROLEPING: 'It looks like you are trying to inject a role ping. I\'m not going to let you do that!',
+		INHIBITOR_PINGPROTECTION_EVERYONE: 'It looks like you are trying to ping everyone. I\'m not going to let you do that!'
 	};
 
 
