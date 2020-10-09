@@ -1053,6 +1053,7 @@ export default class extends Language {
 		 * #          MONITORS            #
 		 * ################################
 		 */
+		MONITOR_MENTIONSPAM_MAX: (maxMentions: number) => `You tagged more than ${maxMentions} people, chill out please.`,
 		MONITOR_WORDBLACKLIST_FILTERED: 'Please refrain from using words that are blacklisted!'
 	};
 
