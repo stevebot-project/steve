@@ -9,7 +9,7 @@ export default class extends SteveCommand {
 
 	public constructor(store: CommandStore, file: string[], directory: string) {
 		super(store, file, directory, {
-			aliases: ['member'],
+			aliases: ['member', 'whoami'],
 			description: lang => lang.tget('COMMAND_WHOIS_DESCRIPTION'),
 			extendedHelp: lang => lang.tget('COMMAND_WHOIS_EXTENDED'),
 			runIn: ['text'],
