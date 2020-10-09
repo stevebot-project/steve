@@ -1054,8 +1054,7 @@ export default class extends Language {
 		 * ################################
 		 */
 		MONITOR_WORDBLACKLIST_FILTERED: 'Please refrain from using words that are blacklisted!',
-    MONITOR_MENTIONSPAM_MAX: (maxMentions: number) => `You tagged more than ${maxMentions} people, chill out please.`,
-		MONITOR_WORDBLACKLIST_FILTERED: 'Please refrain from using words that are blacklisted!',
+		MONITOR_MENTIONSPAM_MAX: (maxMentions: number) => `You tagged more than ${maxMentions} people, chill out please.`,
 		/**
 		 * ################################
 		 * #         INHIBITORS           #
