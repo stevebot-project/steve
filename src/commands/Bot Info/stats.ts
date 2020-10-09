@@ -29,14 +29,14 @@ export default class extends SteveCommand {
 
 		const embed = new MessageEmbed()
 			.addFields(
-				{ name: EMBED_DATA.FIELD_TITLES.MEMORY_USAGE, value: `${(memory || process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)} MB` },
-				{ name: EMBED_DATA.FIELD_TITLES.UPTIME, value: Duration.toNow(Date.now() - (process.uptime() * 1000)) },
-				{ name: EMBED_DATA.FIELD_TITLES.USERS, value: (users || this.client.users.cache.size).toLocaleString() },
-				{ name: EMBED_DATA.FIELD_TITLES.GUILDS, value: (guilds || this.client.guilds.cache.size).toLocaleString() },
-				{ name: EMBED_DATA.FIELD_TITLES.CHANNELS, value: (channels || this.client.channels.cache.size).toLocaleString() },
-				{ name: EMBED_DATA.FIELD_TITLES.KLASA, value: `v${klasaVersion}` },
-				{ name: EMBED_DATA.FIELD_TITLES.DISCORDJS, value: `v${discordVersion}` },
-				{ name: EMBED_DATA.FIELD_TITLES.NODE, value: process.version }
+				{ name: EMBED_DATA.FIELD_TITLES.MEMORY_USAGE, value: `${(memory || process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)} MB`, inline: true },
+				{ name: EMBED_DATA.FIELD_TITLES.UPTIME, value: Duration.toNow(Date.now() - (process.uptime() * 1000)), inline: true },
+				{ name: EMBED_DATA.FIELD_TITLES.USERS, value: (users || this.client.users.cache.size).toLocaleString(), inline: true },
+				{ name: EMBED_DATA.FIELD_TITLES.GUILDS, value: (guilds || this.client.guilds.cache.size).toLocaleString(), inline: true },
+				{ name: EMBED_DATA.FIELD_TITLES.CHANNELS, value: (channels || this.client.channels.cache.size).toLocaleString(), inline: true },
+				{ name: EMBED_DATA.FIELD_TITLES.KLASA, value: `v${klasaVersion}`, inline: true },
+				{ name: EMBED_DATA.FIELD_TITLES.DISCORDJS, value: `v${discordVersion}`, inline: true },
+				{ name: EMBED_DATA.FIELD_TITLES.NODE, value: process.version, inline: true }
 			)
 			.attachFiles(['./assets/images/stats_embed_thumbnail.png'])
 			.setColor(0x71adcf)
