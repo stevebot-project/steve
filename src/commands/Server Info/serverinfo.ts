@@ -2,6 +2,7 @@ import { SteveCommand } from '@lib/structures/commands/SteveCommand';
 import { CommandStore, KlasaMessage } from 'klasa';
 import { Message, MessageEmbed } from 'discord.js';
 import { friendlyDuration, formatDate } from '@utils/util';
+import { EmbedColors } from '@lib/types/Enums';
 
 export default class extends SteveCommand {
 
@@ -33,7 +34,8 @@ export default class extends SteveCommand {
 			])
 			.setAuthor(msg.guild!.name, msg.guild!.iconURL()!)
 			.setFooter(EMBED_DATA.FOOTER(formatDate(msg.guild!.createdTimestamp), friendlyDuration(Date.now() - msg.guild!.createdTimestamp)))
-			.setTimestamp();
+			.setTimestamp()
+			.setColor(EmbedColors.YELLOW_GREEN);
 
 		return msg.channel.send(embed);
 	}
