@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { Task } from 'klasa';
 import { Message, TextChannel, DMChannel } from 'discord.js';
-import { ReminderData } from '../extendables/Schedule';
+import { OldReminderData, ReminderData } from '../extendables/Schedule';
 
 export default class extends Task {
 
@@ -14,10 +14,4 @@ export default class extends Task {
 		return (_channel as TextChannel | DMChannel).send(`${_user}, here's the reminder you asked for: **${data.content}**`);
 	}
 
-}
-
-interface OldReminderData {
-	user: string;
-	content: string;
-	channel: string;
 }

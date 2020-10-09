@@ -21,7 +21,11 @@ export default class extends Extendable {
 	}
 
 	public getUserReminders(this: Schedule, userID: string): Reminder[] {
-		return this.tasks.filter(task => task.taskName === 'reminder' && task.data.userID === userID);
+		const filter = (task: ScheduledTask) => {
+			const id = task.data.userID ?? task.data.user;
+			return task.taskName === 'reminder' && id === userID;
+		};
+		return this.tasks.filter(filter);
 	}
 
 }
@@ -37,7 +41,13 @@ export interface ReminderData {
 	channelID: string;
 }
 
+export interface OldReminderData {
+	user: string;
+	content: string;
+	channel: string;
+}
+
 export interface Reminder extends ScheduledTask {
-	data: ReminderData;
+	data: ReminderData | OldReminderData;
 }
 
