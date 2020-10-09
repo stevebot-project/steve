@@ -259,6 +259,7 @@ declare module 'klasa' {
 		COMMAND_REMINDER_DISPLAY_HIDDEN: string;
 		COMMAND_REMIND_VIEW_EMBED: {
 			TITLE: string;
+			DECRIPTION: (prefix: string) => string;
 		};
 		COMMAND_POMODORO_DESCRIPTION: string;
 		COMMAND_POMODORO_EXTENDED: string;

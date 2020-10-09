@@ -1,10 +1,12 @@
 import { SteveCommand } from '@lib/structures/commands/SteveCommand';
-import { CommandStore, KlasaMessage } from 'klasa';
+import { CommandStore, KlasaMessage, RichDisplay } from 'klasa';
 import { ColorResolvable, Message, MessageEmbed, TextChannel } from 'discord.js';
 import { GuildSettings } from '@lib/types/settings/GuildSettings';
 import { friendlyDuration } from '@utils/util';
 import { Reminder } from '@root/src/extendables/Schedule';
 import { UserSettings } from '@lib/types/settings/UserSettings';
+import { EmbedColors } from '@lib/types/Enums';
+import { chunk } from '@klasa/utils';
 
 export default class extends SteveCommand {
 
@@ -45,26 +47,36 @@ export default class extends SteveCommand {
 	}
 
 	public async view(msg: KlasaMessage): Promise<Message> {
-		let output = '';
+		// const output = '';
 		const reminders = this.client.schedule.getUserReminders(msg.author.id);
 		if (reminders.length < 1) throw msg.language.tget('COMMAND_REMIND_NOREMINDERS');
 
-		for (let i = 0; i < reminders.length; i++) {
-			const reminder = reminders[i];
-			const display = await this.getReminderDisplayContent(msg, reminder);
-			output += `**${i + 1}**: ${display} (${friendlyDuration(reminder.time.getTime() - Date.now())} left!)\n\n`;
-		}
+		const responce = await msg.send(new MessageEmbed()
+			.setDescription('Loading...')
+			.setColor(msg.author.settings.get(UserSettings.EmbedColor) as ColorResolvable || EmbedColors.YELLOW_GREEN));
 
 		const EMBED_DATA = msg.language.tget('COMMAND_REMIND_VIEW_EMBED');
+		const display = new RichDisplay(new MessageEmbed());
+		for (const page of chunk(reminders, 5)) {
+			const embed = new MessageEmbed()
+				.setColor(msg.author.settings.get(UserSettings.EmbedColor) as ColorResolvable || EmbedColors.YELLOW_GREEN)
+				.setDescription(EMBED_DATA.DECRIPTION(msg.guildSettings.get(GuildSettings.Prefix)))
+				.setTitle(EMBED_DATA.TITLE)
+				.setThumbnail('https://github.com/tuataria/steve/blob/master/assets/images/alarmclock.png?raw=true');
 
-		const embed = new MessageEmbed()
-			.attachFiles(['./assets/images/alarmclock.png'])
-			.setColor(msg.author.settings.get(UserSettings.EmbedColor) as ColorResolvable || 0xadcb27)
-			.setDescription(output)
-			.setTitle(EMBED_DATA.TITLE)
-			.setThumbnail('attachment://alarmclock.png');
+			for (let i = 0; i < page.length; i++) {
+				const displayMessage = this.getReminderDisplayContent(msg, page[i]);
+				embed.addField(
+					`**${reminders.indexOf(page[i]) + 1}: ${await displayMessage}**`,
+					`${friendlyDuration(page[i].time.getTime() - Date.now())} left!`
+				);
+			}
 
-		return msg.channel.send(embed);
+			display.addPage(embed);
+		}
+
+		await display.run(responce);
+		return responce;
 	}
 
 	public async cancel(msg: KlasaMessage, [reminderNum]: [number]): Promise<Message> {

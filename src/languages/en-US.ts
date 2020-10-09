@@ -665,7 +665,8 @@ export default class extends Language {
 		COMMAND_REMIND_NOREMINDERS: 'You have no reminders currently set.',
 		COMMAND_REMINDER_DISPLAY_HIDDEN: 'Private reminder: content hidden',
 		COMMAND_REMIND_VIEW_EMBED: {
-			TITLE: 'Pending Reminders'
+			TITLE: 'Pending Reminders',
+			DECRIPTION: (prefix: string) => `To cancel a reminder, do \`${prefix}remind cancel|<reminder number>\``
 		},
 		/**
 		 * ################################
