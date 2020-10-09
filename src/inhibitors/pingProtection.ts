@@ -6,7 +6,7 @@ export default class extends Inhibitor {
 		super(store, file, directory, { spamProtection: true });
 	}
 
-	public run(msg: KlasaMessage): Promise<void> {
+	public run(msg: KlasaMessage): void {
 		if (msg.channel.type === 'dm') return;
 
 		if (msg.content.match(/<@&\d*>/)) {
