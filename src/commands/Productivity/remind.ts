@@ -47,7 +47,6 @@ export default class extends SteveCommand {
 	}
 
 	public async view(msg: KlasaMessage): Promise<Message> {
-		// const output = '';
 		const reminders = this.client.schedule.getUserReminders(msg.author.id);
 		if (reminders.length < 1) throw msg.language.tget('COMMAND_REMIND_NOREMINDERS');
 
