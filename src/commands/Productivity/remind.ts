@@ -52,7 +52,7 @@ export default class extends SteveCommand {
 		for (let i = 0; i < reminders.length; i++) {
 			const reminder = reminders[i];
 			const display = await this.getReminderDisplayContent(msg, reminder);
-			output += `**${i + 1}**: ${display}\n\n`;
+			output += `**${i + 1}**: ${display} (${friendlyDuration(reminder.time.getTime() - Date.now())} left!)\n\n`;
 		}
 
 		const EMBED_DATA = msg.language.tget('COMMAND_REMIND_VIEW_EMBED');
