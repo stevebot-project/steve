@@ -572,8 +572,8 @@ export default class extends Language {
 			extendedHelp: `This command requires me to have the **${this.PERMISSIONS.MANAGE_ROLES}** permission.`,
 			reminder: 'This command works on a toggle; there is no need to specify if you want to add or remove the command.'
 		}),
-		COMMAND_ROLE_REMOVE: (user: string, role: string) => `The ${role} role has been removed from ${user}.`,
-		COMMAND_ROLE_ADD: (user: string, role: string) => `The ${role} role has been added to ${user}.`,
+		COMMAND_ROLE_REMOVE: (roles: string) => `${Emojis.MINUS} Removed roles: \`${roles}\``,
+		COMMAND_ROLE_ADD: (roles: string) => `${Emojis.PLUS} Added roles: \`${roles}\``,
 		COMMAND_LOCK_DESCRIPTION: 'Lock a channel from public posting',
 		COMMAND_LOCK_EXTENDED: builder.display('lock', {
 			extendedHelp: `This command takes away the **${this.PERMISSIONS.SEND_MESSAGES}** permission from the everyone role in the channel. I need the **${this.PERMISSIONS.MANAGE_CHANNELS}** permission to run it.`
