@@ -458,5 +458,7 @@ declare module 'klasa' {
 		};
 		MONITOR_MENTIONSPAM_MAX: (maxMentions: number) => string;
 		MONITOR_WORDBLACKLIST_FILTERED: string;
+		INHIBITOR_PINGPROTECTION_ROLEPING: string;
+		INHIBITOR_PINGPROTECTION_EVERYONE: string;
 	}
 }

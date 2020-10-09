@@ -6,7 +6,7 @@ export default class extends SteveCommand {
 
 	public constructor(store: CommandStore, file: string[], directory: string) {
 		super(store, file, directory, {
-			aliases: ['pomo'],
+			aliases: ['pomo', 'pom'],
 			description: lang => lang.tget('COMMAND_POMODORO_DESCRIPTION'),
 			extendedHelp: lang => lang.tget('COMMAND_POMODORO_EXTENDED')
 		});

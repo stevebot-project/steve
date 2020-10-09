@@ -1053,8 +1053,16 @@ export default class extends Language {
 		 * #          MONITORS            #
 		 * ################################
 		 */
+		MONITOR_WORDBLACKLIST_FILTERED: 'Please refrain from using words that are blacklisted!',
 		MONITOR_MENTIONSPAM_MAX: (maxMentions: number) => `You tagged more than ${maxMentions} people, chill out please.`,
-		MONITOR_WORDBLACKLIST_FILTERED: 'Please refrain from using words that are blacklisted!'
+		/**
+		 * ################################
+		 * #         INHIBITORS           #
+		 * ################################
+		 */
+		INHIBITOR_PINGPROTECTION_ROLEPING: 'It looks like you are trying to inject a role ping. I\'m not going to let you do that!',
+		INHIBITOR_PINGPROTECTION_EVERYONE: 'It looks like you are trying to ping everyone. I\'m not going to let you do that!'
+
 	};
 
 
