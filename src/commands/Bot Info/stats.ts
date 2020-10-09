@@ -1,6 +1,7 @@
 import { CommandStore, KlasaMessage, Duration, version as klasaVersion } from 'klasa';
 import { MessageEmbed, version as discordVersion } from 'discord.js';
 import { SteveCommand } from '@lib/structures/commands/SteveCommand';
+import { EmbedColors } from '@lib/types/Enums';
 
 export default class extends SteveCommand {
 
@@ -39,7 +40,7 @@ export default class extends SteveCommand {
 				{ name: EMBED_DATA.FIELD_TITLES.NODE, value: process.version, inline: true }
 			)
 			.attachFiles(['./assets/images/stats_embed_thumbnail.png'])
-			.setColor(0x71adcf)
+			.setColor(EmbedColors.FIRE_BLUE)
 			.setFooter(EMBED_DATA.FOOTER)
 			.setThumbnail('attachment://stats_embed_thumbnail.png')
 			.setTimestamp()

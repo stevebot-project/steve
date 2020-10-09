@@ -3,6 +3,7 @@ import { Collection, Message, TextChannel, MessageEmbed } from 'discord.js';
 import { floatPromise } from '@lib/util/util';
 import { GuildSettings } from '@lib/types/settings/GuildSettings';
 import { SteveCommand } from '@lib/structures/commands/SteveCommand';
+import { EmbedColors } from '@lib/types/Enums';
 
 function sortCommandsAlphabetically(_: Command[], __: Command[], firstCategory: string, secondCategory: string): 1 | -1 | 0 {
 	if (firstCategory > secondCategory) return 1;
@@ -37,7 +38,7 @@ export default class extends SteveCommand {
 				.setTimestamp()
 				.attachFiles(['./assets/images/help_embed_thumbnail.png'])
 				.setThumbnail('attachment://help_embed_thumbnail.png')
-				.setColor(0x71adcf)
+				.setColor(EmbedColors.FIRE_BLUE)
 				.setFooter(EMBED_DATA.FOOTER(cmd.name))
 				.setTitle(EMBED_DATA.TITLE(util.isFunction(cmd.description) ? cmd.description(msg.language) : cmd.description))
 				.setDescription([

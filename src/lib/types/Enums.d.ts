@@ -13,6 +13,12 @@ export const enum LogColors {
 	YELLOW = 0xffd944
 }
 
+export const enum EmbedColors{
+	FIRE_BLUE = 0x71adcf,
+	YELLOW_GREEN = 0xadcb27,
+
+}
+
 export const enum PermissionsLevels {
 	EVERYONE = 0,
 	TRUSTED = 1,
