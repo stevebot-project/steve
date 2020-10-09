@@ -1,15 +1,23 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { Task } from 'klasa';
 import { Message, TextChannel, DMChannel } from 'discord.js';
 import { ReminderData } from '../extendables/Schedule';
 
 export default class extends Task {
 
-	public async run({ userID, content, channelID }: ReminderData): Promise<Message> {
-		const _channel = this.client.channels.cache.get(channelID);
-		const _user = this.client.users.cache.get(userID);
+	public async run(data: ReminderData | OldReminderData): Promise<Message> {
+		// @ts-expect-error 2339
+		const _channel = this.client.channels.cache.get(data.channelID ?? data.channel);
+		// @ts-expect-error 2339
+		const _user = this.client.users.cache.get(data.userID ?? data.user);
 
-		// eslint-disable-next-line
-		return (_channel as TextChannel | DMChannel).send(`${_user}, here's the reminder you asked for: **${content}**`);
+		return (_channel as TextChannel | DMChannel).send(`${_user}, here's the reminder you asked for: **${data.content}**`);
 	}
 
+}
+
+interface OldReminderData {
+	user: string;
+	content: string;
+	channel: string;
 }
