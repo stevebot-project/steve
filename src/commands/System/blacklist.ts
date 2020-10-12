@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
+
 import { CommandStore, KlasaMessage } from 'klasa';
 import { Guild, User } from 'discord.js';
 import { SteveCommand } from '@lib/structures/commands/SteveCommand';

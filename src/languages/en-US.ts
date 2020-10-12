@@ -92,7 +92,7 @@ export default class extends Language {
 		return this.dftba[Math.floor(Math.random() * this.dftba.length)];
 	}
 
-	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+
 	// @ts-expect-error 2416
 	public language: LanguageKeys = {
 		/**

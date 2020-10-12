@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
+
 import { Extendable, ExtendableStore } from 'klasa';
 import { Role } from 'discord.js';
 import { GuildSettings } from '@lib/types/settings/GuildSettings';

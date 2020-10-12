@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
+
 import { Task } from 'klasa';
 import { Message, TextChannel, DMChannel } from 'discord.js';
 import { OldReminderData, ReminderData } from '../extendables/Schedule';

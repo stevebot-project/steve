@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
+
 import { SteveCommand } from '@lib/structures/commands/SteveCommand';
 import { CommandStore, KlasaMessage, util, SettingsUpdateResult } from 'klasa';
 

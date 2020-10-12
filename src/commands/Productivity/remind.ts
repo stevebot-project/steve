@@ -80,7 +80,7 @@ export default class extends SteveCommand {
 		const reminderUser = await this.client.users.fetch(msg.author.id);
 		if (!reminderUser.dmChannel) return reminder.data.content;
 
-		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+
 		// @ts-expect-error 2339
 		const channelID = reminder.data.channelID ?? reminder.data.channel;
 
