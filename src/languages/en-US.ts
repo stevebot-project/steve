@@ -631,7 +631,8 @@ export default class extends Language {
 			explainedUsage: [
 				['name', 'The name of a snip has a maximum length of 100 characters.'],
 				['content', 'The content of a snip has a maximum length of 1900 characters.']
-			]
+			],
+			reminder: 'NOTE: If a snippet shares a name with an assignable role, the snippet will be inaccessible using custom command syntax.'
 		}, true),
 		COMMAND_SNIPPET_ADD: (name: string) => `Added a snippet with the name: ${name}.`,
 		COMMAND_SNIPPET_EDIT: (name: string) => `Edited the ${name} snippet.`,
@@ -886,7 +887,8 @@ export default class extends Language {
 				['reset', 'Clears the list of assignable roles.'],
 				['show', 'Displays the list of assignable roles.']
 			],
-			extendedHelp: 'Adding a role to the list of assignable roles allows members to assign that role to themselves without staff intervention.'
+			extendedHelp: 'Adding a role to the list of assignable roles allows members to assign that role to themselves without staff intervention.',
+			reminder: 'NOTE: If an assignable role shares a name with a snippet, the snippet will be inaccessible using custom command syntax.'
 		}),
 		COMMAND_MANAGEASSIGNABLEROLES_MANAGE_REMOVED: (removedRoles: string) => `${Emojis.MINUS} Removed roles: ${removedRoles}\n`,
 		COMMAND_MANAGEASSIGNABLEROLES_MANAGE_ADDED: (addedRoles: string) => `${Emojis.PLUS} Added roles: ${addedRoles}`,
