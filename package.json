@@ -28,7 +28,7 @@
   "dependencies": {
     "@klasa/utils": "^0.1.0",
     "common-tags": "^1.8.0",
-    "discord.js": "^12.3.1",
+    "discord.js": "^12.4.1",
     "genius-lyrics": "^4.0.0",
     "klasa": "github:dirigeants/klasa#v0.5.0",
     "lavalink": "^2.10.0",
