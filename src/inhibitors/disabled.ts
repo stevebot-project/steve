@@ -6,7 +6,7 @@ module.exports = class extends Inhibitor {
 
 	public run(msg: KlasaMessage, cmd: SteveCommand) {
 		if (!cmd.enabled) throw msg.language.get('INHIBITOR_DISABLED_GLOBAL');
-		if (msg.guildSettings.get(GuildSettings.DisabledCommands).includes(cmd.name)) throw msg.language.get('INHIBITOR_DISABLED_GUILD');
+		if (msg.guild && msg.guildSettings.get(GuildSettings.DisabledCommands).includes(cmd.name)) throw msg.language.get('INHIBITOR_DISABLED_GUILD');
 	}
 
 };
