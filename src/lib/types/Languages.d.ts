@@ -395,6 +395,10 @@ declare module 'klasa' {
 		COMMAND_TOGGLEGUILDMEMBERUPDATE_DESCRIPTION: string;
 		COMMAND_TOGGLEGUILDMEMBERUPDATE_EXTENDED: string;
 		COMMAND_TOGGLEGUILDMEMBERUPDATE: (disabled: boolean) => string;
+		COMMAND_TOGGLEINVITECREATE_DESCRIPTION: string;
+		COMMAND_TOGGLEINVITECREATE: (disabled: boolean) => string;
+		COMMAND_TOGGLEINVITEDELETE_DESCRIPTION: string;
+		COMMAND_TOGGLEINVITEDELETE: (disabled: boolean) => string;
 		COMMAND_TOGGLEMESSAGEDELETE_DESCRIPTION: string;
 		COMMAND_TOGGLEMESSAGEDELETE: (disabled: boolean) => string;
 		COMMAND_TOGGLEMESSAGEDELETEBULK_DESCRIPTION: string;
@@ -473,6 +477,14 @@ declare module 'klasa' {
 				NEW_DISPLAY_NAME: string;
 			};
 			FOOTER: (id: string) => string;
+		};
+		EVENT_INVITECREATE_EMBED: {
+			FOOTER: (code: string) => string;
+			TITLE: (channel: string) => string;
+		};
+		EVENT_INVITEDELETE_EMBED: {
+			FOOTER: (code: string) => string;
+			TITLE: (channel: string) => string;
 		};
 		EVENT_MESSAGEDELETE_UNABLE_TO_DISPLAY: string;
 		EVENT_MESSAGEDELETE_EMBED: {

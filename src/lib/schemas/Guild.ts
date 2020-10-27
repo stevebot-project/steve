@@ -17,6 +17,8 @@ export default Client.defaultGuildSchema
 		.add('guildMemberAdd', 'Boolean', { 'default': true })
 		.add('guildMemberRemove', 'Boolean', { 'default': true })
 		.add('guildMemberUpdate', 'Boolean', { 'default': true })
+		.add('inviteCreate', 'Boolean', { 'default': true })
+		.add('inviteDelete', 'Boolean', { 'default': true })
 		.add('messageDelete', 'Boolean', { 'default': true })
 		.add('messageDeleteBulk', 'Boolean', { 'default': true })
 		.add('roleCreate', 'Boolean', { 'default': true })

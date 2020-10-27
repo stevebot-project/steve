@@ -5,6 +5,7 @@ export const enum Emojis {
 }
 
 export const enum LogColors {
+	BLUE = 0x3a34eb,
 	PINK = 0xfc0ce8,
 	PURPLE = 0xb942f4,
 	RED = 0xe83535,

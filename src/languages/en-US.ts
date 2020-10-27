@@ -995,6 +995,10 @@ export default class extends Language {
 			extendedHelp: 'Member update log embeds include: display name changes and member role updates.'
 		}),
 		COMMAND_TOGGLEGUILDMEMBERUPDATE: (disabled: boolean) => `Member update logging has been turned ${disabled ? 'off' : 'on'}.`,
+		COMMAND_TOGGLEINVITECREATE_DESCRIPTION: 'Toggle whether invite creates are logged in the serverlog',
+		COMMAND_TOGGLEINVITECREATE: (disabled: boolean) => `Invite creation logging has been turned ${disabled ? 'off' : 'on'}.`,
+		COMMAND_TOGGLEINVITEDELETE_DESCRIPTION: 'Toggle whether invite deletes are logged in the serverlog',
+		COMMAND_TOGGLEINVITEDELETE: (disabled: boolean) => `Invite deletion logging has been turned ${disabled ? 'off' : 'on'}.`,
 		COMMAND_TOGGLEMESSAGEDELETE_DESCRIPTION: 'Toggle whether message deletes are logged in the serverlog',
 		COMMAND_TOGGLEMESSAGEDELETE: (disabled: boolean) => `Message delete logging has been turned ${disabled ? 'off' : 'on'}.`,
 		COMMAND_TOGGLEMESSAGEDELETEBULK_DESCRIPTION: 'Toggle whether message purges are logged in the serverlog',
@@ -1080,6 +1084,14 @@ export default class extends Language {
 				NEW_DISPLAY_NAME: 'New Display Name'
 			},
 			FOOTER: (id: string) => `Member ID: ${id}`
+		},
+		EVENT_INVITECREATE_EMBED: {
+			FOOTER: (code: string) => `Invite Code: ${code}`,
+			TITLE: (channel: string) => `Invite created for ${channel}`
+		},
+		EVENT_INVITEDELETE_EMBED: {
+			FOOTER: (code: string) => `Invite Code: ${code}`,
+			TITLE: (channel: string) => `Invite for ${channel} deleted`
 		},
 		EVENT_MESSAGEDELETE_UNABLE_TO_DISPLAY: 'Message is unable to be displayed.',
 		EVENT_MESSAGEDELETE_EMBED: {

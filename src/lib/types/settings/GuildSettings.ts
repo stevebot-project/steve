@@ -27,6 +27,8 @@ export namespace GuildSettings {
 		export const GuildMemberAdd = 'logEvents.guildMemberAdd';
 		export const GuildMemberRemove = 'logEvents.guildMemberRemove';
 		export const GuildMemberUpdate = 'logEvents.guildMemberUpdate';
+		export const InviteCreate = 'logEvents.inviteCreate';
+		export const InviteDelete = 'logEvents.inviteDelete';
 		export const MessageDelete = 'logEvents.messageDelete';
 		export const MessageDeleteBulk = 'logEvents.messageDeleteBulk';
 		export const RoleCreate = 'logEvents.roleCreate';
