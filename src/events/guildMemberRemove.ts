@@ -7,8 +7,10 @@ import { friendlyDuration, floatPromise } from '@utils/util';
 export default class extends Event {
 
 	public run(member: GuildMember): void {
-		const memberlog = member.guild.channels.cache.get(member.guild.settings.get(GuildSettings.Channels.Memberlog)) as TextChannel;
-		if (memberlog) floatPromise(this, this.handleLog(member, memberlog));
+		if (member.guild.settings.get(GuildSettings.LogEvents.GuildMemberRemove) as boolean) {
+			const memberlog = member.guild.channels.cache.get(member.guild.settings.get(GuildSettings.Channels.Memberlog)) as TextChannel;
+			if (memberlog) floatPromise(this, this.handleLog(member, memberlog));
+		}
 	}
 
 	private async handleLog(member: GuildMember, memberlog: TextChannel): Promise<Message> {

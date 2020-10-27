@@ -7,8 +7,10 @@ import { GuildSettings } from '@lib/types/settings/GuildSettings';
 export default class extends Event {
 
 	public run(emoji: GuildEmoji): void {
-		const serverlog = emoji.guild.channels.cache.get(emoji.guild.settings.get(GuildSettings.Channels.Serverlog)) as TextChannel;
-		if (serverlog) floatPromise(this, this.handleLog(emoji, serverlog));
+		if (emoji.guild.settings.get(GuildSettings.LogEvents.EmojiDelete) as boolean) {
+			const serverlog = emoji.guild.channels.cache.get(emoji.guild.settings.get(GuildSettings.Channels.Serverlog)) as TextChannel;
+			if (serverlog) floatPromise(this, this.handleLog(emoji, serverlog));
+		}
 	}
 
 	private async handleLog(emoji: GuildEmoji, serverlog: TextChannel): Promise<Message> {

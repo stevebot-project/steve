@@ -961,6 +961,55 @@ export default class extends Language {
 		COMMAND_FEEDBACK_SENT: 'Your feedback has been sent, thanks!',
 		/**
 		 * ################################
+		 * #  LOG EVENT  TOGGLE COMMANDS  #
+		 * ################################
+		 */
+		COMMAND_TOGGLECHANNELCREATE_DESCRIPTION: 'Toggle whether channel creations are logged in the serverlog',
+		COMMAND_TOGGLECHANNELCREATE: (disabled: boolean) => `Channel creation logging has been turned ${disabled ? 'off' : 'on'}.`,
+		COMMAND_TOGGLECHANNELDELETE_DESCRIPTION: 'Toggle whether channel deletions are logged in the serverlog',
+		COMMAND_TOGGLECHANNELDELETE: (disabled: boolean) => `Channel deletion logging has been turned ${disabled ? 'off' : 'on'}.`,
+		COMMAND_TOGGLECHANNELUPDATE_DESCRIPTION: 'Toggle whether channel updates are logged in the serverlog',
+		COMMAND_TOGGLECHANNELUPDATE_EXTENDED: builder.display('togglechannelupdate', {
+			extendedHelp: 'Channel update log embeds include: channel name changes.'
+		}),
+		COMMAND_TOGGLECHANNELUPDATE: (disabled: boolean) => `Channel update logging has been turned ${disabled ? 'off' : 'on'}.`,
+		COMMAND_TOGGLEEMOJICREATE_DESCRIPTION: 'Toggle whether emoji creations are logged in the serverlog',
+		COMMAND_TOGGLEEMOJICREATE: (disabled: boolean) => `Emoji creation logging has been turned ${disabled ? 'off' : 'on'}.`,
+		COMMAND_TOGGLEEMOJIDELETE_DESCRIPTION: 'Toggle whether emoji deletions are logged in the serverlog',
+		COMMAND_TOGGLEEMOJIDELETE: (disabled: boolean) => `Emoji deletion logging has been turned ${disabled ? 'off' : 'on'}.`,
+		COMMAND_TOGGLEEMOJIUPDATE_DESCRIPTION: 'Toggle whether emoji updates are logged in the serverlog',
+		COMMAND_TOGGLEEMOJIUPDATE_EXTENDED: builder.display('toggleemojiupdate', {
+			extendedHelp: 'Emoji update log embeds include: emoji name changes.'
+		}),
+		COMMAND_TOGGLEEMOJIUPDATE: (disabled: boolean) => `Emoji update logging has been turned ${disabled ? 'off' : 'on'}.`,
+		COMMAND_TOGGLEGUILDBANADD_DESCRIPTION: 'Toggle whether bans are logged in the memberlog',
+		COMMAND_TOGGLEGUILDBANADD: (disabled: boolean) => `Ban logging has been turned ${disabled ? 'off' : 'on'}.`,
+		COMMAND_TOGGLEGUILDBANREMOVE_DESCRIPTION: 'Toggle whether unbans are logged in the memberlog',
+		COMMAND_TOGGLEGUILDBANREMOVE: (disabled: boolean) => `Unban logging has been turned ${disabled ? 'off' : 'on'}.`,
+		COMMAND_TOGGLEGUILDMEMBERADD_DESCRIPTION: 'Toggle whether member joins are logged in the memberlog',
+		COMMAND_TOGGLEGUILDMEMBERADD: (disabled: boolean) => `Member join logging hsa been turned ${disabled ? 'off' : 'on'}.`,
+		COMMAND_TOGGLEGUILDMEMBERREMOVE_DESCRIPTION: 'Toggle whether member leaves are tracked in the memberlog',
+		COMMAND_TOGGLEGUILDMEMBERREMOVE: (disabled: boolean) => `Member leave logging has been turned ${disabled ? 'off' : 'on'}.`,
+		COMMAND_TOGGLEGUILDMEMBERUPDATE_DESCRIPTION: 'Toggle whether member updates are logged in the memberlog',
+		COMMAND_TOGGLEGUILDMEMBERUPDATE_EXTENDED: builder.display('toggleguildmemberupdate', {
+			extendedHelp: 'Member update log embeds include: display name changes and member role updates.'
+		}),
+		COMMAND_TOGGLEGUILDMEMBERUPDATE: (disabled: boolean) => `Member update logging has been turned ${disabled ? 'off' : 'on'}.`,
+		COMMAND_TOGGLEMESSAGEDELETE_DESCRIPTION: 'Toggle whether message deletes are logged in the serverlog',
+		COMMAND_TOGGLEMESSAGEDELETE: (disabled: boolean) => `Message delete logging has been turned ${disabled ? 'off' : 'on'}.`,
+		COMMAND_TOGGLEMESSAGEDELETEBULK_DESCRIPTION: 'Toggle whether message purges are logged in the serverlog',
+		COMMAND_TOGGLEMESSAGEDELETEBULK: (disabled: boolean) => `Message purge logging has been turned ${disabled ? 'off' : 'on'}.`,
+		COMMAND_TOGGLEROLECREATE_DESCRIPTION: 'Toggle whether role creates are logged in the serverlog',
+		COMMAND_TOGGLEROLECREATE: (disabled: boolean) => `Role creation logging has been turned ${disabled ? 'off' : 'on'}.`,
+		COMMAND_TOGGLEROLEDELETE_DESCRIPTION: 'Toggle whether role deletes are logged in the serverlog',
+		COMMAND_TOGGLEROLEDELETE: (disabled: boolean) => `Role deletion logging has been turned ${disabled ? 'off' : 'on'}.`,
+		COMMAND_TOGGLEROLEUPDATE_DESCRIPTION: `Toggle whether role updates are logged in the serverlog`,
+		COMMAND_TOGGLEROLEUPDATE_EXTENDED: builder.display('toggleroleupdate', {
+			extendedHelp: 'Role update log embeds include: role name changes.'
+		}),
+		COMMAND_TOGGLEROLEUPDATE: (disabled: boolean) => `Role update logging has been turned ${disabled ? 'off' : 'on'}.`,
+		/**
+		 * ################################
 		 * #      LOG EVENTS              #
 		 * ################################
 		 */

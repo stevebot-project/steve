@@ -7,11 +7,13 @@ import { LogColors } from '@lib/types/Enums';
 export default class extends Event {
 
 	public run(oldMember: GuildMember, newMember: GuildMember): void {
-		const memberlog = newMember.guild.channels.cache.get(newMember.guild.settings.get(GuildSettings.Channels.Memberlog)) as TextChannel;
+		if (newMember.guild.settings.get(GuildSettings.LogEvents.GuildMemberUpdate) as boolean) {
+			const memberlog = newMember.guild.channels.cache.get(newMember.guild.settings.get(GuildSettings.Channels.Memberlog)) as TextChannel;
 
-		if (memberlog) {
-			if (oldMember.displayName !== newMember.displayName) floatPromise(this, this.logDisplayNameChange(oldMember, newMember, memberlog));
-			if (!oldMember.roles.cache.equals(newMember.roles.cache)) floatPromise(this, this.logRoleUpdate(oldMember, newMember, memberlog));
+			if (memberlog) {
+				if (oldMember.displayName !== newMember.displayName) floatPromise(this, this.logDisplayNameChange(oldMember, newMember, memberlog));
+				if (!oldMember.roles.cache.equals(newMember.roles.cache)) floatPromise(this, this.logRoleUpdate(oldMember, newMember, memberlog));
+			}
 		}
 
 		if (!oldMember.roles.cache.equals(newMember.roles.cache)) floatPromise(this, this.handleTrustedRole(oldMember, newMember));
