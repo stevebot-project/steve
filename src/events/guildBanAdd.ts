@@ -7,8 +7,10 @@ import { LogColors } from '@lib/types/Enums';
 export default class extends Event {
 
 	public run(guild: Guild, user: User): void {
-		const memberlog = guild.channels.cache.get(guild.settings.get(GuildSettings.Channels.Memberlog)) as TextChannel;
-		if (memberlog) floatPromise(this, this.handleLog(guild, user, memberlog));
+		if (guild.settings.get(GuildSettings.LogEvents.GuildBanAdd) as boolean) {
+			const memberlog = guild.channels.cache.get(guild.settings.get(GuildSettings.Channels.Memberlog)) as TextChannel;
+			if (memberlog) floatPromise(this, this.handleLog(guild, user, memberlog));
+		}
 	}
 
 	private async handleLog(guild: Guild, user: User, memberlog: TextChannel): Promise<Message> {

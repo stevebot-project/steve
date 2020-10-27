@@ -7,10 +7,12 @@ import { GuildSettings } from '@lib/types/settings/GuildSettings';
 export default class extends Event {
 
 	public run(oldEmoji: GuildEmoji, newEmoji: GuildEmoji): void {
-		const serverlog = newEmoji.guild.channels.cache.get(newEmoji.guild.settings.get(GuildSettings.Channels.Serverlog)) as TextChannel;
+		if (newEmoji.guild.settings.get(GuildSettings.LogEvents.EmojiUpdate) as boolean) {
+			const serverlog = newEmoji.guild.channels.cache.get(newEmoji.guild.settings.get(GuildSettings.Channels.Serverlog)) as TextChannel;
 
-		if (serverlog) {
-			if (oldEmoji.name !== newEmoji.name) floatPromise(this, this.logEmojiNameChange(oldEmoji, newEmoji, serverlog));
+			if (serverlog) {
+				if (oldEmoji.name !== newEmoji.name) floatPromise(this, this.logEmojiNameChange(oldEmoji, newEmoji, serverlog));
+			}
 		}
 	}
 

@@ -7,8 +7,10 @@ import { GuildSettings } from '@lib/types/settings/GuildSettings';
 export default class extends Event {
 
 	public run(role: Role): void {
-		const serverlog = role.guild.channels.cache.get(role.guild.settings.get(GuildSettings.Channels.Serverlog)) as TextChannel;
-		if (serverlog) floatPromise(this, this.handleLog(role, serverlog));
+		if (role.guild.settings.get(GuildSettings.LogEvents.RoleDelete) as boolean) {
+			const serverlog = role.guild.channels.cache.get(role.guild.settings.get(GuildSettings.Channels.Serverlog)) as TextChannel;
+			if (serverlog) floatPromise(this, this.handleLog(role, serverlog));
+		}
 	}
 
 	private async handleLog(role: Role, serverlog: TextChannel): Promise<Message> {

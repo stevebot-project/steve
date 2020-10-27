@@ -15,6 +15,25 @@ export namespace GuildSettings {
 		export const Serverlog = 'channels.serverlog';
 	}
 
+	export namespace LogEvents {
+		export const ChannelCreate = 'logEvents.channelCreate';
+		export const ChannelDelete = 'logEvents.channelDelete';
+		export const ChannelUpdate = 'logEvents.channelUpdate';
+		export const EmojiCreate = 'logEvents.emojiCreate';
+		export const EmojiDelete = 'logEvents.emojiDelete';
+		export const EmojiUpdate = 'logEvents.emojiUpdate';
+		export const GuildBanAdd = 'logEvents.guildBanAdd';
+		export const GuildBanRemove = 'logEvents.guildBanRemove';
+		export const GuildMemberAdd = 'logEvents.guildMemberAdd';
+		export const GuildMemberRemove = 'logEvents.guildMemberRemove';
+		export const GuildMemberUpdate = 'logEvents.guildMemberUpdate';
+		export const MessageDelete = 'logEvents.messageDelete';
+		export const MessageDeleteBulk = 'logEvents.messageDeleteBulk';
+		export const RoleCreate = 'logEvents.roleCreate';
+		export const RoleDelete = 'logEvents.roleDelete';
+		export const RoleUpdate = 'logEvents.roleUpdate';
+	}
+
 	export namespace Moderation {
 		export const BanDeleteDays = 'moderation.banDeleteDays';
 		export const Cases = 'moderation.cases';

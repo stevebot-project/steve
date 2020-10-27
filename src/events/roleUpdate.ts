@@ -7,10 +7,12 @@ import { LogColors } from '@lib/types/Enums';
 export default class extends Event {
 
 	public run(oldRole: Role, newRole: Role): void {
-		const serverlog = newRole.guild.channels.cache.get(newRole.guild.settings.get(GuildSettings.Channels.Serverlog)) as TextChannel;
+		if (newRole.guild.settings.get(GuildSettings.LogEvents.RoleUpdate) as boolean) {
+			const serverlog = newRole.guild.channels.cache.get(newRole.guild.settings.get(GuildSettings.Channels.Serverlog)) as TextChannel;
 
-		if (serverlog) {
-			if (oldRole.name !== newRole.name) floatPromise(this, this.logRoleNameChange(oldRole, newRole, serverlog));
+			if (serverlog) {
+				if (oldRole.name !== newRole.name) floatPromise(this, this.logRoleNameChange(oldRole, newRole, serverlog));
+			}
 		}
 	}
 

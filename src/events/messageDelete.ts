@@ -8,8 +8,11 @@ export default class extends Event {
 
 	public run(msg: KlasaMessage): void {
 		if (msg.type === 'PINS_ADD' || msg.channel instanceof DMChannel) return;
-		const serverlog = msg.guild!.channels.cache.get(msg.guild!.settings.get(GuildSettings.Channels.Serverlog)) as TextChannel;
-		if (serverlog) floatPromise(this, this.handleLog(msg, serverlog));
+
+		if (msg.guild!.settings.get(GuildSettings.LogEvents.MessageDelete) as boolean) {
+			const serverlog = msg.guild!.channels.cache.get(msg.guild!.settings.get(GuildSettings.Channels.Serverlog)) as TextChannel;
+			if (serverlog) floatPromise(this, this.handleLog(msg, serverlog));
+		}
 	}
 
 	private async handleLog(msg: KlasaMessage, serverlog: TextChannel): Promise<Message | undefined> {

@@ -9,8 +9,10 @@ export default class extends Event {
 	public run(channel: DMChannel | GuildChannel): void {
 		if (channel instanceof DMChannel) return;
 
-		const serverlog = channel.guild.channels.cache.get(channel.guild.settings.get(GuildSettings.Channels.Serverlog)) as TextChannel;
-		if (serverlog) floatPromise(this, this.handleLog(channel, serverlog));
+		if (channel.guild.settings.get(GuildSettings.LogEvents.ChannelCreate) as boolean) {
+			const serverlog = channel.guild.channels.cache.get(channel.guild.settings.get(GuildSettings.Channels.Serverlog)) as TextChannel;
+			if (serverlog) floatPromise(this, this.handleLog(channel, serverlog));
+		}
 	}
 
 	private async handleLog(channel: GuildChannel, serverlog: TextChannel): Promise<Message> {

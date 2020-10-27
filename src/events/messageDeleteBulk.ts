@@ -9,8 +9,10 @@ export default class extends Event {
 	public run(msgs: MessageCollection): void {
 		if (msgs.first()!.channel instanceof DMChannel) return;
 
-		const serverlog = msgs.first()!.guild!.channels.cache.get(msgs.first()!.guild!.settings.get(GuildSettings.Channels.Serverlog)) as TextChannel;
-		if (serverlog) floatPromise(this, this.handleLog(msgs, serverlog));
+		if (msgs.first()!.guild!.settings.get(GuildSettings.LogEvents.MessageDeleteBulk) as boolean) {
+			const serverlog = msgs.first()!.guild!.channels.cache.get(msgs.first()!.guild!.settings.get(GuildSettings.Channels.Serverlog)) as TextChannel;
+			if (serverlog) floatPromise(this, this.handleLog(msgs, serverlog));
+		}
 	}
 
 	private async handleLog(msgs: MessageCollection, serverlog: TextChannel): Promise<Message | undefined> {
