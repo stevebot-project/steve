@@ -1,7 +1,7 @@
 import { BaseNodeOptions, Node as Lavalink } from 'lavalink';
 import { ModerationManager } from '@lib/structures/ModerationManager';
 import { LanguageKeys } from 'klasa';
-import { ModerationTaskData, Reminder } from '../../extendables/Schedule';
+import { ModerationTask, ModerationTaskData, Reminder } from '../../extendables/Schedule';
 import { PermissionString } from 'discord.js';
 
 declare module 'discord.js' {
@@ -41,7 +41,7 @@ declare module 'klasa' {
 	}
 
 	interface Schedule {
-		createModerationTask(taskName: 'unmute' | 'undeafen' | 'unban', duration: number, taskData: ModerationTaskData): Promise<ScheduledTask>;
+		createModerationTask(taskName: ModerationTask, duration: number, taskData: ModerationTaskData): Promise<ScheduledTask>;
 		createReminder(duration: number, userID: string, content: string, channelID: string): Promise<Reminder>;
 		getUserReminders(userID: string): Reminder[];
 	}

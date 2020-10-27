@@ -6,7 +6,7 @@ export default class extends Extendable {
 		super(store, file, directory, { appliesTo: [Schedule] });
 	}
 
-	public createModerationTask(this: Schedule, taskName: 'unmute' | 'undeafen' | 'unban', duration: number, taskData: ModerationTaskData): Promise<ScheduledTask> {
+	public createModerationTask(this: Schedule, taskName: ModerationTask, duration: number, taskData: ModerationTaskData): Promise<ScheduledTask> {
 		return this.create(taskName, Date.now() + duration, {
 			catchUp: true,
 			data: { target: taskData.targetID, guild: taskData.guildID }
@@ -29,6 +29,8 @@ export default class extends Extendable {
 	}
 
 }
+
+export type ModerationTask = 'unmute' | 'undeafen' | 'unban';
 
 export interface ModerationTaskData {
 	targetID: string;
