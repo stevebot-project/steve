@@ -226,13 +226,6 @@ export default class extends SteveCommand {
 			}
 			return msg.channel.send(message);
 		}
-		let message = 'You rolled:';
-		for (const result of results) {
-			const emoji = getEmoji(result.spec);
-			message += `\n${emoji} ${result.spec.input}: \`${result.rolls.join(', ')}\``;
-		}
-		return msg.channel.send(message);
-
 	}
 
 	private rollOnce(sides: number): number {
