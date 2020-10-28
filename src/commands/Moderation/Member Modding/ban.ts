@@ -1,27 +1,42 @@
 import { ModerationCommand } from '@lib/structures/commands/ModerationCommand';
 import { CommandStore, KlasaMessage } from 'klasa';
-import { GuildMember, Message, TextChannel } from 'discord.js';
+import { User, Guild, GuildMember, Message } from 'discord.js';
 
 export default class extends ModerationCommand {
 
 	public constructor(store: CommandStore, file: string[], directory: string) {
 		super(store, file, directory, {
-			description: 'Bans a member from the server.',
+			description: lang => lang.tget('COMMAND_BAN_DESCRIPTION'),
 			duration: true,
-			examples: ['ban enchtest', 'ban enchtest|using slurs', 'ban enchtest|trolling|1 day'],
-			requiredPermissions: ['BAN_MEMBERS'],
-			targetType: 'member',
-			helpUsage: 'member | (reason) | (duration)'
+			extendedHelp: lang => lang.tget('COMMAND_BAN_EXTENDED')
 		});
 	}
 
-	public async handle(msg: KlasaMessage, target: GuildMember, reason: string): Promise<string> {
-		await msg.guild.moderation.ban(target, reason || '');
-		return 'unban';
+	public async prehandle(target: User, guild: Guild): Promise<GuildMember> {
+		const member = await guild.members.fetch(target);
+		if (!member) throw guild.language.tget('USER_NOT_IN_GUILD', target.tag);
+		return member;
 	}
 
-	public posthandle(channel: TextChannel, target: GuildMember): Promise<Message> {
-		return channel.send(`${target.user.tag} has been banned.`);
+	public async handle(msg: KlasaMessage, target: GuildMember, reason: string): Promise<GuildMember> {
+		try {
+			await msg.guild!.moderation.ban(target, reason);
+		} catch (err) {
+			this.client.console.error(err);
+			throw msg.guild!.language.tget('COMMAND_BAN_UNABLE', target.user.tag);
+		}
+
+		return target;
+	}
+
+	public async posthandle(msg: KlasaMessage, target: GuildMember, reason: string, duration: number | undefined): Promise<Message> {
+		const modTask = duration
+			? await this.client.schedule.createModerationTask('unban', duration, { targetID: target.id, guildID: msg.guild!.id })
+			: null;
+
+		const thisCase = await msg.guild!.moderation.cases.createCase('ban', msg.author, target.user, reason, duration, modTask);
+
+		return msg.channel.send(msg.guild!.language.tget('COMMAND_BAN_SUCCESS', target.user.tag, thisCase));
 	}
 
 }

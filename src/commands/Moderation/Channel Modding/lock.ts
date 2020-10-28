@@ -1,34 +1,24 @@
 import { SteveCommand } from '@lib/structures/commands/SteveCommand';
-import { CommandStore, KlasaMessage } from 'klasa';
-import { PermissionLevels } from '@lib/types/enums';
+import { PermissionsLevels } from '@lib/types/Enums';
 import { Message, TextChannel } from 'discord.js';
-import { friendlyDuration } from '@utils/util';
+import { CommandStore, KlasaMessage } from 'klasa';
 
 export default class extends SteveCommand {
 
 	public constructor(store: CommandStore, file: string[], directory: string) {
 		super(store, file, directory, {
-			description: 'Locks a channel from public posting.',
-			examples: ['lock', 'lock 1 hour'],
-			permissionLevel: PermissionLevels.MODERATOR,
+			description: lang => lang.tget('COMMAND_LOCK_DESCRIPTION'),
+			extendedHelp: lang => lang.tget('COMMAND_LOCK_EXTENDED'),
+			permissionLevel: PermissionsLevels.MODERATOR,
 			requiredPermissions: ['MANAGE_CHANNELS'],
-			runIn: ['text'],
-			usage: '[duration:timespan]',
-			helpUsage: '(duration)'
+			runIn: ['text']
 		});
 	}
 
-	public async run(msg: KlasaMessage, [duration]: [number]): Promise<Message> {
-		await msg.guild.channels.lock(msg.channel as TextChannel);
+	public async run(msg: KlasaMessage): Promise<Message> {
+		await (msg.channel as TextChannel).updateOverwrite(msg.guild!.id, { SEND_MESSAGES: false }, msg.author.tag);
 
-		let prettyDuration: string;
-		if (duration) {
-			prettyDuration = friendlyDuration(duration);
-
-			this.client.schedule.createUnlockTask(duration, msg.channel.id, msg.guild.id);
-		}
-
-		return msg.channel.send(`This channel has been locked${duration ? ` for ${prettyDuration}` : ''}.`);
+		return msg.channel.send(msg.guild!.language.tget('COMMAND_LOCK_LOCKED'));
 	}
 
 }

@@ -1,13 +1,31 @@
-import { CreateDeleteEvent } from '@lib/structures/events/CreateDeleteEvent';
-import { GuildEmoji, MessageEmbed } from 'discord.js';
-import { Colors } from '@lib/types/enums';
+import { Event } from 'klasa';
+import { Message, MessageEmbed, TextChannel, GuildEmoji } from 'discord.js';
+import { LogColors } from '@lib/types/Enums';
+import { getExecutor, floatPromise } from '@utils/util';
+import { GuildSettings } from '@lib/types/settings/GuildSettings';
 
-export default class extends CreateDeleteEvent {
+export default class extends Event {
 
-	public async handle(emoji: GuildEmoji, embed: MessageEmbed): Promise<MessageEmbed> {
-		return embed
-			.setColor(Colors.Pink)
-			.setTitle(`Emoji Deleted | ${emoji.name}`);
+	public run(emoji: GuildEmoji): void {
+		if (emoji.guild.settings.get(GuildSettings.LogEvents.EmojiDelete) as boolean) {
+			const serverlog = emoji.guild.channels.cache.get(emoji.guild.settings.get(GuildSettings.Channels.Serverlog)) as TextChannel;
+			if (serverlog) floatPromise(this, this.handleLog(emoji, serverlog));
+		}
+	}
+
+	private async handleLog(emoji: GuildEmoji, serverlog: TextChannel): Promise<Message> {
+		const executor = await getExecutor(emoji.guild, 'EMOJI_DELETE');
+
+		const EMBED_DATA = emoji.guild.language.tget('EVENT_EMOJIDELETE_EMBED');
+
+		const embed = new MessageEmbed()
+			.setAuthor(executor.tag, executor.displayAvatarURL())
+			.setColor(LogColors.PINK)
+			.setFooter(EMBED_DATA.FOOTER(emoji.id))
+			.setTimestamp()
+			.setTitle(EMBED_DATA.TITLE(emoji.name));
+
+		return serverlog.send(embed);
 	}
 
 }

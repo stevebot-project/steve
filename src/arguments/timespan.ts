@@ -1,12 +1,12 @@
-import { Argument, Duration, util } from 'klasa';
+import { Argument, Duration, util, Possible, KlasaMessage } from 'klasa';
 
 export default class extends Argument {
 
-	public run(arg: string): number {
+	public run(arg: string, possible: Possible, msg: KlasaMessage): number {
 		const duration = new Duration(arg);
 
 		if (duration.offset > 0 && util.isNumber(duration.fromNow.getTime())) return duration.offset;
-		throw `**${arg}** is not a valid timespan.`;
+		throw msg.language.tget('ARGUMENT_TIMESPAN_INVALID', arg);
 	}
 
 }

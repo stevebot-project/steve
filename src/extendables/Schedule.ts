@@ -1,5 +1,4 @@
 import { Extendable, ExtendableStore, Schedule, ScheduledTask } from 'klasa';
-import { Snowflake, Guild, GuildMember, UserResolvable, TextChannel, User, Message } from 'discord.js';
 
 export default class extends Extendable {
 
@@ -7,50 +6,50 @@ export default class extends Extendable {
 		super(store, file, directory, { appliesTo: [Schedule] });
 	}
 
-	public createModerationTask(this: Schedule, guild: Guild, target: GuildMember | UserResolvable | TextChannel, taskType: string, time: number): Promise<ScheduledTask> {
-		return this.create(taskType, Date.now() + time, {
+	public createModerationTask(this: Schedule, taskName: ModerationTask, duration: number, taskData: ModerationTaskData): Promise<ScheduledTask> {
+		return this.create(taskName, Date.now() + duration, {
 			catchUp: true,
-			data: {
-				guild: guild.id,
-				target: target instanceof GuildMember || target instanceof User
-					? target.id
-					: target instanceof Message
-						? target.author.id
-						: target
-			}
+			data: { target: taskData.targetID, guild: taskData.guildID }
 		});
 	}
 
-	public createReminderTask(this: Schedule, user: string, content: string, duration: number, channel: string): Promise<ScheduledTask> {
+	public createReminder(this: Schedule, duration: number, userID: string, content: string, channelID: string): Promise<Reminder> {
 		return this.create('reminder', Date.now() + duration, {
-			data: { user, content, channel },
-			catchUp: true
-		});
-	}
-
-	public createRoleTask(this: Schedule, duration: number, user: string, guild: string, role: string): Promise<ScheduledTask> {
-		return this.create('role', Date.now() + duration, {
 			catchUp: true,
-			data: { user, guild, role }
+			data: { userID, content, channelID }
 		});
 	}
 
-	public createSlowmodeTask(this: Schedule, duration: number, guild: string, channel: string): Promise<ScheduledTask> {
-		return this.create('slow', Date.now() + duration, {
-			catchUp: true,
-			data: { guild, channel }
-		});
-	}
-
-	public createUnlockTask(this: Schedule, duration: number, channel: string, guild: string): Promise<ScheduledTask> {
-		return this.create('unlock', Date.now() + duration, {
-			catchUp: true,
-			data: { channel, guild }
-		});
-	}
-
-	public async getUserReminders(this: Schedule, snowflake: Snowflake): Promise<ScheduledTask[]> {
-		return this.tasks.filter(task => task.taskName === 'reminder' && task.data.user === snowflake);
+	public getUserReminders(this: Schedule, userID: string): Reminder[] {
+		const filter = (task: ScheduledTask) => {
+			const id = task.data.userID ?? task.data.user;
+			return task.taskName === 'reminder' && id === userID;
+		};
+		return this.tasks.filter(filter);
 	}
 
 }
+
+export type ModerationTask = 'unmute' | 'undeafen' | 'unban';
+
+export interface ModerationTaskData {
+	targetID: string;
+	guildID: string;
+}
+
+export interface ReminderData {
+	userID: string;
+	content: string;
+	channelID: string;
+}
+
+export interface OldReminderData {
+	user: string;
+	content: string;
+	channel: string;
+}
+
+export interface Reminder extends ScheduledTask {
+	data: ReminderData | OldReminderData;
+}
+

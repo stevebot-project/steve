@@ -1,29 +1,39 @@
 import { Event } from 'klasa';
-import { GuildMember, Message, TextChannel } from 'discord.js';
+import { GuildMember, Message, TextChannel, MessageEmbed } from 'discord.js';
 import { GuildSettings } from '@lib/types/settings/GuildSettings';
-import { Colors } from '@lib/types/enums';
-import { newEmbed, friendlyDuration } from '@utils/util';
+import { LogColors } from '@lib/types/Enums';
+import { friendlyDuration, floatPromise } from '@utils/util';
 
 export default class extends Event {
 
-	public async run(member: GuildMember): Promise<Message | void> {
-		const memberlog = member.guild.channels.cache.get(member.guild.settings.get(GuildSettings.Channels.Memberlog)) as TextChannel;
-		if (!memberlog) return;
+	public run(member: GuildMember): void {
+		if (member.guild.settings.get(GuildSettings.LogEvents.GuildMemberRemove) as boolean) {
+			const memberlog = member.guild.channels.cache.get(member.guild.settings.get(GuildSettings.Channels.Memberlog)) as TextChannel;
+			if (memberlog) floatPromise(this, this.handleLog(member, memberlog));
+		}
+	}
 
-		const joinedTime = friendlyDuration(Date.now() - member.joinedTimestamp);
+	private async handleLog(member: GuildMember, memberlog: TextChannel): Promise<Message> {
+		if (!member.joinedTimestamp) member = await member.guild.members.fetch(member.user);
 
 		let memberRoles = member.roles.cache.filter(r => r.id !== member.guild.id).map(r => r.name).join(', ');
-		memberRoles = memberRoles.length > 0 ? memberRoles : 'None';
+		memberRoles = memberRoles.length > 0 ? memberRoles : member.guild.language.tget('NONE');
 
-		const embed = newEmbed()
+		const EMBED_DATA = member.guild.language.tget('EVENT_GUILDMEMBERREMOVE_EMBED');
+
+		const embed = new MessageEmbed()
+			.addFields(
+				{
+					name: EMBED_DATA.FIELD_TITLES.JOIN_DATE(member.user.bot),
+					value: EMBED_DATA.FIELD_VALUES.JOIN_DATE(friendlyDuration(Date.now() - member.joinedTimestamp!)),
+					inline: true
+				},
+				{ name: EMBED_DATA.FIELD_TITLES.ROLES, value: memberRoles, inline: true }
+			)
 			.setAuthor(member.user.tag, member.user.displayAvatarURL())
-			.setColor(Colors.Turquoise)
-			.setFooter(`Member ID: ${member.id}`)
-			.setTimestamp()
-			.addFields([
-				{ name: `${member.user.bot ? 'Bot' : 'Member'} Left Server`, value: `Joined ${joinedTime} ago`, inline: true },
-				{ name: 'Roles', value: memberRoles, inline: true }
-			]);
+			.setColor(LogColors.TURQUOISE)
+			.setFooter(EMBED_DATA.FOOTER(member.id))
+			.setTimestamp();
 
 		return memberlog.send(embed);
 	}

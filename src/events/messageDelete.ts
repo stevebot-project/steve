@@ -1,32 +1,43 @@
 import { Event, KlasaMessage } from 'klasa';
-import { DMChannel, Message, TextChannel } from 'discord.js';
+import { MessageEmbed, DMChannel, TextChannel, Message } from 'discord.js';
+import { floatPromise, friendlyDuration } from '@utils/util';
 import { GuildSettings } from '@lib/types/settings/GuildSettings';
-import { Colors } from '@lib/types/enums';
-import { newEmbed, friendlyDuration } from '@utils/util';
+import { LogColors } from '@lib/types/Enums';
 
 export default class extends Event {
 
-	public async run(msg: KlasaMessage): Promise<Message | void> {
-		if (msg.type === 'PINS_ADD' || msg.channel instanceof DMChannel) return this.client.console.log('Message deletion not logged.');
+	public run(msg: KlasaMessage): void {
+		if (msg.type === 'PINS_ADD' || msg.channel instanceof DMChannel) return;
 
+		if (msg.guild!.settings.get(GuildSettings.LogEvents.MessageDelete) as boolean) {
+			const serverlog = msg.guild!.channels.cache.get(msg.guild!.settings.get(GuildSettings.Channels.Serverlog)) as TextChannel;
+			if (serverlog) floatPromise(this, this.handleLog(msg, serverlog));
+		}
+	}
 
-		const serverlog = msg.guild.channels.cache.get(msg.guild.settings.get(GuildSettings.Channels.Serverlog)) as TextChannel;
-		if (!serverlog) return;
+	private async handleLog(msg: KlasaMessage, serverlog: TextChannel): Promise<Message | undefined> {
+		if (msg.channel instanceof DMChannel) return; // way to just delcare that msg.channel is a TextChannel instead of a redundant if?
 
-		const msgContent = msg.content.length < 1024 && msg.content.length > 0 ? msg.content : 'Message is unable to be displayed.';
+		const msgContent = msg.content.length < 1024 && msg.content.length > 0
+			? msg.content
+			: msg.guild!.language.tget('EVENT_MESSAGEDELETE_UNABLE_TO_DISPLAY');
+
+		const parent = msg.channel.parent
+			? msg.channel.parent.name
+			: msg.guild!.language.tget('NO_PARENT_CATEGORY');
 
 		const msgSentTime = friendlyDuration(Date.now() - msg.createdTimestamp);
 
-		const parent = msg.channel.parent ? msg.channel.parent.name : 'No Category';
+		const EMBED_DATA = msg.guild!.language.tget('EVENT_MESSAGEDELETE_EMBED');
 
-		const embed = newEmbed()
+		const embed = new MessageEmbed()
+			.addFields(
+				{ name: EMBED_DATA.FIELD_TITLES.CHANNEL(msg.channel.name, parent), value: msgContent }
+			)
 			.setAuthor(msg.author.tag, msg.author.displayAvatarURL())
-			.setColor(Colors.RedOrange)
-			.setFooter(`Message ID: ${msg.id} | Message sent ${msgSentTime} ago`)
-			.setTimestamp()
-			.addFields([
-				{ name: `Message Deleted in ${msg.channel.name} (${parent})`, value: msgContent }
-			]);
+			.setColor(LogColors.REDORANGE)
+			.setFooter(EMBED_DATA.FOOTER(msg.id, msgSentTime))
+			.setTimestamp();
 
 		return serverlog.send(embed);
 	}
