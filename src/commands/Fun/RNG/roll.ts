@@ -30,14 +30,19 @@ interface DiceResult {
 	message: string;
 }
 
+interface MessageSpec {
+	message: string;
+	rollValue: number;
+}
+
 // TypeScript sort() was not working correctly for our arrays
-function Comparator(a, b): number {
+function Comparator(a: any, b: any): number {
 	if (a[0] < b[0]) return -1;
 	if (a[0] > b[0]) return 1;
 	return 0;
 }
 
-function NumComparator(a, b): number {
+function NumComparator(a: number, b: number): number {
 	if (a < b) return -1;
 	if (a > b) return 1;
 	return 0;
@@ -64,14 +69,14 @@ export default class extends SteveCommand {
 			let sides = parseInt(match!.groups!.sides, 10);
 			if (sides > 1000) sides = 1000;
 
-			let mod = parseInt(match.groups.mod, 10);
+			let mod = parseInt(match!.groups!.mod, 10);
 			if (mod > 99) mod = 99;
 
 			let operator: ModType = '';
 			const explodes = match!.groups!.explode === '!';
-			if (match.groups.minus === '-') {
+			if (match!.groups!.minus === '-') {
 				operator = '-';
-			} else if (match.groups.plus === '+') {
+			} else if (match!.groups!.plus === '+') {
 				operator = '+';
 			}
 
@@ -92,25 +97,29 @@ export default class extends SteveCommand {
 		const results: DiceResult[] = [];
 
 		for (const spec of specs) {
-			let rolls = [];
-			let msgs = [];
-			let lost = [];
+			let rolls: number[] = [];
+			let msgs: MessageSpec[] = [];
+			let lost: number[] = [];
 			let message = '';
 			let operator = '';
 
 			// The minus sign is correctly prepended anyway but we need to prepend '+'
 			// when we have a static, positive modifier
-			if (spec.operator === '+') { operator = '+'; }
+			if (spec.operator === '+') {
+				operator = '+';
+			}
 			// get the value of the static modifier
 			const shift = this.getMod(spec.operator, spec.mod);
 
+			let msg: MessageSpec = { message: '', rollValue: 0 };
 			for (let i = 0; i < spec.count; i++) {
 				// in order to correctly print all values in an exploding number we
 				// need to formulate a message, this uses a different roll function
 				if (spec.explodes) {
 					const { roll, msgText } = this.explodingRoll(spec.sides);
 					// array of messages tied to total values
-					msgs.push([roll, msgText]);
+					msg = { message: msgText, rollValue: roll };
+					msgs.push(msg);
 					rolls.push(roll);
 				} else {
 					const roll = this.roll(spec.sides);
@@ -145,12 +154,12 @@ export default class extends SteveCommand {
 				const roll = rolls[0];
 				if (spec.explodes) {
 					// exploding rolls already have a pre-formatted message
-					const msgText = msgs[0][1];
+					const msgText = msgs[0].message;
 					message += msgText;
 				} else {
 					message += `${roll}`;
 				}
-				if (shift !== 0) {
+				if (shift > 0 || shift < 0) {
 					// calculate the final roll value
 					const sum = roll + shift;
 					// rolls are _italicised_, static modifier is plain, sum is **bold**
@@ -172,9 +181,9 @@ export default class extends SteveCommand {
 				for (const [index, roll] of rolls.entries()) {
 					if (spec.explodes) {
 						// exploding rolls already have a pre-formatted message
-						const msgText = msgs[index][1];
+						const msgText = msgs[index].message;
 						// sum values as we go
-						sum += msgs[index][0];
+						sum += msgs[index].rollValue;
 						message += msgText;
 					} else {
 						// sum values as we go
@@ -187,7 +196,7 @@ export default class extends SteveCommand {
 						message += ' + ';
 					}
 				}
-				if (shift !== 0) {
+				if (shift > 0 || shift < 0) {
 					// add the static modifier
 					// in D&D you cannot roll lower than a 1 but this may not
 					// be true _in general_ so we can cope with returning a
@@ -216,16 +225,16 @@ export default class extends SteveCommand {
 			// just display the message when a single roll is made
 			const message = `${emoji} You rolled: ${result.message} ${emoji}`;
 			return msg.channel.send(message);
-		} else {
-			let message = 'You rolled:';
-			for (const result of results) {
-				const emoji = getEmoji(result.spec);
-				// for multiple rolls we want to make the input clear
-				// backticks so it doesn't distract from results
-				message += `\n${emoji} \`${result.spec.input}\` = ${result.message}`;
-			}
-			return msg.channel.send(message);
 		}
+		let message = 'You rolled:';
+		for (const result of results) {
+			const emoji = getEmoji(result.spec);
+			// for multiple rolls we want to make the input clear
+			// backticks so it doesn't distract from results
+			message += `\n${emoji} \`${result.spec.input}\` = ${result.message}`;
+		}
+		return msg.channel.send(message);
+
 	}
 
 	private rollOnce(sides: number): number {
@@ -277,7 +286,7 @@ export default class extends SteveCommand {
 				} else if (roll === sides) {
 					// we exploded again and append
 					msgText += `**${roll}**+`;
-				} else if (msgText !== '') {
+				} else if (msgText) {
 					// we stopped exploding, final roll is
 					// plainly formatted and display total
 					msgText += `${roll}=${total}]`;
