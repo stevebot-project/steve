@@ -166,6 +166,8 @@ declare module 'klasa' {
 		COMMAND_ROCKPAPERSCISSORS_WINNER: (playerMove: string, steveMove: string, winner: number) => string;
 		COMMAND_ROLL_DESCRIPTION: string;
 		COMMAND_ROLL_EXTENDED: string;
+		COMMAND_ROLL_RESPONSE: string;
+		COMMAND_ROLL_EMOJI_RESPONSE: (emoji: string, message: string) => string;
 		COMMAND_AUDINO_DESCRIPTION: string;
 		COMMAND_AUDINO_EXTENDED: string;
 		COMMAND_AUDINO_ID: string;

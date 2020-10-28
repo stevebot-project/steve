@@ -223,10 +223,9 @@ export default class extends SteveCommand {
 			const result = results[0];
 			const emoji = getEmoji(result.spec);
 			// just display the message when a single roll is made
-			const message = `${emoji} You rolled: ${result.message} ${emoji}`;
-			return msg.channel.send(message);
+			return msg.channel.send(msg.language.tget('COMMAND_ROLL_EMOJI_RESPONSE', emoji, result.message));
 		}
-		let message = 'You rolled:';
+		let message = msg.language.tget('COMMAND_ROLL_RESPONSE');
 		for (const result of results) {
 			const emoji = getEmoji(result.spec);
 			// for multiple rolls we want to make the input clear
