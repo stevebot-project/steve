@@ -5,7 +5,7 @@ export default class extends Task {
 
 	public async run({ targetID, guildID }: ModerationTaskData): Promise<void> {
 		const guild = this.client.guilds.cache.get(guildID);
-		const targetUser = this.client.users.cache.get(targetID);
+		const targetUser = await this.client.users.fetch(targetID);
 
 		if (guild && targetUser) {
 			const member = await guild.members.fetch(targetUser);
