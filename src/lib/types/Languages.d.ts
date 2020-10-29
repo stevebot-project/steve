@@ -288,13 +288,11 @@ declare module 'klasa' {
 		COMMAND_SERVERINFO_EMBED: {
 			FIELD_TITLES: {
 				TOTAL_MEMBERS: string;
-				HUMANS: string;
 				BOTS: string;
 				TEXT_CHANNELS: string;
 				VOICE_CHANNELS: string;
 				ROLES: string;
 				EMOJIS: string;
-				MEMBERS_WITH_ROLES: string;
 			};
 			FOOTER: (date: string, duration: string) => string;
 		};
