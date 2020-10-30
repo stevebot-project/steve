@@ -4,7 +4,9 @@ import { Guild, GuildMember, User } from 'discord.js';
 
 const USER_REGEXP = Argument.regex.userOrMember;
 
-function resolveUser(query: GuildMember | User | string, guild: Guild) {
+async function resolveUser(query: GuildMember | User | string, guild: Guild) {
+	if (guild.memberCount > guild.members.cache.size) await guild.members.fetch();
+
 	if (query instanceof GuildMember) return query.user;
 	if (query instanceof User) return query;
 	if (typeof query === 'string') {
