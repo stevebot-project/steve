@@ -283,6 +283,8 @@ declare module 'klasa' {
 			};
 			FOOTER: (id: string) => string;
 		};
+		COMMAND_AVATAR_DESCRIPTION: string;
+		COMMAND_AVATAR_CANNOTDISPLAY: (user: string) => string;
 		COMMAND_SERVERINFO_DESCRIPTION: string;
 		COMMAND_SERVERINFO_EXTENDED: string;
 		COMMAND_SERVERINFO_EMBED: {

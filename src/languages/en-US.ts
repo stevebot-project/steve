@@ -724,6 +724,8 @@ export default class extends Language {
 			},
 			FOOTER: (id: string) => `Member ID: ${id} | ${this.randomDftba}`
 		},
+		COMMAND_AVATAR_DESCRIPTION: 'See a larger version user\'s avatar',
+		COMMAND_AVATAR_CANNOTDISPLAY: (user: string) => `Unable to display avatar for ${user}.`,
 		/**
 		 * ################################
 		 * #      SERVER INFO             #
