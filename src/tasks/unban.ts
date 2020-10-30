@@ -5,7 +5,7 @@ export default class extends Task {
 
 	public async run({ targetID, guildID }: ModerationTaskData): Promise<void> {
 		const guild = this.client.guilds.cache.get(guildID);
-		const target = this.client.users.cache.get(targetID);
+		const target = await this.client.users.fetch(targetID);
 
 		if (guild && target) {
 			await guild.moderation.unban(target, guild.language.tget('MODERATION_NOREASON'));

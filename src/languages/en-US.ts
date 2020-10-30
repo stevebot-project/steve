@@ -740,13 +740,11 @@ export default class extends Language {
 		COMMAND_SERVERINFO_EMBED: {
 			FIELD_TITLES: {
 				TOTAL_MEMBERS: 'Total Members',
-				HUMANS: 'Humans',
 				BOTS: 'Bots',
 				TEXT_CHANNELS: 'Text Channels',
 				VOICE_CHANNELS: 'Voice Channels',
 				ROLES: 'Roles',
-				EMOJIS: 'Emojis',
-				MEMBERS_WITH_ROLES: 'Members with Roles'
+				EMOJIS: 'Emojis'
 			},
 			FOOTER: (date: string, duration: string) => `Created ${date} (${duration} ago) | ${this.randomDftba}`
 		},
