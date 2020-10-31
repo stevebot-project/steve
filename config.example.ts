@@ -43,5 +43,5 @@ export const CLIENT_OPTIONS: KlasaClientOptions = {
 		userID: CLIENT_ID,
 		shardCount: 0
 	},
-	readyMessage: client => `Logged in and ready to serve ${client.guilds.cache.size} guilds as ${client.user.tag}.`
+	readyMessage: client => `Logged in and ready to serve ${client.guilds.cache.size} guilds as ${client.user!.tag}.`
 };
