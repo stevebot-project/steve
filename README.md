@@ -21,6 +21,10 @@ Steve is an all-purpose Discord bot originally developed for [Tuataria] and its 
 - Download Lavalink from the link above, and put the host/port/password for your Lavalink server into the config file. (You can run Lavalink on your localhost.)
 - Make sure you have a MongoDB Atlas server set up (it's free). Put the connection string into the config file.
 - Once all that's done, you should be good to go!
+- If you've not run a Discord bot before that means:
+    1. `npm install`
+    2. `npm run build`
+    3. `npm start`
 
 ##### Notes
 - Having the EditorConfig extension installed in whatever editor you use is recommended (we recommend using Visual Studio Code).

@@ -366,7 +366,7 @@ export default class extends Language {
 			explainedUsage: [
 				['choice', 'You need to specify at least two choices for this command to work. Please don\'t make me sass you.']
 			],
-					 reminder: 'Choices have a maximum length of 500 characters.'
+			reminder: 'Choices have a maximum length of 500 characters.'
 		}),
 		COMMAND_CHOOSE_RESPONSE: (choice: string) => `${botName} chooses... ${choice}!`,
 		COMMAND_CHOOSE_TOOFEW: 'You must provide at least two choices!',
@@ -394,13 +394,16 @@ export default class extends Language {
 			examples: [
 				'1d6',
 				'd20',
+				'4d6-5',
 				'5d10!',
 				'1d8|4d6',
 				'6d12k1',
 				'6d12kl2'
 			],
-			extendedHelp: 'Use standard dice notation. You can roll up to 10 dice with up to 1,000 sides each. Add a \`!\` at the end of your roll to use exploding dice. To keep the highest n, add `k<n>`; to keep the lowest n, add `kl<n>` (with n < amount of dice). You can do multiple rolls at once, separated by `|`.'
+			extendedHelp: 'Using standard dice notation: You can roll up to 10 dice with up to 1,000 sides each. Add a \`!\` at the end of your roll to use exploding dice. To keep the highest n, add `k<n>`; to keep the lowest n, add `kl<n>` (with n < amount of dice). You can add a static positive or negative modifier to the sum of the roll using \`+<n>\` or \`-<n>\`. You can do multiple rolls at once, separated by `|`.'
 		}),
+		COMMAND_ROLL_RESPONSE: `You rolled:`,
+		COMMAND_ROLL_EMOJI_RESPONSE: (emoji: string, message: string) => `${emoji} You rolled: ${message} ${emoji}`,
 		COMMAND_AUDINO_DESCRIPTION: 'When the audio cuts out and you must screm',
 		COMMAND_AUDINO_EXTENDED: builder.display('audino', {
 			extendedHelp: 'This command has a cooldown of 60 seconds per channel. The image this command displays came from a reading livestream [John](https://en.wikipedia.org/wiki/John_Green_(author)) did; it\'s the face he made when his audio cut out *again*.'
