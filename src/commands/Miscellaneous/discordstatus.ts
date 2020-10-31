@@ -11,7 +11,7 @@ export default class extends SteveCommand {
 			aliases: ['ds', 'discstatus', 'isdiscordbroke'],
 			cooldown: 60,
 			cooldownLevel: 'channel',
-			description: 'See the current status of Discord'
+			description: lang => lang.tget('COMMAND_DISCORD_STAUTS_DECRIPTION')
 		});
 	}
 
@@ -23,14 +23,13 @@ export default class extends SteveCommand {
 			.then((json) => {
 				const embed = new MessageEmbed()
 				.setTitle(json.status.description)
-				.setDescription(`[Discord Status](https://discordstatus.com/)\n**Current Incident:**\n${json.status.indicator}`)
+				.setDescription(msg.language.tget('COMMAND_DISCORD_STAUTS_EMBED_DECRIPTION', json.status.indicator))
 				.addFields(json.components.map((component: { name: any; status: any; }) => ({
 					name: component.name,
 					value: component.status,
 					inline: true
 				})))
-				.setTimestamp()
-				.setFooter(`Last changed: ${formatDate(json.page.updated_at)}`);
+				.setFooter(msg.language.tget('COMMAND_DISCORD_STATUS_EMBED_FOOTER', formatDate(json.page.updated_at)));
 
 			return msg.channel.send(embed);
 			});
