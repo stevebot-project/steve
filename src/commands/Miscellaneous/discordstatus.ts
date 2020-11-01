@@ -17,7 +17,7 @@ export default class extends SteveCommand {
 
 	public async run(msg: KlasaMessage): Promise<Message> {
 		const url = 'https://srhpyqt94yxb.statuspage.io/api/v2/summary.json';
-		const EMBED_DATA = msg.language.tget('COMMAND_DISCORD_STAUTS_EMBED')
+		const EMBED_DATA = msg.language.tget('COMMAND_DISCORD_STAUTS_EMBED');
 
 		return fetch(url, { method: 'Get' })
 			.then(res => res.json())
