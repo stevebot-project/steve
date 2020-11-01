@@ -332,6 +332,7 @@ export default class extends Language {
 		USER_NOT_IN_GUILD: (user: string) => `${user} is not in this server.`,
 		NONE: 'None',
 		NO_PARENT_CATEGORY: 'No Category',
+		WORKING: 'Working...',
 		/**
 		 * ################################
 		 * #      ARGUMENTS               #
@@ -557,6 +558,14 @@ export default class extends Language {
 		COMMAND_UNDEAFEN_SUCCESS: (target: string, thisCase: ModerationCase) => `Undeafened ${target} and created case number ${thisCase.number} with reason: *${thisCase.reason}*.`,
 		COMMAND_PERMISSIONS_DESCRIPTION: 'View the permissions of the specified user.',
 		COMMAND_PERMISSIONS_HAS_ALL: (user: string) => `${user} has the Administrator permission; they have all permissions by default.`,
+		COMMAND_CLEARROLE_DESCRIPTION: 'Quickly remove all members from the specified role',
+		COMMAND_CLEARROLE_EXTENDED: builder.display('clearrole', {
+			examples: [
+				'gmt-4'
+			]
+		}),
+		COMMAND_CLEARROLE_ROLE_EMPTY: (role: string) => `There are no members in the ${role} role.`,
+		COMMAND_CLEARROLE: (size: number, role: string) => `${size} members were removed from the ${role} role.`,
 		COMMAND_NICKNAME_DESCRIPTION: 'Set or clear a member\'s nickname',
 		COMMAND_NICKNAME_EXTENDED: builder.display('nickname', {
 			examples: [

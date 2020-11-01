@@ -149,6 +149,7 @@ declare module 'klasa' {
 		USER_NOT_IN_GUILD: (user: string) => string;
 		NONE: string;
 		NO_PARENT_CATEGORY: string;
+		WORKING: string;
 		ARGUMENT_ROLENAME_COULDNOTFIND: (name: string, arg: string) => string;
 		ARGUMENT_ROLENAME_MULTIPLEMATCHES: (matches: string, name: string) => string;
 		ARGUMENT_TIMESPAN_INVALID: (arg: string) => string;
@@ -226,6 +227,10 @@ declare module 'klasa' {
 		COMMAND_UNDEAFEN_SUCCESS: (target: string, thisCase: ModerationCase) => string;
 		COMMAND_PERMISSIONS_DESCRIPTION: string;
 		COMMAND_PERMISSIONS_HAS_ALL: (user: string) => string;
+		COMMAND_CLEARROLE_DESCRIPTION: string;
+		COMMAND_CLEARROLE_EXTENDED: string;
+		COMMAND_CLEARROLE_ROLE_EMPTY: (role: string) => string;
+		COMMAND_CLEARROLE: (size: number, role: string) => string;
 		COMMAND_NICKNAME_DESCRIPTION: string;
 		COMMAND_NICKNAME_EXTENDED: string;
 		COMMAND_NICKNAME_SET: (user: string) => string;
