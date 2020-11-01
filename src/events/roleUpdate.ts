@@ -1,33 +1,34 @@
 import { Event } from 'klasa';
-import { Role, Message, TextChannel } from 'discord.js';
+import { Role, Message, TextChannel, MessageEmbed } from 'discord.js';
 import { GuildSettings } from '@lib/types/settings/GuildSettings';
-import { Colors } from '@lib/types/enums';
-import { getExecutor, newEmbed, noLog } from '@utils/util';
+import { floatPromise, getExecutor } from '@utils/util';
+import { LogColors } from '@lib/types/Enums';
 
-module.exports = class extends Event {
+export default class extends Event {
 
-	public async run(oldRole: Role, newRole: Role): Promise<Message | void> {
-		if (oldRole.name === newRole.name) return;
+	public run(oldRole: Role, newRole: Role): void {
+		if (newRole.guild.settings.get(GuildSettings.LogEvents.RoleUpdate) as boolean) {
+			const serverlog = newRole.guild.channels.cache.get(newRole.guild.settings.get(GuildSettings.Channels.Serverlog)) as TextChannel;
 
-		const serverlog = newRole.guild.channels.cache.get(newRole.guild.settings.get(GuildSettings.Channels.Serverlog)) as TextChannel;
-		if (!serverlog) return noLog(this.client.console, 'server', newRole.guild.name);
+			if (serverlog) {
+				if (oldRole.name !== newRole.name) floatPromise(this, this.logRoleNameChange(oldRole, newRole, serverlog));
+			}
+		}
+	}
 
+	private async logRoleNameChange(oldRole: Role, newRole: Role, serverlog: TextChannel): Promise<Message> {
 		const executor = await getExecutor(newRole.guild, 'ROLE_UPDATE');
 
-		const inline = oldRole.name.length < 14;
+		const EMBED_DATA = newRole.guild.language.tget('EVENT_ROLEUPDATE_NAMECHANGE_EMBED');
 
-		const embed = newEmbed()
+		const embed = new MessageEmbed()
 			.setAuthor(executor.tag, executor.displayAvatarURL())
-			.setColor(Colors.Yellow)
-			.setFooter(`Role ID: ${newRole.id}`)
+			.setColor(LogColors.YELLOW)
+			.setFooter(EMBED_DATA.FOOTER(newRole.id))
 			.setTimestamp()
-			.setTitle('Role Name Changed')
-			.addFields([
-				{ name: 'Old Role Name', value: oldRole.name, inline: inline },
-				{ name: 'New Role Name', value: newRole.name, inline: inline }
-			]);
+			.setTitle(EMBED_DATA.TITLE(oldRole.name, newRole.name));
 
 		return serverlog.send(embed);
 	}
 
-};
+}

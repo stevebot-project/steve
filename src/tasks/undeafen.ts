@@ -1,14 +1,19 @@
 import { Task } from 'klasa';
-import { ModerationManager } from '@lib/structures/moderation/ModerationManager';
-import { ModerationTaskData } from '@lib/structures/commands/ModerationCommand';
-import { GuildMember } from 'discord.js';
+import { ModerationTaskData } from '../extendables/Schedule';
 
 export default class extends Task {
 
-	public async run({ guild, target }: ModerationTaskData): Promise<ModerationManager | void> {
-		const _guild = this.client.guilds.cache.get(guild);
-		const _target = await _guild.members.fetch(target).catch(err => this.client.console.error(err));
-		if (_target) return _guild.moderation.undeafen(_target as GuildMember);
+	public async run({ targetID, guildID }: ModerationTaskData): Promise<void> {
+		const guild = this.client.guilds.cache.get(guildID);
+		const targetUser = await this.client.users.fetch(targetID);
+
+		if (guild && targetUser) {
+			const member = await guild.members.fetch(targetUser);
+
+			if (member && guild.moderation.deafenedRole && member.roles.cache.has(guild.moderation.deafenedRole.id)) {
+				await guild.moderation.undeafen(member, guild.language.tget('MODERATION_NOREASON'));
+			}
+		}
 	}
 
 }

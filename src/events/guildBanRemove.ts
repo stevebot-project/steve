@@ -1,23 +1,29 @@
 import { Event } from 'klasa';
-import { Guild, User, Message, TextChannel } from 'discord.js';
+import { Guild, User, TextChannel, Message, MessageEmbed } from 'discord.js';
 import { GuildSettings } from '@lib/types/settings/GuildSettings';
-import { Colors } from '@lib/types/enums';
-import { getExecutor, newEmbed, noLog } from '@utils/util';
+import { floatPromise, getExecutor } from '@utils/util';
+import { LogColors } from '@lib/types/Enums';
 
 export default class extends Event {
 
-	public async run(guild: Guild, user: User): Promise<Message | void> {
-		const memberlog = guild.channels.cache.get(guild.settings.get(GuildSettings.Channels.Memberlog)) as TextChannel;
-		if (!memberlog) return noLog(this.client.console, 'member', guild.name);
+	public run(guild: Guild, user: User): void {
+		if (guild.settings.get(GuildSettings.LogEvents.GuildBanRemove) as boolean) {
+			const memberlog = guild.channels.cache.get(guild.settings.get(GuildSettings.Channels.Memberlog)) as TextChannel;
+			if (memberlog) floatPromise(this, this.handleLog(guild, user, memberlog));
+		}
+	}
 
+	private async handleLog(guild: Guild, user: User, memberlog: TextChannel): Promise<Message> {
 		const executor = await getExecutor(guild, 'MEMBER_BAN_REMOVE');
 
-		const embed = newEmbed()
+		const EMBED_DATA = guild.language.tget('EVENT_GUILDBANREMOVE_EMBED');
+
+		const embed = new MessageEmbed()
 			.setAuthor(user.tag, user.displayAvatarURL())
-			.setColor(Colors.Red)
-			.setFooter(`User ID: ${user.id}`)
+			.setColor(LogColors.RED)
+			.setFooter(EMBED_DATA.FOOTER(user.id))
 			.setTimestamp()
-			.setTitle(`Unbanned by ${executor.tag}`);
+			.setTitle(EMBED_DATA.TITLE(executor.tag));
 
 		return memberlog.send(embed);
 	}

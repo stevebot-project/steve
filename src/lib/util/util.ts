@@ -1,9 +1,16 @@
-import { Guild, GuildAuditLogsAction, User, MessageEmbed } from 'discord.js';
-import { KlasaConsole } from 'klasa';
-import prettyMilliseconds from 'pretty-ms';
+import { Guild, GuildAuditLogsAction, MessageEmbed, User } from 'discord.js';
+import { Client, util, RichDisplay } from 'klasa';
+import { chunk } from '@klasa/utils';
+import prettyMilliseconds = require('pretty-ms');
+import moment = require('moment');
 
-export function friendlyColonDuration(duration: number): string {
-	return prettyMilliseconds(duration, { colonNotation: true, secondsDecimalDigits: 0 });
+export function floatPromise(ctx: { client: Client }, promise: Promise<unknown>): void {
+	if (util.isThenable(promise)) promise.catch(error => ctx.client.emit('error', error));
+}
+
+/* TODO: internationalize date format (requires additonal languages to be added first) */
+export function formatDate(date: number | Date, format = 'YYYY MMM Do'): string {
+	return moment(date).format(format);
 }
 
 export function friendlyDuration(duration: number): string {
@@ -11,14 +18,17 @@ export function friendlyDuration(duration: number): string {
 }
 
 export async function getExecutor(guild: Guild, type: GuildAuditLogsAction | number): Promise<User> {
-	const logs = await guild.fetchAuditLogs({ limit: 1, type: type });
-	return logs.entries.first().executor;
+	const logs = await guild.fetchAuditLogs({ limit: 1, type });
+	return logs.entries.first()!.executor;
 }
 
-export function newEmbed(): MessageEmbed {
-	return new MessageEmbed;
-}
+export function richDisplayList(items: string[], chunkSize: number, stringPrefix?: string): RichDisplay {
+	const display = new RichDisplay(new MessageEmbed());
 
-export function noLog(kconsole: KlasaConsole, log: string, guildName: string): void {
-	return kconsole.log(`The ${guildName} server has not set a ${log}log.`);
+	for (const page of chunk(items, chunkSize)) {
+		const description = page.map(item => `${stringPrefix ?? ''}${item}`).join(' | ');
+		display.addPage((embed: MessageEmbed) => embed.setDescription(description));
+	}
+
+	return display;
 }

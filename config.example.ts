@@ -17,7 +17,8 @@ export const LAVALINK_PASSWORD = '';
 
 export const NAME = 'Steve';
 
-export const TUATARIA = true;
+export const FEEDBACK_GUILD = ''; // guild snowflake
+export const FEEDBACK_CHANNEL = ''; // text channel snowflake
 
 export const CLIENT_OPTIONS: KlasaClientOptions = {
 	commandEditing: true,
@@ -42,13 +43,5 @@ export const CLIENT_OPTIONS: KlasaClientOptions = {
 		userID: CLIENT_ID,
 		shardCount: 0
 	},
-	readyMessage: client => `Logged in and ready to serve ${client.guilds.cache.size} guilds as ${client.user.tag}.`
-};
-
-export const MAGIC8BALL_RESPONSES = [
-
-];
-
-export const DOCS = {
-
+	readyMessage: client => `Logged in and ready to serve ${client.guilds.cache.size} guilds as ${client.user!.tag}.`
 };

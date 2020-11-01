@@ -1,13 +1,15 @@
 import { Task } from 'klasa';
-import { ModerationTaskData } from '@lib/structures/commands/ModerationCommand';
-import { ModerationManager } from '@lib/structures/moderation/ModerationManager';
+import { ModerationTaskData } from '../extendables/Schedule';
 
 export default class extends Task {
 
-	public run({ guild, target }: ModerationTaskData): Promise<ModerationManager> {
-		const _guild = this.client.guilds.cache.get(guild);
-		const _target = this.client.users.cache.get(target);
-		return _guild.moderation.unban(_target);
+	public async run({ targetID, guildID }: ModerationTaskData): Promise<void> {
+		const guild = this.client.guilds.cache.get(guildID);
+		const target = await this.client.users.fetch(targetID);
+
+		if (guild && target) {
+			await guild.moderation.unban(target, guild.language.tget('MODERATION_NOREASON'));
+		}
 	}
 
 }
