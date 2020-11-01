@@ -317,8 +317,10 @@ export default class extends Language {
 			TITLE: 'Statistics'
 		},
 		COMMAND_DISCORD_STAUTS_DECRIPTION: 'See the current status of Discord.',
-		COMMAND_DISCORD_STAUTS_EMBED_DECRIPTION: (incident): string => `[Discord Status](https://discordstatus.com/)\n**Current Incident:**\n${incident}`,
-		COMMAND_DISCORD_STATUS_EMBED_FOOTER: (time): string => `Last changed: ${time} • ${this.randomDftba}`,
+		COMMAND_DISCORD_STAUTS_EMBED: {
+			DECRIPTION: (incident): string => `[Discord Status](https://discordstatus.com/)\n**Current Incident:**\n${incident}`,
+			FOOTER: (time): string => `Last changed: ${time} | ${this.randomDftba}`	
+		},
 		MESSAGE_PROMPT_TIMEOUT: 'The prompt has timed out.',
 		TEXT_PROMPT_ABORT_OPTIONS: ['abort', 'stop', 'cancel'],
 		/**

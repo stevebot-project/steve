@@ -139,8 +139,10 @@ declare module 'klasa' {
 			TITLE: string;
 		};
 		COMMAND_DISCORD_STAUTS_DECRIPTION: string;
-		COMMAND_DISCORD_STAUTS_EMBED_DECRIPTION: (incident: string) => string;
-		COMMAND_DISCORD_STATUS_EMBED_FOOTER: (time: string) => string;
+		COMMAND_DISCORD_STAUTS_EMBED: {
+			DECRIPTION: (incident: string) => string;
+			FOOTER: (time: string) => string;
+		};
 		MESSAGE_PROMPT_TIMEOUT: string;
 		TEXT_PROMPT_ABORT_OPTIONS: string[];
 		USER_NOT_IN_GUILD: (user: string) => string;
