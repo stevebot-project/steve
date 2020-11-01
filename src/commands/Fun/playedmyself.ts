@@ -9,13 +9,14 @@ export default class extends SteveCommand {
 			aliases: ['iplayedmyself'],
 			cooldown: 60,
 			cooldownLevel: 'channel',
-			description: 'Congratulations, you played yourself.',
-			extendedHelp: 'This command returns the DJ Khaled GIF. You know, that DJ Khaled GIF.'
+			description: lang => lang.tget('COMMAND_PLAYEDMYSELF_DESCRIPTION'),
+			extendedHelp: lang => lang.tget('COMMAND_PLAYEDMYSELF_EXTENDED')
 		});
 	}
 
 	public async run(msg: KlasaMessage): Promise<Message> {
-		return msg.channel.send({ files: [{ attachment: './assets/images/played_yourself.mp4', name: 'played_yourself.mp4' }] });
+		return msg.channel.send(msg.language.tget('COMMAND_PLAYEDMYSELF_ID'),
+			{ files: [{ attachment: './assets/images/played_yourself.mp4', name: 'played_yourself.mp4' }] });
 	}
 
 }

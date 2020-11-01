@@ -435,6 +435,11 @@ export default class extends Language {
 			extendedHelp: 'Darling, Fetch the Battle Axe!',
 			reminder: 'Decepticons Fear This Brilliant Autobot'
 		}),
+		COMMAND_PLAYEDMYSELF_DESCRIPTION: 'Congratulations, you played yourself.',
+		COMMAND_PLAYEDMYSELF_EXTENDED: builder.display('playedmyself', {
+			extendedHelp: `This returns the DJ Khaled "congratulations, you played yourself" GIF.`
+		}),
+		COMMAND_PLAYEDMYSELF_ID: '[Image Description: DJ Khaled saying "Congratulations, you played yourself" with the caption of what he said below in white text.]',
 		/**
 		 * ################################
 		 * #      MODERATION SYSTEM       #
