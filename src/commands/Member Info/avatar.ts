@@ -8,7 +8,13 @@ export default class extends SteveCommand {
 		super(store, file, directory, {
 			aliases: ['av'],
 			description: lang => lang.tget('COMMAND_AVATAR_DESCRIPTION'),
-			usage: '<user:username>'
+			usage: '[user:username]'
+		});
+
+		this.createCustomResolver('username', (str, possible, msg) => {
+			const arg = this.client.arguments.get('username');
+
+			return str ? arg.run(str, possible, msg) : arg.run(msg.author.tag, possible, msg);
 		});
 	}
 
