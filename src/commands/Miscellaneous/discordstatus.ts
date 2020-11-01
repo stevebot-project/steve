@@ -33,6 +33,10 @@ export default class extends SteveCommand {
 					.setFooter(EMBED_DATA.FOOTER(formatDate(json.page.updated_at)));
 
 				return msg.channel.send(embed);
+			})
+			.catch(err => {
+				console.log(err);
+				return msg.sendLocale('COMMAND_DSICORD_STATUS_ERROR');
 			});
 	}
 
