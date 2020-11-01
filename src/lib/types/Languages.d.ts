@@ -138,8 +138,8 @@ declare module 'klasa' {
 			FOOTER: string;
 			TITLE: string;
 		};
-		COMMAND_DISCORD_STAUTS_DECRIPTION: string;
-		COMMAND_DSICORD_STATUS_ERROR: string;
+		COMMAND_DISCORD_STATUS_DESCRIPTION: string;
+		COMMAND_DISCORD_STATUS_ERROR: string;
 		COMMAND_DISCORD_STAUTS_EMBED: {
 			DECRIPTION: (incident: string) => string;
 			FOOTER: (time: string) => string;

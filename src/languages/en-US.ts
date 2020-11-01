@@ -316,8 +316,8 @@ export default class extends Language {
 			FOOTER: this.randomDftba,
 			TITLE: 'Statistics'
 		},
-		COMMAND_DISCORD_STAUTS_DECRIPTION: 'See the current status of Discord.',
-		COMMAND_DSICORD_STATUS_ERROR: 'An error occured when attempting to fetch Discord\'s status.',
+		COMMAND_DISCORD_STATUS_DESCRIPTION: 'See the current status of Discord.',
+		COMMAND_DISCORD_STATUS_ERROR: 'An error occured when attempting to fetch Discord\'s status.',
 		COMMAND_DISCORD_STAUTS_EMBED: {
 			DECRIPTION: (incident): string => `[Discord Status](https://discordstatus.com/)\n**Current Incident:**\n${incident}`,
 			FOOTER: (time): string => `Last changed: ${time} | ${this.randomDftba}`

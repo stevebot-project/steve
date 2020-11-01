@@ -11,7 +11,7 @@ export default class extends SteveCommand {
 			aliases: ['ds', 'discstatus', 'isdiscordbroke'],
 			cooldown: 60,
 			cooldownLevel: 'channel',
-			description: lang => lang.tget('COMMAND_DISCORD_STAUTS_DECRIPTION')
+			description: lang => lang.tget('COMMAND_DISCORD_STATUS_DESCRIPTION')
 		});
 	}
 
@@ -36,7 +36,7 @@ export default class extends SteveCommand {
 			})
 			.catch(err => {
 				console.log(err);
-				return msg.sendLocale('COMMAND_DSICORD_STATUS_ERROR');
+				return msg.sendLocale('COMMAND_DISCORD_STATUS_ERROR');
 			});
 	}
 
