@@ -30,7 +30,7 @@
     "common-tags": "^1.8.0",
     "discord.js": "^12.4.1",
     "genius-lyrics": "^4.0.0",
-    "klasa": "^0.5.0",
+    "klasa": "git://github.com/tuataria/klasa.git#e6b7139b2e1d0c544e93eb27ca2a20bb0756be08",
     "lavalink": "^2.10.0",
     "module-alias": "^2.2.2",
     "moment": "^2.24.0",
