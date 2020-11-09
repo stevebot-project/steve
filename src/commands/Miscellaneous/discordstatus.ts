@@ -24,7 +24,7 @@ export default class extends SteveCommand {
 			.then(json => {
 				const embed = new MessageEmbed()
 					.setTitle(json.status.description)
-					.setDescription(EMBED_DATA.DECRIPTION(json.status.indicator))
+					.setDescription(EMBED_DATA.DECRIPTION(json.incidents[0] ? json.incidents[0].name : 'none'))
 					.addFields(json.components.map((component: { name: any; status: any }) => ({
 						name: component.name,
 						value: component.status,
