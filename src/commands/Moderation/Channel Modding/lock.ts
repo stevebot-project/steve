@@ -1,6 +1,6 @@
 import { SteveCommand } from '@lib/structures/commands/SteveCommand';
 import { PermissionsLevels } from '@lib/types/Enums';
-import { Message, TextChannel } from 'discord.js';
+import { Message } from 'discord.js';
 import { CommandStore, KlasaMessage } from 'klasa';
 
 export default class extends SteveCommand {
@@ -16,7 +16,7 @@ export default class extends SteveCommand {
 	}
 
 	public async run(msg: KlasaMessage): Promise<Message> {
-		await (msg.channel as TextChannel).updateOverwrite(msg.guild!.id, { SEND_MESSAGES: false }, msg.author.tag);
+		if (msg.channel.isGuildTextChannel()) await msg.channel.updateOverwrite(msg.guild!.id, { SEND_MESSAGES: false }, msg.author.tag);
 
 		return msg.channel.send(msg.guild!.language.tget('COMMAND_LOCK_LOCKED'));
 	}

@@ -2,9 +2,12 @@ import { BaseNodeOptions, Node as Lavalink } from 'lavalink';
 import { ModerationManager } from '@lib/structures/ModerationManager';
 import { LanguageKeys } from 'klasa';
 import { ModerationTask, ModerationTaskData, Reminder } from '../../extendables/Schedule';
-import { PermissionString } from 'discord.js';
+import { PermissionString, TextChannel } from 'discord.js';
 
 declare module 'discord.js' {
+	interface Channel {
+		isGuildTextChannel(): this is TextChannel;
+	}
 	interface Guild {
 		readonly moderation: ModerationManager;
 	}
