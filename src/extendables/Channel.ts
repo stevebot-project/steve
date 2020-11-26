@@ -8,7 +8,7 @@ export default class extends Extendable {
 		super(store, file, directory, { appliesTo: [Channel] });
 	}
 
-	public isGuildTextChannel(this: Channel): this is Channel {
+	public isGuildTextChannel(this: Channel): this is TextChannel {
 		return this instanceof TextChannel;
 	}
 
