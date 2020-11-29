@@ -8,9 +8,9 @@ export default class extends Event {
 
 	public run(oldEmoji: GuildEmoji, newEmoji: GuildEmoji): void {
 		if (newEmoji.guild.settings.get(GuildSettings.LogEvents.EmojiUpdate) as boolean) {
-			const serverlog = newEmoji.guild.channels.cache.get(newEmoji.guild.settings.get(GuildSettings.Channels.Serverlog)) as TextChannel;
+			const serverlog = newEmoji.guild.channels.cache.get(newEmoji.guild.settings.get(GuildSettings.Channels.Serverlog));
 
-			if (serverlog) {
+			if (serverlog && serverlog.isGuildTextChannel()) {
 				if (oldEmoji.name !== newEmoji.name) floatPromise(this, this.logEmojiNameChange(oldEmoji, newEmoji, serverlog));
 			}
 		}

@@ -10,8 +10,8 @@ export default class extends Event {
 		if (msg.type === 'PINS_ADD' || msg.channel instanceof DMChannel) return;
 
 		if (msg.guild!.settings.get(GuildSettings.LogEvents.MessageDelete) as boolean) {
-			const serverlog = msg.guild!.channels.cache.get(msg.guild!.settings.get(GuildSettings.Channels.Serverlog)) as TextChannel;
-			if (serverlog) floatPromise(this, this.handleLog(msg, serverlog));
+			const serverlog = msg.guild!.channels.cache.get(msg.guild!.settings.get(GuildSettings.Channels.Serverlog));
+			if (serverlog && serverlog.isGuildTextChannel()) floatPromise(this, this.handleLog(msg, serverlog));
 		}
 	}
 

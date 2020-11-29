@@ -8,9 +8,9 @@ export default class extends Event {
 
 	public run(oldMember: GuildMember, newMember: GuildMember): void {
 		if (newMember.guild.settings.get(GuildSettings.LogEvents.GuildMemberUpdate) as boolean) {
-			const memberlog = newMember.guild.channels.cache.get(newMember.guild.settings.get(GuildSettings.Channels.Memberlog)) as TextChannel;
+			const memberlog = newMember.guild.channels.cache.get(newMember.guild.settings.get(GuildSettings.Channels.Memberlog));
 
-			if (memberlog) {
+			if (memberlog && memberlog.isGuildTextChannel()) {
 				if (oldMember.displayName !== newMember.displayName) floatPromise(this, this.logDisplayNameChange(oldMember, newMember, memberlog));
 				if (!oldMember.roles.cache.equals(newMember.roles.cache)) floatPromise(this, this.logRoleUpdate(oldMember, newMember, memberlog));
 			}

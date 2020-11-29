@@ -10,8 +10,8 @@ export default class extends Event {
 		if (msgs.first()!.channel instanceof DMChannel) return;
 
 		if (msgs.first()!.guild!.settings.get(GuildSettings.LogEvents.MessageDeleteBulk) as boolean) {
-			const serverlog = msgs.first()!.guild!.channels.cache.get(msgs.first()!.guild!.settings.get(GuildSettings.Channels.Serverlog)) as TextChannel;
-			if (serverlog) floatPromise(this, this.handleLog(msgs, serverlog));
+			const serverlog = msgs.first()!.guild!.channels.cache.get(msgs.first()!.guild!.settings.get(GuildSettings.Channels.Serverlog));
+			if (serverlog && serverlog.isGuildTextChannel()) floatPromise(this, this.handleLog(msgs, serverlog));
 		}
 	}
 

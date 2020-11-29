@@ -10,7 +10,7 @@ export default class extends Event {
 		if (newRole.guild.settings.get(GuildSettings.LogEvents.RoleUpdate) as boolean) {
 			const serverlog = newRole.guild.channels.cache.get(newRole.guild.settings.get(GuildSettings.Channels.Serverlog)) as TextChannel;
 
-			if (serverlog) {
+			if (serverlog && serverlog.isGuildTextChannel()) {
 				if (oldRole.name !== newRole.name) floatPromise(this, this.logRoleNameChange(oldRole, newRole, serverlog));
 			}
 		}

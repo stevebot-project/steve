@@ -9,8 +9,8 @@ export default class extends Event {
 
 	public run(member: GuildMember): void {
 		if (member.guild.settings.get(GuildSettings.LogEvents.GuildMemberAdd) as boolean) {
-			const memberlog = member.guild.channels.cache.get(member.guild.settings.get(GuildSettings.Channels.Memberlog)) as TextChannel;
-			if (memberlog) floatPromise(this, this.handleLog(member, memberlog));
+			const memberlog = member.guild.channels.cache.get(member.guild.settings.get(GuildSettings.Channels.Memberlog));
+			if (memberlog && memberlog.isGuildTextChannel()) floatPromise(this, this.handleLog(member, memberlog));
 		}
 
 		this.handleTrustedRole(member);

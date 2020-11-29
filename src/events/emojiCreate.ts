@@ -8,8 +8,8 @@ export default class extends Event {
 
 	public run(emoji: GuildEmoji): void {
 		if (emoji.guild.settings.get(GuildSettings.LogEvents.EmojiCreate) as boolean) {
-			const serverlog = emoji.guild.channels.cache.get(emoji.guild.settings.get(GuildSettings.Channels.Serverlog)) as TextChannel;
-			if (serverlog) floatPromise(this, this.handleLog(emoji, serverlog));
+			const serverlog = emoji.guild.channels.cache.get(emoji.guild.settings.get(GuildSettings.Channels.Serverlog));
+			if (serverlog && serverlog.isGuildTextChannel()) floatPromise(this, this.handleLog(emoji, serverlog));
 		}
 	}
 

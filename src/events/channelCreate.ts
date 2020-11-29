@@ -10,8 +10,8 @@ export default class extends Event {
 		if (channel instanceof DMChannel) return;
 
 		if (channel.guild.settings.get(GuildSettings.LogEvents.ChannelCreate) as boolean) {
-			const serverlog = channel.guild.channels.cache.get(channel.guild.settings.get(GuildSettings.Channels.Serverlog)) as TextChannel;
-			if (serverlog) floatPromise(this, this.handleLog(channel, serverlog));
+			const serverlog = channel.guild.channels.cache.get(channel.guild.settings.get(GuildSettings.Channels.Serverlog));
+			if (serverlog && serverlog.isGuildTextChannel()) floatPromise(this, this.handleLog(channel, serverlog));
 		}
 	}
 

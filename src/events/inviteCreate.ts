@@ -11,7 +11,7 @@ export default class extends Event {
 
 		if (invite.guild.settings.get(GuildSettings.LogEvents.InviteCreate) as boolean) {
 			const serverlog = invite.guild.channels.cache.get(invite.guild.settings.get(GuildSettings.Channels.Serverlog));
-			if (serverlog && serverlog.isText()) floatPromise(this, this.handleLog(invite, serverlog));
+			if (serverlog && serverlog.isGuildTextChannel()) floatPromise(this, this.handleLog(invite, serverlog));
 		}
 	}
 

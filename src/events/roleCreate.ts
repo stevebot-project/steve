@@ -8,8 +8,8 @@ export default class extends Event {
 
 	public run(role: Role): void {
 		if (role.guild.settings.get(GuildSettings.LogEvents.RoleCreate) as boolean) {
-			const serverlog = role.guild.channels.cache.get(role.guild.settings.get(GuildSettings.Channels.Serverlog)) as TextChannel;
-			if (serverlog) floatPromise(this, this.handleLog(role, serverlog));
+			const serverlog = role.guild.channels.cache.get(role.guild.settings.get(GuildSettings.Channels.Serverlog));
+			if (serverlog && serverlog.isGuildTextChannel()) floatPromise(this, this.handleLog(role, serverlog));
 		}
 	}
 

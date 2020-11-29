@@ -11,8 +11,8 @@ export default class extends Event {
 		if (newChannel instanceof DMChannel) return;
 
 		if ((newChannel as GuildChannel).guild.settings.get(GuildSettings.LogEvents.ChannelUpdate) as boolean) {
-			const serverlog = (newChannel as GuildChannel).guild.channels.cache.get((newChannel as GuildChannel).guild.settings.get(GuildSettings.Channels.Serverlog)) as TextChannel;
-			if (serverlog) {
+			const serverlog = (newChannel as GuildChannel).guild.channels.cache.get((newChannel as GuildChannel).guild.settings.get(GuildSettings.Channels.Serverlog));
+			if (serverlog && serverlog.isGuildTextChannel()) {
 				if ((oldChannel as GuildChannel).name !== (newChannel as GuildChannel).name) floatPromise(this, this.logChannelNameChange(oldChannel as GuildChannel, newChannel as GuildChannel, serverlog));
 			}
 		}
