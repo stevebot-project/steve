@@ -797,6 +797,10 @@ export default class extends Language {
 		COMMAND_ROLEINFO_TOOMANY: 'There are too many members in this role to display.',
 		COMMAND_ROLEINFO_EMBED: {
 			DESCRIPTION: (role: string, date: string) => `The ${role} role was created on ${date}.`,
+			FIELD_TITLES: {
+				ALIASES: 'Aliases',
+				MEMBERS: (num: number) => `${num} Member${num === 1 ? '' : 's'}`
+			},
 			FOOTER: (assignable: boolean) => `This role is ${assignable ? '' : 'not '}self-assignable.`
 		},
 		/**

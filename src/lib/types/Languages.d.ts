@@ -324,6 +324,10 @@ declare module 'klasa' {
 		COMMAND_ROLEINFO_TOOMANY: string;
 		COMMAND_ROLEINFO_EMBED: {
 			DESCRIPTION: (role: string, date: string) => string;
+			FIELD_TITLES: {
+				ALIASES: string;
+				MEMBERS: (num: number) => string;
+			};
 			FOOTER: (assignable: boolean) => string;
 		};
 		COMMAND_SETMEMBERLOG_DESCRIPTION: string;
