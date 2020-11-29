@@ -24,8 +24,7 @@ export default class extends SteveCommand {
 
 		if (size < 1) return res.edit(msg.guild!.language.tget('COMMAND_CLEARROLE_ROLE_EMPTY', role.name));
 
-		// @ts-expect-error 6133
-		for (const [id, member] of role.members) { // eslint-disable-line @typescript-eslint/no-unused-vars
+		for (const [, member] of role.members) {
 			if (member.roles.cache.has(role.id)) await member.roles.remove(role.id);
 		}
 
