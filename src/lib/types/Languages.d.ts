@@ -252,6 +252,12 @@ declare module 'klasa' {
 		COMMAND_PURGE_DESCRIPTION: string;
 		COMMAND_PURGE_EXTENDED: string;
 		COMMAND_PURGE_PURGED: (size: number) => string;
+		COMMAND_ROLEALIAS_DESCRIPTION: string;
+		COMMAND_ROLEALIAS_EXTENDED: string;
+		COMMAND_ROLEALIAS_ALREADYEXISTS: (alias: string) => string;
+		COMMAND_ROLEALIAS_DOESNOTEXIST: (alias: string) => string;
+		COMMAND_ROLEALIAS_ADD: (alias: string, role: string) => string;
+		COMMAND_ROLEALIAS_REMOVE: (alias: string) => string;
 		COMMAND_SNIPPET_DESCRIPTION: string;
 		COMMAND_SNIPPET_EXTENDED: string;
 		COMMAND_SNIPPET_ADD: (name: string) => string;

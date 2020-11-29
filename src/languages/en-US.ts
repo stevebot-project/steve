@@ -628,6 +628,23 @@ export default class extends Language {
 		COMMAND_PURGE_PURGED: (size: number) => `${size} messages were deleted.`,
 		/**
 		 * ################################
+		 * #         ROLE ALIASES         #
+		 * ################################
+		 */
+		COMMAND_ROLEALIAS_DESCRIPTION: 'Add an alias to a role to make self-assigning easier',
+		COMMAND_ROLEALIAS_EXTENDED: builder.display('rolealias', {
+			examples: [
+				'add|notifsquad|notification squad',
+				'remove|notifsquad'
+			]
+			// TODO: add better help for role alias command
+		}),
+		COMMAND_ROLEALIAS_ALREADYEXISTS: (alias: string) => `The ${alias} role alias already exists.`,
+		COMMAND_ROLEALIAS_DOESNOTEXIST: (alias: string) => `There is no ${alias} role alias.`,
+		COMMAND_ROLEALIAS_ADD: (alias: string, role: string) => `Added the ${alias} alias for the ${role} role.`,
+		COMMAND_ROLEALIAS_REMOVE: (alias: string) => `The ${alias} role alias has been removed.`,
+		/**
+		 * ################################
 		 * #      SNIPPETS                #
 		 * ################################
 		 */
