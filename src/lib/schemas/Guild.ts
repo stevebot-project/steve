@@ -38,6 +38,7 @@ export default Client.defaultGuildSchema
 		.add('trusted', 'Role')
 		.add('giveTrustedRoleOn', 'TrustedRoleSetting', { 'default': 'none' })
 		.add('requireTrustedRoleForSelfAssign', 'Boolean', { 'default': false }))
+	.add('roleAliases', 'any', { array: true, configurable: false })
 	.add('snippets', 'any', { array: true, configurable: false })
 	.add('wordBlacklist', wordBlacklist => wordBlacklist
 		.add('enabled', 'Boolean', { 'default': true })
