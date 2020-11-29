@@ -58,7 +58,7 @@ export default class extends SteveCommand {
 
 }
 
-interface RoleAlias {
+export interface RoleAlias {
 	alias: string;
 	role: string; // snowflake
 }

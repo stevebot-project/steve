@@ -4,14 +4,17 @@ import { Snippet } from '../commands/Snippets/snippet';
 import { SteveCommand } from '@lib/structures/commands/SteveCommand';
 import { floatPromise } from '@utils/util';
 import { Role } from 'discord.js';
+import { RoleAlias } from '../commands/Role Aliases/rolealias';
 
 export default class extends Event {
 
+	// TODO: this is one of the messiest functions in this god-forsaken bot, fix it
 	public run(msg: KlasaMessage, cmd: string): Promise<void> | undefined {
 		if (!msg.guild) return;
 
 		cmd = cmd.toLowerCase();
 
+		/* check for exact role name matches */
 		const roles
 			= msg.guild!.roles.cache.filter(r => (msg.guild!.settings.get(GuildSettings.Roles.Assignable) as string[]).includes(r.id))
 				.map(r => r.name.toLowerCase());
@@ -19,7 +22,18 @@ export default class extends Event {
 		const role = roles.some(r => r === cmd);
 		if (role) return this.runAssign(msg, msg.guild!.roles.cache.find(r => r.name.toLowerCase() === cmd)!);
 
+		/* check for role alias matches */
+		const aliases: RoleAlias[] = msg.guild.settings.get(GuildSettings.RoleAliases);
+		const aliasExists = aliases.some(a => a.alias === cmd);
 
+		if (aliasExists) {
+			const alias = aliases.filter(a => a.alias === cmd)[0];
+
+			const realRole = msg.guild.roles.cache.get(alias.role);
+
+			if (realRole) return this.runAssign(msg, realRole);
+		}
+		/* check for snip matches */
 		const snips: Snippet[] = msg.guild.settings.get(GuildSettings.Snippets);
 		const snip = snips.some(s => s.name === cmd);
 		if (snip) return this.runSnippet(msg, cmd);
