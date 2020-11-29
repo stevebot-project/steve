@@ -6,7 +6,9 @@
   "scripts": {
     "start": "node --harmony dist/src/Steve.js",
     "build": "tsc -p .",
-    "build-clear": "rm -rf dist && tsc -p .",
+	"build-clear": "rm -rf dist && tsc -p .",
+	"dev": "tsc -p . && node --harmony dist/src/Steve.js",
+	"dev-clear": "rm -rf dist && tsc -p . && node --harmony dist/src/Steve.js",
     "test": "eslint src --ext .ts",
     "lint": "eslint src --ext .ts --fix",
     "pm2:start": "pm2 start pm2.ecosystem.yml",
