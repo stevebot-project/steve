@@ -6,16 +6,11 @@
   "scripts": {
     "start": "node --harmony dist/src/Steve.js",
     "build": "tsc -p .",
-	"build-clear": "rm -rf dist && tsc -p .",
-	"dev": "tsc -p . && node --harmony dist/src/Steve.js",
-	"dev-clear": "rm -rf dist && tsc -p . && node --harmony dist/src/Steve.js",
+    "build-clear": "rm -rf dist && tsc -p .",
+    "dev": "tsc -p . && node --harmony dist/src/Steve.js",
+    "dev-clear": "rm -rf dist && tsc -p . && node --harmony dist/src/Steve.js",
     "test": "eslint src --ext .ts",
-    "lint": "eslint src --ext .ts --fix",
-    "pm2:start": "pm2 start pm2.ecosystem.yml",
-    "pm2:reload": "pm2 reload Steve",
-    "pm2:delete": "pm2 delete Steve",
-    "pm2:logs": "pm2 logs Steve --lines=50",
-    "pm2:stop": "pm2 stop Steve"
+    "lint": "eslint src --ext .ts --fix"
   },
   "repository": {
     "type": "git",
