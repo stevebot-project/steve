@@ -14,7 +14,7 @@ export default class extends Event {
 
 		if (data.data.name === 'audino' && channel) floatPromise(this, this.audinoSlash(guild!, channel));
 		if (data.data.name === 'dftba' && channel) floatPromise(this, this.dftbaSlash(guild!, channel));
-		if (data.data.name === 'pressf' && channel) floatPromise(this, this.pressfSlash(guild!, channel));
+		if (data.data.name === 'payrespects' && channel) floatPromise(this, this.payRespectsSlash(guild!, channel));
 	}
 
 	private async audinoSlash(guild: Guild, channel: GuildChannel) {
@@ -28,7 +28,7 @@ export default class extends Event {
 		if (channel.isText()) return channel.send(guild.language.randomDftba);
 	}
 
-	private async pressfSlash(guild: Guild, channel: GuildChannel) {
+	private async payRespectsSlash(guild: Guild, channel: GuildChannel) {
 		if (channel.isText()) {
 			return channel.send(guild.language.tget('COMMAND_F_ID'),
 				{ files: [{ attachment: './assets/images/f.png', name: 'pay_respects.png' }] });
