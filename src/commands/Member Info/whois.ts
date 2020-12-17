@@ -1,9 +1,8 @@
 import { SteveCommand } from '@lib/structures/commands/SteveCommand';
 import { CommandStore, KlasaMessage } from 'klasa';
-import { User, Message, Guild, MessageEmbed, ColorResolvable } from 'discord.js';
-import { friendlyDuration, formatDate } from '@utils/util';
-import { Time } from '@lib/types/Enums';
+import { User, Message, MessageEmbed, ColorResolvable } from 'discord.js';
 import { UserSettings } from '@lib/types/settings/UserSettings';
+import { getJoinDateString, userAccountCreated } from '@utils/UserInfo';
 
 export default class extends SteveCommand {
 
@@ -28,10 +27,9 @@ export default class extends SteveCommand {
 		const member = await msg.guild!.members.fetch(user);
 		if (!member) throw msg.guild!.language.tget('USER_NOT_IN_GUILD', user.tag);
 
-		const accountCreated = msg.guild!.language.tget('COMMAND_WHOIS_DATE',
-			friendlyDuration(Date.now() - user.createdTimestamp), formatDate(user.createdTimestamp));
+		const accountCreated = userAccountCreated(msg.guild!, member.user.createdTimestamp);
 
-		const joinedGuild = this.getJoinDateString(member.joinedTimestamp!, msg.guild!);
+		const joinedGuild = getJoinDateString(msg.guild!, member.joinedTimestamp!);
 
 		const EMBED_DATA = msg.guild!.language.tget('COMMAND_WHOIS_EMBED');
 
@@ -57,17 +55,6 @@ export default class extends SteveCommand {
 		}
 
 		return msg.channel.send(embed);
-	}
-
-	private getJoinDateString(timestamp: number, guild: Guild): string {
-		const timeSinceJoin = Date.now() - timestamp;
-		const joinDate = formatDate(timestamp);
-
-		if (timeSinceJoin > Time.DAY && timeSinceJoin < Time.HOUR * 31) {
-			return guild.language.tget('COMMAND_WHOIS_JOINEDGUILD_HOURS', Math.floor(timeSinceJoin / Time.HOUR), joinDate);
-		}
-
-		return guild.language.tget('COMMAND_WHOIS_DATE', friendlyDuration(timeSinceJoin), joinDate);
 	}
 
 }

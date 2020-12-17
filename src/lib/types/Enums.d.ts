@@ -9,7 +9,8 @@ export const enum Events {
 	DftbaSlash = 'dftbaSlash',
 	InteractionCreate = 'interactionCreate',
 	PayRespectsSlash = 'payRespectsSlash',
-	RpsSlash = 'rpsSlash'
+	RpsSlash = 'rpsSlash',
+	WhoAmISlash = 'whoAmISlash'
 }
 
 export const enum LogColors {

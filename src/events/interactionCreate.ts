@@ -24,6 +24,9 @@ export default class extends Event {
 			case 'rps':
 				this.client.emit(Events.RpsSlash, guild!, channel, data.data.options[0].value);
 				break;
+			case 'whoami':
+				this.client.emit(Events.WhoAmISlash, guild!, channel, data.member);
+				break;
 			default:
 				this.client.console.log(inspect(data, { depth: 4 }));
 		}
@@ -42,7 +45,7 @@ interface InteractionCreatePacket {
 	channel_id: string;
 }
 
-interface InteractionCreatePacketMember {
+export interface InteractionCreatePacketMember {
 	user: InteractionCreatePacketMemberUser;
 	roles: string[];
 	premium_since: Date | null;
