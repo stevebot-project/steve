@@ -4,6 +4,13 @@ export const enum Emojis {
 	REDX = '<:red_x:688365693485187072>'
 }
 
+export const enum Events {
+	AudinoSlash = 'audinoSlash',
+	DftbaSlash = 'dftbaSlash',
+	InteractionCreate = 'interactionCreate',
+	PayRespectsSlash = 'payRespectsSlash'
+}
+
 export const enum LogColors {
 	BLUE = 0x3a34eb,
 	PINK = 0xfc0ce8,
