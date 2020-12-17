@@ -21,6 +21,9 @@ export default class extends Event {
 			case 'payrespects':
 				this.client.emit(Events.PayRespectsSlash, guild!, channel);
 				break;
+			case 'rps':
+				this.client.emit(Events.RpsSlash, guild!, channel, data.data.options[0].value);
+				break;
 			default:
 				this.client.console.log(inspect(data, { depth: 4 }));
 		}

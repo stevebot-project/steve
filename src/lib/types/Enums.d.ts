@@ -8,7 +8,8 @@ export const enum Events {
 	AudinoSlash = 'audinoSlash',
 	DftbaSlash = 'dftbaSlash',
 	InteractionCreate = 'interactionCreate',
-	PayRespectsSlash = 'payRespectsSlash'
+	PayRespectsSlash = 'payRespectsSlash',
+	RpsSlash = 'rpsSlash'
 }
 
 export const enum LogColors {
