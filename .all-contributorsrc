@@ -77,6 +77,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "tawilkinson",
+      "name": "Tom Wilkinson",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/3664960?v=4",
+      "profile": "https://tawilkinson.com/",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7
