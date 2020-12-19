@@ -50,6 +50,15 @@
         "userTesting",
         "ideas"
       ]
+    },
+    {
+      "login": "stephenwade",
+      "name": "Stephen Wade",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/4148577?v=4",
+      "profile": "https://github.com/stephenwade",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7
