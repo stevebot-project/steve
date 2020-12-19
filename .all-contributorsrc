@@ -24,6 +24,21 @@
         "projectManagement",
         "review"
       ]
+    },
+    {
+      "login": "BoedJ",
+      "name": "boedj",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/8688189?v=4",
+      "profile": "https://github.com/BoedJ",
+      "contributions": [
+        "code",
+        "financial",
+        "ideas",
+        "infra",
+        "maintenance",
+        "projectManagement",
+        "review"
+      ]
     }
   ],
   "contributorsPerLine": 7

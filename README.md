@@ -1,6 +1,6 @@
 # SteveBot ![GitHub package.json version](https://img.shields.io/github/package-json/v/tuataria/steve?color=004953)
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 Steve is an all-purpose Discord bot originally developed for [Tuataria] and its sideservers (although now usable anywhere). Developed and maintained by Jonathan#0412 and BoedJ#5476.
 
@@ -61,6 +61,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <table>
   <tr>
     <td align="center"><a href="https://linkedin.com/in/jwford65"><img src="https://avatars1.githubusercontent.com/u/13416547?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Jonathan Ford</b></sub></a><br /><a href="https://github.com/tuataria/steve/commits?author=jwford" title="Code">💻</a> <a href="#financial-jwford" title="Financial">💵</a> <a href="#ideas-jwford" title="Ideas, Planning, & Feedback">🤔</a> <a href="#infra-jwford" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="#maintenance-jwford" title="Maintenance">🚧</a> <a href="#projectManagement-jwford" title="Project Management">📆</a> <a href="https://github.com/tuataria/steve/pulls?q=is%3Apr+reviewed-by%3Ajwford" title="Reviewed Pull Requests">👀</a></td>
+    <td align="center"><a href="https://github.com/BoedJ"><img src="https://avatars0.githubusercontent.com/u/8688189?v=4?s=100" width="100px;" alt=""/><br /><sub><b>boedj</b></sub></a><br /><a href="https://github.com/tuataria/steve/commits?author=BoedJ" title="Code">💻</a> <a href="#financial-BoedJ" title="Financial">💵</a> <a href="#ideas-BoedJ" title="Ideas, Planning, & Feedback">🤔</a> <a href="#infra-BoedJ" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="#maintenance-BoedJ" title="Maintenance">🚧</a> <a href="#projectManagement-BoedJ" title="Project Management">📆</a> <a href="https://github.com/tuataria/steve/pulls?q=is%3Apr+reviewed-by%3ABoedJ" title="Reviewed Pull Requests">👀</a></td>
   </tr>
 </table>
 
