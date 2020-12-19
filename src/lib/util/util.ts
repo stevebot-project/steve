@@ -1,8 +1,8 @@
 import { Guild, GuildAuditLogsAction, MessageEmbed, User } from 'discord.js';
 import { Client, util, RichDisplay } from 'klasa';
 import { chunk } from '@klasa/utils';
-import prettyMilliseconds from 'pretty-ms';
-import moment from 'moment';
+import * as prettyMilliseconds from 'pretty-ms';
+import * as moment from 'moment';
 
 /**
  *
