@@ -1,20 +1,20 @@
 import { SteveCommand } from '@lib/structures/commands/SteveCommand';
-import { CommandStore, KlasaMessage } from 'klasa';
+import { CommandOptions, KlasaMessage } from 'klasa';
 import { User, Message, MessageEmbed, ColorResolvable } from 'discord.js';
 import { UserSettings } from '@lib/types/settings/UserSettings';
 import { getJoinDateString, userAccountCreated } from '@utils/UserInfo';
+import { ApplyOptions } from '@skyra/decorators';
 
+@ApplyOptions<CommandOptions>({
+	aliases: ['member'],
+	description: lang => lang.tget('COMMAND_WHOIS_DESCRIPTION'),
+	extendedHelp: lang => lang.tget('COMMAND_WHOIS_EXTENDED'),
+	runIn: ['text'],
+	usage: '[user:username]'
+})
 export default class extends SteveCommand {
 
-	public constructor(store: CommandStore, file: string[], directory: string) {
-		super(store, file, directory, {
-			aliases: ['member'],
-			description: lang => lang.tget('COMMAND_WHOIS_DESCRIPTION'),
-			extendedHelp: lang => lang.tget('COMMAND_WHOIS_EXTENDED'),
-			runIn: ['text'],
-			usage: '[user:username]'
-		});
-
+	public async init() {
 		this.createCustomResolver('username', (str, possible, msg) => {
 			const arg = this.client.arguments.get('username');
 

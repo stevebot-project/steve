@@ -1,20 +1,18 @@
 import { SteveCommand } from '@lib/structures/commands/SteveCommand';
 import { PermissionsLevels } from '@lib/types/Enums';
-import { CommandStore, KlasaMessage, Stopwatch, Type, util } from 'klasa';
+import { ApplyOptions } from '@skyra/decorators';
+import { CommandOptions, KlasaMessage, Stopwatch, Type, util } from 'klasa';
 import { inspect } from 'util';
 
+@ApplyOptions<CommandOptions>({
+	aliases: ['ev'],
+	description: lang => lang.tget('COMMAND_EVAL_DESCRIPTION'),
+	extendedHelp: lang => lang.tget('COMMAND_EVAL_EXTENDEDHELP'),
+	guarded: true,
+	permissionLevel: PermissionsLevels.OWNER,
+	usage: '<expression:str>'
+})
 export default class extends SteveCommand {
-
-	public constructor(store: CommandStore, file: string[], directory: string) {
-		super(store, file, directory, {
-			aliases: ['ev'],
-			description: lang => lang.tget('COMMAND_EVAL_DESCRIPTION'),
-			extendedHelp: lang => lang.tget('COMMAND_EVAL_EXTENDEDHELP'),
-			guarded: true,
-			permissionLevel: PermissionsLevels.OWNER,
-			usage: '<expression:str>'
-		});
-	}
 
 	public async run(msg: KlasaMessage, [code]: [string]) {
 		const { success, result, time, type } = await this.eval(msg, code);

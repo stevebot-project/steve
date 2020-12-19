@@ -1,21 +1,19 @@
 import { SteveCommand } from '@lib/structures/commands/SteveCommand';
-import { CommandStore, KlasaMessage } from 'klasa';
+import { CommandOptions, KlasaMessage } from 'klasa';
 import { Role, Message, MessageEmbed } from 'discord.js';
 import { formatDate } from '@utils/util';
 import { RoleAlias } from '../Role Aliases/rolealias';
 import { GuildSettings } from '@lib/types/settings/GuildSettings';
+import { ApplyOptions } from '@skyra/decorators';
 
+@ApplyOptions<CommandOptions>({
+	aliases: ['membersin'],
+	description: lang => lang.tget('COMMAND_ROLEINFO_DESCRIPTION'),
+	extendedHelp: lang => lang.tget('COMMAND_ROLEINFO_EXTENDED'),
+	runIn: ['text'],
+	usage: '<role:rolename>'
+})
 export default class extends SteveCommand {
-
-	public constructor(store: CommandStore, file: string[], directory: string) {
-		super(store, file, directory, {
-			aliases: ['membersin'],
-			description: lang => lang.tget('COMMAND_ROLEINFO_DESCRIPTION'),
-			extendedHelp: lang => lang.tget('COMMAND_ROLEINFO_EXTENDED'),
-			runIn: ['text'],
-			usage: '<role:rolename>'
-		});
-	}
 
 	public async run(msg: KlasaMessage, [role]: [Role]): Promise<Message> {
 		if (role.isRestricted && !msg.member!.isStaff) throw msg.guild!.language.tget('COMMAND_ROLEINFO_RESTRICTED');

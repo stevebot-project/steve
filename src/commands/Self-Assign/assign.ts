@@ -1,21 +1,21 @@
 import { SteveCommand } from '@lib/structures/commands/SteveCommand';
-import { CommandStore, KlasaMessage } from 'klasa';
+import { CommandOptions, KlasaMessage } from 'klasa';
 import { Role, Message, MessageEmbed } from 'discord.js';
 import { GuildSettings } from '@lib/types/settings/GuildSettings';
 import { floatPromise, richDisplayList } from '@utils/util';
+import { ApplyOptions } from '@skyra/decorators';
 
+@ApplyOptions<CommandOptions>({
+	description: lang => lang.tget('COMMAND_ASSIGN_DESCRIPTION'),
+	extendedHelp: lang => lang.tget('COMMAND_ASSIGN_EXTENDED'),
+	flagSupport: true,
+	requiredPermissions: ['MANAGE_ROLES'],
+	runIn: ['text'],
+	usage: '(role:rolename) [...]'
+})
 export default class extends SteveCommand {
 
-	public constructor(store: CommandStore, file: string[], directory: string) {
-		super(store, file, directory, {
-			description: lang => lang.tget('COMMAND_ASSIGN_DESCRIPTION'),
-			extendedHelp: lang => lang.tget('COMMAND_ASSIGN_EXTENDED'),
-			flagSupport: true,
-			requiredPermissions: ['MANAGE_ROLES'],
-			runIn: ['text'],
-			usage: '(role:rolename) [...]'
-		});
-
+	public async init() {
 		this.createCustomResolver('rolename', (str, possible, msg) => {
 			if (Reflect.has(msg.flagArgs, 'list')) return null;
 			if (str) return this.client.arguments.get('rolename').run(str, possible, msg);

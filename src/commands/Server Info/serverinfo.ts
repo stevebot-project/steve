@@ -1,18 +1,16 @@
 import { SteveCommand } from '@lib/structures/commands/SteveCommand';
-import { CommandStore, KlasaMessage } from 'klasa';
+import { CommandOptions, KlasaMessage } from 'klasa';
 import { Message, MessageEmbed } from 'discord.js';
 import { friendlyDuration, formatDate } from '@utils/util';
+import { ApplyOptions } from '@skyra/decorators';
 
+@ApplyOptions<CommandOptions>({
+	aliases: ['serverstats'],
+	description: lang => lang.tget('COMMAND_SERVERINFO_DESCRIPTION'),
+	extendedHelp: lang => lang.tget('COMMAND_SERVERINFO_EXTENDED'),
+	runIn: ['text']
+})
 export default class extends SteveCommand {
-
-	public constructor(store: CommandStore, file: string[], directory: string) {
-		super(store, file, directory, {
-			aliases: ['serverstats'],
-			description: lang => lang.tget('COMMAND_SERVERINFO_DESCRIPTION'),
-			extendedHelp: lang => lang.tget('COMMAND_SERVERINFO_EXTENDED'),
-			runIn: ['text']
-		});
-	}
 
 	public async run(msg: KlasaMessage): Promise<Message> {
 		const EMBED_DATA = msg.guild!.language.tget('COMMAND_SERVERINFO_EMBED');

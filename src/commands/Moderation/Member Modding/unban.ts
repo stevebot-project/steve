@@ -1,16 +1,14 @@
-import { ModerationCommand } from '@lib/structures/commands/ModerationCommand';
-import { CommandStore, KlasaMessage } from 'klasa';
+import { ModerationCommand, ModerationCommandOptions } from '@lib/structures/commands/ModerationCommand';
+import { KlasaMessage } from 'klasa';
 import { User, Message } from 'discord.js';
+import { ApplyOptions } from '@skyra/decorators';
 
+@ApplyOptions<ModerationCommandOptions>({
+	description: lang => lang.tget('COMMAND_UNBAN_DESCRIPTION'),
+	extendedHelp: lang => lang.tget('COMMAND_UNBAN_EXTENDED'),
+	usage: '<user:user> [reason:string]'
+})
 export default class extends ModerationCommand {
-
-	public constructor(store: CommandStore, file: string[], directory: string) {
-		super(store, file, directory, {
-			description: lang => lang.tget('COMMAND_UNBAN_DESCRIPTION'),
-			extendedHelp: lang => lang.tget('COMMAND_UNBAN_EXTENDED'),
-			usage: '<user:user> [reason:string]'
-		});
-	}
 
 	public async prehandle(target: User): Promise<User> {
 		return target;

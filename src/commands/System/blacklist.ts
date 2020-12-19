@@ -1,25 +1,21 @@
 
-import { CommandStore, KlasaMessage } from 'klasa';
+import { CommandOptions, KlasaMessage } from 'klasa';
 import { Guild, User } from 'discord.js';
 import { SteveCommand } from '@lib/structures/commands/SteveCommand';
 import { PermissionsLevels } from '@lib/types/Enums';
+import { ApplyOptions } from '@skyra/decorators';
 
+@ApplyOptions<CommandOptions>({
+	description: lang => lang.tget('COMMAND_BLACKLIST_DESCRIPTION'),
+	guarded: true,
+	permissionLevel: PermissionsLevels.OWNER,
+	usage: '<User:user|Guild:guild|guild:string> [...]'
+})
 export default class extends SteveCommand {
 
-	public terms: string[];
+	public terms = ['usersAdded', 'usersRemoved', 'guildsAdded', 'guildsRemoved'];
 
-	public constructor(store: CommandStore, file: string[], directory: string) {
-		super(store, file, directory, {
-			description: lang => lang.tget('COMMAND_BLACKLIST_DESCRIPTION'),
-			guarded: true,
-			permissionLevel: PermissionsLevels.OWNER,
-			usage: '<User:user|Guild:guild|guild:string> [...]'
-		});
-
-		this.terms = ['usersAdded', 'usersRemoved', 'guildsAdded', 'guildsRemoved'];
-	}
-
-	 public async run(msg: KlasaMessage, usersAndGuilds: Array<User | Guild>) {
+	public async run(msg: KlasaMessage, usersAndGuilds: Array<User | Guild>) {
 		const changes = [[], [], [], []];
 		const queries = [[], []];
 

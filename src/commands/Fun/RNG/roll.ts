@@ -1,6 +1,7 @@
 import { SteveCommand } from '@lib/structures/commands/SteveCommand';
-import { CommandStore, KlasaMessage } from 'klasa';
+import { CommandOptions, KlasaMessage } from 'klasa';
 import { Message } from 'discord.js';
+import { ApplyOptions } from '@skyra/decorators';
 
 const DICE_REGEX = /(?<count>\d{1,2})?d(?<sides>\d{1,4})(?<explode>!)?(?<keep>kl?(?<keepCount>\d{1,2}))?((?<plus>\+)?(?<minus>-)?(?<mod>\d{1,2})|$)/;
 
@@ -48,17 +49,15 @@ function NumComparator(a: number, b: number): number {
 	return 0;
 }
 
+@ApplyOptions<CommandOptions>({
+	aliases: ['dice'],
+	description: lang => lang.tget('COMMAND_ROLL_DESCRIPTION'),
+	extendedHelp: lang => lang.tget('COMMAND_ROLL_EXTENDED'),
+	usage: '<spec:dice> [...]'
+})
 export default class extends SteveCommand {
 
-	public constructor(store: CommandStore, file: string[], directory: string) {
-		super(store, file, directory, {
-			aliases: ['dice'],
-			description: lang => lang.tget('COMMAND_ROLL_DESCRIPTION'),
-			extendedHelp: lang => lang.tget('COMMAND_ROLL_EXTENDED'),
-			usage: '<spec:dice> [...]'
-
-		});
-
+	public async init() {
 		this.createCustomResolver('dice', (arg): RollSpec => {
 			const match = DICE_REGEX.exec(arg);
 

@@ -1,22 +1,22 @@
 /* eslint-disable id-length */
 import { SteveCommand } from '@lib/structures/commands/SteveCommand';
-import { CommandStore, KlasaMessage, RichDisplay } from 'klasa';
+import { CommandOptions, KlasaMessage, RichDisplay } from 'klasa';
 import { GuildSettings } from '@lib/types/settings/GuildSettings';
 import { Message, MessageEmbed } from 'discord.js';
 import { chunk, codeBlock } from '@klasa/utils';
+import { ApplyOptions } from '@skyra/decorators';
 
+@ApplyOptions<CommandOptions>({
+	aliases: ['snippets', 'snip', 'customcommand'],
+	description: lang => lang.tget('COMMAND_SNIPPET_DESCRIPTION'),
+	extendedHelp: lang => lang.tget('COMMAND_SNIPPET_EXTENDED'),
+	runIn: ['text'],
+	subcommands: true,
+	usage: '<add|remove|list|edit|reset|source|view:default> (name:name{,100}) (content:content{,1900})'
+})
 export default class extends SteveCommand {
 
-	public constructor(store: CommandStore, file: string[], directory: string) {
-		super(store, file, directory, {
-			aliases: ['snippets', 'snip', 'customcommand'],
-			description: lang => lang.tget('COMMAND_SNIPPET_DESCRIPTION'),
-			extendedHelp: lang => lang.tget('COMMAND_SNIPPET_EXTENDED'),
-			runIn: ['text'],
-			subcommands: true,
-			usage: '<add|remove|list|edit|reset|source|view:default> (name:name{,100}) (content:content{,1900})'
-		});
-
+	public async init() {
 		this
 			.createCustomResolver('name', (str, possible, msg, [action]) => action === 'list' ? null : str)
 			.createCustomResolver('content', (str, possible, msg, [action]) => action === 'add' || action === 'edit' ? str : null);

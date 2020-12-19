@@ -1,18 +1,18 @@
 
 import { SteveCommand } from '@lib/structures/commands/SteveCommand';
-import { CommandStore, KlasaMessage, util, SettingsUpdateResult } from 'klasa';
+import { ApplyOptions } from '@skyra/decorators';
+import { CommandOptions, KlasaMessage, util, SettingsUpdateResult } from 'klasa';
 
+@ApplyOptions<CommandOptions>({
+	description: lang => lang.tget('COMMAND_CONF_USER_DESCRIPTION'),
+	extendedHelp: lang => lang.tget('COMMAND_CONF_USER_EXTENDED'),
+	guarded: true,
+	subcommands: true,
+	usage: '<set|show|remove|reset> (key:key) (value:value) [...]'
+})
 export default class extends SteveCommand {
 
-	public constructor(store: CommandStore, file: string[], directory: string) {
-		super(store, file, directory, {
-			description: lang => lang.tget('COMMAND_CONF_USER_DESCRIPTION'),
-			extendedHelp: lang => lang.tget('COMMAND_CONF_USER_EXTENDED'),
-			guarded: true,
-			subcommands: true,
-			usage: '<set|show|remove|reset> (key:key) (value:value) [...]'
-		});
-
+	public async init() {
 		this
 			.createCustomResolver('key', (arg, possible, message, [action]) => {
 				if (action === 'show' || arg) return arg;

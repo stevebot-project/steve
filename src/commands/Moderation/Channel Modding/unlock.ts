@@ -1,19 +1,17 @@
 import { SteveCommand } from '@lib/structures/commands/SteveCommand';
 import { PermissionsLevels } from '@lib/types/Enums';
+import { ApplyOptions } from '@skyra/decorators';
 import { Message } from 'discord.js';
-import { CommandStore, KlasaMessage } from 'klasa';
+import { CommandOptions, KlasaMessage } from 'klasa';
 
+@ApplyOptions<CommandOptions>({
+	description: lang => lang.tget('COMMAND_UNLOCK_DESCRIPTION'),
+	extendedHelp: lang => lang.tget('COMMAND_UNLOCK_EXTENDED'),
+	permissionLevel: PermissionsLevels.MODERATOR,
+	requiredPermissions: ['MANAGE_CHANNELS'],
+	runIn: ['text']
+})
 export default class extends SteveCommand {
-
-	public constructor(store: CommandStore, file: string[], directory: string) {
-		super(store, file, directory, {
-			description: lang => lang.tget('COMMAND_UNLOCK_DESCRIPTION'),
-			extendedHelp: lang => lang.tget('COMMAND_UNLOCK_EXTENDED'),
-			permissionLevel: PermissionsLevels.MODERATOR,
-			requiredPermissions: ['MANAGE_CHANNELS'],
-			runIn: ['text']
-		});
-	}
 
 	public async run(msg: KlasaMessage): Promise<Message> {
 		if (msg.channel.isGuildTextChannel()) await msg.channel.updateOverwrite(msg.guild!.id, { SEND_MESSAGES: true }, msg.author.tag);

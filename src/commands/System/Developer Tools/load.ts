@@ -1,25 +1,21 @@
-import { CommandStore, KlasaMessage, Stopwatch, Store, Piece } from 'klasa';
+import { CommandOptions, KlasaMessage, Stopwatch, Store, Piece } from 'klasa';
 import { pathExists } from 'fs-nextra';
 import { join } from 'path';
 import { SteveCommand } from '@lib/structures/commands/SteveCommand';
 import { PermissionsLevels } from '@lib/types/Enums';
 import { Constructor } from 'discord.js';
+import { ApplyOptions } from '@skyra/decorators';
 
+@ApplyOptions<CommandOptions>({
+	description: lang => lang.tget('COMMAND_TOGGLETRUSTEDROLEREQUIREMENT_DESCRIPTION'),
+	extendedHelp: lang => lang.tget('COMMAND_TOGGLETRUSTEDROLEREQUIREMENT_EXTENDED'),
+	permissionLevel: PermissionsLevels.MODERATOR,
+	requiredSettings: ['roles.trusted'],
+	runIn: ['text']
+})
 export default class extends SteveCommand {
 
-	public regExp: RegExp;
-
-	public constructor(store: CommandStore, file: string[], directory: string) {
-		super(store, file, directory, {
-			aliases: ['l'],
-			description: lang => lang.tget('COMMAND_LOAD_DESCRIPTION'),
-			guarded: true,
-			permissionLevel: PermissionsLevels.OWNER,
-			usage: '[core] <Store:store> <path:...string>'
-		});
-
-		this.regExp = /\\\\?|\//g;
-	}
+	public regExp = /\\\\?|\//g;
 
 	public async run<K, V extends Piece>(msg: KlasaMessage, [core, store, path]: [string, Store<K, V, Constructor<V>>, string]) {
 		const pathSplit = (path.endsWith('.js') ? path : `${path}.js`).split(this.regExp);

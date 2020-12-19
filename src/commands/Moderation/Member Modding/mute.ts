@@ -1,17 +1,15 @@
-import { ModerationCommand } from '@lib/structures/commands/ModerationCommand';
-import { CommandStore, KlasaMessage } from 'klasa';
+import { ModerationCommand, ModerationCommandOptions } from '@lib/structures/commands/ModerationCommand';
+import { KlasaMessage } from 'klasa';
 import { User, GuildMember, Guild, Message } from 'discord.js';
+import { ApplyOptions } from '@skyra/decorators';
 
+@ApplyOptions<ModerationCommandOptions>({
+	description: lang => lang.tget('COMMAND_MUTE_DESCRIPTION'),
+	duration: true,
+	extendedHelp: lang => lang.tget('COMMAND_MUTE_EXTENDED'),
+	requiredSettings: ['roles.muted']
+})
 export default class extends ModerationCommand {
-
-	public constructor(store: CommandStore, file: string[], directory: string) {
-		super(store, file, directory, {
-			description: lang => lang.tget('COMMAND_MUTE_DESCRIPTION'),
-			duration: true,
-			extendedHelp: lang => lang.tget('COMMAND_MUTE_EXTENDED'),
-			requiredSettings: ['roles.muted']
-		});
-	}
 
 	public async prehandle(target: User, guild: Guild): Promise<GuildMember> {
 		const member = await guild.members.fetch(target);

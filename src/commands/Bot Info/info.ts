@@ -1,15 +1,13 @@
 import { SteveCommand } from '@lib/structures/commands/SteveCommand';
-import { CommandStore, KlasaMessage } from 'klasa';
+import { ApplyOptions } from '@skyra/decorators';
+import { CommandOptions, KlasaMessage } from 'klasa';
 
+@ApplyOptions<CommandOptions>({
+	aliases: ['details', 'what'],
+	guarded: true,
+	description: lang => lang.tget('COMMAND_INFO_DESCRIPTION')
+})
 export default class extends SteveCommand {
-
-	public constructor(store: CommandStore, file: string[], directory: string) {
-		super(store, file, directory, {
-			aliases: ['details', 'what'],
-			guarded: true,
-			description: lang => lang.tget('COMMAND_INFO_DESCRIPTION')
-		});
-	}
 
 	public async run(msg: KlasaMessage) {
 		return msg.channel.send(msg.language.tget('COMMAND_INFO'));

@@ -1,18 +1,20 @@
 import * as Genius from 'genius-lyrics';
-import { CommandStore, KlasaMessage } from 'klasa';
+import { CommandOptions, KlasaMessage } from 'klasa';
 import { SteveCommand } from '@lib/structures/commands/SteveCommand';
 import { Message, MessageEmbed } from 'discord.js';
 import { TOKENS } from '@root/config';
+import { ApplyOptions } from '@skyra/decorators';
 
+@ApplyOptions<CommandOptions>({
+	aliases: ['genius'],
+	description: lang => lang.tget('COMMAND_LYRICS_DESCRIPTION'),
+	extendedHelp: lang => lang.tget('COMMAND_LYRICS_EXTENDED'),
+	usage: '<song:string>'
+})
 export default class extends SteveCommand {
 
-	public constructor(store: CommandStore, file: string[], directory: string) {
-		super(store, file, directory, {
-			aliases: ['genius'],
-			description: lang => lang.tget('COMMAND_LYRICS_DESCRIPTION'),
-			extendedHelp: lang => lang.tget('COMMAND_LYRICS_EXTENDED'),
-			usage: '<song:string>'
-		});
+	public async init(): Promise<void> {
+		if (!TOKENS.GENIUS) this.disable();
 	}
 
 	public async run(msg: KlasaMessage, [song]: [string]): Promise<Message> {
@@ -35,10 +37,6 @@ export default class extends SteveCommand {
 		}
 
 		return msg.channel.send(embed);
-	}
-
-	public async init(): Promise<void> {
-		if (!TOKENS.GENIUS) this.disable();
 	}
 
 }

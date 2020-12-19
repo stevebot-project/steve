@@ -1,22 +1,22 @@
 import { SteveCommand } from '@lib/structures/commands/SteveCommand';
-import { CommandStore, KlasaMessage } from 'klasa';
+import { CommandOptions, KlasaMessage } from 'klasa';
 import { ColorResolvable, Message, MessageEmbed, TextChannel } from 'discord.js';
 import { GuildSettings } from '@lib/types/settings/GuildSettings';
 import { friendlyDuration } from '@utils/util';
 import { Reminder } from '@root/src/extendables/Schedule';
 import { UserSettings } from '@lib/types/settings/UserSettings';
+import { ApplyOptions } from '@skyra/decorators';
 
+@ApplyOptions<CommandOptions>({
+	aliases: ['remindme', 'reminders', 'myreminders'],
+	description: lang => lang.tget('COMMAND_REMIND_DESCRIPTION'),
+	extendedHelp: lang => lang.tget('COMMAND_REMIND_EXTENDED'),
+	subcommands: true,
+	usage: '<view|cancel|create:default> (reminder:reminder) (duration:timespan)'
+})
 export default class extends SteveCommand {
 
-	public constructor(store: CommandStore, file: string[], directory: string) {
-		super(store, file, directory, {
-			aliases: ['remindme', 'reminders', 'myreminders'],
-			description: lang => lang.tget('COMMAND_REMIND_DESCRIPTION'),
-			extendedHelp: lang => lang.tget('COMMAND_REMIND_EXTENDED'),
-			subcommands: true,
-			usage: '<view|cancel|create:default> (reminder:reminder) (duration:timespan)'
-		});
-
+	public async init() {
 		this
 			.createCustomResolver('reminder', (str, possible, msg, [action]) => {
 				if (action === 'view') return null;

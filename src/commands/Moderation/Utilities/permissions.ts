@@ -1,21 +1,19 @@
 import { SteveCommand } from '@lib/structures/commands/SteveCommand';
-import { CommandStore, KlasaMessage } from 'klasa';
+import { CommandOptions, KlasaMessage } from 'klasa';
 import { PermissionsLevels } from '@lib/types/Enums';
 import { User, Message, Permissions, PermissionString, MessageEmbed } from 'discord.js';
+import { ApplyOptions } from '@skyra/decorators';
 
 const PERM_FLAGS = Object.keys(Permissions.FLAGS) as PermissionString[];
 
+@ApplyOptions<CommandOptions>({
+	aliases: ['perms'],
+	description: lang => lang.tget('COMMAND_PERMISSIONS_DESCRIPTION'),
+	permissionLevel: PermissionsLevels.MODERATOR,
+	runIn: ['text'],
+	usage: '<user:username>'
+})
 export default class extends SteveCommand {
-
-	public constructor(store: CommandStore, file: string[], directory: string) {
-		super(store, file, directory, {
-			aliases: ['perms'],
-			description: lang => lang.tget('COMMAND_PERMISSIONS_DESCRIPTION'),
-			permissionLevel: PermissionsLevels.MODERATOR,
-			runIn: ['text'],
-			usage: '<user:username>'
-		});
-	}
 
 	public async run(msg: KlasaMessage, [user]: [User]): Promise<Message> {
 		const member = await msg.guild!.members.fetch(user);

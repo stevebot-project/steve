@@ -1,19 +1,17 @@
-import { CommandStore, KlasaMessage, Piece } from 'klasa';
+import { CommandOptions, KlasaMessage, Piece } from 'klasa';
 import * as fs from 'fs-nextra';
 import { resolve, join } from 'path';
 import { SteveCommand } from '@lib/structures/commands/SteveCommand';
 import { PermissionsLevels } from '@lib/types/Enums';
+import { ApplyOptions } from '@skyra/decorators';
 
+@ApplyOptions<CommandOptions>({
+	description: lang => lang.tget('COMMAND_TRANSFER_DESCRIPTION'),
+	guarded: true,
+	permissionLevel: PermissionsLevels.OWNER,
+	usage: '<Piece:piece>'
+})
 export default class extends SteveCommand {
-
-	public constructor(store: CommandStore, file: string[], directory: string) {
-		super(store, file, directory, {
-			description: lang => lang.tget('COMMAND_TRANSFER_DESCRIPTION'),
-			guarded: true,
-			permissionLevel: PermissionsLevels.OWNER,
-			usage: '<Piece:piece>'
-		});
-	}
 
 	public async run(msg: KlasaMessage, [piece]: [Piece]) {
 		const file = join(...piece.file);

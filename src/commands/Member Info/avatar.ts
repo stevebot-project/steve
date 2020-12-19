@@ -1,16 +1,16 @@
 import { SteveCommand } from '@lib/structures/commands/SteveCommand';
+import { ApplyOptions } from '@skyra/decorators';
 import { Message, MessageEmbed, User } from 'discord.js';
-import { CommandStore, KlasaMessage } from 'klasa';
+import { CommandOptions, KlasaMessage } from 'klasa';
 
+@ApplyOptions<CommandOptions>({
+	aliases: ['av'],
+	description: lang => lang.tget('COMMAND_AVATAR_DESCRIPTION'),
+	usage: '[user:username]'
+})
 export default class extends SteveCommand {
 
-	public constructor(store: CommandStore, file: string[], directory: string) {
-		super(store, file, directory, {
-			aliases: ['av'],
-			description: lang => lang.tget('COMMAND_AVATAR_DESCRIPTION'),
-			usage: '[user:username]'
-		});
-
+	public async init() {
 		this.createCustomResolver('username', (str, possible, msg) => {
 			const arg = this.client.arguments.get('username');
 

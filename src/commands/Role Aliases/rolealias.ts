@@ -1,22 +1,22 @@
 import { SteveCommand } from '@lib/structures/commands/SteveCommand';
 import { PermissionsLevels } from '@lib/types/Enums';
 import { GuildSettings } from '@lib/types/settings/GuildSettings';
+import { ApplyOptions } from '@skyra/decorators';
 import { Role } from 'discord.js';
-import { CommandStore, KlasaMessage } from 'klasa';
+import { CommandOptions, KlasaMessage } from 'klasa';
 
+@ApplyOptions<CommandOptions>({
+	aliases: ['ra'],
+	description: lang => lang.tget('COMMAND_ROLEALIAS_DESCRIPTION'),
+	extendedHelp: lang => lang.tget('COMMAND_ROLEALIAS_EXTENDED'),
+	permissionLevel: PermissionsLevels.MODERATOR,
+	runIn: ['text'],
+	subcommands: true,
+	usage: '<add|remove> <alias:string{2,30}> (role:rolename)'
+})
 export default class extends SteveCommand {
 
-	public constructor(store: CommandStore, file: string[], directory: string) {
-		super(store, file, directory, {
-			aliases: ['ra'],
-			description: lang => lang.tget('COMMAND_ROLEALIAS_DESCRIPTION'),
-			extendedHelp: lang => lang.tget('COMMAND_ROLEALIAS_EXTENDED'),
-			permissionLevel: PermissionsLevels.MODERATOR,
-			runIn: ['text'],
-			subcommands: true,
-			usage: '<add|remove> <alias:string{2,30}> (role:rolename)'
-		});
-
+	public async init() {
 		this.createCustomResolver('rolename', (str, possible, msg, [action]) => action === 'add'
 			? this.client.arguments.get('rolename').run(str, possible, msg)
 			: null);

@@ -1,19 +1,17 @@
 import { SteveCommand } from '@lib/structures/commands/SteveCommand';
-import { CommandStore, KlasaMessage } from 'klasa';
+import { CommandOptions, KlasaMessage } from 'klasa';
 import { Message, MessageEmbed } from 'discord.js';
 import { formatDate } from '@utils/util';
 import fetch from 'node-fetch';
+import { ApplyOptions } from '@skyra/decorators';
 
+@ApplyOptions<CommandOptions>({
+	aliases: ['ds', 'discstatus', 'isdiscordbroke'],
+	cooldown: 60,
+	cooldownLevel: 'channel',
+	description: lang => lang.tget('COMMAND_DISCORD_STATUS_DESCRIPTION')
+})
 export default class extends SteveCommand {
-
-	public constructor(store: CommandStore, file: string[], directory: string) {
-		super(store, file, directory, {
-			aliases: ['ds', 'discstatus', 'isdiscordbroke'],
-			cooldown: 60,
-			cooldownLevel: 'channel',
-			description: lang => lang.tget('COMMAND_DISCORD_STATUS_DESCRIPTION')
-		});
-	}
 
 	public async run(msg: KlasaMessage): Promise<Message> {
 		const url = 'https://srhpyqt94yxb.statuspage.io/api/v2/summary.json';

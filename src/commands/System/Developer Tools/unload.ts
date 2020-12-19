@@ -1,18 +1,16 @@
 import { SteveCommand } from '@lib/structures/commands/SteveCommand';
 import { PermissionsLevels } from '@lib/types/Enums';
-import { CommandStore, KlasaMessage, Piece } from 'klasa';
+import { ApplyOptions } from '@skyra/decorators';
+import { CommandOptions, KlasaMessage, Piece } from 'klasa';
 
+@ApplyOptions<CommandOptions>({
+	aliases: ['u'],
+	description: lang => lang.tget('COMMAND_UNLOAD_DESCRIPTION'),
+	guarded: true,
+	permissionLevel: PermissionsLevels.OWNER,
+	usage: '<Piece:piece>'
+})
 export default class extends SteveCommand {
-
-	public constructor(store: CommandStore, file: string[], directory: string) {
-		super(store, file, directory, {
-			aliases: ['u'],
-			description: lang => lang.tget('COMMAND_UNLOAD_DESCRIPTION'),
-			guarded: true,
-			permissionLevel: PermissionsLevels.OWNER,
-			usage: '<Piece:piece>'
-		});
-	}
 
 	public async run(msg: KlasaMessage, [piece]: [Piece]) {
 		if ((piece.type === 'event' && piece.name === 'message') || (piece.type === 'monitor' && piece.name === 'commandHandler')) {

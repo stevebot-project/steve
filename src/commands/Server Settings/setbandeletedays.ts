@@ -1,20 +1,18 @@
 import { SteveCommand } from '@lib/structures/commands/SteveCommand';
 import { PermissionsLevels } from '@lib/types/Enums';
 import { GuildSettings } from '@lib/types/settings/GuildSettings';
+import { ApplyOptions } from '@skyra/decorators';
 import { Message } from 'discord.js';
-import { CommandStore, KlasaMessage } from 'klasa';
+import { CommandOptions, KlasaMessage } from 'klasa';
 
+@ApplyOptions<CommandOptions>({
+	description: lang => lang.tget('COMMAND_SETBANDELETEDAYS_DESCRIPTION'),
+	extendedHelp: lang => lang.tget('COMMAND_SETBANDELETEDAYS_EXTENDED'),
+	permissionLevel: PermissionsLevels.MODERATOR,
+	runIn: ['text'],
+	usage: '<days:integer{0,14}>'
+})
 export default class extends SteveCommand {
-
-	public constructor(store: CommandStore, file: string[], directory: string) {
-		super(store, file, directory, {
-			description: lang => lang.tget('COMMAND_SETBANDELETEDAYS_DESCRIPTION'),
-			extendedHelp: lang => lang.tget('COMMAND_SETBANDELETEDAYS_EXTENDED'),
-			permissionLevel: PermissionsLevels.MODERATOR,
-			runIn: ['text'],
-			usage: '<days:integer{0,14}>'
-		});
-	}
 
 	public async run(msg: KlasaMessage, [days]: [number]): Promise<Message> {
 		await msg.guild!.settings.update(GuildSettings.Moderation.BanDeleteDays, days);

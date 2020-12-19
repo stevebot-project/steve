@@ -1,17 +1,15 @@
-import { CommandStore, KlasaMessage } from 'klasa';
+import { CommandOptions, KlasaMessage } from 'klasa';
 import { SteveCommand } from '@lib/structures/commands/SteveCommand';
 import { Message } from 'discord.js';
+import { ApplyOptions } from '@skyra/decorators';
 
+@ApplyOptions<CommandOptions>({
+	cooldown: 60,
+	cooldownLevel: 'channel',
+	description: lang => lang.tget('COMMAND_AUDINO_DESCRIPTION'),
+	extendedHelp: lang => lang.tget('COMMAND_AUDINO_EXTENDED')
+})
 export default class extends SteveCommand {
-
-	public constructor(store: CommandStore, file: string[], directory: string) {
-		super(store, file, directory, {
-			cooldown: 60,
-			cooldownLevel: 'channel',
-			description: lang => lang.tget('COMMAND_AUDINO_DESCRIPTION'),
-			extendedHelp: lang => lang.tget('COMMAND_AUDINO_EXTENDED')
-		});
-	}
 
 	public async run(msg: KlasaMessage): Promise<Message> {
 		return msg.channel.send(msg.language.tget('COMMAND_AUDINO_ID'),

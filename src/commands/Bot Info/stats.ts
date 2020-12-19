@@ -1,16 +1,14 @@
-import { CommandStore, KlasaMessage, Duration, version as klasaVersion } from 'klasa';
+import { CommandOptions, KlasaMessage, Duration, version as klasaVersion } from 'klasa';
 import { MessageEmbed, version as discordVersion } from 'discord.js';
 import { SteveCommand } from '@lib/structures/commands/SteveCommand';
+import { ApplyOptions } from '@skyra/decorators';
 
+@ApplyOptions<CommandOptions>({
+	guarded: true,
+	description: lang => lang.tget('COMMAND_STATS_DESCRIPTION'),
+	extendedHelp: lang => lang.tget('COMMAND_STATS_EXTENDED')
+})
 export default class extends SteveCommand {
-
-	public constructor(store: CommandStore, file: string[], directory: string) {
-		super(store, file, directory, {
-			guarded: true,
-			description: lang => lang.tget('COMMAND_STATS_DESCRIPTION'),
-			extendedHelp: lang => lang.tget('COMMAND_STATS_EXTENDED')
-		});
-	}
 
 	public async run(msg: KlasaMessage) {
 		let [users, guilds, channels, memory] = [0, 0, 0, 0];

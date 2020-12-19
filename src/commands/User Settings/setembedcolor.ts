@@ -1,17 +1,17 @@
 import { SteveCommand } from '@lib/structures/commands/SteveCommand';
 import { UserSettings } from '@lib/types/settings/UserSettings';
+import { ApplyOptions } from '@skyra/decorators';
 import { Message } from 'discord.js';
-import { CommandStore, KlasaMessage } from 'klasa';
+import { CommandOptions, KlasaMessage } from 'klasa';
 
+@ApplyOptions<CommandOptions>({
+	description: lang => lang.tget('COMMAND_SETEMBEDCOLOR_DESCRIPTION'),
+	extendedHelp: lang => lang.tget('COMMAND_SETEMBEDCOLOR_EXTENDED'),
+	usage: '<color:color|reset|show>'
+})
 export default class extends SteveCommand {
 
-	public constructor(store: CommandStore, file: string[], directory: string) {
-		super(store, file, directory, {
-			description: lang => lang.tget('COMMAND_SETEMBEDCOLOR_DESCRIPTION'),
-			extendedHelp: lang => lang.tget('COMMAND_SETEMBEDCOLOR_EXTENDED'),
-			usage: '<color:color|reset|show>'
-		});
-
+	public async init() {
 		this.createCustomResolver('color', (str, possible, msg) => {
 			if (/^#[0-9A-F]{6}$/i.test(str)) return str;
 			throw msg.language.tget('RESOLVER_INVALID_COLOR', str);
