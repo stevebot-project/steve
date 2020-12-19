@@ -1,4 +1,7 @@
 # SteveBot ![GitHub package.json version](https://img.shields.io/github/package-json/v/tuataria/steve?color=004953)
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
 Steve is an all-purpose Discord bot originally developed for [Tuataria] and its sideservers (although now usable anywhere). Developed and maintained by Jonathan#0412 and BoedJ#5476.
 
 ## Features
@@ -47,3 +50,23 @@ Steve has a [Twitter] and a [blog] so that you can keep up with his latest explo
 [blog]:                      http://www.tuataria.com/blog/steve/
 [Alys]:                      https://twitter.com/alysjones96
 [Koalas to the Max dot Com]: http://koalastothemax.com/
+
+## Contributors ✨
+
+Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tr>
+    <td align="center"><a href="https://linkedin.com/in/jwford65"><img src="https://avatars1.githubusercontent.com/u/13416547?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Jonathan Ford</b></sub></a><br /><a href="https://github.com/tuataria/steve/commits?author=jwford" title="Code">💻</a> <a href="#financial-jwford" title="Financial">💵</a> <a href="#ideas-jwford" title="Ideas, Planning, & Feedback">🤔</a> <a href="#infra-jwford" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="#maintenance-jwford" title="Maintenance">🚧</a> <a href="#projectManagement-jwford" title="Project Management">📆</a> <a href="https://github.com/tuataria/steve/pulls?q=is%3Apr+reviewed-by%3Ajwford" title="Reviewed Pull Requests">👀</a></td>
+  </tr>
+</table>
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!

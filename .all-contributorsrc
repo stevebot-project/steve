@@ -1,0 +1,30 @@
+{
+  "projectName": "steve",
+  "projectOwner": "tuataria",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": true,
+  "commitConvention": "eslint",
+  "contributors": [
+    {
+      "login": "jwford",
+      "name": "Jonathan Ford",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/13416547?v=4",
+      "profile": "https://linkedin.com/in/jwford65",
+      "contributions": [
+        "code",
+        "financial",
+        "ideas",
+        "infra",
+        "maintenance",
+        "projectManagement",
+        "review"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7
+}
