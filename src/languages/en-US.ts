@@ -1164,8 +1164,14 @@ export default class extends Language {
 		 * ################################
 		 */
 		INHIBITOR_PINGPROTECTION_ROLEPING: 'It looks like you are trying to inject a role ping. I\'m not going to let you do that!',
-		INHIBITOR_PINGPROTECTION_EVERYONE: 'It looks like you are trying to ping everyone. I\'m not going to let you do that!'
-
+		INHIBITOR_PINGPROTECTION_EVERYONE: 'It looks like you are trying to ping everyone. I\'m not going to let you do that!',
+		/**
+		 * ################################
+		 * #         SERIALIZERS           #
+		 * ################################
+		 */
+		SERIALIZER_COLOR_INVALID_HEX: (code: string) => `${code} is not a valid hex.`,
+		SERIALIZER_TRUSTEDROLESETTING_INVALID_SETTING: (setting: string) => `${setting} is not a valid setting for giveTrustedRoleOn.`
 	};
 
 

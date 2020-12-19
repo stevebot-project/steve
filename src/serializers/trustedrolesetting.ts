@@ -1,11 +1,10 @@
-import { Serializer } from 'klasa';
-
+import { Language, SchemaPiece, Serializer } from 'klasa';
 export default class extends Serializer {
 
 	// eslint-disable-next-line @typescript-eslint/require-await
-	public async deserialize(data: string): Promise<string> {
+	public async deserialize(data: string, piece: SchemaPiece, lang: Language): Promise<string> {
 		if (data === 'none' || data === 'join' || data === 'role') return data;
-		throw 'Not a valid setting for GiveTrustedRoleOn!';
+		throw lang.tget('SERIALIZER_TRUSTEDROLESETTING_INVALID_SETTING', data);
 	}
 
 	public serialize(value: string): string {
