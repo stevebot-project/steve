@@ -1,6 +1,6 @@
 # SteveBot ![GitHub package.json version](https://img.shields.io/github/package-json/v/tuataria/steve?color=004953)
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-5-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-6-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 Steve is an all-purpose Discord bot originally developed for [Tuataria] and its sideservers (although now usable anywhere). Developed and maintained by Jonathan#0412 and BoedJ#5476.
 
@@ -65,6 +65,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/devoeas"><img src="https://avatars0.githubusercontent.com/u/27713388?v=4?s=100" width="100px;" alt=""/><br /><sub><b>devoeas</b></sub></a><br /><a href="https://github.com/tuataria/steve/issues?q=author%3Adevoeas" title="Bug reports">🐛</a> <a href="#userTesting-devoeas" title="User Testing">📓</a> <a href="#ideas-devoeas" title="Ideas, Planning, & Feedback">🤔</a></td>
     <td align="center"><a href="https://github.com/stephenwade"><img src="https://avatars1.githubusercontent.com/u/4148577?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Stephen Wade</b></sub></a><br /><a href="https://github.com/tuataria/steve/commits?author=stephenwade" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/BenSegal855"><img src="https://avatars3.githubusercontent.com/u/34194692?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Ben</b></sub></a><br /><a href="https://github.com/tuataria/steve/commits?author=BenSegal855" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/colinkautz"><img src="https://avatars0.githubusercontent.com/u/5387995?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Colin J. Kautz</b></sub></a><br /><a href="https://github.com/tuataria/steve/commits?author=colinkautz" title="Code">💻</a></td>
   </tr>
 </table>
 
