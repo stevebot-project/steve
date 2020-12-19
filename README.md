@@ -39,18 +39,6 @@ Steve is the resident koala of Tuataria; he's named after one of the koalas feat
 
 Steve has a [Twitter] and a [blog] so that you can keep up with his latest exploits! ~~"Latest" is used very loosely in that sentence.~~ His wonderful array of profile pictures was designed by [Alys].
 
-
-<!----------------- LINKS --------------->
-
-[Tuataria]:                  http://www.tuataria.com
-[`Node.js`]:                 https://nodejs.org/en/download/current/
-[`MongoDB Atlas`]:           https://www.mongodb.com/cloud/atlas
-[`Lavalink`]:                https://github.com/Frederikam/Lavalink
-[Twitter]:                   https://twitter.com/StevetheBot
-[blog]:                      http://www.tuataria.com/blog/steve/
-[Alys]:                      https://twitter.com/alysjones96
-[Koalas to the Max dot Com]: http://koalastothemax.com/
-
 ## Contributors ✨
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
@@ -76,3 +64,14 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
+
+<!----------------- LINKS --------------->
+
+[Tuataria]:                  http://www.tuataria.com
+[`Node.js`]:                 https://nodejs.org/en/download/current/
+[`MongoDB Atlas`]:           https://www.mongodb.com/cloud/atlas
+[`Lavalink`]:                https://github.com/Frederikam/Lavalink
+[Twitter]:                   https://twitter.com/StevetheBot
+[blog]:                      http://www.tuataria.com/blog/steve/
+[Alys]:                      https://twitter.com/alysjones96
+[Koalas to the Max dot Com]: http://koalastothemax.com/
