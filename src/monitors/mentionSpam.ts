@@ -1,13 +1,14 @@
-import { Monitor, MonitorStore, KlasaMessage } from 'klasa';
+import { Monitor, MonitorOptions, KlasaMessage } from 'klasa';
 import { TextChannel } from 'discord.js';
 import { GuildSettings } from '@lib/types/settings/GuildSettings';
 import { floatPromise } from '@utils/util';
+import { ApplyOptions } from '@skyra/decorators';
 
+@ApplyOptions<MonitorOptions>({
+	ignoreEdits: false,
+	ignoreOthers: false
+})
 export default class extends Monitor {
-
-	public constructor(store: MonitorStore, file: string[], directory: string) {
-		super(store, file, directory, { ignoreOthers: false, ignoreEdits: false });
-	}
 
 	public async run(msg: KlasaMessage): Promise<void> {
 		if (msg.channel instanceof TextChannel) {
