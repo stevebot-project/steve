@@ -1,11 +1,11 @@
 import { SteveCommand } from '@lib/structures/commands/SteveCommand';
-import { Inhibitor, InhibitorStore, KlasaMessage } from 'klasa';
+import { ApplyOptions } from '@skyra/decorators';
+import { Inhibitor, InhibitorOptions, KlasaMessage } from 'klasa';
 
+@ApplyOptions<InhibitorOptions>({
+	spamProtection: true
+})
 export default class extends Inhibitor {
-
-	public constructor(store: InhibitorStore, file: string[], directory: string) {
-		super(store, file, directory, { spamProtection: true });
-	}
 
 	public run(msg: KlasaMessage, cmd: SteveCommand) {
 		if (this.client.owners.has(msg.author) || cmd.cooldown <= 0) return;

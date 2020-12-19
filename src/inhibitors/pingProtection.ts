@@ -1,10 +1,10 @@
-import { Inhibitor, KlasaMessage, InhibitorStore } from 'klasa';
+import { ApplyOptions } from '@skyra/decorators';
+import { Inhibitor, InhibitorOptions, KlasaMessage } from 'klasa';
 
+@ApplyOptions<InhibitorOptions>({
+	spamProtection: true
+})
 export default class extends Inhibitor {
-
-	public constructor(store: InhibitorStore, file: string[], directory: string) {
-		super(store, file, directory, { spamProtection: true });
-	}
 
 	public run(msg: KlasaMessage): void {
 		if (msg.channel.type === 'dm') return;
