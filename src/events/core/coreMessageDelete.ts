@@ -1,11 +1,11 @@
+import { ApplyOptions } from '@skyra/decorators';
 import { floatPromise } from '@utils/util';
-import { Event, EventStore, KlasaMessage } from 'klasa';
+import { Event, EventOptions, KlasaMessage } from 'klasa';
 
+@ApplyOptions<EventOptions>({
+	event: 'messageDelete'
+})
 export default class extends Event {
-
-	public constructor(store: EventStore, file: string[], directory: string) {
-		super(store, file, directory, { event: 'messageDelete' });
-	}
 
 	public run(msg: KlasaMessage) {
 		if (msg.command && msg.command.deletable) {

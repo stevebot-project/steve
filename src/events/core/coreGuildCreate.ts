@@ -1,13 +1,13 @@
 import { ClientSettings } from '@lib/types/settings/ClientSettings';
+import { ApplyOptions } from '@skyra/decorators';
 import { floatPromise } from '@utils/util';
 import { Guild } from 'discord.js';
-import { Event, EventStore } from 'klasa';
+import { Event, EventOptions } from 'klasa';
 
+@ApplyOptions<EventOptions>({
+	event: 'guildCreate'
+})
 export default class extends Event {
-
-	public constructor(store: EventStore, file: string[], directory: string) {
-		super(store, file, directory, { event: 'guildCreate' });
-	}
 
 	public run(guild: Guild) {
 		if (!guild.available) return;

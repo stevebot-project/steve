@@ -1,15 +1,13 @@
-import { Event, EventStore, util } from 'klasa';
+import { Event, EventOptions, util } from 'klasa';
 import { Team } from 'discord.js';
+import { ApplyOptions } from '@skyra/decorators';
 let retries = 0;
 
+@ApplyOptions<EventOptions>({
+	event: 'ready',
+	once: true
+})
 export default class extends Event {
-
-	public constructor(store: EventStore, file: string[], directory: string) {
-		super(store, file, directory, {
-			once: true,
-			event: 'ready'
-		});
-	}
 
 	public async run(): Promise<boolean> {
 		try {

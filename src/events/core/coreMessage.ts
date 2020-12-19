@@ -1,14 +1,14 @@
+import { ApplyOptions } from '@skyra/decorators';
 import { floatPromise } from '@utils/util';
-import { Event, EventStore, KlasaMessage } from 'klasa';
+import { Event, EventOptions, KlasaMessage } from 'klasa';
 
-module.exports = class extends Event {
-
-	public constructor(store: EventStore, file: string[], directory: string) {
-		super(store, file, directory, { event: 'message' });
-	}
+@ApplyOptions<EventOptions>({
+	event: 'message'
+})
+export default class extends Event {
 
 	public run(msg: KlasaMessage) {
 		if (this.client.ready) floatPromise(this, this.client.monitors.run(msg));
 	}
 
-};
+}
