@@ -1,4 +1,5 @@
 import { SteveCommand } from '@lib/structures/commands/SteveCommand';
+import { UserSettings } from '@lib/types/settings/UserSettings';
 import { ApplyOptions } from '@skyra/decorators';
 import { Message, MessageEmbed, User } from 'discord.js';
 import { CommandOptions, KlasaMessage } from 'klasa';
@@ -26,7 +27,12 @@ export default class extends SteveCommand {
 				.setAuthor(user.tag)
 				.setImage(user.displayAvatarURL({ dynamic: true }));
 
-			if (member) embed.setColor(member.displayHexColor);
+			const userColor = user.settings.get(UserSettings.EmbedColor);
+			if (userColor) {
+				embed.setColor(userColor);
+			} else if (member) {
+				embed.setColor(member.displayHexColor);
+			}
 
 			return msg.channel.send(embed);
 		} catch (e) {
