@@ -1,13 +1,13 @@
 # SteveBot ![GitHub package.json version](https://img.shields.io/github/package-json/v/tuataria/steve?color=004953)
-Steve is an all-purpose Discord bot originally developed for [Tuataria] and its sideservers. Developed and maintained by Jonathan#0412 and BoedJ#5476.
+Steve is an all-purpose Discord bot originally developed for [Tuataria] and its sideservers (although now usable anywhere). Developed and maintained by Jonathan#0412 and BoedJ#5476.
 
 ## Features
 - Moderation commands
-- Music functionality
 - Memberlog and serverlog
 - Per-server settings
-- Public and semi-private reminders
+- Public and private reminders
 - Allows members to self-assign roles
+- Slash commands
 - Much, much more!
 
 ### Development Requirements
