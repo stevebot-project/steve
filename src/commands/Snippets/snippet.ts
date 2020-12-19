@@ -63,6 +63,10 @@ export default class extends SteveCommand {
 	}
 
 	public async view(msg: KlasaMessage, [snipName]: [string]): Promise<Message> {
+		if (!snipName) {
+			return this.list(msg);
+		}
+
 		const snips: Snippet[] = msg.guild!.settings.get(GuildSettings.Snippets);
 
 		const snip = snips.find(s => s.name === snipName.toLowerCase());
