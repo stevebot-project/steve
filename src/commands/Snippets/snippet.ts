@@ -4,7 +4,8 @@ import { CommandOptions, KlasaMessage, RichDisplay } from 'klasa';
 import { GuildSettings } from '@lib/types/settings/GuildSettings';
 import { Message, MessageEmbed } from 'discord.js';
 import { chunk, codeBlock } from '@klasa/utils';
-import { ApplyOptions } from '@skyra/decorators';
+import { ApplyOptions, requiresPermission } from '@skyra/decorators';
+import { PermissionsLevels } from '@lib/types/Enums';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['snippets', 'snip', 'customcommand'],
@@ -22,9 +23,10 @@ export default class extends SteveCommand {
 			.createCustomResolver('content', (str, possible, msg, [action]) => action === 'add' || action === 'edit' ? str : null);
 	}
 
+	@requiresPermission(PermissionsLevels.MODERATOR, (msg: KlasaMessage) => {
+		throw msg.guild!.language.tget('COMMAND_SNIPPET_NOPERMISSION');
+	})
 	public async add(msg: KlasaMessage, [snipName, snipContent]: [string, string]): Promise<Message> {
-		if (!msg.member!.isStaff) throw msg.guild!.language.tget('COMMAND_SNIPPET_NOPERMISSION');
-
 		const snips: Snippet[] = msg.guild!.settings.get(GuildSettings.Snippets);
 		if (snips.some(snip => snip.name === snipName)) throw msg.guild!.language.tget('COMMAND_SNIPPET_ALREADYEXISTS', snipName);
 
@@ -34,9 +36,10 @@ export default class extends SteveCommand {
 		return msg.channel.send(msg.guild!.language.tget('COMMAND_SNIPPET_ADD', newSnip.name));
 	}
 
+	@requiresPermission(PermissionsLevels.MODERATOR, (msg: KlasaMessage) => {
+		throw msg.guild!.language.tget('COMMAND_SNIPPET_NOPERMISSION');
+	})
 	public async edit(msg: KlasaMessage, [snipName, snipContent]: [string, string]): Promise<Message> {
-		if (!msg.member!.isStaff) throw msg.guild!.language.tget('COMMAND_SNIPPET_NOPERMISSION');
-
 		const snips: Snippet[] = msg.guild!.settings.get(GuildSettings.Snippets);
 		const index = snips.findIndex(snip => snip.name === snipName);
 		if (index === -1) throw msg.guild!.language.tget('COMMAND_SNIPPET_INVALID', snipName);
@@ -46,9 +49,10 @@ export default class extends SteveCommand {
 		return msg.channel.send(msg.guild!.language.tget('COMMAND_SNIPPET_EDIT', snipName));
 	}
 
+	@requiresPermission(PermissionsLevels.MODERATOR, (msg: KlasaMessage) => {
+		throw msg.guild!.language.tget('COMMAND_SNIPPET_NOPERMISSION');
+	})
 	public async remove(msg: KlasaMessage, [snipName]: [string]): Promise<Message> {
-		if (!msg.member!.isStaff) throw msg.guild!.language.tget('COMMAND_SNIPPET_NOPERMISSION');
-
 		const snips: Snippet[] = msg.guild!.settings.get(GuildSettings.Snippets);
 		const snip = snips.find(snip => snip.name === snipName.toLowerCase());
 		if (!snip) throw msg.guild!.language.tget('COMMAND_SNIPPET_INVALID', snipName);
@@ -86,9 +90,10 @@ export default class extends SteveCommand {
 		return response;
 	}
 
+	@requiresPermission(PermissionsLevels.MODERATOR, (msg: KlasaMessage) => {
+		throw msg.guild!.language.tget('COMMAND_SNIPPET_NOPERMISSION');
+	})
 	public async reset(msg: KlasaMessage): Promise<Message> {
-		if (!msg.member!.isStaff) throw msg.guild!.language.tget('COMMAND_SNIPPET_NOPERMISSION');
-
 		await msg.guild!.settings.reset(GuildSettings.Snippets);
 
 		return msg.channel.send(msg.guild!.language.tget('COMMAND_SNIPPET_RESET'));
