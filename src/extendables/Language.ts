@@ -1,12 +1,11 @@
 import { ComplexLanguageKeys, SimpleLanguageKeys } from '@lib/types/Augments';
+import { ApplyOptions } from '@skyra/decorators';
+import { Extendable, ExtendableOptions, Language, LanguageKeys } from 'klasa';
 
-import { Extendable, ExtendableStore, Language, LanguageKeys } from 'klasa';
-
+@ApplyOptions<ExtendableOptions>({
+	appliesTo: [Language]
+})
 export default class extends Extendable {
-
-	public constructor(store: ExtendableStore, file: string[], directory: string) {
-		super(store, file, directory, { appliesTo: [Language] });
-	}
 
 	public tget<T extends SimpleLanguageKeys>(term: T): LanguageKeys[T];
 

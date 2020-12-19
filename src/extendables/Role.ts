@@ -1,13 +1,13 @@
 
-import { Extendable, ExtendableStore } from 'klasa';
+import { Extendable, ExtendableOptions } from 'klasa';
 import { Role } from 'discord.js';
 import { GuildSettings } from '@lib/types/settings/GuildSettings';
+import { ApplyOptions } from '@skyra/decorators';
 
+@ApplyOptions<ExtendableOptions>({
+	appliesTo: [Role]
+})
 export default class extends Extendable {
-
-	public constructor(store: ExtendableStore, file: string[], directory: string) {
-		super(store, file, directory, { appliesTo: [Role] });
-	}
 
 	// @ts-expect-error 2784
 	public get isAssignable(this: Role): boolean {

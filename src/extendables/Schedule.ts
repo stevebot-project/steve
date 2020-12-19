@@ -1,10 +1,10 @@
-import { Extendable, ExtendableStore, Schedule, ScheduledTask } from 'klasa';
+import { ApplyOptions } from '@skyra/decorators';
+import { Extendable, ExtendableOptions, Schedule, ScheduledTask } from 'klasa';
 
+@ApplyOptions<ExtendableOptions>({
+	appliesTo: [Schedule]
+})
 export default class extends Extendable {
-
-	public constructor(store: ExtendableStore, file: string[], directory: string) {
-		super(store, file, directory, { appliesTo: [Schedule] });
-	}
 
 	public createModerationTask(this: Schedule, taskName: ModerationTask, duration: number, taskData: ModerationTaskData): Promise<ScheduledTask> {
 		return this.create(taskName, Date.now() + duration, {
