@@ -1,9 +1,10 @@
 import { SteveCommand } from '@lib/structures/commands/SteveCommand';
-import { CommandOptions, KlasaMessage } from 'klasa';
+import { CommandOptions } from 'klasa';
 import { User, Message, MessageEmbed, ColorResolvable } from 'discord.js';
 import { UserSettings } from '@lib/types/settings/UserSettings';
 import { getJoinDateString, userAccountCreated } from '@utils/UserInfo';
 import { ApplyOptions } from '@skyra/decorators';
+import { GuildMessage } from '@lib/types/Messages';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['member'],
@@ -22,16 +23,16 @@ export default class extends SteveCommand {
 		});
 	}
 
-	public async run(msg: KlasaMessage, [user]: [User]): Promise<Message> {
+	public async run(msg: GuildMessage, [user]: [User]): Promise<Message> {
 		user = await this.client.users.fetch(user.id);
-		const member = await msg.guild!.members.fetch(user);
-		if (!member) throw msg.guild!.language.tget('USER_NOT_IN_GUILD', user.tag);
+		const member = await msg.guild.members.fetch(user);
+		if (!member) throw msg.guild.language.tget('USER_NOT_IN_GUILD', user.tag);
 
-		const accountCreated = userAccountCreated(msg.guild!, member.user.createdTimestamp);
+		const accountCreated = userAccountCreated(msg.guild, member.user.createdTimestamp);
 
-		const joinedGuild = getJoinDateString(msg.guild!, member.joinedTimestamp!);
+		const joinedGuild = getJoinDateString(msg.guild, member.joinedTimestamp!);
 
-		const EMBED_DATA = msg.guild!.language.tget('COMMAND_WHOIS_EMBED');
+		const EMBED_DATA = msg.guild.language.tget('COMMAND_WHOIS_EMBED');
 
 		const embed = new MessageEmbed()
 			.addFields([

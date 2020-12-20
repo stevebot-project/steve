@@ -1,10 +1,11 @@
 import { SteveCommand } from '@lib/structures/commands/SteveCommand';
-import { CommandOptions, KlasaMessage } from 'klasa';
+import { CommandOptions } from 'klasa';
 import { Role, Message, MessageEmbed } from 'discord.js';
 import { formatDate } from '@utils/util';
 import { RoleAlias } from '../Role Aliases/rolealias';
 import { GuildSettings } from '@lib/types/settings/GuildSettings';
 import { ApplyOptions } from '@skyra/decorators';
+import { GuildMessage } from '@lib/types/Messages';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['membersin'],
@@ -15,24 +16,24 @@ import { ApplyOptions } from '@skyra/decorators';
 })
 export default class extends SteveCommand {
 
-	public async run(msg: KlasaMessage, [role]: [Role]): Promise<Message> {
-		if (role.isRestricted && !msg.member!.isStaff) throw msg.guild!.language.tget('COMMAND_ROLEINFO_RESTRICTED');
+	public async run(msg: GuildMessage, [role]: [Role]): Promise<Message> {
+		if (role.isRestricted && !msg.member.isStaff) throw msg.guild.language.tget('COMMAND_ROLEINFO_RESTRICTED');
 
 		let membersList = role.members.map(m => m.user.username).join(', ');
 
 		membersList = membersList.length < 1
-			? msg.guild!.language.tget('COMMAND_ROLEINFO_NOMEMBERS')
+			? msg.guild.language.tget('COMMAND_ROLEINFO_NOMEMBERS')
 			: membersList.length > 1024
-				? msg.guild!.language.tget('COMMAND_ROLEINFO_TOOMANY')
+				? msg.guild.language.tget('COMMAND_ROLEINFO_TOOMANY')
 				: membersList;
 
-		let aliases: RoleAlias[] = msg.guild!.settings.get(GuildSettings.RoleAliases);
+		let aliases: RoleAlias[] = msg.guild.settings.get(GuildSettings.RoleAliases);
 		const roleHasAlias = aliases.some(a => a.role === role.id);
 		if (roleHasAlias) {
 			aliases = aliases.filter(a => a.role === role.id);
 		}
 
-		const EMBED_DATA = msg.guild!.language.tget('COMMAND_ROLEINFO_EMBED');
+		const EMBED_DATA = msg.guild.language.tget('COMMAND_ROLEINFO_EMBED');
 
 		const embed = new MessageEmbed()
 			.addFields([

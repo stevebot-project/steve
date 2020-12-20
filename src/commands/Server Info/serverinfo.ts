@@ -1,8 +1,9 @@
 import { SteveCommand } from '@lib/structures/commands/SteveCommand';
-import { CommandOptions, KlasaMessage } from 'klasa';
+import { CommandOptions } from 'klasa';
 import { Message, MessageEmbed } from 'discord.js';
 import { friendlyDuration, formatDate } from '@utils/util';
 import { ApplyOptions } from '@skyra/decorators';
+import { GuildMessage } from '@lib/types/Messages';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['serverstats'],
@@ -12,8 +13,8 @@ import { ApplyOptions } from '@skyra/decorators';
 })
 export default class extends SteveCommand {
 
-	public async run(msg: KlasaMessage): Promise<Message> {
-		const EMBED_DATA = msg.guild!.language.tget('COMMAND_SERVERINFO_EMBED');
+	public async run(msg: GuildMessage): Promise<Message> {
+		const EMBED_DATA = msg.guild.language.tget('COMMAND_SERVERINFO_EMBED');
 
 		const embed = new MessageEmbed()
 			.addFields([
@@ -24,7 +25,7 @@ export default class extends SteveCommand {
 				{ name: EMBED_DATA.FIELD_TITLES.ROLES, value: msg.guild!.roles.cache.size, inline: true },
 				{ name: EMBED_DATA.FIELD_TITLES.EMOJIS, value: msg.guild!.emojis.cache.size, inline: true }
 			])
-			.setAuthor(msg.guild!.name, msg.guild!.iconURL()!)
+			.setAuthor(msg.guild.name, msg.guild.iconURL()!)
 			.setFooter(EMBED_DATA.FOOTER(formatDate(msg.guild!.createdTimestamp), friendlyDuration(Date.now() - msg.guild!.createdTimestamp)))
 			.setTimestamp();
 

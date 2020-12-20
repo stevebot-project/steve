@@ -1,8 +1,9 @@
 import { SteveCommand } from '@lib/structures/commands/SteveCommand';
 import { PermissionsLevels } from '@lib/types/Enums';
+import { GuildMessage } from '@lib/types/Messages';
 import { ApplyOptions } from '@skyra/decorators';
 import { Message, User } from 'discord.js';
-import { CommandOptions, KlasaMessage } from 'klasa';
+import { CommandOptions } from 'klasa';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['nick'],
@@ -15,15 +16,15 @@ import { CommandOptions, KlasaMessage } from 'klasa';
 })
 export default class extends SteveCommand {
 
-	public async run(msg: KlasaMessage, [user, nickname]: [User, string]): Promise<Message> {
-		const member = await msg.guild!.members.fetch(user);
-		if (!member) return msg.channel.send(msg.guild!.language.tget('USER_NOT_IN_GUILD', user.tag));
+	public async run(msg: GuildMessage, [user, nickname]: [User, string]): Promise<Message> {
+		const member = await msg.guild.members.fetch(user);
+		if (!member) return msg.channel.send(msg.guild.language.tget('USER_NOT_IN_GUILD', user.tag));
 
 		await member.setNickname(nickname);
 
 		return msg.channel.send(nickname
-			? msg.guild!.language.tget('COMMAND_NICKNAME_SET', user.tag)
-			: msg.guild!.language.tget('COMMAND_NICKNAME_CLEARED', user.tag));
+			? msg.guild.language.tget('COMMAND_NICKNAME_SET', user.tag)
+			: msg.guild.language.tget('COMMAND_NICKNAME_CLEARED', user.tag));
 	}
 
 }
