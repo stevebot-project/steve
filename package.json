@@ -1,6 +1,6 @@
 {
   "name": "steve",
-  "version": "3.10.2",
+  "version": "3.11.1",
   "description": "Discord bot for Tuataria and its sideservers.",
   "main": "dist/src/bot.js",
   "scripts": {
@@ -10,8 +10,8 @@
     "dev": "tsc -p . && node --harmony dist/src/Steve.js",
     "dev-clear": "rm -rf dist && tsc -p . && node --harmony dist/src/Steve.js",
     "test": "eslint src --ext .ts",
-	"lint": "eslint src --ext .ts --fix",
-	"contrib:add": "all-contributors add"
+    "lint": "eslint src --ext .ts --fix",
+    "contrib:add": "all-contributors add"
   },
   "repository": {
     "type": "git",
