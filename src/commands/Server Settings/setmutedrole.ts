@@ -1,9 +1,10 @@
 import { SteveCommand } from '@lib/structures/commands/SteveCommand';
 import { PermissionsLevels } from '@lib/types/Enums';
+import { GuildMessage } from '@lib/types/Messages';
 import { GuildSettings } from '@lib/types/settings/GuildSettings';
 import { ApplyOptions } from '@skyra/decorators';
 import { Message, Role } from 'discord.js';
-import { CommandOptions, KlasaMessage } from 'klasa';
+import { CommandOptions } from 'klasa';
 
 @ApplyOptions<CommandOptions>({
 	description: lang => lang.tget('COMMAND_SETMUTEDROLE_DESCRIPTION'),
@@ -14,10 +15,10 @@ import { CommandOptions, KlasaMessage } from 'klasa';
 })
 export default class extends SteveCommand {
 
-	public async run(msg: KlasaMessage, [role]: [Role]): Promise<Message> {
-		await msg.guild!.settings.update(GuildSettings.Roles.Muted, role.id, msg.guild!.id);
+	public async run(msg: GuildMessage, [role]: [Role]): Promise<Message> {
+		await msg.guild.settings.update(GuildSettings.Roles.Muted, role.id, msg.guild.id);
 
-		return msg.channel.send(msg.guild!.language.tget('COMMAND_SETMUTEDROLE_SET', role.name));
+		return msg.channel.send(msg.guild.language.tget('COMMAND_SETMUTEDROLE_SET', role.name));
 	}
 
 }

@@ -15,7 +15,7 @@ import { CommandOptions } from 'klasa';
 export default class extends SteveCommand {
 
 	public async run(msg: GuildMessage): Promise<Message> {
-		await msg.channel.updateOverwrite(msg.guild!.id, { SEND_MESSAGES: true }, msg.author.tag);
+		await msg.channel.updateOverwrite(msg.guild.id, { SEND_MESSAGES: true }, msg.author.tag);
 
 		return msg.channel.send(msg.guild.language.tget('COMMAND_UNLOCK_UNLOCKED'));
 	}

@@ -46,7 +46,7 @@ export default class extends SteveCommand {
 
 	public async set(msg: GuildMessage, [key, ...valueToSet]: [string, string[]]) {
 		const status = await msg.guild.settings.update(key, valueToSet.join(' '), msg.guild, { avoidUnconfigurable: true, action: 'add' });
-		return this.check(msg, key, status) || msg.sendLocale('COMMAND_CONF_UPDATED', [key, msg.guild!.settings.resolveString(msg, status.updated[0].piece)]);
+		return this.check(msg, key, status) || msg.sendLocale('COMMAND_CONF_UPDATED', [key, msg.guild.settings.resolveString(msg, status.updated[0].piece)]);
 	}
 
 	public async remove(msg: GuildMessage, [key, ...valueToRemove]: [string, string[]]) {

@@ -1,9 +1,10 @@
 import { SteveCommand } from '@lib/structures/commands/SteveCommand';
 import { PermissionsLevels } from '@lib/types/Enums';
+import { GuildMessage } from '@lib/types/Messages';
 import { GuildSettings } from '@lib/types/settings/GuildSettings';
 import { ApplyOptions } from '@skyra/decorators';
 import { Message, TextChannel } from 'discord.js';
-import { CommandOptions, KlasaMessage } from 'klasa';
+import { CommandOptions } from 'klasa';
 
 @ApplyOptions<CommandOptions>({
 	description: lang => lang.tget('COMMAND_SETREMINDERCHANNEL_DESCRIPTION'),
@@ -14,10 +15,10 @@ import { CommandOptions, KlasaMessage } from 'klasa';
 })
 export default class extends SteveCommand {
 
-	public async run(msg: KlasaMessage, [channel]: [TextChannel]): Promise<Message> {
-		await msg.guild!.settings.update(GuildSettings.Channels.ReminderChannel, channel.id);
+	public async run(msg: GuildMessage, [channel]: [TextChannel]): Promise<Message> {
+		await msg.guild.settings.update(GuildSettings.Channels.ReminderChannel, channel.id);
 
-		return msg.channel.send(msg.guild!.language.tget('COMMAND_SETREMINDERCHANNEL_SET', channel.id));
+		return msg.channel.send(msg.guild.language.tget('COMMAND_SETREMINDERCHANNEL_SET', channel.id));
 	}
 
 }

@@ -36,7 +36,7 @@ export default class extends SteveCommand {
 
 			return msg.channel.send(embed);
 		} catch (e) {
-			return msg.channel.send(msg.guild!.language.tget('COMMAND_AVATAR_CANNOTDISPLAY', user.tag));
+			return msg.channel.send(msg.language.tget('COMMAND_AVATAR_CANNOTDISPLAY', user.tag));
 		}
 	}
 

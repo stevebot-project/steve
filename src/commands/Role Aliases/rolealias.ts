@@ -39,7 +39,7 @@ export default class extends SteveCommand {
 		const roleAliases: RoleAlias[] = msg.guild.settings.get(GuildSettings.RoleAliases);
 
 		if (!this.roleAliasExists(roleAliases, alias)) {
-			throw msg.guild!.language.tget('COMMAND_ROLEALIAS_DOESNOTEXIST', alias);
+			throw msg.guild.language.tget('COMMAND_ROLEALIAS_DOESNOTEXIST', alias);
 		}
 
 		const removedAlias = roleAliases.find(ra => ra.alias === alias.toLowerCase());

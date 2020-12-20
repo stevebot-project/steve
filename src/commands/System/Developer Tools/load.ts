@@ -9,9 +9,7 @@ import { ApplyOptions } from '@skyra/decorators';
 @ApplyOptions<CommandOptions>({
 	description: lang => lang.tget('COMMAND_TOGGLETRUSTEDROLEREQUIREMENT_DESCRIPTION'),
 	extendedHelp: lang => lang.tget('COMMAND_TOGGLETRUSTEDROLEREQUIREMENT_EXTENDED'),
-	permissionLevel: PermissionsLevels.MODERATOR,
-	requiredSettings: ['roles.trusted'],
-	runIn: ['text']
+	permissionLevel: PermissionsLevels.OWNER
 })
 export default class extends SteveCommand {
 

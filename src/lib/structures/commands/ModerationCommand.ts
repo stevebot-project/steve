@@ -1,7 +1,8 @@
 import { SteveCommand } from './SteveCommand';
-import { CommandOptions, CommandStore, util, KlasaMessage } from 'klasa';
+import { CommandOptions, CommandStore, util } from 'klasa';
 import { PermissionsLevels } from '@lib/types/Enums';
 import { GuildMember, User, Message, Guild } from 'discord.js';
+import { GuildMessage } from '@lib/types/Messages';
 
 export interface ModerationCommandOptions extends CommandOptions {
 	duration?: boolean;
@@ -23,11 +24,11 @@ export abstract class ModerationCommand extends SteveCommand {
 		this.duration = options.duration;
 	}
 
-	public async run(msg: KlasaMessage, [target, reason, duration]: [User, string | undefined, number | undefined]): Promise<Message> {
-		const prehandledTarget = await this.prehandle(target, msg.guild!);
-		if (prehandledTarget instanceof GuildMember) this.checkModeratable(prehandledTarget, msg.member!);
+	public async run(msg: GuildMessage, [target, reason, duration]: [User, string | undefined, number | undefined]): Promise<Message> {
+		const prehandledTarget = await this.prehandle(target, msg.guild);
+		if (prehandledTarget instanceof GuildMember) this.checkModeratable(prehandledTarget, msg.member);
 
-		if (typeof reason === 'undefined') reason = msg.guild!.language.tget('MODERATION_NOREASON') as string;
+		if (typeof reason === 'undefined') reason = msg.guild.language.tget('MODERATION_NOREASON') as string;
 
 		await this.handle(msg, prehandledTarget, reason);
 
@@ -35,8 +36,8 @@ export abstract class ModerationCommand extends SteveCommand {
 	}
 
 	public abstract prehandle(target: User, guild: Guild): Promise<GuildMember | User>; // choose target type
-	public abstract handle(msg: KlasaMessage, target: GuildMember | User, reason: string): Promise<GuildMember | User>; // do the thing
-	public abstract posthandle(msg: KlasaMessage, target: GuildMember | User, reason: string, duration: number | undefined): Promise<Message>; // handle modlog and case
+	public abstract handle(msg: GuildMessage, target: GuildMember | User, reason: string): Promise<GuildMember | User>; // do the thing
+	public abstract posthandle(msg: GuildMessage, target: GuildMember | User, reason: string, duration: number | undefined): Promise<Message>; // handle modlog and case
 
 	private checkModeratable(target: GuildMember, moderator: GuildMember): boolean {
 		if (target.id === target.guild.me!.id) throw target.guild.language.tget('MODERATION_NOSTEVE');

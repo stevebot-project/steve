@@ -1,9 +1,10 @@
 import { SteveCommand } from '@lib/structures/commands/SteveCommand';
 import { PermissionsLevels } from '@lib/types/Enums';
+import { GuildMessage } from '@lib/types/Messages';
 import { GuildSettings } from '@lib/types/settings/GuildSettings';
 import { ApplyOptions } from '@skyra/decorators';
 import { Message } from 'discord.js';
-import { CommandOptions, KlasaMessage } from 'klasa';
+import { CommandOptions } from 'klasa';
 
 @ApplyOptions<CommandOptions>({
 	description: lang => lang.tget('COMMAND_MANAGEWORDBLACKLIST_DESCRIPTION'),
@@ -14,26 +15,26 @@ import { CommandOptions, KlasaMessage } from 'klasa';
 })
 export default class extends SteveCommand {
 
-	public async run(msg: KlasaMessage, [word]: [string]): Promise<Message> {
+	public async run(msg: GuildMessage, [word]: [string]): Promise<Message> {
 		if (word === 'enable') {
-			await msg.guild!.settings.update(GuildSettings.WordBlacklist.Enabled, true);
+			await msg.guild.settings.update(GuildSettings.WordBlacklist.Enabled, true);
 
-			return msg.channel.send(msg.guild!.language.tget('COMMAND_MANAGEWORDBLACKLIST_ENABLED'));
+			return msg.channel.send(msg.guild.language.tget('COMMAND_MANAGEWORDBLACKLIST_ENABLED'));
 		} else if (word === 'disable') {
-			await msg.guild!.settings.update(GuildSettings.WordBlacklist.Enabled, false);
+			await msg.guild.settings.update(GuildSettings.WordBlacklist.Enabled, false);
 
-			return msg.channel.send(msg.guild!.language.tget('COMMAND_MANAGEWORDBLACKLIST_DISABLED'));
+			return msg.channel.send(msg.guild.language.tget('COMMAND_MANAGEWORDBLACKLIST_DISABLED'));
 		} else if (word === 'reset') {
-			await msg.guild!.settings.reset(GuildSettings.WordBlacklist.List);
+			await msg.guild.settings.reset(GuildSettings.WordBlacklist.List);
 
-			return msg.channel.send(msg.guild!.language.tget('COMMAND_MANAGEWORDBLACKLIST_RESET'));
+			return msg.channel.send(msg.guild.language.tget('COMMAND_MANAGEWORDBLACKLIST_RESET'));
 		}
 
-		const removing = (msg.guild!.settings.get(GuildSettings.WordBlacklist.List) as string[]).includes(word);
+		const removing = (msg.guild.settings.get(GuildSettings.WordBlacklist.List) as string[]).includes(word);
 
-		await msg.guild!.settings.update(GuildSettings.WordBlacklist.List, word);
+		await msg.guild.settings.update(GuildSettings.WordBlacklist.List, word);
 
-		return msg.channel.send(msg.guild!.language.tget('COMMAND_MANAGEWORDBLACKLIST_UPDATE', removing));
+		return msg.channel.send(msg.guild.language.tget('COMMAND_MANAGEWORDBLACKLIST_UPDATE', removing));
 	}
 
 }

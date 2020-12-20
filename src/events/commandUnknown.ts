@@ -16,11 +16,11 @@ export default class extends Event {
 
 		/* check for exact role name matches */
 		const roles
-			= msg.guild!.roles.cache.filter(r => (msg.guild!.settings.get(GuildSettings.Roles.Assignable) as string[]).includes(r.id))
+			= msg.guild.roles.cache.filter(r => (msg.guild!.settings.get(GuildSettings.Roles.Assignable) as string[]).includes(r.id))
 				.map(r => r.name.toLowerCase());
 
 		const role = roles.some(r => r === cmd);
-		if (role) return this.runAssign(msg, msg.guild!.roles.cache.find(r => r.name.toLowerCase() === cmd)!);
+		if (role) return this.runAssign(msg, msg.guild.roles.cache.find(r => r.name.toLowerCase() === cmd)!);
 
 		/* check for role alias matches */
 		const aliases: RoleAlias[] = msg.guild.settings.get(GuildSettings.RoleAliases);

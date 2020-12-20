@@ -1,7 +1,7 @@
 import { ModerationCommand, ModerationCommandOptions } from '@lib/structures/commands/ModerationCommand';
-import { KlasaMessage } from 'klasa';
 import { User, Guild, GuildMember, Message } from 'discord.js';
 import { ApplyOptions } from '@skyra/decorators';
+import { GuildMessage } from '@lib/types/Messages';
 
 @ApplyOptions<ModerationCommandOptions>({
 	description: lang => lang.tget('COMMAND_BAN_DESCRIPTION'),
@@ -16,7 +16,7 @@ export default class extends ModerationCommand {
 		return member;
 	}
 
-	public async handle(msg: KlasaMessage, target: GuildMember, reason: string): Promise<GuildMember> {
+	public async handle(msg: GuildMessage, target: GuildMember, reason: string): Promise<GuildMember> {
 		try {
 			await msg.guild!.moderation.ban(target, reason);
 		} catch (err) {
@@ -27,7 +27,7 @@ export default class extends ModerationCommand {
 		return target;
 	}
 
-	public async posthandle(msg: KlasaMessage, target: GuildMember, reason: string, duration: number | undefined): Promise<Message> {
+	public async posthandle(msg: GuildMessage, target: GuildMember, reason: string, duration: number | undefined): Promise<Message> {
 		const modTask = duration
 			? await this.client.schedule.createModerationTask('unban', duration, { targetID: target.id, guildID: msg.guild!.id })
 			: null;
