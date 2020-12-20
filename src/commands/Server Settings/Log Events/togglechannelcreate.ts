@@ -4,7 +4,7 @@ import { GuildMessage } from '@lib/types/Messages';
 import { GuildSettings } from '@lib/types/settings/GuildSettings';
 import { ApplyOptions } from '@skyra/decorators';
 import { Message } from 'discord.js';
-import { CommandOptions, KlasaMessage } from 'klasa';
+import { CommandOptions } from 'klasa';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['tcc'],
