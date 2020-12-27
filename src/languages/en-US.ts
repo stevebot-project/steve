@@ -443,6 +443,15 @@ export default class extends Language {
 			extendedHelp: 'Darling, Fetch the Battle Axe!',
 			reminder: 'Decepticons Fear This Brilliant Autobot'
 		}),
+		COMMAND_XKCD_DESCRIPTION: 'Get an XKCD comic',
+		COMMAND_XKCD_EXTENDED: builder.display('xkcd', {
+			examples: [
+				'',
+				'50'
+			],
+			extendedHelp: 'The ability to search for a relevant XKCD is coming soon!'
+		}),
+		COMMAND_XKCD_INVALID: 'I was unable to find that XKCD.',
 		/**
 		 * ################################
 		 * #      MODERATION SYSTEM       #
