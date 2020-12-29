@@ -62,7 +62,7 @@ export default class extends SteveCommand {
 			.replace('>>', '>');
 		return new MessageEmbed()
 			.setColor(0x2242c7)
-			.setDescription(description)
+			.setDescription(`${description}\n\nhttps://xkcd.com/${comic.num}/`)
 			.setImage(comic.img)
 			.setTimestamp()
 			.setTitle(oneLine`${comic.safe_title} (#${comic.num},
