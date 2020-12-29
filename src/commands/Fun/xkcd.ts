@@ -53,9 +53,16 @@ export default class extends SteveCommand {
 	 * @param comic The Xkcd commic used to form the embed
 	 */
 	private createComicEmbed(comic: XkcdComic): MessageEmbed {
+		const description = (comic.transcript || comic.alt)
+			.replace('{{', '{')
+			.replace('}}', '}')
+			.replace('[[', '[')
+			.replace(']]', ']')
+			.replace('<<', '<')
+			.replace('>>', '>');
 		return new MessageEmbed()
 			.setColor(0x2242c7)
-			.setDescription(comic.transcript || comic.alt)
+			.setDescription(description)
 			.setImage(comic.img)
 			.setTimestamp()
 			.setTitle(oneLine`${comic.safe_title} (#${comic.num},
