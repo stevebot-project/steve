@@ -54,12 +54,12 @@ export default class extends SteveCommand {
 	 */
 	private createComicEmbed(comic: XkcdComic): MessageEmbed {
 		const description = (comic.transcript || comic.alt)
-			.replace('{{', '{')
-			.replace('}}', '}')
-			.replace('[[', '[')
-			.replace(']]', ']')
-			.replace('<<', '<')
-			.replace('>>', '>');
+			.replace(/{{/g, '{')
+			.replace(/}}/g, '}')
+			.replace(/\[\[/g, '[')
+			.replace(/]]/g, ']')
+			.replace(/<</g, '<')
+			.replace(/>>/g, '>');
 		return new MessageEmbed()
 			.setColor(0x2242c7)
 			.setDescription(`${description}\n\nhttps://xkcd.com/${comic.num}/`)
