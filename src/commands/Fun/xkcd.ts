@@ -21,34 +21,55 @@ interface XkcdComic {
 }
 
 @ApplyOptions<CommandOptions>({
+	aliases: ['x'],
 	cooldown: 15,
 	cooldownLevel: 'author',
 	description: lang => lang.tget('COMMAND_XKCD_DESCRIPTION'),
 	extendedHelp: lang => lang.tget('COMMAND_XKCD_EXTENDED'),
 	requiredPermissions: ['EMBED_LINKS'],
-	usage: '[comicNumber:integer]'
+	subcommands: true,
+	usage: '<new|random:default> [comicNumber:integer]'
 })
 export default class extends SteveCommand {
 
-	public async run(msg: KlasaMessage, [comicID]: [number]) {
+	public async random(msg: KlasaMessage, [comicID]: [number]) {
+		const comic = comicID
+			? await this.getXkcdByNumber(comicID).catch(() => { throw msg.language.tget('COMMAND_XKCD_INVALID'); })
+			: await this.getRandomXkcd();
+
+		return msg.channel.send(this.createComicEmbed(comic));
+	}
+
+	public async new(msg: KlasaMessage, [comicID]: [number]) {
 		const comic = comicID
 			? await this.getXkcdByNumber(comicID).catch(() => { throw msg.language.tget('COMMAND_XKCD_INVALID'); })
 			: await this.getCurrentXkcd();
 
-		const embed = new MessageEmbed()
+		return msg.channel.send(this.createComicEmbed(comic));
+	}
+
+	/**
+	 *
+	 * @param comic The Xkcd commic used to form the embed
+	 */
+	private createComicEmbed(comic: XkcdComic): MessageEmbed {
+		return new MessageEmbed()
 			.setColor(0x2242c7)
 			.setDescription(comic.transcript || comic.alt)
 			.setImage(comic.img)
 			.setTimestamp()
 			.setTitle(oneLine`${comic.safe_title} (#${comic.num},
 				${formatDate(new Date(Number(comic.year), Number(comic.month) - 1, Number(comic.day)), 'YYYY MMMM Do')})`);
-
-		return msg.channel.send(embed);
 	}
 
 	private async getCurrentXkcd() {
 		const res = await axios.get<XkcdComic>(`http://xkcd.com/info.0.json`);
 		return res.data;
+	}
+
+	private async getRandomXkcd() {
+		const comicID = Math.trunc((Math.random() * ((await this.getCurrentXkcd()).num - 1)) + 1);
+		return this.getXkcdByNumber(comicID);
 	}
 
 	/**
