@@ -19,6 +19,7 @@ export const NAME = 'Steve';
 
 export const FEEDBACK_GUILD = ''; // guild snowflake
 export const FEEDBACK_CHANNEL = ''; // text channel snowflake
+export const SUPPORT_LINK = ''; // link to the bot's support server
 
 export const CLIENT_OPTIONS: KlasaClientOptions = {
 	commandEditing: true,

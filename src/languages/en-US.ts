@@ -1008,6 +1008,7 @@ export default class extends Language {
 		COMMAND_FEEDBACK_NO_GUILD: 'The specified feedback server for this bot does not exist; contact a bot owner.',
 		COMMAND_FEEDBACK_NO_CHANNEL: 'The specified feedback channel for this bot does not exist; contact a bot owner.',
 		COMMAND_FEEDBACK_SENT: 'Your feedback has been sent, thanks!',
+		COMMAND_SUPPORT_DESCRIPTION: `Get a link to ${botName}'s support server.`,
 		/**
 		 * ################################
 		 * #  LOG EVENT  TOGGLE COMMANDS  #
