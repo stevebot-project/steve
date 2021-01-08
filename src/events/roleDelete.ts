@@ -14,6 +14,8 @@ export default class extends Event {
 
 		const aliases: RoleAlias[] = role.guild.settings.get(GuildSettings.RoleAliases);
 		if (aliases.some(a => a.role === role.id)) floatPromise(this, this.handleAliases(aliases, role));
+
+		if (role.isAssignable) floatPromise(this, this.handleSelfAssign(role));
 	}
 
 	private async handleAliases(aliases: RoleAlias[], role: Role) {
@@ -37,6 +39,10 @@ export default class extends Event {
 			.setTitle(EMBED_DATA.TITLE(role.name));
 
 		return serverlog.send(embed);
+	}
+
+	private async handleSelfAssign(role: Role) {
+		await role.guild.settings.update(GuildSettings.Roles.Assignable, role.id, role.guild.id);
 	}
 
 }

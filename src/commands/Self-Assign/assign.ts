@@ -63,16 +63,20 @@ export default class extends SteveCommand {
 		let assignables = msg.guild.settings.get(GuildSettings.Roles.Assignable) as string[];
 		assignables = assignables.slice(); // clone to avoid mutating cache
 
-		// make assignables into an array of role names
+		const roleNames: string[] = [];
+
 		for (let i = 0; i < assignables.length; i++) {
 			const role = msg.guild.roles.cache.get(assignables[i]);
-			if (role) assignables.splice(i, 1, role.name);
+
+			if (role) roleNames.push(role.name);
 		}
+
+		if (!roleNames.length) throw msg.guild.language.tget('COMMAND_MANAGEASSIGNABLEROLES_SHOW_NOROLES');
 
 		const response = await msg.send(new MessageEmbed()
 			.setDescription('Loading...'));
 
-		const display = richDisplayList(assignables, 30);
+		const display = richDisplayList(roleNames, 30);
 
 		await display.run(response);
 		return response;
