@@ -50,6 +50,7 @@ declare module 'klasa' {
 		INHIBITOR_DISABLED_GUILD: string;
 		INHIBITOR_DISABLED_GLOBAL: string;
 		INHIBITOR_MISSING_BOT_PERMS: (missing: string) => string;
+		inhibitorMissingBotPerms: (missing: string) => string; // for @requiredPermissions
 		INHIBITOR_NSFW: string;
 		INHIBITOR_PERMISSIONS: string;
 		INHIBITOR_REQUIRED_SETTINGS: (settings: string[]) => string;

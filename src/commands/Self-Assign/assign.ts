@@ -3,7 +3,7 @@ import { CommandOptions } from 'klasa';
 import { Role, Message, MessageEmbed } from 'discord.js';
 import { GuildSettings } from '@lib/types/settings/GuildSettings';
 import { floatPromise, richDisplayList } from '@utils/util';
-import { ApplyOptions } from '@skyra/decorators';
+import { ApplyOptions, requiredPermissions } from '@skyra/decorators';
 import { GuildMessage } from '@lib/types/Messages';
 
 @ApplyOptions<CommandOptions>({
@@ -59,6 +59,7 @@ export default class extends SteveCommand {
 		return output ? msg.channel.send(output) : null;
 	}
 
+	@requiredPermissions('EMBED_LINKS')
 	private async listAssignableRoles(msg: GuildMessage): Promise<Message> {
 		let assignables = msg.guild.settings.get(GuildSettings.Roles.Assignable) as string[];
 		assignables = assignables.slice(); // clone to avoid mutating cache

@@ -155,6 +155,7 @@ export default class extends Language {
 		INHIBITOR_DISABLED_GUILD: 'This command has been disabled by an admin in this guild.',
 		INHIBITOR_DISABLED_GLOBAL: 'This command has been globally disabled by the bot owner.',
 		INHIBITOR_MISSING_BOT_PERMS: (missing): string => `Insufficient permissions, missing: **${missing}**`,
+		inhibitorMissingBotPerms: (missing): string => `Insufficient permissions, missing: **${missing}**`, // this one is for the @requiredPermissions decorator
 		INHIBITOR_NSFW: 'You can only use NSFW commands in NSFW channels.',
 		INHIBITOR_PERMISSIONS: 'You do not have permission to use this command.',
 		INHIBITOR_REQUIRED_SETTINGS: (settings): string => `The guild is missing the **${settings.join(', ')}** guild setting${settings.length === 1 ? '' : 's'} and thus the command cannot run.`,

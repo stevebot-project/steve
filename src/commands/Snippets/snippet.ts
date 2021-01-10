@@ -4,7 +4,7 @@ import { CommandOptions, RichDisplay } from 'klasa';
 import { GuildSettings } from '@lib/types/settings/GuildSettings';
 import { Message, MessageEmbed } from 'discord.js';
 import { chunk, codeBlock } from '@klasa/utils';
-import { ApplyOptions, requiresPermission } from '@skyra/decorators';
+import { ApplyOptions, requiredPermissions, requiresPermission } from '@skyra/decorators';
 import { PermissionsLevels } from '@lib/types/Enums';
 import { GuildMessage } from '@lib/types/Messages';
 
@@ -76,6 +76,7 @@ export default class extends SteveCommand {
 		return msg.channel.send(snip.embed ? new MessageEmbed().setDescription(snip.content) : snip.content);
 	}
 
+	@requiredPermissions('EMBED_LINKS')
 	public async list(msg: GuildMessage): Promise<Message> {
 		const snips: Snippet[] = msg.guild.settings.get(GuildSettings.Snippets);
 		if (!snips.length) throw msg.guild.language.tget('COMMAND_SNIPPET_NOSNIPS');

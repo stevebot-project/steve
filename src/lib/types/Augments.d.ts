@@ -2,7 +2,8 @@ import { BaseNodeOptions, Node as Lavalink } from 'lavalink';
 import { ModerationManager } from '@lib/structures/ModerationManager';
 import { LanguageKeys } from 'klasa';
 import { ModerationTask, ModerationTaskData, Reminder } from '../../extendables/Schedule';
-import { PermissionString, TextChannel } from 'discord.js';
+import { TextChannel } from 'discord.js';
+import { PermissionStrings } from '@skyra/decorators';
 
 declare module 'discord.js' {
 	interface Channel {
@@ -37,7 +38,7 @@ declare module 'klasa' {
 	interface Language {
 		caseActions: any;
 		dftba: string[];
-		PERMISSIONS: Record<PermissionString, string>;
+		PERMISSIONS: PermissionStrings;
 		randomDftba: string;
 		tget<T extends SimpleLanguageKeys>(term: T): LanguageKeys[T];
 		tget<T extends ComplexLanguageKeys>(term: T, ...args: Parameters<LanguageKeys[T]>): ReturnType<LanguageKeys[T]>;
