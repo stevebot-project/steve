@@ -6,6 +6,7 @@ import { GuildMessage } from '@lib/types/Messages';
 @ApplyOptions<ModerationCommandOptions>({
 	description: lang => lang.tget('COMMAND_UNBAN_DESCRIPTION'),
 	extendedHelp: lang => lang.tget('COMMAND_UNBAN_EXTENDED'),
+	requiredPermissions: ['BAN_MEMBERS'],
 	usage: '<user:user> [reason:string]'
 })
 export default class extends ModerationCommand {

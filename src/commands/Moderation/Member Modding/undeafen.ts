@@ -6,6 +6,7 @@ import { GuildMessage } from '@lib/types/Messages';
 @ApplyOptions<ModerationCommandOptions>({
 	description: lang => lang.tget('COMMAND_UNDEAFEN_DESCRIPTION'),
 	extendedHelp: lang => lang.tget('COMMAND_UNDEAFEN_EXTENDED'),
+	requiredPermissions: ['MANAGE_ROLES'],
 	requiredSettings: ['roles.deafened']
 })
 export default class extends ModerationCommand {

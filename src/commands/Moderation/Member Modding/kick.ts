@@ -5,7 +5,8 @@ import { GuildMessage } from '@lib/types/Messages';
 
 @ApplyOptions<ModerationCommandOptions>({
 	description: lang => lang.tget('COMMAND_KICK_DESCRIPTION'),
-	extendedHelp: lang => lang.tget('COMMAND_KICK_EXTENDED')
+	extendedHelp: lang => lang.tget('COMMAND_KICK_EXTENDED'),
+	requiredPermissions: ['KICK_MEMBERS']
 })
 export default class extends ModerationCommand {
 

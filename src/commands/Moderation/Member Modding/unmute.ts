@@ -6,6 +6,7 @@ import { GuildMessage } from '@lib/types/Messages';
 @ApplyOptions<ModerationCommandOptions>({
 	description: lang => lang.tget('COMMAND_UNMUTE_DESCRIPTION'),
 	extendedHelp: lang => lang.tget('COMMAND_UNMUTE_EXTENDED'),
+	requiredPermissions: ['MANAGE_ROLES'],
 	requiredSettings: ['roles.muted']
 })
 export default class extends ModerationCommand {

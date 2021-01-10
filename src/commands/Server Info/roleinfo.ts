@@ -11,6 +11,7 @@ import { GuildMessage } from '@lib/types/Messages';
 	aliases: ['membersin'],
 	description: lang => lang.tget('COMMAND_ROLEINFO_DESCRIPTION'),
 	extendedHelp: lang => lang.tget('COMMAND_ROLEINFO_EXTENDED'),
+	requiredPermissions: ['EMBED_LINKS'],
 	runIn: ['text'],
 	usage: '<role:rolename>'
 })

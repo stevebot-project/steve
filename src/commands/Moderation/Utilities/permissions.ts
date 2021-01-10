@@ -11,6 +11,7 @@ const PERM_FLAGS = Object.keys(Permissions.FLAGS) as PermissionString[];
 	aliases: ['perms'],
 	description: lang => lang.tget('COMMAND_PERMISSIONS_DESCRIPTION'),
 	permissionLevel: PermissionsLevels.MODERATOR,
+	requiredPermissions: ['EMBED_LINKS'],
 	runIn: ['text'],
 	usage: '<user:username>'
 })

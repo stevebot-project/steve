@@ -7,6 +7,7 @@ import { GuildMessage } from '@lib/types/Messages';
 	description: lang => lang.tget('COMMAND_MUTE_DESCRIPTION'),
 	duration: true,
 	extendedHelp: lang => lang.tget('COMMAND_MUTE_EXTENDED'),
+	requiredPermissions: ['MANAGE_ROLES'],
 	requiredSettings: ['roles.muted']
 })
 export default class extends ModerationCommand {

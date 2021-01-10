@@ -10,6 +10,7 @@ import { GuildMessage } from '@lib/types/Messages';
 	aliases: ['member'],
 	description: lang => lang.tget('COMMAND_WHOIS_DESCRIPTION'),
 	extendedHelp: lang => lang.tget('COMMAND_WHOIS_EXTENDED'),
+	requiredPermissions: ['EMBED_LINKS'],
 	runIn: ['text'],
 	usage: '[user:username]'
 })

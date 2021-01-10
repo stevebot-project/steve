@@ -9,6 +9,7 @@ import { GuildMessage } from '@lib/types/Messages';
 	aliases: ['serverstats'],
 	description: lang => lang.tget('COMMAND_SERVERINFO_DESCRIPTION'),
 	extendedHelp: lang => lang.tget('COMMAND_SERVERINFO_EXTENDED'),
+	requiredPermissions: ['EMBED_LINKS'],
 	runIn: ['text']
 })
 export default class extends SteveCommand {

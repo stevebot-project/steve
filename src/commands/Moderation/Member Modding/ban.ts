@@ -6,7 +6,8 @@ import { GuildMessage } from '@lib/types/Messages';
 @ApplyOptions<ModerationCommandOptions>({
 	description: lang => lang.tget('COMMAND_BAN_DESCRIPTION'),
 	duration: true,
-	extendedHelp: lang => lang.tget('COMMAND_BAN_EXTENDED')
+	extendedHelp: lang => lang.tget('COMMAND_BAN_EXTENDED'),
+	requiredPermissions: ['BAN_MEMBERS']
 })
 export default class extends ModerationCommand {
 

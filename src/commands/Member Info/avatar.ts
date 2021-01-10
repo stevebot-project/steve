@@ -7,6 +7,7 @@ import { CommandOptions, KlasaMessage } from 'klasa';
 @ApplyOptions<CommandOptions>({
 	aliases: ['av'],
 	description: lang => lang.tget('COMMAND_AVATAR_DESCRIPTION'),
+	requiredPermissions: ['EMBED_LINKS'],
 	usage: '[user:username]'
 })
 export default class extends SteveCommand {
