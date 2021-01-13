@@ -19,7 +19,7 @@ export default class extends Event {
 	private async logEmojiNameChange(oldEmoji: GuildEmoji, newEmoji: GuildEmoji, serverlog: TextChannel): Promise<Message> {
 		const executor = await getExecutor(newEmoji.guild, 'EMOJI_UPDATE');
 
-		const embedData = newEmoji.guild.language.tget('eventEmojiupdateNamechangeEmbed');
+		const embedData = newEmoji.guild.language.tget('eventEmojiUpdateNameChangeEmbedx');
 
 		const embed = new MessageEmbed()
 			.setAuthor(executor.tag, executor.displayAvatarURL())

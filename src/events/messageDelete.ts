@@ -20,7 +20,7 @@ export default class extends Event {
 
 		const msgContent = msg.content.length < 1024 && msg.content.length > 0
 			? msg.content
-			: msg.guild!.language.tget('eventMessagedeleteUnableToDisplay');
+			: msg.guild!.language.tget('eventMessageDeleteUnableToDisplay');
 
 		const parent = msg.channel.parent
 			? msg.channel.parent.name
@@ -28,7 +28,7 @@ export default class extends Event {
 
 		const msgSentTime = friendlyDuration(Date.now() - msg.createdTimestamp);
 
-		const embedData = msg.guild!.language.tget('eventMessagedeleteEmbed');
+		const embedData = msg.guild!.language.tget('eventMessageDeleteEmbed');
 
 		const embed = new MessageEmbed()
 			.addFields(

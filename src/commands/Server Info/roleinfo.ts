@@ -9,8 +9,8 @@ import { GuildMessage } from '@lib/types/Messages';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['membersin'],
-	description: lang => lang.tget('commandRoleinfoDescription'),
-	extendedHelp: lang => lang.tget('commandRoleinfoExtended'),
+	description: lang => lang.tget('commandRoleInfoDescription'),
+	extendedHelp: lang => lang.tget('commandRoleInfoExtended'),
 	requiredPermissions: ['EMBED_LINKS'],
 	runIn: ['text'],
 	usage: '<role:rolename>'
@@ -18,14 +18,14 @@ import { GuildMessage } from '@lib/types/Messages';
 export default class extends SteveCommand {
 
 	public async run(msg: GuildMessage, [role]: [Role]): Promise<Message> {
-		if (role.isRestricted && !msg.member.isStaff) throw msg.guild.language.tget('commandRoleinfoRestricted');
+		if (role.isRestricted && !msg.member.isStaff) throw msg.guild.language.tget('commandRoleInfoRestricted');
 
 		let membersList = role.members.map(m => m.user.username).join(', ');
 
 		membersList = membersList.length < 1
-			? msg.guild.language.tget('commandRoleinfoNomembers')
+			? msg.guild.language.tget('commandRoleInfoNoMembers')
 			: membersList.length > 1024
-				? msg.guild.language.tget('commandRoleinfoToomany')
+				? msg.guild.language.tget('commandRoleInfoTooMany')
 				: membersList;
 
 		let aliases: RoleAlias[] = msg.guild.settings.get(GuildSettings.RoleAliases);
@@ -34,7 +34,7 @@ export default class extends SteveCommand {
 			aliases = aliases.filter(a => a.role === role.id);
 		}
 
-		const embedData = msg.guild.language.tget('commandRoleinfoEmbed');
+		const embedData = msg.guild.language.tget('commandRoleInfoEmbed');
 
 		const embed = new MessageEmbed()
 			.addFields([

@@ -20,7 +20,7 @@ export default class extends Event {
 	}
 
 	private async logDisplayNameChange(oldMember: GuildMember, newMember: GuildMember, memberlog: TextChannel): Promise<Message> {
-		const embedData = newMember.guild.language.tget('eventGuildmemberupdateDisplaynamechangeEmbed');
+		const embedData = newMember.guild.language.tget('eventGuildMemberUpdateDisplayNameChangeEmbed');
 
 		const embed = new MessageEmbed()
 			.addFields(
@@ -36,13 +36,13 @@ export default class extends Event {
 
 	private async logRoleUpdate(oldMember: GuildMember, newMember: GuildMember, memberlog: TextChannel): Promise<Message> {
 		const roleUpdateType = oldMember.roles.cache.size > newMember.roles.cache.size
-			? newMember.guild.language.tget('eventGuildmemberupdateRoleupdateRemovedfrom')
-			: newMember.guild.language.tget('eventGuildmemberupdateRoleupdateAddedto');
+			? newMember.guild.language.tget('eventGuildMemberUpdateRoleUpdateRemovedFrom')
+			: newMember.guild.language.tget('eventGuildMemberUpdateRoleUpdateAddedTo');
 
 		const executor = await getExecutor(newMember.guild, 'MEMBER_ROLE_UPDATE');
 		const role = await this.getRoleFromAuditLogs(newMember.guild);
 
-		const embedData = newMember.guild.language.tget('eventGuildmemberupdateRoleupdateEmbed');
+		const embedData = newMember.guild.language.tget('eventGuildMemberUpdateRoleUpdateEmbed');
 
 		const embed = new MessageEmbed()
 			.setAuthor(newMember.user.tag, newMember.user.displayAvatarURL())

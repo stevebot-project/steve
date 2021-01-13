@@ -8,7 +8,7 @@ import { CommandOptions } from 'klasa';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['tcc'],
-	description: lang => lang.tget('commandTogglechannelcreateDescription'),
+	description: lang => lang.tget('commandToggleChannelCreateDescription'),
 	permissionLevel: PermissionsLevels.MODERATOR,
 	runIn: ['text']
 })
@@ -19,7 +19,7 @@ export default class extends SteveCommand {
 
 		await msg.guild.settings.update(GuildSettings.LogEvents.ChannelCreate, !current);
 
-		return msg.channel.send(msg.guild.language.tget('commandTogglechannelcreate', current));
+		return msg.channel.send(msg.guild.language.tget('commandToggleChannelCreate', current));
 	}
 
 }

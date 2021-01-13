@@ -11,7 +11,7 @@ import { CommandOptions, KlasaMessage } from 'klasa';
 export default class extends SteveCommand {
 
 	public async run(msg: KlasaMessage): Promise<Message> {
-		return msg.channel.send(msg.language.tget('commandPomodoroUnderconstruction'));
+		return msg.channel.send(msg.language.tget('commandPomodoroUnderConstruction'));
 	}
 
 }

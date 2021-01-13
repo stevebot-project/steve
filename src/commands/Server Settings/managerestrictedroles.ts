@@ -8,8 +8,8 @@ import { Message, MessageEmbed, Role } from 'discord.js';
 import { CommandOptions } from 'klasa';
 
 @ApplyOptions<CommandOptions>({
-	description: lang => lang.tget('commandManagerestrictedrolesDescription'),
-	extendedHelp: lang => lang.tget('commandManagerestrictedrolesExtended'),
+	description: lang => lang.tget('commandManageRestrictedRolesDescription'),
+	extendedHelp: lang => lang.tget('commandManageRestrictedRolesExtended'),
 	permissionLevel: PermissionsLevels.MODERATOR,
 	runIn: ['text'],
 	subcommands: true,
@@ -38,11 +38,11 @@ export default class extends SteveCommand {
 		let res = '';
 
 		if (removedRoles.length) {
-			res += msg.guild.language.tget('commandManagerestrictedrolesManageRemoved', removedRoles.join(', '));
+			res += msg.guild.language.tget('commandManageRestrictedRolesManageRemoved', removedRoles.join(', '));
 		}
 
 		if (addedRoles.length) {
-			res += msg.guild.language.tget('commandManagerestrictedrolesManageAdded', addedRoles.join(', '));
+			res += msg.guild.language.tget('commandManageRestrictedRolesManageAdded', addedRoles.join(', '));
 		}
 
 		return msg.channel.send(res);
@@ -51,12 +51,12 @@ export default class extends SteveCommand {
 	public async reset(msg: GuildMessage): Promise<Message> {
 		await msg.guild.settings.reset(GuildSettings.Roles.Restricted);
 
-		return msg.channel.send(msg.guild.language.tget('commandManagerestrictedrolesReset'));
+		return msg.channel.send(msg.guild.language.tget('commandManageRestrictedRolesReset'));
 	}
 
 	public async show(msg: GuildMessage): Promise<Message> {
 		const restrictedRoles = msg.guild.settings.get(GuildSettings.Roles.Restricted) as string[];
-		if (!restrictedRoles.length) return msg.channel.send(msg.guild.language.tget('commandManagerestrictedrolesShowNoroles'));
+		if (!restrictedRoles.length) return msg.channel.send(msg.guild.language.tget('commandManageRestrictedrolesShowNoRoles'));
 
 		const res = await msg.send(new MessageEmbed()
 			.setDescription('Loading...'));
@@ -65,7 +65,7 @@ export default class extends SteveCommand {
 
 		restrictedRoles.forEach(snowflake => {
 			const role = msg.guild.roles.cache.get(snowflake)!;
-			restrictedRoleNames.push(role.name ?? msg.guild.language.tget('commandManagerestrictedrolesShowRolenotfound'));
+			restrictedRoleNames.push(role.name ?? msg.guild.language.tget('commandManageRestrictedrolesShowRoleNotFound'));
 		});
 
 		const display = richDisplayList(restrictedRoleNames, 30);

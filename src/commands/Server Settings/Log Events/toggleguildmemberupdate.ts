@@ -8,7 +8,7 @@ import { CommandOptions } from 'klasa';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['tgmu'],
-	description: lang => lang.tget('commandToggleguildmemberupdateDescription'),
+	description: lang => lang.tget('commandToggleGuildMemberUpdateDescription'),
 	permissionLevel: PermissionsLevels.MODERATOR,
 	runIn: ['text']
 })
@@ -19,7 +19,7 @@ export default class extends SteveCommand {
 
 		await msg.guild.settings.update(GuildSettings.LogEvents.GuildMemberUpdate, !current);
 
-		return msg.channel.send(msg.guild.language.tget('commandToggleguildmemberupdate', current));
+		return msg.channel.send(msg.guild.language.tget('commandToggleGuildMemberUpdate', current));
 	}
 
 }

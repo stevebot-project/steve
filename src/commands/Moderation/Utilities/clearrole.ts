@@ -7,8 +7,8 @@ import { CommandOptions } from 'klasa';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['crole'],
-	description: lang => lang.tget('commandClearroleDescription'),
-	extendedHelp: lang => lang.tget('commandClearroleExtended'),
+	description: lang => lang.tget('commandClearRoleDescription'),
+	extendedHelp: lang => lang.tget('commandClearRoleExtended'),
 	permissionLevel: PermissionsLevels.MODERATOR,
 	runIn: ['text'],
 	requiredPermissions: ['MANAGE_ROLES'],
@@ -21,13 +21,13 @@ export default class extends SteveCommand {
 		await msg.guild.members.fetch();
 		const { size } = role.members;
 
-		if (size < 1) return res.edit(msg.guild.language.tget('commandClearroleRoleEmpty', role.name));
+		if (size < 1) return res.edit(msg.guild.language.tget('commandClearRoleRoleEmpty', role.name));
 
 		for (const [, member] of role.members) {
 			if (member.roles.cache.has(role.id)) await member.roles.remove(role.id);
 		}
 
-		return res.edit(msg.guild.language.tget('commandClearrole', size, role.name));
+		return res.edit(msg.guild.language.tget('commandClearRole', size, role.name));
 	}
 
 }

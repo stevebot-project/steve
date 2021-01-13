@@ -18,7 +18,7 @@ export default class extends Event {
 	private async handleLog(channel: GuildChannel, serverlog: TextChannel): Promise<Message> {
 		const executor = await getExecutor(channel.guild, 'CHANNEL_CREATE');
 
-		const embedData = channel.guild.language.tget('eventChannelcreateEmbed');
+		const embedData = channel.guild.language.tget('eventChannelCreateEmbed');
 
 		const embed = new MessageEmbed()
 			.setAuthor(executor.tag, executor.displayAvatarURL())

@@ -8,7 +8,7 @@ import { CommandOptions } from 'klasa';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['tru'],
-	description: lang => lang.tget('commandToggleroleupdateDescription'),
+	description: lang => lang.tget('commandToggleRoleUpdateDescription'),
 	permissionLevel: PermissionsLevels.MODERATOR,
 	runIn: ['text']
 })
@@ -19,7 +19,7 @@ export default class extends SteveCommand {
 
 		await msg.guild.settings.update(GuildSettings.LogEvents.RoleUpdate, !current);
 
-		return msg.channel.send(msg.guild.language.tget('commandToggleroleupdate', current));
+		return msg.channel.send(msg.guild.language.tget('commandToggleRoleUpdate', current));
 	}
 
 }

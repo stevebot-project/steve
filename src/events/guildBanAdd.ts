@@ -16,7 +16,7 @@ export default class extends Event {
 	private async handleLog(guild: Guild, user: User, memberlog: TextChannel): Promise<Message> {
 		const executor = await getExecutor(guild, 'MEMBER_BAN_ADD');
 
-		const embedData = guild.language.tget('eventGuildbanaddEmbed');
+		const embedData = guild.language.tget('eventGuildBanAddEmbed');
 
 		const embed = new MessageEmbed()
 			.setAuthor(user.tag, user.displayAvatarURL())

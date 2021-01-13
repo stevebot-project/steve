@@ -8,7 +8,7 @@ import { CommandOptions } from 'klasa';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['tmdb'],
-	description: lang => lang.tget('commandTogglemessagedeletebulkDescription'),
+	description: lang => lang.tget('commandToggleMessageDeleteBulkDescription'),
 	permissionLevel: PermissionsLevels.MODERATOR,
 	runIn: ['text']
 })
@@ -19,7 +19,7 @@ export default class extends SteveCommand {
 
 		await msg.guild.settings.update(GuildSettings.LogEvents.MessageDeleteBulk, !current);
 
-		return msg.channel.send(msg.guild.language.tget('commandTogglemessagedeletebulk', current));
+		return msg.channel.send(msg.guild.language.tget('commandToggleMessageDeleteBulk', current));
 	}
 
 }

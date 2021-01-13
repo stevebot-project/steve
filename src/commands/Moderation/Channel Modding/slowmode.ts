@@ -8,8 +8,8 @@ import { GuildMessage } from '@lib/types/Messages';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['slow'],
-	description: lang => lang.tget('commandSlowmodeDescription'),
-	extendedHelp: lang => lang.tget('commandSlowmodeExtended'),
+	description: lang => lang.tget('commandSlowModeDescription'),
+	extendedHelp: lang => lang.tget('commandSlowModeExtended'),
 	permissionLevel: PermissionsLevels.MODERATOR,
 	requiredPermissions: ['MANAGE_CHANNELS'],
 	runIn: ['text'],
@@ -24,8 +24,8 @@ export default class extends SteveCommand {
 		}
 
 		return msg.channel.send(duration === 'reset'
-			? msg.guild.language.tget('commandSlowmodeReset')
-			: msg.guild.language.tget('commandSlowmodeSet', friendlyDuration(duration as number)));
+			? msg.guild.language.tget('commandSlowModeReset')
+			: msg.guild.language.tget('commandSlowModeSet', friendlyDuration(duration as number)));
 	}
 
 }

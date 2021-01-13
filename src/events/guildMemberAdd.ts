@@ -19,7 +19,7 @@ export default class extends Event {
 	private async handleLog(member: GuildMember, memberlog: TextChannel): Promise<Message> {
 		const accountCreatedTime = friendlyDuration(Date.now() - member.user.createdTimestamp);
 
-		const embedData = member.guild.language.tget('eventGuildmemberaddEmbed');
+		const embedData = member.guild.language.tget('eventGuildMemberAddEmbed');
 
 		const embed = new MessageEmbed()
 			.addFields(

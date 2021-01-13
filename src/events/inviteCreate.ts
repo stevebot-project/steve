@@ -16,7 +16,7 @@ export default class extends Event {
 	}
 
 	private handleLog(invite: Invite, serverlog: TextChannel | NewsChannel): Promise<Message> {
-		const embedData = invite.guild!.language.tget('eventInvitecreateEmbed');
+		const embedData = invite.guild!.language.tget('eventInviteCreateEmbed');
 
 		const embed = new MessageEmbed()
 			.setColor(LogColors.BLUE)

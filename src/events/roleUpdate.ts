@@ -19,7 +19,7 @@ export default class extends Event {
 	private async logRoleNameChange(oldRole: Role, newRole: Role, serverlog: TextChannel): Promise<Message> {
 		const executor = await getExecutor(newRole.guild, 'ROLE_UPDATE');
 
-		const embedData = newRole.guild.language.tget('eventRoleupdateNamechangeEmbed');
+		const embedData = newRole.guild.language.tget('eventRoleUpdateNameChangeEmbed');
 
 		const embed = new MessageEmbed()
 			.setAuthor(executor.tag, executor.displayAvatarURL())

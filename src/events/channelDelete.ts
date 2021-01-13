@@ -18,7 +18,7 @@ export default class extends Event {
 	private async handleLog(channel: GuildChannel, serverlog: TextChannel): Promise<Message> {
 		const executor = await getExecutor(channel.guild, 'CHANNEL_DELETE');
 
-		const embedData = channel.guild.language.tget('eventChanneldeleteEmbed');
+		const embedData = channel.guild.language.tget('eventChannelDeleteEmbed');
 
 		const embed = new MessageEmbed()
 			.setAuthor(executor.tag, executor.displayAvatarURL())

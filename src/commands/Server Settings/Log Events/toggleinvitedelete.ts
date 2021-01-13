@@ -8,7 +8,7 @@ import { CommandOptions } from 'klasa';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['tid'],
-	description: lang => lang.tget('commandToggleinvitedeleteDescription'),
+	description: lang => lang.tget('commandToggleInviteDeleteDescription'),
 	permissionLevel: PermissionsLevels.MODERATOR,
 	runIn: ['text']
 })
@@ -19,7 +19,7 @@ export default class extends SteveCommand {
 
 		await msg.guild.settings.update(GuildSettings.LogEvents.InviteDelete, !current);
 
-		return msg.channel.send(msg.guild.language.tget('commandToggleinvitedelete', current));
+		return msg.channel.send(msg.guild.language.tget('commandToggleInviteDelete', current));
 	}
 
 }

@@ -8,8 +8,8 @@ import { GuildMessage } from '@lib/types/Messages';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['member'],
-	description: lang => lang.tget('commandWhoisDescription'),
-	extendedHelp: lang => lang.tget('commandWhoisExtended'),
+	description: lang => lang.tget('commandWhoIsDescription'),
+	extendedHelp: lang => lang.tget('commandWhoIsExtended'),
 	requiredPermissions: ['EMBED_LINKS'],
 	runIn: ['text'],
 	usage: '[user:username]'
@@ -33,7 +33,7 @@ export default class extends SteveCommand {
 
 		const joinedGuild = getJoinDateString(msg.guild, member.joinedTimestamp!);
 
-		const embedData = msg.guild.language.tget('commandWhoisEmbed');
+		const embedData = msg.guild.language.tget('commandWhoIsEmbed');
 
 		const embed = new MessageEmbed()
 			.addFields([

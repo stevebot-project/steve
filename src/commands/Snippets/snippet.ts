@@ -25,11 +25,11 @@ export default class extends SteveCommand {
 	}
 
 	@requiresPermission(PermissionsLevels.MODERATOR, (msg: GuildMessage) => {
-		throw msg.guild.language.tget('commandSnippetNopermission');
+		throw msg.guild.language.tget('commandSnippetNoPermission');
 	})
 	public async add(msg: GuildMessage, [snipName, snipContent]: [string, string]): Promise<Message> {
 		const snips: Snippet[] = msg.guild.settings.get(GuildSettings.Snippets);
-		if (snips.some(snip => snip.name === snipName)) throw msg.guild.language.tget('commandSnippetAlreadyexists', snipName);
+		if (snips.some(snip => snip.name === snipName)) throw msg.guild.language.tget('commandSnippetAlreadyExists', snipName);
 
 		const newSnip = this.createSnip(msg, snipName, snipContent);
 		await msg.guild.settings.update(GuildSettings.Snippets, newSnip, { action: 'add' });
@@ -38,7 +38,7 @@ export default class extends SteveCommand {
 	}
 
 	@requiresPermission(PermissionsLevels.MODERATOR, (msg: GuildMessage) => {
-		throw msg.guild.language.tget('commandSnippetNopermission');
+		throw msg.guild.language.tget('commandSnippetNoPermission');
 	})
 	public async edit(msg: GuildMessage, [snipName, snipContent]: [string, string]): Promise<Message> {
 		const snips: Snippet[] = msg.guild.settings.get(GuildSettings.Snippets);
@@ -51,7 +51,7 @@ export default class extends SteveCommand {
 	}
 
 	@requiresPermission(PermissionsLevels.MODERATOR, (msg: GuildMessage) => {
-		throw msg.guild.language.tget('commandSnippetNopermission');
+		throw msg.guild.language.tget('commandSnippetNoPermission');
 	})
 	public async remove(msg: GuildMessage, [snipName]: [string]): Promise<Message> {
 		const snips: Snippet[] = msg.guild.settings.get(GuildSettings.Snippets);
@@ -79,7 +79,7 @@ export default class extends SteveCommand {
 	@requiredPermissions('EMBED_LINKS')
 	public async list(msg: GuildMessage): Promise<Message> {
 		const snips: Snippet[] = msg.guild.settings.get(GuildSettings.Snippets);
-		if (!snips.length) throw msg.guild.language.tget('commandSnippetNosnips');
+		if (!snips.length) throw msg.guild.language.tget('commandSnippetNoSnipsInGuild');
 
 		const response = await msg.send(new MessageEmbed()
 			.setDescription('Loading...'));
@@ -97,7 +97,7 @@ export default class extends SteveCommand {
 	}
 
 	@requiresPermission(PermissionsLevels.MODERATOR, (msg: GuildMessage) => {
-		throw msg.guild.language.tget('commandSnippetNopermission');
+		throw msg.guild.language.tget('commandSnippetNoPermission');
 	})
 	public async reset(msg: GuildMessage): Promise<Message> {
 		await msg.guild.settings.reset(GuildSettings.Snippets);

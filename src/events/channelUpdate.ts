@@ -21,7 +21,7 @@ export default class extends Event {
 	private async logChannelNameChange(oldChannel: GuildChannel, newChannel: GuildChannel, serverlog: TextChannel): Promise<Message> {
 		const executor = await getExecutor(newChannel.guild, 'CHANNEL_UPDATE');
 
-		const embedData = newChannel.guild.language.tget('eventChannelupdateNamechangeEmbed');
+		const embedData = newChannel.guild.language.tget('eventChannelUpdateNameChangeEmbed');
 
 		const embed = new MessageEmbed()
 			.setAuthor(executor.tag, executor.displayAvatarURL())

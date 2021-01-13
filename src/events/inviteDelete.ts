@@ -16,7 +16,7 @@ export default class extends Event {
 	}
 
 	private handleLog(invite: Invite, serverlog: TextChannel | NewsChannel): Promise<Message> {
-		const embedData = invite.guild!.language.tget('eventInvitedeleteEmbed');
+		const embedData = invite.guild!.language.tget('eventInviteDeleteEmbed');
 
 		const embed = new MessageEmbed()
 			.setColor(LogColors.BLUE)

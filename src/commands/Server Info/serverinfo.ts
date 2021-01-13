@@ -7,15 +7,15 @@ import { GuildMessage } from '@lib/types/Messages';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['serverstats'],
-	description: lang => lang.tget('commandServerinfoDescription'),
-	extendedHelp: lang => lang.tget('commandServerinfoExtended'),
+	description: lang => lang.tget('commandServerInfoDescription'),
+	extendedHelp: lang => lang.tget('commandServerInfoExtended'),
 	requiredPermissions: ['EMBED_LINKS'],
 	runIn: ['text']
 })
 export default class extends SteveCommand {
 
 	public async run(msg: GuildMessage): Promise<Message> {
-		const embedData = msg.guild.language.tget('commandServerinfoEmbed');
+		const embedData = msg.guild.language.tget('commandServerInfoEmbed');
 
 		const embed = new MessageEmbed()
 			.addFields([

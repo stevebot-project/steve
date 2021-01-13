@@ -16,18 +16,18 @@ export default class extends SteveCommand {
 		this
 			.createCustomResolver('key', (arg, possible, message, [action]) => {
 				if (action === 'show' || arg) return arg;
-				throw message.language.get('commandConfNokey');
+				throw message.language.get('commandConfNoKey');
 			})
 			.createCustomResolver('value', (arg, possible, message, [action]) => {
 				if (!['set', 'remove'].includes(action) || arg) return arg;
-				throw message.language.get('commandConfNovalue');
+				throw message.language.get('commandConfNoValue');
 			});
 	}
 
 	public show(msg: KlasaMessage, [key]: [string]) {
 		// @ts-expect-error 2322
 		const path = this.client.gateways.users.getPath(key, { avoidUnconfigurable: true, errors: false, piece: null });
-		if (!path) return msg.sendLocale('commandConfGetNoext', [key]);
+		if (!path) return msg.sendLocale('commandConfGetNoExt', [key]);
 		if (path.piece.type === 'Folder') {
 			return msg.sendLocale('commandConfUser', [
 				key
@@ -57,7 +57,7 @@ export default class extends SteveCommand {
 
 	private check(msg: KlasaMessage, key: string, { errors, updated }: SettingsUpdateResult) {
 		if (errors.length) return msg.sendMessage(errors[0]);
-		if (!updated.length) return msg.sendLocale('commandConfNochange', [key]);
+		if (!updated.length) return msg.sendLocale('commandConfNoChange', [key]);
 		return null;
 	}
 

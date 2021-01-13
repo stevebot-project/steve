@@ -16,7 +16,7 @@ export default class extends Event {
 	private async handleLog(role: Role, serverlog: TextChannel): Promise<Message> {
 		const executor = await getExecutor(role.guild, 'ROLE_CREATE');
 
-		const embedData = role.guild.language.tget('eventRolecreateEmbed');
+		const embedData = role.guild.language.tget('eventRoleCreateEmbed');
 
 		const embed = new MessageEmbed()
 			.setAuthor(executor.tag, executor.displayAvatarURL())

@@ -55,7 +55,7 @@ export default class extends SteveCommand {
 
 			return msg.author.send(help, { split: { 'char': '\n' } })
 				.then(() => { if (msg.channel.type !== 'dm') floatPromise(this, msg.sendLocale('commandHelpDm')); })
-				.catch(() => { if (msg.channel.type !== 'dm') floatPromise(this, msg.sendLocale('commandHelpNodm')); });
+				.catch(() => { if (msg.channel.type !== 'dm') floatPromise(this, msg.sendLocale('commandHelpNoDm')); });
 		}
 	}
 

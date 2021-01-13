@@ -12,7 +12,7 @@ export default class extends Event {
 			const accountCreated = userAccountCreated(guild, fullMember.user.createdTimestamp);
 			const joinedGuild = getJoinDateString(guild, fullMember.joinedTimestamp!);
 
-			const embedData = guild.language.tget('commandWhoisEmbed');
+			const embedData = guild.language.tget('commandWhoIsEmbed');
 
 			const embed = new MessageEmbed()
 				.addFields([

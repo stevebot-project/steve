@@ -19,7 +19,7 @@ export default class extends Event {
 		let memberRoles = member.roles.cache.filter(r => r.id !== member.guild.id).map(r => r.name).join(', ');
 		memberRoles = memberRoles.length > 0 ? memberRoles : member.guild.language.tget('none');
 
-		const embedData = member.guild.language.tget('eventGuildmemberremoveEmbed');
+		const embedData = member.guild.language.tget('eventGuildMemberRemoveEmbed');
 
 		const embed = new MessageEmbed()
 			.addFields(

@@ -13,7 +13,7 @@ import { ApplyOptions } from '@skyra/decorators';
 export default class extends SteveCommand {
 
 	public async run(msg: KlasaMessage, choices: string[]): Promise<Message> {
-		if (choices.length < 2) throw msg.language.tget('commandChooseToofew');
+		if (choices.length < 2) throw msg.language.tget('commandChooseTooFew');
 		return msg.channel.send(msg.language.tget('commandChooseResponse', choices[Math.floor(Math.random() * choices.length)]));
 	}
 

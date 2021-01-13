@@ -29,7 +29,7 @@ export default class extends Event {
 	private async handleLog(role: Role, serverlog: TextChannel): Promise<Message> {
 		const executor = await getExecutor(role.guild, 'ROLE_DELETE');
 
-		const embedData = role.guild.language.tget('eventRoledeleteEmbed');
+		const embedData = role.guild.language.tget('eventRoleDeleteEmbed');
 
 		const embed = new MessageEmbed()
 			.setAuthor(executor.tag, executor.displayAvatarURL())

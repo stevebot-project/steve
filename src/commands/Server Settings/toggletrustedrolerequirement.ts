@@ -7,8 +7,8 @@ import { Message } from 'discord.js';
 import { CommandOptions } from 'klasa';
 
 @ApplyOptions<CommandOptions>({
-	description: lang => lang.tget('commandToggletrustedrolerequirementDescription'),
-	extendedHelp: lang => lang.tget('commandToggletrustedrolerequirementExtended'),
+	description: lang => lang.tget('commandToggleTrustedRoleRequirementDescription'),
+	extendedHelp: lang => lang.tget('commandToggleTrustedRoleRequirementExtended'),
 	permissionLevel: PermissionsLevels.MODERATOR,
 	requiredSettings: ['roles.trusted'],
 	runIn: ['text']
@@ -21,12 +21,12 @@ export default class extends SteveCommand {
 		if (required) {
 			await msg.guild.settings.update(GuildSettings.Roles.RequireTrustedRoleForSelfAssign, false);
 
-			return msg.channel.send(msg.guild.language.tget('commandToggletrustedrolerequirementDisable'));
+			return msg.channel.send(msg.guild.language.tget('commandToggleTrustedRoleRequirementDisable'));
 		}
 
 		await msg.guild.settings.update(GuildSettings.Roles.RequireTrustedRoleForSelfAssign, true);
 
-		return msg.channel.send(msg.guild.language.tget('commandToggletrustedrolerequirementEnable'));
+		return msg.channel.send(msg.guild.language.tget('commandToggleTrustedRoleRequirementEnable'));
 	}
 
 }

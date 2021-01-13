@@ -5,8 +5,8 @@ import { Message } from 'discord.js';
 import { CommandOptions, KlasaMessage } from 'klasa';
 
 @ApplyOptions<CommandOptions>({
-	description: lang => lang.tget('commandSetembedcolorDescription'),
-	extendedHelp: lang => lang.tget('commandSetembedcolorExtended'),
+	description: lang => lang.tget('commandSetEmbedColorDescription'),
+	extendedHelp: lang => lang.tget('commandSetEmbedColorExtended'),
 	usage: '<color:color|reset|show>'
 })
 export default class extends SteveCommand {
@@ -27,13 +27,13 @@ export default class extends SteveCommand {
 
 		if (color === 'show') {
 			return msg.author.settings.get(UserSettings.EmbedColor) === null
-				? msg.channel.send(msg.language.tget('commandSetembedcolorShowNone'))
-				: msg.channel.send(msg.language.tget('commandSetembedcolorShow', msg.author.settings.get(UserSettings.EmbedColor)));
+				? msg.channel.send(msg.language.tget('commandSetEmbedColorShowNone'))
+				: msg.channel.send(msg.language.tget('commandSetEmbedColorShow', msg.author.settings.get(UserSettings.EmbedColor)));
 		}
 
 		return color === 'reset'
-			? msg.channel.send(msg.language.tget('commandSetembedcolorReset'))
-			: msg.channel.send(msg.language.tget('commandSetembedcolorSet', color));
+			? msg.channel.send(msg.language.tget('commandSetEmbedColorReset'))
+			: msg.channel.send(msg.language.tget('commandSetEmbedColorSet', color));
 	}
 
 }

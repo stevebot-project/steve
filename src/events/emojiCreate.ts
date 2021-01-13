@@ -16,7 +16,7 @@ export default class extends Event {
 	private async handleLog(emoji: GuildEmoji, serverlog: TextChannel): Promise<Message> {
 		const executor = await getExecutor(emoji.guild, 'EMOJI_CREATE');
 
-		const embedData = emoji.guild.language.tget('eventEmojicreateEmbed');
+		const embedData = emoji.guild.language.tget('eventEmojiCreateEmbed');
 
 		const embed = new MessageEmbed()
 			.setAuthor(executor.tag, executor.displayAvatarURL())

@@ -16,7 +16,7 @@ export default class extends Event {
 	private async handleLog(emoji: GuildEmoji, serverlog: TextChannel): Promise<Message> {
 		const executor = await getExecutor(emoji.guild, 'EMOJI_DELETE');
 
-		const embedData = emoji.guild.language.tget('eventEmojideleteEmbed');
+		const embedData = emoji.guild.language.tget('eventEmojiDeleteEmbed');
 
 		const embed = new MessageEmbed()
 			.setAuthor(executor.tag, executor.displayAvatarURL())

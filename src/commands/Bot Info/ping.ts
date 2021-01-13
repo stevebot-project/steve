@@ -10,7 +10,7 @@ export default class extends SteveCommand {
 
 	public async run(msg: KlasaMessage) {
 		const pingMsg = await msg.channel.send(msg.language.tget('commandPing'));
-		return pingMsg.edit(msg.language.tget('commandPingpong', (pingMsg.editedTimestamp || pingMsg.createdTimestamp) - (msg.editedTimestamp || msg.createdTimestamp), Math.round(this.client.ws.ping)));
+		return pingMsg.edit(msg.language.tget('commandPingPong', (pingMsg.editedTimestamp || pingMsg.createdTimestamp) - (msg.editedTimestamp || msg.createdTimestamp), Math.round(this.client.ws.ping)));
 	}
 
 }

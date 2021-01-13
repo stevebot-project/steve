@@ -20,7 +20,7 @@ export default class extends SteveCommand {
 		this.createCustomResolver('rolename', (str, possible, msg) => {
 			if (Reflect.has(msg.flagArgs, 'list')) return null;
 			if (str) return this.client.arguments.get('rolename').run(str, possible, msg);
-			throw msg.guild!.language.tget('commandAssignNoroleprovided');
+			throw msg.guild!.language.tget('commandAssignNoRoleProvided');
 		});
 	}
 
@@ -31,7 +31,7 @@ export default class extends SteveCommand {
 		const trustedRoleRequirement = msg.guild.settings.get(GuildSettings.Roles.RequireTrustedRoleForSelfAssign) as boolean;
 
 		if (trustedRoleID && trustedRoleRequirement && !msg.member.roles.cache.has(trustedRoleID)) {
-			throw msg.guild.language.tget('commandAssignRoleNeedtrusted', msg.guild.roles.cache.get(trustedRoleID)!.name);
+			throw msg.guild.language.tget('commandAssignRoleNeedTrusted', msg.guild.roles.cache.get(trustedRoleID)!.name);
 		}
 
 		const removed: string[] = [];
@@ -39,7 +39,7 @@ export default class extends SteveCommand {
 
 		for (const role of roles) {
 			if (!role.isAssignable) {
-				floatPromise(this, msg.channel.send(msg.guild.language.tget('commandAssignNotassignable', role.name)));
+				floatPromise(this, msg.channel.send(msg.guild.language.tget('commandAssignNotAssignable', role.name)));
 				continue;
 			}
 
@@ -72,7 +72,7 @@ export default class extends SteveCommand {
 			if (role) roleNames.push(role.name);
 		}
 
-		if (!roleNames.length) throw msg.guild.language.tget('commandManageassignablerolesShowNoroles');
+		if (!roleNames.length) throw msg.guild.language.tget('commandManageAssignableRolesShowNoRoles');
 
 		const response = await msg.send(new MessageEmbed()
 			.setDescription('Loading...'));

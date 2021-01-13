@@ -7,8 +7,8 @@ import { Message, Role } from 'discord.js';
 import { CommandOptions } from 'klasa';
 
 @ApplyOptions<CommandOptions>({
-	description: lang => lang.tget('commandSetdeafenedroleDescription'),
-	extendedHelp: lang => lang.tget('commandSetdeafenedroleExtended'),
+	description: lang => lang.tget('commandSetDeafenedRoleDescription'),
+	extendedHelp: lang => lang.tget('commandSetDeafenedRoleExtended'),
 	permissionLevel: PermissionsLevels.MODERATOR,
 	runIn: ['text'],
 	usage: '<role:rolename>'
@@ -18,7 +18,7 @@ export default class extends SteveCommand {
 	public async run(msg: GuildMessage, [role]: [Role]): Promise<Message> {
 		await msg.guild.settings.update(GuildSettings.Roles.Deafened, role.id, msg.guild.id);
 
-		return msg.channel.send(msg.guild.language.tget('commandSetdeafenedroleSet', role.name));
+		return msg.channel.send(msg.guild.language.tget('commandSetDeafenedRoleSet', role.name));
 	}
 
 }

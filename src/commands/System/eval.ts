@@ -7,7 +7,7 @@ import { inspect } from 'util';
 @ApplyOptions<CommandOptions>({
 	aliases: ['ev'],
 	description: lang => lang.tget('commandEvalDescription'),
-	extendedHelp: lang => lang.tget('commandEvalExtendedhelp'),
+	extendedHelp: lang => lang.tget('commandEvalExtended'),
 	guarded: true,
 	permissionLevel: PermissionsLevels.OWNER,
 	usage: '<expression:str>'
@@ -27,10 +27,10 @@ export default class extends SteveCommand {
 			// @ts-expect-error 2339
 			if (msg.guild && msg.channel.attachable) {
 				// @ts-expect-error 2339
-				return msg.channel.sendFile(Buffer.from(result), 'output.txt', msg.language.tget('commandEvalSendfile', time, footer));
+				return msg.channel.sendFile(Buffer.from(result), 'output.txt', msg.language.tget('commandEvalSendFile', time, footer));
 			}
 			this.client.emit('log', result);
-			return msg.sendLocale('commandEvalSendconsole', [time, footer]);
+			return msg.sendLocale('commandEvalSendConsole', [time, footer]);
 		}
 
 		// If it's a message that can be sent correctly, send it

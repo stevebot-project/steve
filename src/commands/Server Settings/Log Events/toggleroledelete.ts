@@ -8,7 +8,7 @@ import { CommandOptions } from 'klasa';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['trd'],
-	description: lang => lang.tget('commandToggleroledeleteDescription'),
+	description: lang => lang.tget('commandToggleRoleDeleteDescription'),
 	permissionLevel: PermissionsLevels.MODERATOR,
 	runIn: ['text']
 })
@@ -19,7 +19,7 @@ export default class extends SteveCommand {
 
 		await msg.guild.settings.update(GuildSettings.LogEvents.RoleDelete, !current);
 
-		return msg.channel.send(msg.guild.language.tget('commandToggleroledelete', current));
+		return msg.channel.send(msg.guild.language.tget('commandToggleRoleDelete', current));
 	}
 
 }

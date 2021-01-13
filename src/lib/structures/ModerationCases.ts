@@ -35,7 +35,7 @@ export class ModerationCases {
 		const newCase: ModerationCase
 			= {
 				action,
-				duration: typeof duration === 'number' ? friendlyDuration(duration) : this.manager.guild.language.tget('moderationNoduration'),
+				duration: typeof duration === 'number' ? friendlyDuration(duration) : this.manager.guild.language.tget('moderationNoDuration'),
 				moderator: moderator.id,
 				number: this.caseArray.length + 1,
 				reason,
