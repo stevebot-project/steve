@@ -5,8 +5,8 @@ import { ApplyOptions } from '@skyra/decorators';
 import { GuildMessage } from '@lib/types/Messages';
 
 @ApplyOptions<CommandOptions>({
-	description: lang => lang.tget('COMMAND_PURGE_DESCRIPTION'),
-	extendedHelp: lang => lang.tget('COMMAND_PURGE_EXTENDED'),
+	description: lang => lang.tget('commandPurgeDescription'),
+	extendedHelp: lang => lang.tget('commandPurgeExtended'),
 	permissionLevel: PermissionsLevels.MODERATOR,
 	requiredPermissions: ['MANAGE_MESSAGES'],
 	runIn: ['text'],
@@ -17,7 +17,7 @@ export default class extends SteveCommand {
 	public async run(msg: GuildMessage, [number]: [number]): Promise<void> {
 		const msgCollection = await msg.channel.bulkDelete(number + 1, true);
 
-		const res = await msg.channel.send(msg.guild.language.tget('COMMAND_PURGE_PURGED', msgCollection.size - 1));
+		const res = await msg.channel.send(msg.guild.language.tget('commandPurgePurged', msgCollection.size - 1));
 
 		setTimeout(() => res.delete(), Time.SECOND * 10);
 	}

@@ -5,8 +5,8 @@ import { Message } from 'discord.js';
 import { CommandOptions, KlasaMessage } from 'klasa';
 
 @ApplyOptions<CommandOptions>({
-	description: lang => lang.tget('COMMAND_SETEMBEDCOLOR_DESCRIPTION'),
-	extendedHelp: lang => lang.tget('COMMAND_SETEMBEDCOLOR_EXTENDED'),
+	description: lang => lang.tget('commandSetembedcolorDescription'),
+	extendedHelp: lang => lang.tget('commandSetembedcolorExtended'),
 	usage: '<color:color|reset|show>'
 })
 export default class extends SteveCommand {
@@ -14,7 +14,7 @@ export default class extends SteveCommand {
 	public async init() {
 		this.createCustomResolver('color', (str, possible, msg) => {
 			if (/^#[0-9A-F]{6}$/i.test(str)) return str;
-			throw msg.language.tget('RESOLVER_INVALID_COLOR', str);
+			throw msg.language.tget('resolverInvalidColor', str);
 		});
 	}
 
@@ -27,13 +27,13 @@ export default class extends SteveCommand {
 
 		if (color === 'show') {
 			return msg.author.settings.get(UserSettings.EmbedColor) === null
-				? msg.channel.send(msg.language.tget('COMMAND_SETEMBEDCOLOR_SHOW_NONE'))
-				: msg.channel.send(msg.language.tget('COMMAND_SETEMBEDCOLOR_SHOW', msg.author.settings.get(UserSettings.EmbedColor)));
+				? msg.channel.send(msg.language.tget('commandSetembedcolorShowNone'))
+				: msg.channel.send(msg.language.tget('commandSetembedcolorShow', msg.author.settings.get(UserSettings.EmbedColor)));
 		}
 
 		return color === 'reset'
-			? msg.channel.send(msg.language.tget('COMMAND_SETEMBEDCOLOR_RESET'))
-			: msg.channel.send(msg.language.tget('COMMAND_SETEMBEDCOLOR_SET', color));
+			? msg.channel.send(msg.language.tget('commandSetembedcolorReset'))
+			: msg.channel.send(msg.language.tget('commandSetembedcolorSet', color));
 	}
 
 }

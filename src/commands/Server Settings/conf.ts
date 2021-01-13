@@ -6,8 +6,8 @@ import { ApplyOptions } from '@skyra/decorators';
 import { CommandOptions, util, SettingsUpdateResult } from 'klasa';
 
 @ApplyOptions<CommandOptions>({
-	description: lang => lang.tget('COMMAND_CONF_SERVER_DESCRIPTION'),
-	extendedHelp: lang => lang.tget('COMMAND_CONF_SERVER_EXTENDED'),
+	description: lang => lang.tget('commandConfServerDescription'),
+	extendedHelp: lang => lang.tget('commandConfServerExtended'),
 	guarded: true,
 	permissionLevel: PermissionsLevels.ADMINISTRATOR,
 	runIn: ['text'],
@@ -20,20 +20,20 @@ export default class extends SteveCommand {
 		this
 			.createCustomResolver('key', (arg, possible, message, [action]) => {
 				if (action === 'show' || arg) return arg;
-				throw message.language.get('COMMAND_CONF_NOKEY');
+				throw message.language.get('commandConfNokey');
 			})
 			.createCustomResolver('value', (arg, possible, message, [action]) => {
 				if (!['set', 'remove'].includes(action) || arg) return arg;
-				throw message.language.get('COMMAND_CONF_NOVALUE');
+				throw message.language.get('commandConfNovalue');
 			});
 	}
 
 	public show(msg: GuildMessage, [key]: [string]) {
 		// @ts-expect-error 2322
 		const path = this.client.gateways.guilds.getPath(key, { avoidUnconfigurable: true, errors: false, piece: null });
-		if (!path) return msg.sendLocale('COMMAND_CONF_GET_NOEXT', [key]);
+		if (!path) return msg.sendLocale('commandConfGetNoext', [key]);
 		if (path.piece.type === 'Folder') {
-			return msg.sendLocale('COMMAND_CONF_SERVER', [
+			return msg.sendLocale('commandConfServer', [
 				key
 					// eslint-disable-next-line @typescript-eslint/unbound-method
 					? `: ${key.split('.').map(util.toTitleCase).join('/')}`
@@ -41,27 +41,27 @@ export default class extends SteveCommand {
 					: '', util.codeBlock('asciidoc', msg.guild.settings.list(msg, path.piece))
 			]);
 		}
-		return msg.sendLocale('COMMAND_CONF_GET', [path.piece.path, msg.guild.settings.resolveString(msg, path.piece)]);
+		return msg.sendLocale('commandConfGet', [path.piece.path, msg.guild.settings.resolveString(msg, path.piece)]);
 	}
 
 	public async set(msg: GuildMessage, [key, ...valueToSet]: [string, string[]]) {
 		const status = await msg.guild.settings.update(key, valueToSet.join(' '), msg.guild, { avoidUnconfigurable: true, action: 'add' });
-		return this.check(msg, key, status) || msg.sendLocale('COMMAND_CONF_UPDATED', [key, msg.guild.settings.resolveString(msg, status.updated[0].piece)]);
+		return this.check(msg, key, status) || msg.sendLocale('commandConfUpdated', [key, msg.guild.settings.resolveString(msg, status.updated[0].piece)]);
 	}
 
 	public async remove(msg: GuildMessage, [key, ...valueToRemove]: [string, string[]]) {
 		const status = await msg.guild.settings.update(key, valueToRemove.join(' '), msg.guild, { avoidUnconfigurable: true, action: 'remove' });
-		return this.check(msg, key, status) || msg.sendLocale('COMMAND_CONF_UPDATED', [key, msg.guild.settings.resolveString(msg, status.updated[0].piece)]);
+		return this.check(msg, key, status) || msg.sendLocale('commandConfUpdated', [key, msg.guild.settings.resolveString(msg, status.updated[0].piece)]);
 	}
 
 	public async reset(msg: GuildMessage, [key]: [string]) {
 		const status = await msg.guild.settings.reset(key, msg.guild, { avoidUnconfigurable: true });
-		return this.check(msg, key, status) || msg.sendLocale('COMMAND_CONF_RESET', [key, msg.guild.settings.resolveString(msg, status.updated[0].piece)]);
+		return this.check(msg, key, status) || msg.sendLocale('commandConfReset', [key, msg.guild.settings.resolveString(msg, status.updated[0].piece)]);
 	}
 
 	private check(msg: GuildMessage, key: string, { errors, updated }: SettingsUpdateResult) {
 		if (errors.length) return msg.sendMessage(String(errors[0]));
-		if (!updated.length) return msg.sendLocale('COMMAND_CONF_NOCHANGE', [key]);
+		if (!updated.length) return msg.sendLocale('commandConfNochange', [key]);
 		return null;
 	}
 

@@ -17,22 +17,22 @@ export default class extends Event {
 		if (!member.joinedTimestamp) member = await member.guild.members.fetch(member.user);
 
 		let memberRoles = member.roles.cache.filter(r => r.id !== member.guild.id).map(r => r.name).join(', ');
-		memberRoles = memberRoles.length > 0 ? memberRoles : member.guild.language.tget('NONE');
+		memberRoles = memberRoles.length > 0 ? memberRoles : member.guild.language.tget('none');
 
-		const EMBED_DATA = member.guild.language.tget('EVENT_GUILDMEMBERREMOVE_EMBED');
+		const embedData = member.guild.language.tget('eventGuildmemberremoveEmbed');
 
 		const embed = new MessageEmbed()
 			.addFields(
 				{
-					name: EMBED_DATA.FIELD_TITLES.JOIN_DATE(member.user.bot),
-					value: EMBED_DATA.FIELD_VALUES.JOIN_DATE(friendlyDuration(Date.now() - member.joinedTimestamp!)),
+					name: embedData.fieldTitles.joinDate(member.user.bot),
+					value: embedData.fieldValues.joinDate(friendlyDuration(Date.now() - member.joinedTimestamp!)),
 					inline: true
 				},
-				{ name: EMBED_DATA.FIELD_TITLES.ROLES, value: memberRoles, inline: true }
+				{ name: embedData.fieldTitles.roles, value: memberRoles, inline: true }
 			)
 			.setAuthor(member.user.tag, member.user.displayAvatarURL())
 			.setColor(LogColors.TURQUOISE)
-			.setFooter(EMBED_DATA.FOOTER(member.id))
+			.setFooter(embedData.footer(member.id))
 			.setTimestamp();
 
 		return memberlog.send(embed);

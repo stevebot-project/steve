@@ -9,8 +9,8 @@ import { ApplyOptions } from '@skyra/decorators';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['remindme', 'reminders', 'myreminders'],
-	description: lang => lang.tget('COMMAND_REMIND_DESCRIPTION'),
-	extendedHelp: lang => lang.tget('COMMAND_REMIND_EXTENDED'),
+	description: lang => lang.tget('commandRemindDescription'),
+	extendedHelp: lang => lang.tget('commandRemindExtended'),
 	subcommands: true,
 	usage: '<view|cancel|create:default> (reminder:reminder) (duration:timespan)'
 })
@@ -22,12 +22,12 @@ export default class extends SteveCommand {
 				if (action === 'view') return null;
 				if (action === 'create') {
 					if (str.length <= 140) return str;
-					throw msg.language.tget('RESOLVER_REMINDER_LENGTH');
+					throw msg.language.tget('resolverReminderLength');
 				}
 
 				const reminders = this.client.schedule.getUserReminders(msg.author.id);
 				const reminderNum = parseInt(str, 10);
-				if (isNaN(reminderNum) || reminders.length < reminderNum) throw msg.language.tget('RESOLVER_REMINDER_INVALID', str);
+				if (isNaN(reminderNum) || reminders.length < reminderNum) throw msg.language.tget('resolverReminderInvalid', str);
 				return reminderNum;
 			})
 			.createCustomResolver('timespan', (str, possible, msg, [action]) => {
@@ -41,13 +41,13 @@ export default class extends SteveCommand {
 
 		await this.client.schedule.createReminder(duration, msg.author.id, reminder, msg.channel instanceof TextChannel && reminderChannel ? reminderChannel : msg.channel.id);
 
-		return msg.channel.send(msg.language.tget('COMMAND_REMIND_CREATED', friendlyDuration(duration)));
+		return msg.channel.send(msg.language.tget('commandRemindCreated', friendlyDuration(duration)));
 	}
 
 	public async view(msg: KlasaMessage): Promise<Message> {
 		let output = '';
 		const reminders = this.client.schedule.getUserReminders(msg.author.id);
-		if (reminders.length < 1) throw msg.language.tget('COMMAND_REMIND_NOREMINDERS');
+		if (reminders.length < 1) throw msg.language.tget('commandRemindNoreminders');
 
 		for (let i = 0; i < reminders.length; i++) {
 			const reminder = reminders[i];
@@ -55,13 +55,13 @@ export default class extends SteveCommand {
 			output += `**${i + 1}**: ${display} (${friendlyDuration(reminder.time.getTime() - Date.now())} left!)\n\n`;
 		}
 
-		const EMBED_DATA = msg.language.tget('COMMAND_REMIND_VIEW_EMBED');
+		const embedData = msg.language.tget('commandRemindViewEmbed');
 
 		const embed = new MessageEmbed()
 			.attachFiles(['./assets/images/alarmclock.png'])
 			.setColor(msg.author.settings.get(UserSettings.EmbedColor) as ColorResolvable || 0xadcb27)
 			.setDescription(output)
-			.setTitle(EMBED_DATA.TITLE)
+			.setTitle(embedData.title)
 			.setThumbnail('attachment://alarmclock.png');
 
 		return msg.channel.send(embed);
@@ -73,7 +73,7 @@ export default class extends SteveCommand {
 
 		await reminder.delete();
 
-		return msg.channel.send(msg.language.tget('COMMAND_REMIND_CANCELED', await this.getReminderDisplayContent(msg, reminder)));
+		return msg.channel.send(msg.language.tget('commandRemindCanceled', await this.getReminderDisplayContent(msg, reminder)));
 	}
 
 	private async getReminderDisplayContent(msg: KlasaMessage, reminder: Reminder): Promise<string> {
@@ -85,7 +85,7 @@ export default class extends SteveCommand {
 		const channelID = reminder.data.channelID ?? reminder.data.channel;
 
 		return channelID === reminderUser.dmChannel.id && msg.channel.id !== reminderUser.dmChannel.id
-			? msg.language.tget('COMMAND_REMINDER_DISPLAY_HIDDEN')
+			? msg.language.tget('commandReminderDisplayHidden')
 			: reminder.data.content;
 	}
 

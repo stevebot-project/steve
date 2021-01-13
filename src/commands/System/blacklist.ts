@@ -6,7 +6,7 @@ import { PermissionsLevels } from '@lib/types/Enums';
 import { ApplyOptions } from '@skyra/decorators';
 
 @ApplyOptions<CommandOptions>({
-	description: lang => lang.tget('COMMAND_BLACKLIST_DESCRIPTION'),
+	description: lang => lang.tget('commandBlacklistDescription'),
 	guarded: true,
 	permissionLevel: PermissionsLevels.OWNER,
 	usage: '<User:user|Guild:guild|guild:string> [...]'
@@ -35,7 +35,7 @@ export default class extends SteveCommand {
 		const { errors } = await this.client.settings!.update([['userBlacklist', queries[0]], ['guildBlacklist', queries[1]]]);
 		if (errors.length) throw String(errors[0]);
 
-		return msg.sendLocale('COMMAND_BLACKLIST_SUCCESS', changes);
+		return msg.sendLocale('commandBlacklistSuccess', changes);
 	}
 
 }

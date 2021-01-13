@@ -8,7 +8,7 @@ import { CommandOptions } from 'klasa';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['tgba'],
-	description: lang => lang.tget('COMMAND_TOGGLEGUILDBANADD_DESCRIPTION'),
+	description: lang => lang.tget('commandToggleguildbanaddDescription'),
 	permissionLevel: PermissionsLevels.MODERATOR,
 	runIn: ['text']
 })
@@ -19,7 +19,7 @@ export default class extends SteveCommand {
 
 		await msg.guild.settings.update(GuildSettings.LogEvents.GuildBanAdd, !current);
 
-		return msg.channel.send(msg.guild.language.tget('COMMAND_TOGGLEGUILDBANADD', current));
+		return msg.channel.send(msg.guild.language.tget('commandToggleguildbanadd', current));
 	}
 
 }

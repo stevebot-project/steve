@@ -21,17 +21,17 @@ export default class extends Event {
 		const guild = msgs.first()!.guild!;
 		const channel = msgs.first()!.channel as TextChannel;
 
-		const parent = channel.parent ? channel.parent.name : guild.language.tget('NO_PARENT_CATEGORY');
+		const parent = channel.parent ? channel.parent.name : guild.language.tget('noParentCategory');
 		const executor = await getExecutor(guild, 'MESSAGE_BULK_DELETE');
 
-		const EMBED_DATA = guild.language.tget('EVENT_MESSAGEDELETEBULK_EMBED');
+		const embedData = guild.language.tget('eventMessagedeletebulkEmbed');
 
 		const embed = new MessageEmbed()
 			.setAuthor(executor.tag, executor.displayAvatarURL())
 			.setColor(LogColors.REDORANGE)
-			.setFooter(EMBED_DATA.FOOTER(channel.id))
+			.setFooter(embedData.footer(channel.id))
 			.setTimestamp()
-			.setTitle(EMBED_DATA.TITLE(msgs.size, channel.name, parent));
+			.setTitle(embedData.title(msgs.size, channel.name, parent));
 
 		return serverlog.send(embed);
 	}

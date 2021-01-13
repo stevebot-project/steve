@@ -19,23 +19,23 @@ export default class extends Event {
 	private async handleLog(member: GuildMember, memberlog: TextChannel): Promise<Message> {
 		const accountCreatedTime = friendlyDuration(Date.now() - member.user.createdTimestamp);
 
-		const EMBED_DATA = member.guild.language.tget('EVENT_GUILDMEMBERADD_EMBED');
+		const embedData = member.guild.language.tget('eventGuildmemberaddEmbed');
 
 		const embed = new MessageEmbed()
 			.addFields(
 				{
-					name: EMBED_DATA.FIELD_TITLES.HUMAN,
-					value: EMBED_DATA.FIELD_VALUES.ACCOUNT_AGE(accountCreatedTime)
+					name: embedData.fieldTitles.human,
+					value: embedData.fieldValues.accountAge(accountCreatedTime)
 				}
 			)
 			.setAuthor(member.user.tag, member.user.displayAvatarURL())
 			.setColor(LogColors.TURQUOISE)
-			.setFooter(EMBED_DATA.FOOTER(member.id))
+			.setFooter(embedData.footer(member.id))
 			.setTimestamp();
 
 		if (member.user.bot) {
 			const executor = await getExecutor(member.guild, 'BOT_ADD');
-			embed.fields[0].name = EMBED_DATA.FIELD_TITLES.BOT(executor.tag);
+			embed.fields[0].name = embedData.fieldTitles.bot(executor.tag);
 		}
 
 		return memberlog.send(embed);

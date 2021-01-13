@@ -6,13 +6,13 @@ import { ApplyOptions } from '@skyra/decorators';
 @ApplyOptions<CommandOptions>({
 	cooldown: 60,
 	cooldownLevel: 'channel',
-	description: lang => lang.tget('COMMAND_F_DESCRIPTION'),
-	extendedHelp: lang => lang.tget('COMMAND_F_EXTENDED')
+	description: lang => lang.tget('commandFDescription'),
+	extendedHelp: lang => lang.tget('commandFExtended')
 })
 export default class extends SteveCommand {
 
 	public async run(msg: KlasaMessage): Promise<Message> {
-		return msg.channel.send(msg.language.tget('COMMAND_F_ID'),
+		return msg.channel.send(msg.language.tget('commandFId'),
 			{ files: [{ attachment: './assets/images/f.png', name: 'pay_respects.png' }] });
 	}
 

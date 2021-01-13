@@ -9,7 +9,7 @@ const PERM_FLAGS = Object.keys(Permissions.FLAGS) as PermissionString[];
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['perms'],
-	description: lang => lang.tget('COMMAND_PERMISSIONS_DESCRIPTION'),
+	description: lang => lang.tget('commandPermissionsDescription'),
 	permissionLevel: PermissionsLevels.MODERATOR,
 	requiredPermissions: ['EMBED_LINKS'],
 	runIn: ['text'],
@@ -19,13 +19,13 @@ export default class extends SteveCommand {
 
 	public async run(msg: GuildMessage, [user]: [User]): Promise<Message> {
 		const member = await msg.guild.members.fetch(user);
-		if (!member) throw msg.guild.language.tget('USER_NOT_IN_GUILD', user.tag);
+		if (!member) throw msg.guild.language.tget('userNotInGuild', user.tag);
 
 		const { permissions } = member;
 		const permList: string[] = [];
 
 		if (permissions.has(Permissions.FLAGS.ADMINISTRATOR)) {
-			permList.push(msg.guild.language.tget('COMMAND_PERMISSIONS_HAS_ALL', user.tag));
+			permList.push(msg.guild.language.tget('commandPermissionsHasAll', user.tag));
 		} else {
 			for (const flag of PERM_FLAGS) {
 				if (permissions.has(flag)) permList.push(`🔹 ${msg.guild.language.PERMISSIONS[flag]}`);

@@ -8,7 +8,7 @@ import { CommandOptions } from 'klasa';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['tic'],
-	description: lang => lang.tget('COMMAND_TOGGLEINVITECREATE_DESCRIPTION'),
+	description: lang => lang.tget('commandToggleinvitecreateDescription'),
 	permissionLevel: PermissionsLevels.MODERATOR,
 	runIn: ['text']
 })
@@ -19,7 +19,7 @@ export default class extends SteveCommand {
 
 		await msg.guild.settings.update(GuildSettings.LogEvents.InviteCreate, !current);
 
-		return msg.channel.send(msg.guild.language.tget('COMMAND_TOGGLEINVITECREATE', current));
+		return msg.channel.send(msg.guild.language.tget('commandToggleinvitecreate', current));
 	}
 
 }

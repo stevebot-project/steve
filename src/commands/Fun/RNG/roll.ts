@@ -51,8 +51,8 @@ function NumComparator(a: number, b: number): number {
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['dice'],
-	description: lang => lang.tget('COMMAND_ROLL_DESCRIPTION'),
-	extendedHelp: lang => lang.tget('COMMAND_ROLL_EXTENDED'),
+	description: lang => lang.tget('commandRollDescription'),
+	extendedHelp: lang => lang.tget('commandRollExtended'),
 	usage: '<spec:dice> [...]'
 })
 export default class extends SteveCommand {
@@ -222,9 +222,9 @@ export default class extends SteveCommand {
 			const result = results[0];
 			const emoji = getEmoji(result.spec);
 			// just display the message when a single roll is made
-			return msg.channel.send(msg.language.tget('COMMAND_ROLL_EMOJI_RESPONSE', emoji, result.message));
+			return msg.channel.send(msg.language.tget('commandRollEmojiResponse', emoji, result.message));
 		}
-		let message = msg.language.tget('COMMAND_ROLL_RESPONSE');
+		let message = msg.language.tget('commandRollResponse');
 		for (const result of results) {
 			const emoji = getEmoji(result.spec);
 			// for multiple rolls we want to make the input clear

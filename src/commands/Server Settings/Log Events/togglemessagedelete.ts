@@ -8,7 +8,7 @@ import { CommandOptions } from 'klasa';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['tmd'],
-	description: lang => lang.tget('COMMAND_TOGGLEMESSAGEDELETE_DESCRIPTION'),
+	description: lang => lang.tget('commandTogglemessagedeleteDescription'),
 	permissionLevel: PermissionsLevels.MODERATOR,
 	runIn: ['text']
 })
@@ -19,7 +19,7 @@ export default class extends SteveCommand {
 
 		await msg.guild.settings.update(GuildSettings.LogEvents.MessageDelete, !current);
 
-		return msg.channel.send(msg.guild.language.tget('COMMAND_TOGGLEMESSAGEDELETE', current));
+		return msg.channel.send(msg.guild.language.tget('commandTogglemessagedelete', current));
 	}
 
 }

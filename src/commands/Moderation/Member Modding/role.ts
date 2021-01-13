@@ -6,8 +6,8 @@ import { Message, Role, User } from 'discord.js';
 import { CommandOptions } from 'klasa';
 
 @ApplyOptions<CommandOptions>({
-	description: lang => lang.tget('COMMAND_ROLE_DESCRIPTION'),
-	extendedHelp: lang => lang.tget('COMMAND_ROLE_EXTENDED'),
+	description: lang => lang.tget('commandRoleDescription'),
+	extendedHelp: lang => lang.tget('commandRoleExtended'),
 	permissionLevel: PermissionsLevels.MODERATOR,
 	requiredPermissions: ['MANAGE_ROLES'],
 	runIn: ['text'],
@@ -17,7 +17,7 @@ export default class extends SteveCommand {
 
 	public async run(msg: GuildMessage, [user, ...roles]: [User, Role]): Promise<Message> {
 		const member = await msg.guild.members.fetch(user);
-		if (!member) return msg.channel.send(msg.guild.language.tget('USER_NOT_IN_GUILD', user.tag));
+		if (!member) return msg.channel.send(msg.guild.language.tget('userNotInGuild', user.tag));
 
 		const removed: string[] = [];
 		const added: string[] = [];
@@ -33,8 +33,8 @@ export default class extends SteveCommand {
 		}
 
 		let output = '';
-		if (added.length) output += `${msg.guild.language.tget('COMMAND_ROLE_ADD', added.join(', '))}\n`;
-		if (removed.length) output += `${msg.guild.language.tget('COMMAND_ROLE_REMOVE', removed.join(', '))}\n`;
+		if (added.length) output += `${msg.guild.language.tget('commandRoleAdd', added.join(', '))}\n`;
+		if (removed.length) output += `${msg.guild.language.tget('commandRoleRemove', removed.join(', '))}\n`;
 
 		return msg.channel.send(output);
 	}

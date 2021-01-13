@@ -7,8 +7,8 @@ import { Message, TextChannel } from 'discord.js';
 import { CommandOptions } from 'klasa';
 
 @ApplyOptions<CommandOptions>({
-	description: lang => lang.tget('COMMAND_SETSERVERLOG_DESCRIPTION'),
-	extendedHelp: lang => lang.tget('COMMAND_SETSERVERLOG_EXTENDED'),
+	description: lang => lang.tget('commandSetserverlogDescription'),
+	extendedHelp: lang => lang.tget('commandSetserverlogExtended'),
 	permissionLevel: PermissionsLevels.MODERATOR,
 	runIn: ['text'],
 	usage: '<channel:channel>'
@@ -18,7 +18,7 @@ export default class extends SteveCommand {
 	public async run(msg: GuildMessage, [channel]: [TextChannel]): Promise<Message> {
 		await msg.guild.settings.update(GuildSettings.Channels.Serverlog, channel.id);
 
-		return msg.channel.send(msg.guild.language.tget('COMMAND_SETSERVERLOG_SET', channel.id));
+		return msg.channel.send(msg.guild.language.tget('commandSetserverlogSet', channel.id));
 	}
 
 }

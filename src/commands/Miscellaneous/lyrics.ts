@@ -7,8 +7,8 @@ import { ApplyOptions } from '@skyra/decorators';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['genius'],
-	description: lang => lang.tget('COMMAND_LYRICS_DESCRIPTION'),
-	extendedHelp: lang => lang.tget('COMMAND_LYRICS_EXTENDED'),
+	description: lang => lang.tget('commandLyricsDescription'),
+	extendedHelp: lang => lang.tget('commandLyricsExtended'),
 	usage: '<song:string>'
 })
 export default class extends SteveCommand {
@@ -21,12 +21,12 @@ export default class extends SteveCommand {
 		const Client = new Genius.Client(TOKENS.GENIUS);
 		const songs = await Client.songs.search(song);
 
-		if (songs.length < 1) throw msg.language.tget('COMMAND_LYRICS_NOLYRICS');
+		if (songs.length < 1) throw msg.language.tget('commandLyricsNolyrics');
 
-		const EMBED_DATA = msg.language.tget('COMMAND_LYRICS_EMBED');
+		const embedData = msg.language.tget('commandLyricsEmbed');
 
 		const embed = new MessageEmbed()
-			.setTitle(EMBED_DATA.TITLE);
+			.setTitle(embedData.title);
 
 		for (let i = 0; i < 5; i++) {
 			if (!songs[i]) break;

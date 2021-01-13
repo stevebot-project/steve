@@ -6,13 +6,13 @@ import { ApplyOptions } from '@skyra/decorators';
 @ApplyOptions<CommandOptions>({
 	cooldown: 60,
 	cooldownLevel: 'channel',
-	description: lang => lang.tget('COMMAND_AUDINO_DESCRIPTION'),
-	extendedHelp: lang => lang.tget('COMMAND_AUDINO_EXTENDED')
+	description: lang => lang.tget('commandAudinoDescription'),
+	extendedHelp: lang => lang.tget('commandAudinoExtended')
 })
 export default class extends SteveCommand {
 
 	public async run(msg: KlasaMessage): Promise<Message> {
-		return msg.channel.send(msg.language.tget('COMMAND_AUDINO_ID'),
+		return msg.channel.send(msg.language.tget('commandAudinoId'),
 			{ files: [{ attachment: './assets/images/john_screech.png', name: 'john_screech.png' }] });
 	}
 

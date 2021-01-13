@@ -7,8 +7,8 @@ import { Message, Role } from 'discord.js';
 import { CommandOptions } from 'klasa';
 
 @ApplyOptions<CommandOptions>({
-	description: lang => lang.tget('COMMAND_MANAGEASSIGNABLEROLES_DESCRIPTION'),
-	extendedHelp: lang => lang.tget('COMMAND_MANAGEASSIGNABLEROLES_EXTENDED'),
+	description: lang => lang.tget('commandManageassignablerolesDescription'),
+	extendedHelp: lang => lang.tget('commandManageassignablerolesExtended'),
 	permissionLevel: PermissionsLevels.MODERATOR,
 	runIn: ['text'],
 	subcommands: true,
@@ -37,11 +37,11 @@ export default class extends SteveCommand {
 		let res = '';
 
 		if (removedRoles.length) {
-			res += msg.guild.language.tget('COMMAND_MANAGEASSIGNABLEROLES_MANAGE_REMOVED', removedRoles.join(', '));
+			res += msg.guild.language.tget('commandManageassignablerolesManageRemoved', removedRoles.join(', '));
 		}
 
 		if (addedRoles.length) {
-			res += msg.guild.language.tget('COMMAND_MANAGEASSIGNABLEROLES_MANAGE_ADDED', addedRoles.join(', '));
+			res += msg.guild.language.tget('commandManageassignablerolesManageAdded', addedRoles.join(', '));
 		}
 
 		return msg.channel.send(res);
@@ -50,7 +50,7 @@ export default class extends SteveCommand {
 	public async reset(msg: GuildMessage): Promise<Message> {
 		await msg.guild.settings.reset(GuildSettings.Roles.Assignable);
 
-		return msg.channel.send(msg.guild.language.tget('COMMAND_MANAGEASSIGNABLEROLES_RESET'));
+		return msg.channel.send(msg.guild.language.tget('commandManageassignablerolesReset'));
 	}
 
 }

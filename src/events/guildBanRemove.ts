@@ -16,14 +16,14 @@ export default class extends Event {
 	private async handleLog(guild: Guild, user: User, memberlog: TextChannel): Promise<Message> {
 		const executor = await getExecutor(guild, 'MEMBER_BAN_REMOVE');
 
-		const EMBED_DATA = guild.language.tget('EVENT_GUILDBANREMOVE_EMBED');
+		const embedData = guild.language.tget('eventGuildbanremoveEmbed');
 
 		const embed = new MessageEmbed()
 			.setAuthor(user.tag, user.displayAvatarURL())
 			.setColor(LogColors.RED)
-			.setFooter(EMBED_DATA.FOOTER(user.id))
+			.setFooter(embedData.footer(user.id))
 			.setTimestamp()
-			.setTitle(EMBED_DATA.TITLE(executor.tag));
+			.setTitle(embedData.title(executor.tag));
 
 		return memberlog.send(embed);
 	}

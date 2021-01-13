@@ -8,7 +8,7 @@ export default class extends Event {
 		if (channel.isText()) {
 			const stevePlay = chooseRandomPlay();
 			const winner = checkWinner(plays.indexOf(playerPlay), plays.indexOf(stevePlay));
-			return channel.send(guild.language.tget('COMMAND_ROCKPAPERSCISSORS_WINNER', playerPlay, stevePlay, winner));
+			return channel.send(guild.language.tget('commandRockpaperscissorsWinner', playerPlay, stevePlay, winner));
 		}
 	}
 

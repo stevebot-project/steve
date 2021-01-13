@@ -7,8 +7,8 @@ import { Message, Role } from 'discord.js';
 import { CommandOptions } from 'klasa';
 
 @ApplyOptions<CommandOptions>({
-	description: lang => lang.tget('COMMAND_SETMUTEDROLE_DESCRIPTION'),
-	extendedHelp: lang => lang.tget('COMMAND_SETMUTEDROLE_EXTENDED'),
+	description: lang => lang.tget('commandSetmutedroleDescription'),
+	extendedHelp: lang => lang.tget('commandSetmutedroleExtended'),
 	permissionLevel: PermissionsLevels.MODERATOR,
 	runIn: ['text'],
 	usage: '<role:rolename>'
@@ -18,7 +18,7 @@ export default class extends SteveCommand {
 	public async run(msg: GuildMessage, [role]: [Role]): Promise<Message> {
 		await msg.guild.settings.update(GuildSettings.Roles.Muted, role.id, msg.guild.id);
 
-		return msg.channel.send(msg.guild.language.tget('COMMAND_SETMUTEDROLE_SET', role.name));
+		return msg.channel.send(msg.guild.language.tget('commandSetmutedroleSet', role.name));
 	}
 
 }

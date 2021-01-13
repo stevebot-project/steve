@@ -8,8 +8,8 @@ import { CommandOptions } from 'klasa';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['ra'],
-	description: lang => lang.tget('COMMAND_ROLEALIAS_DESCRIPTION'),
-	extendedHelp: lang => lang.tget('COMMAND_ROLEALIAS_EXTENDED'),
+	description: lang => lang.tget('commandRolealiasDescription'),
+	extendedHelp: lang => lang.tget('commandRolealiasExtended'),
 	permissionLevel: PermissionsLevels.MODERATOR,
 	runIn: ['text'],
 	subcommands: true,
@@ -27,26 +27,26 @@ export default class extends SteveCommand {
 		const roleAliases: RoleAlias[] = msg.guild.settings.get(GuildSettings.RoleAliases);
 
 		if (this.roleAliasExists(roleAliases, alias)) {
-			throw msg.guild.language.tget('COMMAND_ROLEALIAS_ALREADYEXISTS', alias);
+			throw msg.guild.language.tget('commandRolealiasAlreadyexists', alias);
 		}
 
 		await msg.guild.settings.update(GuildSettings.RoleAliases, this.createRoleAlias(alias, role), { action: 'add' });
 
-		return msg.channel.send(msg.guild.language.tget('COMMAND_ROLEALIAS_ADD', alias.toLowerCase(), role.name));
+		return msg.channel.send(msg.guild.language.tget('commandRolealiasAdd', alias.toLowerCase(), role.name));
 	}
 
 	public async remove(msg: GuildMessage, [alias]: [string]) {
 		const roleAliases: RoleAlias[] = msg.guild.settings.get(GuildSettings.RoleAliases);
 
 		if (!this.roleAliasExists(roleAliases, alias)) {
-			throw msg.guild.language.tget('COMMAND_ROLEALIAS_DOESNOTEXIST', alias);
+			throw msg.guild.language.tget('commandRolealiasDoesnotexist', alias);
 		}
 
 		const removedAlias = roleAliases.find(ra => ra.alias === alias.toLowerCase());
 
 		await msg.guild.settings.update(GuildSettings.RoleAliases, removedAlias, { action: 'remove' });
 
-		return msg.channel.send(msg.guild.language.tget('COMMAND_ROLEALIAS_REMOVE', alias.toLowerCase()));
+		return msg.channel.send(msg.guild.language.tget('commandRolealiasRemove', alias.toLowerCase()));
 	}
 
 	private createRoleAlias(alias: string, role: Role): RoleAlias {

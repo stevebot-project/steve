@@ -23,8 +23,8 @@ interface XkcdComic {
 @ApplyOptions<CommandOptions>({
 	cooldown: 15,
 	cooldownLevel: 'author',
-	description: lang => lang.tget('COMMAND_XKCD_DESCRIPTION'),
-	extendedHelp: lang => lang.tget('COMMAND_XKCD_EXTENDED'),
+	description: lang => lang.tget('commandXkcdDescription'),
+	extendedHelp: lang => lang.tget('commandXkcdExtended'),
 	requiredPermissions: ['EMBED_LINKS'],
 	usage: '[comicNumber:integer]'
 })
@@ -32,7 +32,7 @@ export default class extends SteveCommand {
 
 	public async run(msg: KlasaMessage, [comicID]: [number]) {
 		const comic = comicID
-			? await this.getXkcdByNumber(comicID).catch(() => { throw msg.language.tget('COMMAND_XKCD_INVALID'); })
+			? await this.getXkcdByNumber(comicID).catch(() => { throw msg.language.tget('commandXkcdInvalid'); })
 			: await this.getCurrentXkcd();
 
 		const embed = new MessageEmbed()

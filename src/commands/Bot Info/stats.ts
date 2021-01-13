@@ -5,8 +5,8 @@ import { ApplyOptions } from '@skyra/decorators';
 
 @ApplyOptions<CommandOptions>({
 	guarded: true,
-	description: lang => lang.tget('COMMAND_STATS_DESCRIPTION'),
-	extendedHelp: lang => lang.tget('COMMAND_STATS_EXTENDED')
+	description: lang => lang.tget('commandStatsDescription'),
+	extendedHelp: lang => lang.tget('commandStatsExtended')
 })
 export default class extends SteveCommand {
 
@@ -23,25 +23,25 @@ export default class extends SteveCommand {
 			}
 		}
 
-		const EMBED_DATA = msg.language.tget('COMMAND_STATS_EMBED');
+		const embedData = msg.language.tget('commandStatsEmbed');
 
 		const embed = new MessageEmbed()
 			.addFields(
-				{ name: EMBED_DATA.FIELD_TITLES.MEMORY_USAGE, value: `${(memory || process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)} MB` },
-				{ name: EMBED_DATA.FIELD_TITLES.UPTIME, value: Duration.toNow(Date.now() - (process.uptime() * 1000)) },
-				{ name: EMBED_DATA.FIELD_TITLES.USERS, value: (users || this.client.users.cache.size).toLocaleString() },
-				{ name: EMBED_DATA.FIELD_TITLES.GUILDS, value: (guilds || this.client.guilds.cache.size).toLocaleString() },
-				{ name: EMBED_DATA.FIELD_TITLES.CHANNELS, value: (channels || this.client.channels.cache.size).toLocaleString() },
-				{ name: EMBED_DATA.FIELD_TITLES.KLASA, value: `v${klasaVersion}` },
-				{ name: EMBED_DATA.FIELD_TITLES.DISCORDJS, value: `v${discordVersion}` },
-				{ name: EMBED_DATA.FIELD_TITLES.NODE, value: process.version }
+				{ name: embedData.fieldTitles.memoryUsage, value: `${(memory || process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)} MB` },
+				{ name: embedData.fieldTitles.uptime, value: Duration.toNow(Date.now() - (process.uptime() * 1000)) },
+				{ name: embedData.fieldTitles.users, value: (users || this.client.users.cache.size).toLocaleString() },
+				{ name: embedData.fieldTitles.guilds, value: (guilds || this.client.guilds.cache.size).toLocaleString() },
+				{ name: embedData.fieldTitles.channels, value: (channels || this.client.channels.cache.size).toLocaleString() },
+				{ name: embedData.fieldTitles.klasa, value: `v${klasaVersion}` },
+				{ name: embedData.fieldTitles.discordjs, value: `v${discordVersion}` },
+				{ name: embedData.fieldTitles.node, value: process.version }
 			)
 			.attachFiles(['./assets/images/stats_embed_thumbnail.png'])
 			.setColor(0x71adcf)
-			.setFooter(EMBED_DATA.FOOTER)
+			.setFooter(embedData.footer)
 			.setThumbnail('attachment://stats_embed_thumbnail.png')
 			.setTimestamp()
-			.setTitle(EMBED_DATA.TITLE);
+			.setTitle(embedData.title);
 
 		return msg.channel.send(embed);
 	}

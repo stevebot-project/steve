@@ -4,15 +4,15 @@ import { ApplyOptions } from '@skyra/decorators';
 import { GuildMessage } from '@lib/types/Messages';
 
 @ApplyOptions<ModerationCommandOptions>({
-	description: lang => lang.tget('COMMAND_KICK_DESCRIPTION'),
-	extendedHelp: lang => lang.tget('COMMAND_KICK_EXTENDED'),
+	description: lang => lang.tget('commandKickDescription'),
+	extendedHelp: lang => lang.tget('commandKickExtended'),
 	requiredPermissions: ['KICK_MEMBERS']
 })
 export default class extends ModerationCommand {
 
 	public async prehandle(target: User, guild: Guild): Promise<GuildMember> {
 		const member = await guild.members.fetch(target);
-		if (!member) throw guild.language.tget('USER_NOT_IN_GUILD', target.tag);
+		if (!member) throw guild.language.tget('userNotInGuild', target.tag);
 		return member;
 	}
 
@@ -21,7 +21,7 @@ export default class extends ModerationCommand {
 			await msg.guild.moderation.kick(target, reason);
 		} catch (err) {
 			this.client.console.error(err);
-			throw msg.guild.language.tget('COMMAND_KICK_UNABLE', target.user.tag);
+			throw msg.guild.language.tget('commandKickUnable', target.user.tag);
 		}
 
 		return target;
@@ -30,7 +30,7 @@ export default class extends ModerationCommand {
 	public async posthandle(msg: GuildMessage, target: GuildMember, reason: string, duration: number | undefined): Promise<Message> {
 		const thisCase = await msg.guild.moderation.cases.createCase('kick', msg.author, target.user, reason, duration, null);
 
-		return msg.channel.send(msg.guild.language.tget('COMMAND_KICK_SUCCESS', target.user.tag, thisCase));
+		return msg.channel.send(msg.guild.language.tget('commandKickSuccess', target.user.tag, thisCase));
 	}
 
 }

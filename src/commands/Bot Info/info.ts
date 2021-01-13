@@ -5,12 +5,12 @@ import { CommandOptions, KlasaMessage } from 'klasa';
 @ApplyOptions<CommandOptions>({
 	aliases: ['details', 'what'],
 	guarded: true,
-	description: lang => lang.tget('COMMAND_INFO_DESCRIPTION')
+	description: lang => lang.tget('commandInfoDescription')
 })
 export default class extends SteveCommand {
 
 	public async run(msg: KlasaMessage) {
-		return msg.channel.send(msg.language.tget('COMMAND_INFO'));
+		return msg.channel.send(msg.language.tget('commandInfo'));
 	}
 
 }

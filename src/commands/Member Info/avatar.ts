@@ -6,7 +6,7 @@ import { CommandOptions, KlasaMessage } from 'klasa';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['av'],
-	description: lang => lang.tget('COMMAND_AVATAR_DESCRIPTION'),
+	description: lang => lang.tget('commandAvatarDescription'),
 	requiredPermissions: ['EMBED_LINKS'],
 	usage: '[user:username]'
 })
@@ -37,7 +37,7 @@ export default class extends SteveCommand {
 
 			return msg.channel.send(embed);
 		} catch (e) {
-			return msg.channel.send(msg.language.tget('COMMAND_AVATAR_CANNOTDISPLAY', user.tag));
+			return msg.channel.send(msg.language.tget('commandAvatarCannotdisplay', user.tag));
 		}
 	}
 

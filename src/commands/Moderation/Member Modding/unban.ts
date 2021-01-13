@@ -4,8 +4,8 @@ import { ApplyOptions } from '@skyra/decorators';
 import { GuildMessage } from '@lib/types/Messages';
 
 @ApplyOptions<ModerationCommandOptions>({
-	description: lang => lang.tget('COMMAND_UNBAN_DESCRIPTION'),
-	extendedHelp: lang => lang.tget('COMMAND_UNBAN_EXTENDED'),
+	description: lang => lang.tget('commandUnbanDescription'),
+	extendedHelp: lang => lang.tget('commandUnbanExtended'),
 	requiredPermissions: ['BAN_MEMBERS'],
 	usage: '<user:user> [reason:string]'
 })
@@ -20,7 +20,7 @@ export default class extends ModerationCommand {
 			await msg.guild.moderation.unban(target, reason);
 		} catch (err) {
 			this.client.console.error(err);
-			throw msg.guild.language.tget('COMMAND_UNBAN_UNABLE', target.tag);
+			throw msg.guild.language.tget('commandUnbanUnable', target.tag);
 		}
 
 		return target;
@@ -29,7 +29,7 @@ export default class extends ModerationCommand {
 	public async posthandle(msg: GuildMessage, target: User, reason: string, duration: number | undefined): Promise<Message> {
 		const thisCase = await msg.guild.moderation.cases.createCase('unban', msg.author, target, reason, duration, null);
 
-		return msg.channel.send(msg.guild.language.tget('COMMAND_UNBAN_SUCCESS', target.tag, thisCase));
+		return msg.channel.send(msg.guild.language.tget('commandUnbanSuccess', target.tag, thisCase));
 	}
 
 }

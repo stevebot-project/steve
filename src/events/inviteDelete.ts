@@ -16,13 +16,13 @@ export default class extends Event {
 	}
 
 	private handleLog(invite: Invite, serverlog: TextChannel | NewsChannel): Promise<Message> {
-		const EMBED_DATA = invite.guild!.language.tget('EVENT_INVITEDELETE_EMBED');
+		const embedData = invite.guild!.language.tget('eventInvitedeleteEmbed');
 
 		const embed = new MessageEmbed()
 			.setColor(LogColors.BLUE)
-			.setFooter(EMBED_DATA.FOOTER(invite.code))
+			.setFooter(embedData.footer(invite.code))
 			.setTimestamp()
-			.setTitle(EMBED_DATA.TITLE(invite.channel.name));
+			.setTitle(embedData.title(invite.channel.name));
 
 		if (invite.inviter) embed.setAuthor(invite.inviter.tag, invite.inviter.displayAvatarURL());
 

@@ -5,7 +5,7 @@ export default class extends Event {
 
 	public run(guild: Guild, channel: GuildChannel) {
 		if (channel.isText()) {
-			return channel.send(guild.language.tget('COMMAND_AUDINO_ID'),
+			return channel.send(guild.language.tget('commandAudinoId'),
 				{ files: [{ attachment: './assets/images/john_screech.png', name: 'john_screech.png' }] });
 		}
 	}

@@ -7,8 +7,8 @@ import { Message } from 'discord.js';
 import { CommandOptions } from 'klasa';
 
 @ApplyOptions<CommandOptions>({
-	description: lang => lang.tget('COMMAND_MANAGEWORDBLACKLIST_DESCRIPTION'),
-	extendedHelp: lang => lang.tget('COMMAND_MANAGEWORDBLACKLIST_EXTENDED'),
+	description: lang => lang.tget('commandManagewordblacklistDescription'),
+	extendedHelp: lang => lang.tget('commandManagewordblacklistExtended'),
 	permissionLevel: PermissionsLevels.MODERATOR,
 	runIn: ['text'],
 	usage: '<enable|disable|reset|word:string>'
@@ -19,22 +19,22 @@ export default class extends SteveCommand {
 		if (word === 'enable') {
 			await msg.guild.settings.update(GuildSettings.WordBlacklist.Enabled, true);
 
-			return msg.channel.send(msg.guild.language.tget('COMMAND_MANAGEWORDBLACKLIST_ENABLED'));
+			return msg.channel.send(msg.guild.language.tget('commandManagewordblacklistEnabled'));
 		} else if (word === 'disable') {
 			await msg.guild.settings.update(GuildSettings.WordBlacklist.Enabled, false);
 
-			return msg.channel.send(msg.guild.language.tget('COMMAND_MANAGEWORDBLACKLIST_DISABLED'));
+			return msg.channel.send(msg.guild.language.tget('commandManagewordblacklistDisabled'));
 		} else if (word === 'reset') {
 			await msg.guild.settings.reset(GuildSettings.WordBlacklist.List);
 
-			return msg.channel.send(msg.guild.language.tget('COMMAND_MANAGEWORDBLACKLIST_RESET'));
+			return msg.channel.send(msg.guild.language.tget('commandManagewordblacklistReset'));
 		}
 
 		const removing = (msg.guild.settings.get(GuildSettings.WordBlacklist.List) as string[]).includes(word);
 
 		await msg.guild.settings.update(GuildSettings.WordBlacklist.List, word);
 
-		return msg.channel.send(msg.guild.language.tget('COMMAND_MANAGEWORDBLACKLIST_UPDATE', removing));
+		return msg.channel.send(msg.guild.language.tget('commandManagewordblacklistUpdate', removing));
 	}
 
 }

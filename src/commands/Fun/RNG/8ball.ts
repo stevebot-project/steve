@@ -7,14 +7,14 @@ import { ApplyOptions } from '@skyra/decorators';
 	aliases: ['magic8ball'],
 	cooldown: 5,
 	cooldownLevel: 'author',
-	description: lang => lang.tget('COMMAND_8BALL_DESCRIPTION'),
-	extendedHelp: lang => lang.tget('COMMAND_8BALL_EXTENDED'),
+	description: lang => lang.tget('command_8BallDescription'),
+	extendedHelp: lang => lang.tget('command_8BallExtended'),
 	usage: '<question:string>'
 })
 export default class extends SteveCommand {
 
 	public async run(msg: KlasaMessage): Promise<Message> {
-		const responses = msg.language.tget('COMMAND_8BALL_RESPONSES') as string[];
+		const responses = msg.language.tget('command_8BallResponses') as string[];
 		return msg.channel.send(responses[Math.floor(Math.random() * responses.length)]);
 	}
 

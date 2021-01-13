@@ -8,8 +8,8 @@ import { ApplyOptions } from '@skyra/decorators';
 	aliases: ['rps'],
 	cooldown: 5,
 	cooldownLevel: 'author',
-	description: lang => lang.tget('COMMAND_ROCKPAPERSCISSORS_DESCRIPTION'),
-	extendedHelp: lang => lang.tget('COMMAND_ROCKPAPERSCISSORS_EXTENDED'),
+	description: lang => lang.tget('commandRockpaperscissorsDescription'),
+	extendedHelp: lang => lang.tget('commandRockpaperscissorsExtended'),
 	usage: '<rock|paper|scissors>'
 })
 export default class extends SteveCommand {
@@ -17,7 +17,7 @@ export default class extends SteveCommand {
 	public async run(msg: KlasaMessage, [playerMove]: [string]): Promise<Message> {
 		const steveMove = chooseRandomPlay();
 		const winner = checkWinner(plays.indexOf(playerMove), plays.indexOf(steveMove));
-		return msg.channel.send(msg.language.tget('COMMAND_ROCKPAPERSCISSORS_WINNER', playerMove, steveMove, winner));
+		return msg.channel.send(msg.language.tget('commandRockpaperscissorsWinner', playerMove, steveMove, winner));
 	}
 
 }

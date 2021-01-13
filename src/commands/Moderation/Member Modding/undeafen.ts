@@ -4,8 +4,8 @@ import { ApplyOptions } from '@skyra/decorators';
 import { GuildMessage } from '@lib/types/Messages';
 
 @ApplyOptions<ModerationCommandOptions>({
-	description: lang => lang.tget('COMMAND_UNDEAFEN_DESCRIPTION'),
-	extendedHelp: lang => lang.tget('COMMAND_UNDEAFEN_EXTENDED'),
+	description: lang => lang.tget('commandUndeafenDescription'),
+	extendedHelp: lang => lang.tget('commandUndeafenExtended'),
 	requiredPermissions: ['MANAGE_ROLES'],
 	requiredSettings: ['roles.deafened']
 })
@@ -13,7 +13,7 @@ export default class extends ModerationCommand {
 
 	public async prehandle(target: User, guild: Guild): Promise<GuildMember> {
 		const member = await guild.members.fetch(target);
-		if (!member) throw guild.language.tget('USER_NOT_IN_GUILD', target.tag);
+		if (!member) throw guild.language.tget('userNotInGuild', target.tag);
 		return member;
 	}
 
@@ -22,7 +22,7 @@ export default class extends ModerationCommand {
 			await msg.guild.moderation.undeafen(target, reason);
 		} catch (err) {
 			this.client.console.error(err);
-			throw msg.guild.language.tget('COMMAND_UNDEAFEN_UNABLE', target.user.tag);
+			throw msg.guild.language.tget('commandUndeafenUnable', target.user.tag);
 		}
 
 		return target;
@@ -31,7 +31,7 @@ export default class extends ModerationCommand {
 	public async posthandle(msg: GuildMessage, target: GuildMember, reason: string, duration: number | undefined): Promise<Message> {
 		const thisCase = await msg.guild.moderation.cases.createCase('deafen', msg.author, target.user, reason, duration, null);
 
-		return msg.channel.send(msg.guild.language.tget('COMMAND_UNDEAFEN_SUCCESS', target.user.tag, thisCase));
+		return msg.channel.send(msg.guild.language.tget('commandUndeafenSuccess', target.user.tag, thisCase));
 	}
 
 }

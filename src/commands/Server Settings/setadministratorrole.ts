@@ -8,8 +8,8 @@ import { CommandOptions } from 'klasa';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['setadminrole'],
-	description: lang => lang.tget('COMMAND_SETADMINISTRATORROLE_DESCRIPTION'),
-	extendedHelp: lang => lang.tget('COMMAND_SETADMINISTRATORROLE_EXTENDED'),
+	description: lang => lang.tget('commandSetadministratorroleDescription'),
+	extendedHelp: lang => lang.tget('commandSetadministratorroleExtended'),
 	permissionLevel: PermissionsLevels.ADMINISTRATOR,
 	runIn: ['text'],
 	usage: '<role:rolename>'
@@ -19,7 +19,7 @@ export default class extends SteveCommand {
 	public async run(msg: GuildMessage, [role]: [Role]): Promise<Message> {
 		await msg.guild.settings.update(GuildSettings.Roles.Administrator, role.id, msg.guild.id);
 
-		return msg.channel.send(msg.guild.language.tget('COMMAND_SETADMINISTRATORROLE_SET', role.name));
+		return msg.channel.send(msg.guild.language.tget('commandSetadministratorroleSet', role.name));
 	}
 
 }

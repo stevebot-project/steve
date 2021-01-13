@@ -8,7 +8,7 @@ import { CommandOptions } from 'klasa';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['tec'],
-	description: lang => lang.tget('COMMAND_TOGGLEEMOJICREATE_DESCRIPTION'),
+	description: lang => lang.tget('commandToggleemojicreateDescription'),
 	permissionLevel: PermissionsLevels.MODERATOR,
 	runIn: ['text']
 })
@@ -20,7 +20,7 @@ export default class extends SteveCommand {
 
 		await msg.guild.settings.update(GuildSettings.LogEvents.EmojiCreate, !current);
 
-		return msg.channel.send(msg.guild.language.tget('COMMAND_TOGGLEEMOJICREATE', current));
+		return msg.channel.send(msg.guild.language.tget('commandToggleemojicreate', current));
 	}
 
 }

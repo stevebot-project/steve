@@ -4,7 +4,7 @@ import { SUPPORT_LINK } from '@root/config';
 import { ApplyOptions } from '@skyra/decorators';
 
 @ApplyOptions<CommandOptions>({
-	description: lang => lang.tget('COMMAND_SUPPORT_DESCRIPTION'),
+	description: lang => lang.tget('commandSupportDescription'),
 	guarded: true
 })
 export default class extends SteveCommand {

@@ -7,8 +7,7 @@ import { Constructor } from 'discord.js';
 import { ApplyOptions } from '@skyra/decorators';
 
 @ApplyOptions<CommandOptions>({
-	description: lang => lang.tget('COMMAND_TOGGLETRUSTEDROLEREQUIREMENT_DESCRIPTION'),
-	extendedHelp: lang => lang.tget('COMMAND_TOGGLETRUSTEDROLEREQUIREMENT_EXTENDED'),
+	description: lang => lang.tget('commandLoadDescription'),
 	permissionLevel: PermissionsLevels.OWNER
 })
 export default class extends SteveCommand {
@@ -21,7 +20,7 @@ export default class extends SteveCommand {
 		const piece = await (core ? this.tryEach(store, pathSplit) : store.load(store.userDirectory, pathSplit));
 
 		try {
-			if (!piece) throw msg.language.get('COMMAND_LOAD_FAIL');
+			if (!piece) throw msg.language.get('commandLoadFail');
 			await piece.init();
 			if (this.client.shard) {
 				await this.client.shard.broadcastEval(`
@@ -31,10 +30,10 @@ export default class extends SteveCommand {
 					}
 				`);
 			}
-			return msg.sendLocale('COMMAND_LOAD', [timer.stop(), store.name, piece.name]);
+			return msg.sendLocale('commandLoad', [timer.stop(), store.name, piece.name]);
 		} catch (error) {
 			timer.stop();
-			throw msg.language.get('COMMAND_LOAD_ERROR', store.name, piece ? piece.name : pathSplit.join('/'), error);
+			throw msg.language.get('commandLoadError', store.name, piece ? piece.name : pathSplit.join('/'), error);
 		}
 	}
 

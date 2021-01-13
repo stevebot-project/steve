@@ -12,23 +12,23 @@ export default class extends Event {
 			const accountCreated = userAccountCreated(guild, fullMember.user.createdTimestamp);
 			const joinedGuild = getJoinDateString(guild, fullMember.joinedTimestamp!);
 
-			const EMBED_DATA = guild.language.tget('COMMAND_WHOIS_EMBED');
+			const embedData = guild.language.tget('commandWhoisEmbed');
 
 			const embed = new MessageEmbed()
 				.addFields([
-					{ name: EMBED_DATA.FIELD_TITLES.DISPLAY_NAME, value: fullMember.displayName, inline: true },
-					{ name: EMBED_DATA.FIELD_TITLES.ACCOUNT_CREATED, value: accountCreated, inline: true },
-					{ name: EMBED_DATA.FIELD_TITLES.JOINED_GUILD, value: joinedGuild, inline: true }
+					{ name: embedData.fieldTitles.displayName, value: fullMember.displayName, inline: true },
+					{ name: embedData.fieldTitles.accountCreated, value: accountCreated, inline: true },
+					{ name: embedData.fieldTitles.joinedGuild, value: joinedGuild, inline: true }
 				])
 				.setAuthor(fullMember.user.tag, fullMember.user.displayAvatarURL())
 				.setColor(fullMember.user.settings.get(UserSettings.EmbedColor) as ColorResolvable || 0x61e3f9)
-				.setFooter(EMBED_DATA.FOOTER(fullMember.id))
+				.setFooter(embedData.footer(fullMember.id))
 				.setTimestamp();
 
 			if (fullMember.roles.cache.size > 1) {
 				embed.addFields([
 					{
-						name: EMBED_DATA.FIELD_TITLES.ROLES,
+						name: embedData.fieldTitles.roles,
 						// eslint-disable-next-line newline-per-chained-call
 						value: fullMember.roles.cache.filter(r => r.id !== r.guild.id).sort().array().join(' ')
 					}

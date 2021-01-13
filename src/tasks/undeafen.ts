@@ -11,7 +11,7 @@ export default class extends Task {
 			const member = await guild.members.fetch(targetUser);
 
 			if (member && guild.moderation.deafenedRole && member.roles.cache.has(guild.moderation.deafenedRole.id)) {
-				await guild.moderation.undeafen(member, guild.language.tget('MODERATION_NOREASON'));
+				await guild.moderation.undeafen(member, guild.language.tget('moderationNoreason'));
 			}
 		}
 	}

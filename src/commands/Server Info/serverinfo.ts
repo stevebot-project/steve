@@ -7,27 +7,27 @@ import { GuildMessage } from '@lib/types/Messages';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['serverstats'],
-	description: lang => lang.tget('COMMAND_SERVERINFO_DESCRIPTION'),
-	extendedHelp: lang => lang.tget('COMMAND_SERVERINFO_EXTENDED'),
+	description: lang => lang.tget('commandServerinfoDescription'),
+	extendedHelp: lang => lang.tget('commandServerinfoExtended'),
 	requiredPermissions: ['EMBED_LINKS'],
 	runIn: ['text']
 })
 export default class extends SteveCommand {
 
 	public async run(msg: GuildMessage): Promise<Message> {
-		const EMBED_DATA = msg.guild.language.tget('COMMAND_SERVERINFO_EMBED');
+		const embedData = msg.guild.language.tget('commandServerinfoEmbed');
 
 		const embed = new MessageEmbed()
 			.addFields([
-				{ name: EMBED_DATA.FIELD_TITLES.TOTAL_MEMBERS, value: msg.guild.memberCount, inline: true },
-				{ name: EMBED_DATA.FIELD_TITLES.BOTS, value: msg.guild.members.cache.filter(m => m.user.bot).size, inline: true },
-				{ name: EMBED_DATA.FIELD_TITLES.TEXT_CHANNELS, value: msg.guild.channels.cache.filter(c => c.type === 'text').size, inline: true },
-				{ name: EMBED_DATA.FIELD_TITLES.VOICE_CHANNELS, value: msg.guild.channels.cache.filter(c => c.type === 'voice').size, inline: true },
-				{ name: EMBED_DATA.FIELD_TITLES.ROLES, value: msg.guild.roles.cache.size, inline: true },
-				{ name: EMBED_DATA.FIELD_TITLES.EMOJIS, value: msg.guild.emojis.cache.size, inline: true }
+				{ name: embedData.fieldTitles.totalMembers, value: msg.guild.memberCount, inline: true },
+				{ name: embedData.fieldTitles.bots, value: msg.guild.members.cache.filter(m => m.user.bot).size, inline: true },
+				{ name: embedData.fieldTitles.textChannels, value: msg.guild.channels.cache.filter(c => c.type === 'text').size, inline: true },
+				{ name: embedData.fieldTitles.voiceChannels, value: msg.guild.channels.cache.filter(c => c.type === 'voice').size, inline: true },
+				{ name: embedData.fieldTitles.roles, value: msg.guild.roles.cache.size, inline: true },
+				{ name: embedData.fieldTitles.emojis, value: msg.guild.emojis.cache.size, inline: true }
 			])
 			.setAuthor(msg.guild.name, msg.guild.iconURL()!)
-			.setFooter(EMBED_DATA.FOOTER(formatDate(msg.guild.createdTimestamp), friendlyDuration(Date.now() - msg.guild.createdTimestamp)))
+			.setFooter(embedData.footer(formatDate(msg.guild.createdTimestamp), friendlyDuration(Date.now() - msg.guild.createdTimestamp)))
 			.setTimestamp();
 
 		return msg.channel.send(embed);

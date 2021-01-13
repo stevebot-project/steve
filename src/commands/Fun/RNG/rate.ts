@@ -6,14 +6,14 @@ import { ApplyOptions } from '@skyra/decorators';
 @ApplyOptions<CommandOptions>({
 	cooldown: 5,
 	cooldownLevel: 'author',
-	description: lang => lang.tget('COMMAND_RATE_DESCRIPTION'),
-	extendedHelp: lang => lang.tget('COMMAND_RATE_EXTENDED'),
+	description: lang => lang.tget('commandRateDescription'),
+	extendedHelp: lang => lang.tget('commandRateExtended'),
 	usage: '<thing:string>'
 })
 export default class extends SteveCommand {
 
 	public async run(msg: KlasaMessage, [thing]: [string]): Promise<Message> {
-		return msg.channel.send(msg.language.tget('COMMAND_RATE_RESPONSE', thing, Math.floor((Math.random() * 10) + 1)));
+		return msg.channel.send(msg.language.tget('commandRateResponse', thing, Math.floor((Math.random() * 10) + 1)));
 	}
 
 }

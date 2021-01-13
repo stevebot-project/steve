@@ -7,8 +7,8 @@ import { Message, TextChannel } from 'discord.js';
 import { CommandOptions } from 'klasa';
 
 @ApplyOptions<CommandOptions>({
-	description: lang => lang.tget('COMMAND_SETREMINDERCHANNEL_DESCRIPTION'),
-	extendedHelp: lang => lang.tget('COMMAND_SETREMINDERCHANNEL_EXTENDED'),
+	description: lang => lang.tget('commandSetreminderchannelDescription'),
+	extendedHelp: lang => lang.tget('commandSetreminderchannelExtended'),
 	permissionLevel: PermissionsLevels.MODERATOR,
 	runIn: ['text'],
 	usage: '<channel:channel>'
@@ -18,7 +18,7 @@ export default class extends SteveCommand {
 	public async run(msg: GuildMessage, [channel]: [TextChannel]): Promise<Message> {
 		await msg.guild.settings.update(GuildSettings.Channels.ReminderChannel, channel.id);
 
-		return msg.channel.send(msg.guild.language.tget('COMMAND_SETREMINDERCHANNEL_SET', channel.id));
+		return msg.channel.send(msg.guild.language.tget('commandSetreminderchannelSet', channel.id));
 	}
 
 }

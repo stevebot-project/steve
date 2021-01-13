@@ -20,23 +20,23 @@ export default class extends Event {
 
 		const msgContent = msg.content.length < 1024 && msg.content.length > 0
 			? msg.content
-			: msg.guild!.language.tget('EVENT_MESSAGEDELETE_UNABLE_TO_DISPLAY');
+			: msg.guild!.language.tget('eventMessagedeleteUnableToDisplay');
 
 		const parent = msg.channel.parent
 			? msg.channel.parent.name
-			: msg.guild!.language.tget('NO_PARENT_CATEGORY');
+			: msg.guild!.language.tget('noParentCategory');
 
 		const msgSentTime = friendlyDuration(Date.now() - msg.createdTimestamp);
 
-		const EMBED_DATA = msg.guild!.language.tget('EVENT_MESSAGEDELETE_EMBED');
+		const embedData = msg.guild!.language.tget('eventMessagedeleteEmbed');
 
 		const embed = new MessageEmbed()
 			.addFields(
-				{ name: EMBED_DATA.FIELD_TITLES.CHANNEL(msg.channel.name, parent), value: msgContent }
+				{ name: embedData.fieldTitles.channel(msg.channel.name, parent), value: msgContent }
 			)
 			.setAuthor(msg.author.tag, msg.author.displayAvatarURL())
 			.setColor(LogColors.REDORANGE)
-			.setFooter(EMBED_DATA.FOOTER(msg.id, msgSentTime))
+			.setFooter(embedData.footer(msg.id, msgSentTime))
 			.setTimestamp();
 
 		return serverlog.send(embed);

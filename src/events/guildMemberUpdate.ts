@@ -20,15 +20,15 @@ export default class extends Event {
 	}
 
 	private async logDisplayNameChange(oldMember: GuildMember, newMember: GuildMember, memberlog: TextChannel): Promise<Message> {
-		const EMBED_DATA = newMember.guild.language.tget('EVENT_GUILDMEMBERUPDATE_DISPLAYNAMECHANGE_EMBED');
+		const embedData = newMember.guild.language.tget('eventGuildmemberupdateDisplaynamechangeEmbed');
 
 		const embed = new MessageEmbed()
 			.addFields(
-				{ name: EMBED_DATA.FIELD_TITLES.NEW_DISPLAY_NAME, value: newMember.displayName }
+				{ name: embedData.fieldTitles.newDisplayName, value: newMember.displayName }
 			)
 			.setAuthor(newMember.user.tag, newMember.user.displayAvatarURL())
 			.setColor(LogColors.TURQUOISE)
-			.setFooter(EMBED_DATA.FOOTER(newMember.id))
+			.setFooter(embedData.footer(newMember.id))
 			.setTimestamp();
 
 		return memberlog.send(embed);
@@ -36,20 +36,20 @@ export default class extends Event {
 
 	private async logRoleUpdate(oldMember: GuildMember, newMember: GuildMember, memberlog: TextChannel): Promise<Message> {
 		const roleUpdateType = oldMember.roles.cache.size > newMember.roles.cache.size
-			? newMember.guild.language.tget('EVENT_GUILDMEMBERUPDATE_ROLEUPDATE_REMOVEDFROM')
-			: newMember.guild.language.tget('EVENT_GUILDMEMBERUPDATE_ROLEUPDATE_ADDEDTO');
+			? newMember.guild.language.tget('eventGuildmemberupdateRoleupdateRemovedfrom')
+			: newMember.guild.language.tget('eventGuildmemberupdateRoleupdateAddedto');
 
 		const executor = await getExecutor(newMember.guild, 'MEMBER_ROLE_UPDATE');
 		const role = await this.getRoleFromAuditLogs(newMember.guild);
 
-		const EMBED_DATA = newMember.guild.language.tget('EVENT_GUILDMEMBERUPDATE_ROLEUPDATE_EMBED');
+		const embedData = newMember.guild.language.tget('eventGuildmemberupdateRoleupdateEmbed');
 
 		const embed = new MessageEmbed()
 			.setAuthor(newMember.user.tag, newMember.user.displayAvatarURL())
 			.setColor(LogColors.TURQUOISE)
-			.setFooter(EMBED_DATA.FOOTER(newMember.id))
+			.setFooter(embedData.footer(newMember.id))
 			.setTimestamp()
-			.setTitle(EMBED_DATA.TITLE(roleUpdateType, role.name, executor.tag));
+			.setTitle(embedData.title(roleUpdateType, role.name, executor.tag));
 
 		return memberlog.send(embed);
 	}

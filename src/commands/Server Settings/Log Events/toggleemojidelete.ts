@@ -8,7 +8,7 @@ import { CommandOptions } from 'klasa';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['ted'],
-	description: lang => lang.tget('COMMAND_TOGGLEEMOJIDELETE_DESCRIPTION'),
+	description: lang => lang.tget('commandToggleemojideleteDescription'),
 	permissionLevel: PermissionsLevels.MODERATOR,
 	runIn: ['text']
 })
@@ -20,7 +20,7 @@ export default class extends SteveCommand {
 
 		await msg.guild.settings.update(GuildSettings.LogEvents.EmojiDelete, !current);
 
-		return msg.channel.send(msg.guild.language.tget('COMMAND_TOGGLEEMOJIDELETE', current));
+		return msg.channel.send(msg.guild.language.tget('commandToggleemojidelete', current));
 	}
 
 }

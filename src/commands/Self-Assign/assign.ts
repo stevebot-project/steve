@@ -7,8 +7,8 @@ import { ApplyOptions, requiredPermissions } from '@skyra/decorators';
 import { GuildMessage } from '@lib/types/Messages';
 
 @ApplyOptions<CommandOptions>({
-	description: lang => lang.tget('COMMAND_ASSIGN_DESCRIPTION'),
-	extendedHelp: lang => lang.tget('COMMAND_ASSIGN_EXTENDED'),
+	description: lang => lang.tget('commandAssignDescription'),
+	extendedHelp: lang => lang.tget('commandAssignExtended'),
 	flagSupport: true,
 	requiredPermissions: ['MANAGE_ROLES'],
 	runIn: ['text'],
@@ -20,7 +20,7 @@ export default class extends SteveCommand {
 		this.createCustomResolver('rolename', (str, possible, msg) => {
 			if (Reflect.has(msg.flagArgs, 'list')) return null;
 			if (str) return this.client.arguments.get('rolename').run(str, possible, msg);
-			throw msg.guild!.language.tget('COMMAND_ASSIGN_NOROLEPROVIDED');
+			throw msg.guild!.language.tget('commandAssignNoroleprovided');
 		});
 	}
 
@@ -31,7 +31,7 @@ export default class extends SteveCommand {
 		const trustedRoleRequirement = msg.guild.settings.get(GuildSettings.Roles.RequireTrustedRoleForSelfAssign) as boolean;
 
 		if (trustedRoleID && trustedRoleRequirement && !msg.member.roles.cache.has(trustedRoleID)) {
-			throw msg.guild.language.tget('COMMAND_ASSIGN_ROLE_NEEDTRUSTED', msg.guild.roles.cache.get(trustedRoleID)!.name);
+			throw msg.guild.language.tget('commandAssignRoleNeedtrusted', msg.guild.roles.cache.get(trustedRoleID)!.name);
 		}
 
 		const removed: string[] = [];
@@ -39,7 +39,7 @@ export default class extends SteveCommand {
 
 		for (const role of roles) {
 			if (!role.isAssignable) {
-				floatPromise(this, msg.channel.send(msg.guild.language.tget('COMMAND_ASSIGN_NOTASSIGNABLE', role.name)));
+				floatPromise(this, msg.channel.send(msg.guild.language.tget('commandAssignNotassignable', role.name)));
 				continue;
 			}
 
@@ -53,8 +53,8 @@ export default class extends SteveCommand {
 		}
 
 		let output = '';
-		if (added.length) output += `${msg.guild.language.tget('COMMAND_ASSIGN_ROLE_ADD', added.join(', '))}\n`;
-		if (removed.length) output += `${msg.guild.language.tget('COMMAND_ASSIGN_ROLE_REMOVE', removed.join(', '))}\n`;
+		if (added.length) output += `${msg.guild.language.tget('commandAssignRoleAdd', added.join(', '))}\n`;
+		if (removed.length) output += `${msg.guild.language.tget('commandAssignRoleRemove', removed.join(', '))}\n`;
 
 		return output ? msg.channel.send(output) : null;
 	}
@@ -72,7 +72,7 @@ export default class extends SteveCommand {
 			if (role) roleNames.push(role.name);
 		}
 
-		if (!roleNames.length) throw msg.guild.language.tget('COMMAND_MANAGEASSIGNABLEROLES_SHOW_NOROLES');
+		if (!roleNames.length) throw msg.guild.language.tget('commandManageassignablerolesShowNoroles');
 
 		const response = await msg.send(new MessageEmbed()
 			.setDescription('Loading...'));

@@ -7,12 +7,12 @@ export function getJoinDateString(guild: Guild, timestamp: number): string {
 	const joinDate = formatDate(timestamp);
 
 	if (timeSinceJoin > Time.DAY && timeSinceJoin < Time.HOUR * 31) {
-		return guild.language.tget('COMMAND_WHOIS_JOINEDGUILD_HOURS', Math.floor(timeSinceJoin / Time.HOUR), joinDate);
+		return guild.language.tget('commandWhoisJoinedguildHours', Math.floor(timeSinceJoin / Time.HOUR), joinDate);
 	}
 
-	return guild.language.tget('COMMAND_WHOIS_DATE', friendlyDuration(timeSinceJoin), joinDate);
+	return guild.language.tget('commandWhoisDate', friendlyDuration(timeSinceJoin), joinDate);
 }
 
 export function userAccountCreated(guild: Guild, timestamp: number) {
-	return guild.language.tget('COMMAND_WHOIS_DATE', friendlyDuration(Date.now() - timestamp), formatDate(timestamp));
+	return guild.language.tget('commandWhoisDate', friendlyDuration(Date.now() - timestamp), formatDate(timestamp));
 }

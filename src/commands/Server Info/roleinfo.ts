@@ -9,8 +9,8 @@ import { GuildMessage } from '@lib/types/Messages';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['membersin'],
-	description: lang => lang.tget('COMMAND_ROLEINFO_DESCRIPTION'),
-	extendedHelp: lang => lang.tget('COMMAND_ROLEINFO_EXTENDED'),
+	description: lang => lang.tget('commandRoleinfoDescription'),
+	extendedHelp: lang => lang.tget('commandRoleinfoExtended'),
 	requiredPermissions: ['EMBED_LINKS'],
 	runIn: ['text'],
 	usage: '<role:rolename>'
@@ -18,14 +18,14 @@ import { GuildMessage } from '@lib/types/Messages';
 export default class extends SteveCommand {
 
 	public async run(msg: GuildMessage, [role]: [Role]): Promise<Message> {
-		if (role.isRestricted && !msg.member.isStaff) throw msg.guild.language.tget('COMMAND_ROLEINFO_RESTRICTED');
+		if (role.isRestricted && !msg.member.isStaff) throw msg.guild.language.tget('commandRoleinfoRestricted');
 
 		let membersList = role.members.map(m => m.user.username).join(', ');
 
 		membersList = membersList.length < 1
-			? msg.guild.language.tget('COMMAND_ROLEINFO_NOMEMBERS')
+			? msg.guild.language.tget('commandRoleinfoNomembers')
 			: membersList.length > 1024
-				? msg.guild.language.tget('COMMAND_ROLEINFO_TOOMANY')
+				? msg.guild.language.tget('commandRoleinfoToomany')
 				: membersList;
 
 		let aliases: RoleAlias[] = msg.guild.settings.get(GuildSettings.RoleAliases);
@@ -34,18 +34,18 @@ export default class extends SteveCommand {
 			aliases = aliases.filter(a => a.role === role.id);
 		}
 
-		const EMBED_DATA = msg.guild.language.tget('COMMAND_ROLEINFO_EMBED');
+		const embedData = msg.guild.language.tget('commandRoleinfoEmbed');
 
 		const embed = new MessageEmbed()
 			.addFields([
-				{ name: EMBED_DATA.FIELD_TITLES.MEMBERS(role.members.size), value: membersList }
+				{ name: embedData.fieldTitles.members(role.members.size), value: membersList }
 			])
 			.setColor(role.hexColor)
-			.setDescription(EMBED_DATA.DESCRIPTION(role.name, formatDate(role.createdTimestamp)))
-			.setFooter(EMBED_DATA.FOOTER(role.isAssignable))
+			.setDescription(embedData.description(role.name, formatDate(role.createdTimestamp)))
+			.setFooter(embedData.footer(role.isAssignable))
 			.setTimestamp();
 
-		if (roleHasAlias) embed.addFields({ name: EMBED_DATA.FIELD_TITLES.ALIASES, value: aliases.map(a => a.alias).join(', ') });
+		if (roleHasAlias) embed.addFields({ name: embedData.fieldTitles.aliases, value: aliases.map(a => a.alias).join(', ') });
 
 		return msg.channel.send(embed);
 	}

@@ -16,14 +16,14 @@ export default class extends Event {
 	private async handleLog(emoji: GuildEmoji, serverlog: TextChannel): Promise<Message> {
 		const executor = await getExecutor(emoji.guild, 'EMOJI_DELETE');
 
-		const EMBED_DATA = emoji.guild.language.tget('EVENT_EMOJIDELETE_EMBED');
+		const embedData = emoji.guild.language.tget('eventEmojideleteEmbed');
 
 		const embed = new MessageEmbed()
 			.setAuthor(executor.tag, executor.displayAvatarURL())
 			.setColor(LogColors.PINK)
-			.setFooter(EMBED_DATA.FOOTER(emoji.id))
+			.setFooter(embedData.footer(emoji.id))
 			.setTimestamp()
-			.setTitle(EMBED_DATA.TITLE(emoji.name));
+			.setTitle(embedData.title(emoji.name));
 
 		return serverlog.send(embed);
 	}

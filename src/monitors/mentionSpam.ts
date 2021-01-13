@@ -16,7 +16,7 @@ export default class extends Monitor {
 			if (msg.mentions.users.size > maxMentions) {
 				const spamMsg = await msg.delete();
 
-				floatPromise(this, spamMsg.reply(msg.guild!.language.tget('MONITOR_MENTIONSPAM_MAX', maxMentions)));
+				floatPromise(this, spamMsg.reply(msg.guild!.language.tget('monitorMentionspamMax', maxMentions)));
 			}
 		}
 

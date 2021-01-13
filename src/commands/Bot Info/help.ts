@@ -14,7 +14,7 @@ function sortCommandsAlphabetically(_: Command[], __: Command[], firstCategory: 
 @ApplyOptions<CommandOptions>({
 	aliases: ['commands', 'howthefuckdoiusethisbot'],
 	guarded: true,
-	description: lang => lang.tget('COMMAND_HELP_DESCRIPTION'),
+	description: lang => lang.tget('commandHelpDescription'),
 	usage: '(command:command)'
 })
 export default class extends SteveCommand {
@@ -30,18 +30,18 @@ export default class extends SteveCommand {
 	// eslint-disable-next-line @typescript-eslint/no-invalid-void-type
 	public async run(msg: KlasaMessage, [cmd]: [Command]): Promise<Message | void> {
 		if (cmd) {
-			const EMBED_DATA = msg.language.tget('COMMAND_HELP_DATA');
+			const embedData = msg.language.tget('commandHelpData');
 
 			const embed = new MessageEmbed()
 				.setTimestamp()
 				.attachFiles(['./assets/images/help_embed_thumbnail.png'])
 				.setThumbnail('attachment://help_embed_thumbnail.png')
 				.setColor(0x71adcf)
-				.setFooter(EMBED_DATA.FOOTER(cmd.name))
-				.setTitle(EMBED_DATA.TITLE(util.isFunction(cmd.description) ? cmd.description(msg.language) : cmd.description))
+				.setFooter(embedData.footer(cmd.name))
+				.setTitle(embedData.title(util.isFunction(cmd.description) ? cmd.description(msg.language) : cmd.description))
 				.setDescription([
-					EMBED_DATA.USAGE(cmd.usage.fullUsage(msg)),
-					EMBED_DATA.EXTENDED(util.isFunction(cmd.extendedHelp) ? cmd.extendedHelp(msg.language) : cmd.extendedHelp)
+					embedData.usage(cmd.usage.fullUsage(msg)),
+					embedData.extended(util.isFunction(cmd.extendedHelp) ? cmd.extendedHelp(msg.language) : cmd.extendedHelp)
 				].join('\n'));
 
 			return msg.channel.send(embed);
@@ -51,11 +51,11 @@ export default class extends SteveCommand {
 			const prefix = msg.guildSettings.get(GuildSettings.Prefix);
 
 			let help = await this.buildHelp(msg);
-			help = `${msg.guild!.language.tget('COMMAND_HELP_BEGINNING', prefix)}\n\n${help}`;
+			help = `${msg.guild!.language.tget('commandHelpBeginning', prefix)}\n\n${help}`;
 
 			return msg.author.send(help, { split: { 'char': '\n' } })
-				.then(() => { if (msg.channel.type !== 'dm') floatPromise(this, msg.sendLocale('COMMAND_HELP_DM')); })
-				.catch(() => { if (msg.channel.type !== 'dm') floatPromise(this, msg.sendLocale('COMMAND_HELP_NODM')); });
+				.then(() => { if (msg.channel.type !== 'dm') floatPromise(this, msg.sendLocale('commandHelpDm')); })
+				.catch(() => { if (msg.channel.type !== 'dm') floatPromise(this, msg.sendLocale('commandHelpNodm')); });
 		}
 	}
 

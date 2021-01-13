@@ -5,7 +5,7 @@ import { CommandOptions, KlasaMessage, Piece } from 'klasa';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['u'],
-	description: lang => lang.tget('COMMAND_UNLOAD_DESCRIPTION'),
+	description: lang => lang.tget('commandUnloadDescription'),
 	guarded: true,
 	permissionLevel: PermissionsLevels.OWNER,
 	usage: '<Piece:piece>'
@@ -14,7 +14,7 @@ export default class extends SteveCommand {
 
 	public async run(msg: KlasaMessage, [piece]: [Piece]) {
 		if ((piece.type === 'event' && piece.name === 'message') || (piece.type === 'monitor' && piece.name === 'commandHandler')) {
-			return msg.sendLocale('COMMAND_UNLOAD_WARN');
+			return msg.sendLocale('commandUnloadWarn');
 		}
 		piece.unload();
 		if (this.client.shard) {
@@ -22,7 +22,7 @@ export default class extends SteveCommand {
 				if (String(this.options.shards) !== '${this.client.options.shards}') this.${piece.store}.get('${piece.name}').unload();
 			`);
 		}
-		return msg.sendLocale('COMMAND_UNLOAD', [piece.type, piece.name]);
+		return msg.sendLocale('commandUnload', [piece.type, piece.name]);
 	}
 
 }

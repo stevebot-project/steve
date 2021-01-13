@@ -8,7 +8,7 @@ import { CommandOptions } from 'klasa';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['trc'],
-	description: lang => lang.tget('COMMAND_TOGGLEROLECREATE_DESCRIPTION'),
+	description: lang => lang.tget('commandTogglerolecreateDescription'),
 	permissionLevel: PermissionsLevels.MODERATOR,
 	runIn: ['text']
 })
@@ -19,7 +19,7 @@ export default class extends SteveCommand {
 
 		await msg.guild.settings.update(GuildSettings.LogEvents.RoleCreate, !current);
 
-		return msg.channel.send(msg.guild.language.tget('COMMAND_TOGGLEROLECREATE', current));
+		return msg.channel.send(msg.guild.language.tget('commandTogglerolecreate', current));
 	}
 
 }

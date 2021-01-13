@@ -10,11 +10,11 @@ export default class extends Inhibitor {
 		if (msg.channel.type === 'dm') return;
 
 		if (msg.content.match(/<@&\d*>/)) {
-			throw msg.language.tget('INHIBITOR_PINGPROTECTION_ROLEPING');
+			throw msg.language.tget('inhibitorPingprotectionRoleping');
 		}
 
 		if (msg.content.match(/@everyone/)) {
-			throw msg.language.tget('INHIBITOR_PINGPROTECTION_EVERYONE');
+			throw msg.language.tget('inhibitorPingprotectionEveryone');
 		}
 	}
 

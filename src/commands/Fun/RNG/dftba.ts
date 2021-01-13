@@ -6,8 +6,8 @@ import { CommandOptions, KlasaMessage } from 'klasa';
 @ApplyOptions<CommandOptions>({
 	cooldown: 30,
 	cooldownLevel: 'author',
-	description: lang => lang.tget('COMMAND_DFTBA_DESCRIPTION'),
-	extendedHelp: lang => lang.tget('COMMAND_DFTBA_EXTENDED')
+	description: lang => lang.tget('commandDftbaDescription'),
+	extendedHelp: lang => lang.tget('commandDftbaExtended')
 })
 export default class extends SteveCommand {
 

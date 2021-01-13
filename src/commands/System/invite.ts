@@ -4,7 +4,7 @@ import { ApplyOptions } from '@skyra/decorators';
 import { CommandOptions, KlasaMessage } from 'klasa';
 
 @ApplyOptions<CommandOptions>({
-	description: lang => lang.tget('COMMAND_INVITE_DESCRIPTION'),
+	description: lang => lang.tget('commandInviteDescription'),
 	guarded: true
 })
 export default class extends SteveCommand {
@@ -14,7 +14,7 @@ export default class extends SteveCommand {
 	}
 
 	public async run(msg: KlasaMessage) {
-		return msg.sendLocale('COMMAND_INVITE');
+		return msg.sendLocale('commandInvite');
 	}
 
 }

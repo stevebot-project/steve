@@ -18,14 +18,14 @@ export default class extends Event {
 	private async handleLog(channel: GuildChannel, serverlog: TextChannel): Promise<Message> {
 		const executor = await getExecutor(channel.guild, 'CHANNEL_DELETE');
 
-		const EMBED_DATA = channel.guild.language.tget('EVENT_CHANNELDELETE_EMBED');
+		const embedData = channel.guild.language.tget('eventChanneldeleteEmbed');
 
 		const embed = new MessageEmbed()
 			.setAuthor(executor.tag, executor.displayAvatarURL())
 			.setColor(LogColors.PURPLE)
-			.setFooter(EMBED_DATA.FOOTER(channel.id))
+			.setFooter(embedData.footer(channel.id))
 			.setTimestamp()
-			.setTitle(EMBED_DATA.TITLE(channel.type, channel.name));
+			.setTitle(embedData.title(channel.type, channel.name));
 
 		return serverlog.send(embed);
 	}

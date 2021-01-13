@@ -8,17 +8,17 @@ import { ApplyOptions } from '@skyra/decorators';
 	aliases: ['suggest', 'makeyourbotworkbetter'],
 	cooldown: 60,
 	cooldownLevel: 'author',
-	description: lang => lang.tget('COMMAND_FEEDBACK_DESCRIPTION'),
-	extendedHelp: lang => lang.tget('COMMAND_FEEDBACK_EXTENDED'),
+	description: lang => lang.tget('commandFeedbackDescription'),
+	extendedHelp: lang => lang.tget('commandFeedbackExtended'),
 	usage: '<feedback:string{,1900}>'
 })
 export default class extends SteveCommand {
 
 	public async run(msg: KlasaMessage, [feedback]: [string]): Promise<Message[] | undefined> {
 		const feedbackGuild = this.client.guilds.cache.get(FEEDBACK_GUILD);
-		if (!feedbackGuild) throw msg.language.tget('COMMAND_FEEDBACK_NO_GUILD');
+		if (!feedbackGuild) throw msg.language.tget('commandFeedbackNoGuild');
 		const feedbackChannel = feedbackGuild.channels.cache.get(FEEDBACK_CHANNEL) as TextChannel;
-		if (!feedbackChannel) throw msg.language.tget('COMMAND_FEEDBACK_NO_CHANNEL');
+		if (!feedbackChannel) throw msg.language.tget('commandFeedbackNoChannel');
 
 		const embed = new MessageEmbed()
 			.addFields(
@@ -28,7 +28,7 @@ export default class extends SteveCommand {
 			.setTimestamp();
 
 		return Promise.all([
-			msg.channel.send(msg.language.tget('COMMAND_FEEDBACK_SENT')),
+			msg.channel.send(msg.language.tget('commandFeedbackSent')),
 			feedbackChannel.send(embed)
 		]);
 	}

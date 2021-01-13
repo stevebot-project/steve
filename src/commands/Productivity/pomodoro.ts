@@ -5,13 +5,13 @@ import { CommandOptions, KlasaMessage } from 'klasa';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['pomo', 'pom'],
-	description: lang => lang.tget('COMMAND_POMODORO_DESCRIPTION'),
-	extendedHelp: lang => lang.tget('COMMAND_POMODORO_EXTENDED')
+	description: lang => lang.tget('commandPomodoroDescription'),
+	extendedHelp: lang => lang.tget('commandPomodoroExtended')
 })
 export default class extends SteveCommand {
 
 	public async run(msg: KlasaMessage): Promise<Message> {
-		return msg.channel.send(msg.language.tget('COMMAND_POMODORO_UNDERCONSTRUCTION'));
+		return msg.channel.send(msg.language.tget('commandPomodoroUnderconstruction'));
 	}
 
 }

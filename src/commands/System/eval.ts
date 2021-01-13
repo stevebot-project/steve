@@ -6,8 +6,8 @@ import { inspect } from 'util';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['ev'],
-	description: lang => lang.tget('COMMAND_EVAL_DESCRIPTION'),
-	extendedHelp: lang => lang.tget('COMMAND_EVAL_EXTENDEDHELP'),
+	description: lang => lang.tget('commandEvalDescription'),
+	extendedHelp: lang => lang.tget('commandEvalExtendedhelp'),
 	guarded: true,
 	permissionLevel: PermissionsLevels.OWNER,
 	usage: '<expression:str>'
@@ -17,7 +17,7 @@ export default class extends SteveCommand {
 	public async run(msg: KlasaMessage, [code]: [string]) {
 		const { success, result, time, type } = await this.eval(msg, code);
 		const footer = util.codeBlock('ts', type);
-		const output = msg.language.get(success ? 'COMMAND_EVAL_OUTPUT' : 'COMMAND_EVAL_ERROR',
+		const output = msg.language.tget(success ? 'commandEvalOutput' : 'commandEvalError',
 			time, util.codeBlock('js', result), footer);
 
 		if ('silent' in msg.flagArgs) return null;
@@ -27,10 +27,10 @@ export default class extends SteveCommand {
 			// @ts-expect-error 2339
 			if (msg.guild && msg.channel.attachable) {
 				// @ts-expect-error 2339
-				return msg.channel.sendFile(Buffer.from(result), 'output.txt', msg.language.get('COMMAND_EVAL_SENDFILE', time, footer));
+				return msg.channel.sendFile(Buffer.from(result), 'output.txt', msg.language.tget('commandEvalSendfile', time, footer));
 			}
 			this.client.emit('log', result);
-			return msg.sendLocale('COMMAND_EVAL_SENDCONSOLE', [time, footer]);
+			return msg.sendLocale('commandEvalSendconsole', [time, footer]);
 		}
 
 		// If it's a message that can be sent correctly, send it

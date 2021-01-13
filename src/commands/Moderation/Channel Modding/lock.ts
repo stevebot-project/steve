@@ -6,8 +6,8 @@ import { Message } from 'discord.js';
 import { CommandOptions } from 'klasa';
 
 @ApplyOptions<CommandOptions>({
-	description: lang => lang.tget('COMMAND_LOCK_DESCRIPTION'),
-	extendedHelp: lang => lang.tget('COMMAND_LOCK_EXTENDED'),
+	description: lang => lang.tget('commandLockDescription'),
+	extendedHelp: lang => lang.tget('commandLockExtended'),
 	permissionLevel: PermissionsLevels.MODERATOR,
 	requiredPermissions: ['MANAGE_CHANNELS'],
 	runIn: ['text']
@@ -17,7 +17,7 @@ export default class extends SteveCommand {
 	public async run(msg: GuildMessage): Promise<Message> {
 		await msg.channel.updateOverwrite(msg.guild.id, { SEND_MESSAGES: false }, msg.author.tag);
 
-		return msg.channel.send(msg.guild.language.tget('COMMAND_LOCK_LOCKED'));
+		return msg.channel.send(msg.guild.language.tget('commandLockLocked'));
 	}
 
 }

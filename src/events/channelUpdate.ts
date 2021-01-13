@@ -21,14 +21,14 @@ export default class extends Event {
 	private async logChannelNameChange(oldChannel: GuildChannel, newChannel: GuildChannel, serverlog: TextChannel): Promise<Message> {
 		const executor = await getExecutor(newChannel.guild, 'CHANNEL_UPDATE');
 
-		const EMBED_DATA = newChannel.guild.language.tget('EVENT_CHANNELUPDATE_NAMECHANGE_EMBED');
+		const embedData = newChannel.guild.language.tget('eventChannelupdateNamechangeEmbed');
 
 		const embed = new MessageEmbed()
 			.setAuthor(executor.tag, executor.displayAvatarURL())
 			.setColor(LogColors.PURPLE)
-			.setFooter(EMBED_DATA.FOOTER(newChannel.id))
+			.setFooter(embedData.footer(newChannel.id))
 			.setTimestamp()
-			.setTitle(EMBED_DATA.TITLE(oldChannel.name, newChannel.name, newChannel.type));
+			.setTitle(embedData.title(oldChannel.name, newChannel.name, newChannel.type));
 
 		return serverlog.send(embed);
 	}

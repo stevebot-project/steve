@@ -28,7 +28,7 @@ export abstract class ModerationCommand extends SteveCommand {
 		const prehandledTarget = await this.prehandle(target, msg.guild);
 		if (prehandledTarget instanceof GuildMember) this.checkModeratable(prehandledTarget, msg.member);
 
-		if (typeof reason === 'undefined') reason = msg.guild.language.tget('MODERATION_NOREASON') as string;
+		if (typeof reason === 'undefined') reason = msg.guild.language.tget('moderationNoreason') as string;
 
 		await this.handle(msg, prehandledTarget, reason);
 
@@ -40,9 +40,9 @@ export abstract class ModerationCommand extends SteveCommand {
 	public abstract posthandle(msg: GuildMessage, target: GuildMember | User, reason: string, duration: number | undefined): Promise<Message>; // handle modlog and case
 
 	private checkModeratable(target: GuildMember, moderator: GuildMember): boolean {
-		if (target.id === target.guild.me!.id) throw target.guild.language.tget('MODERATION_NOSTEVE');
-		if (target.id === moderator.id) throw target.guild.language.tget('MODERATION_NOSELF');
-		if (target.roles.highest.comparePositionTo(moderator.roles.highest) > 0) throw target.guild.language.tget('MODERATION_HIGHERROLE', target.user.tag);
+		if (target.id === target.guild.me!.id) throw target.guild.language.tget('moderationNosteve');
+		if (target.id === moderator.id) throw target.guild.language.tget('moderationNoself');
+		if (target.roles.highest.comparePositionTo(moderator.roles.highest) > 0) throw target.guild.language.tget('moderationHigherrole', target.user.tag);
 		return true;
 	}
 
