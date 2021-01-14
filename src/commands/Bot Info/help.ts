@@ -3,7 +3,7 @@ import { Collection, Message, TextChannel, MessageEmbed } from 'discord.js';
 import { floatPromise } from '@lib/util/util';
 import { GuildSettings } from '@lib/types/settings/GuildSettings';
 import { SteveCommand } from '@lib/structures/commands/SteveCommand';
-import { ApplyOptions } from '@skyra/decorators';
+import { ApplyOptions, CreateResolvers } from '@skyra/decorators';
 
 function sortCommandsAlphabetically(_: Command[], __: Command[], firstCategory: string, secondCategory: string): 1 | -1 | 0 {
 	if (firstCategory > secondCategory) return 1;
@@ -17,15 +17,13 @@ function sortCommandsAlphabetically(_: Command[], __: Command[], firstCategory: 
 	description: lang => lang.tget('commandHelpDescription'),
 	usage: '(command:command)'
 })
+@CreateResolvers([
+	[
+		'command',
+		(str, possible, msg) => !str || str === '' ? null : msg.client.arguments.get('command').run(str, possible, msg)
+	]
+])
 export default class extends SteveCommand {
-
-	public async init() {
-		this.createCustomResolver('command', (str, possible, msg) => {
-			if (!str || str === '') return null;
-
-			return this.client.arguments.get('command').run(str, possible, msg);
-		});
-	}
 
 	// eslint-disable-next-line @typescript-eslint/no-invalid-void-type
 	public async run(msg: KlasaMessage, [cmd]: [Command]): Promise<Message | void> {

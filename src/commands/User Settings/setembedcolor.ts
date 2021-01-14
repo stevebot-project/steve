@@ -1,6 +1,6 @@
 import { SteveCommand } from '@lib/structures/commands/SteveCommand';
 import { UserSettings } from '@lib/types/settings/UserSettings';
-import { ApplyOptions } from '@skyra/decorators';
+import { ApplyOptions, CreateResolvers } from '@skyra/decorators';
 import { Message } from 'discord.js';
 import { CommandOptions, KlasaMessage } from 'klasa';
 
@@ -9,14 +9,16 @@ import { CommandOptions, KlasaMessage } from 'klasa';
 	extendedHelp: lang => lang.tget('commandSetEmbedColorExtended'),
 	usage: '<color:color|reset|show>'
 })
-export default class extends SteveCommand {
-
-	public async init() {
-		this.createCustomResolver('color', (str, possible, msg) => {
+@CreateResolvers([
+	[
+		'color',
+		(str, possible, msg) => {
 			if (/^#[0-9A-F]{6}$/i.test(str)) return str;
 			throw msg.language.tget('resolverInvalidColor', str);
-		});
-	}
+		}
+	]
+])
+export default class extends SteveCommand {
 
 	public async run(msg: KlasaMessage, [color]: [string]): Promise<Message> {
 		if (color === 'reset') {

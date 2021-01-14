@@ -1,6 +1,6 @@
 
 import { SteveCommand } from '@lib/structures/commands/SteveCommand';
-import { ApplyOptions } from '@skyra/decorators';
+import { ApplyOptions, CreateResolvers } from '@skyra/decorators';
 import { CommandOptions, KlasaMessage, util, SettingsUpdateResult } from 'klasa';
 
 @ApplyOptions<CommandOptions>({
@@ -10,19 +10,23 @@ import { CommandOptions, KlasaMessage, util, SettingsUpdateResult } from 'klasa'
 	subcommands: true,
 	usage: '<set|show|remove|reset> (key:key) (value:value) [...]'
 })
+@CreateResolvers([
+	[
+		'key',
+		(str, possible, msg, [action]) => {
+			if (action === 'show' || str) return str;
+			throw msg.language.tget('commandConfNoKey');
+		}
+	],
+	[
+		'value',
+		(str, possible, msg, [action]) => {
+			if (!['set', 'remove'].includes(action) || str) return str;
+			throw msg.language.tget('commandConfNoValue');
+		}
+	]
+])
 export default class extends SteveCommand {
-
-	public async init() {
-		this
-			.createCustomResolver('key', (arg, possible, message, [action]) => {
-				if (action === 'show' || arg) return arg;
-				throw message.language.get('commandConfNoKey');
-			})
-			.createCustomResolver('value', (arg, possible, message, [action]) => {
-				if (!['set', 'remove'].includes(action) || arg) return arg;
-				throw message.language.get('commandConfNoValue');
-			});
-	}
 
 	public show(msg: KlasaMessage, [key]: [string]) {
 		// @ts-expect-error 2322

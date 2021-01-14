@@ -1,6 +1,6 @@
 import { SteveCommand } from '@lib/structures/commands/SteveCommand';
 import { UserSettings } from '@lib/types/settings/UserSettings';
-import { ApplyOptions } from '@skyra/decorators';
+import { ApplyOptions, CreateResolvers } from '@skyra/decorators';
 import { Message, MessageEmbed, User } from 'discord.js';
 import { CommandOptions, KlasaMessage } from 'klasa';
 
@@ -10,15 +10,19 @@ import { CommandOptions, KlasaMessage } from 'klasa';
 	requiredPermissions: ['EMBED_LINKS'],
 	usage: '[user:username]'
 })
+@CreateResolvers([
+	[
+		'username',
+		(str, possible, msg) => {
+			const usernameArgument = msg.client.arguments.get('username');
+
+			return str
+				? usernameArgument.run(str, possible, msg)
+				: usernameArgument.run(msg.author.tag, possible, msg);
+		}
+	]
+])
 export default class extends SteveCommand {
-
-	public async init() {
-		this.createCustomResolver('username', (str, possible, msg) => {
-			const arg = this.client.arguments.get('username');
-
-			return str ? arg.run(str, possible, msg) : arg.run(msg.author.tag, possible, msg);
-		});
-	}
 
 	public async run(msg: KlasaMessage, [user]: [User]): Promise<Message> {
 		const member = msg.guild ? await msg.guild.members.fetch(user.id) : null;

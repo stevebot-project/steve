@@ -4,7 +4,7 @@ import { CommandOptions, RichDisplay } from 'klasa';
 import { GuildSettings } from '@lib/types/settings/GuildSettings';
 import { Message, MessageEmbed } from 'discord.js';
 import { chunk, codeBlock } from '@klasa/utils';
-import { ApplyOptions, requiredPermissions, requiresPermission } from '@skyra/decorators';
+import { ApplyOptions, CreateResolvers, requiredPermissions, requiresPermission } from '@skyra/decorators';
 import { PermissionsLevels } from '@lib/types/Enums';
 import { GuildMessage } from '@lib/types/Messages';
 
@@ -16,13 +16,17 @@ import { GuildMessage } from '@lib/types/Messages';
 	subcommands: true,
 	usage: '<add|remove|list|edit|reset|source|view:default> (name:name{,100}) (content:content{,1900})'
 })
+@CreateResolvers([
+	[
+		'name',
+		(str, possible, msg, [action]) => action === 'list' ? null : str
+	],
+	[
+		'content',
+		(str, possible, msg, [action]) => action === 'add' || action === 'edit' ? str : null
+	]
+])
 export default class extends SteveCommand {
-
-	public async init() {
-		this
-			.createCustomResolver('name', (str, possible, msg, [action]) => action === 'list' ? null : str)
-			.createCustomResolver('content', (str, possible, msg, [action]) => action === 'add' || action === 'edit' ? str : null);
-	}
 
 	@requiresPermission(PermissionsLevels.MODERATOR, (msg: GuildMessage) => {
 		throw msg.guild.language.tget('commandSnippetNoPermission');

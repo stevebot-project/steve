@@ -2,7 +2,7 @@ import { SteveCommand } from '@lib/structures/commands/SteveCommand';
 import { PermissionsLevels } from '@lib/types/Enums';
 import { GuildMessage } from '@lib/types/Messages';
 import { GuildSettings } from '@lib/types/settings/GuildSettings';
-import { ApplyOptions } from '@skyra/decorators';
+import { ApplyOptions, CreateResolvers } from '@skyra/decorators';
 import { Message, Role } from 'discord.js';
 import { CommandOptions } from 'klasa';
 
@@ -14,13 +14,15 @@ import { CommandOptions } from 'klasa';
 	subcommands: true,
 	usage: '<reset|manage:default> (role:rolename) [...]'
 })
+@CreateResolvers([
+	[
+		'rolename',
+		(str, possible, msg, [action]) => action === 'manage'
+			? msg.client.arguments.get('rolename').run(str, possible, msg)
+			: null
+	]
+])
 export default class extends SteveCommand {
-
-	public async init() {
-		this.createCustomResolver('rolename', (str, possible, msg, [action]) => action === 'manage'
-			? this.client.arguments.get('rolename').run(str, possible, msg)
-			: null);
-	}
 
 	public async manage(msg: GuildMessage, roles: Role[]): Promise<Message> {
 		const assignableRoles = msg.guild.settings.get(GuildSettings.Roles.Assignable) as string[];

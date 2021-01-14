@@ -2,7 +2,7 @@ import { SteveCommand } from '@lib/structures/commands/SteveCommand';
 import { PermissionsLevels } from '@lib/types/Enums';
 import { GuildMessage } from '@lib/types/Messages';
 import { GuildSettings } from '@lib/types/settings/GuildSettings';
-import { ApplyOptions } from '@skyra/decorators';
+import { ApplyOptions, CreateResolvers } from '@skyra/decorators';
 import { richDisplayList } from '@utils/util';
 import { Message, MessageEmbed, Role } from 'discord.js';
 import { CommandOptions } from 'klasa';
@@ -15,13 +15,15 @@ import { CommandOptions } from 'klasa';
 	subcommands: true,
 	usage: '<reset|show|manage:default> (role:rolename) [...]'
 })
+@CreateResolvers([
+	[
+		'rolename',
+		(str, possible, msg, [action]) => action === 'manage'
+			? msg.client.arguments.get('rolename').run(str, possible, msg)
+			: null
+	]
+])
 export default class extends SteveCommand {
-
-	public async init() {
-		this.createCustomResolver('rolename', (str, possible, msg, [action]) => action === 'manage'
-			? this.client.arguments.get('rolename').run(str, possible, msg)
-			: null);
-	}
 
 	public async manage(msg: GuildMessage, roles: Role[]): Promise<Message> {
 		const restrictedRoles = msg.guild.settings.get(GuildSettings.Roles.Restricted) as string[];
@@ -64,7 +66,7 @@ export default class extends SteveCommand {
 		const restrictedRoleNames: string[] = [];
 
 		restrictedRoles.forEach(snowflake => {
-			const role = msg.guild.roles.cache.get(snowflake)!;
+			const role = msg.guild.roles.cache.get(snowflake)!; // TODO: fix role undefined bug here
 			restrictedRoleNames.push(role.name ?? msg.guild.language.tget('commandManageRestrictedrolesShowRoleNotFound'));
 		});
 

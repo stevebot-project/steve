@@ -5,7 +5,7 @@ import { GuildSettings } from '@lib/types/settings/GuildSettings';
 import { friendlyDuration } from '@utils/util';
 import { Reminder } from '@root/src/extendables/Schedule';
 import { UserSettings } from '@lib/types/settings/UserSettings';
-import { ApplyOptions } from '@skyra/decorators';
+import { ApplyOptions, CreateResolvers } from '@skyra/decorators';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['remindme', 'reminders', 'myreminders'],
@@ -14,27 +14,30 @@ import { ApplyOptions } from '@skyra/decorators';
 	subcommands: true,
 	usage: '<view|cancel|create:default> (reminder:reminder) (duration:timespan)'
 })
+@CreateResolvers([
+	[
+		'reminder',
+		(str, possible, msg, [action]) => {
+			if (action === 'view') return null;
+			if (action === 'create') {
+				if (str.length <= 140) return str;
+				throw msg.language.tget('resolverReminderLength');
+			}
+
+			const reminders = msg.client.schedule.getUserReminders(msg.author.id);
+			const reminderNum = parseInt(str, 10);
+			if (isNaN(reminderNum) || reminders.length < reminderNum) throw msg.language.tget('resolverReminderInvalid', str);
+			return reminderNum;
+		}
+	],
+	[
+		'timespan',
+		(str, possible, msg, [action]) => action === 'view' || action === 'cancel'
+			? null
+			: msg.client.arguments.get('timespan').run(str, possible, msg)
+	]
+])
 export default class extends SteveCommand {
-
-	public async init() {
-		this
-			.createCustomResolver('reminder', (str, possible, msg, [action]) => {
-				if (action === 'view') return null;
-				if (action === 'create') {
-					if (str.length <= 140) return str;
-					throw msg.language.tget('resolverReminderLength');
-				}
-
-				const reminders = this.client.schedule.getUserReminders(msg.author.id);
-				const reminderNum = parseInt(str, 10);
-				if (isNaN(reminderNum) || reminders.length < reminderNum) throw msg.language.tget('resolverReminderInvalid', str);
-				return reminderNum;
-			})
-			.createCustomResolver('timespan', (str, possible, msg, [action]) => {
-				if (action === 'view' || action === 'cancel') return null;
-				return this.client.arguments.get('timespan').run(str, possible, msg);
-			});
-	}
 
 	public async create(msg: KlasaMessage, [reminder, duration]: [string, number]): Promise<Message> {
 		const reminderChannel = msg.guild ? msg.guild.settings.get(GuildSettings.Channels.ReminderChannel) : null;

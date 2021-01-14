@@ -3,7 +3,7 @@ import { CommandOptions } from 'klasa';
 import { Role, Message, MessageEmbed } from 'discord.js';
 import { GuildSettings } from '@lib/types/settings/GuildSettings';
 import { floatPromise, richDisplayList } from '@utils/util';
-import { ApplyOptions, requiredPermissions } from '@skyra/decorators';
+import { ApplyOptions, CreateResolvers, requiredPermissions } from '@skyra/decorators';
 import { GuildMessage } from '@lib/types/Messages';
 
 @ApplyOptions<CommandOptions>({
@@ -14,15 +14,17 @@ import { GuildMessage } from '@lib/types/Messages';
 	runIn: ['text'],
 	usage: '(role:rolename) [...]'
 })
-export default class extends SteveCommand {
-
-	public async init() {
-		this.createCustomResolver('rolename', (str, possible, msg) => {
+@CreateResolvers([
+	[
+		'rolename',
+		(str, possible, msg) => {
 			if (Reflect.has(msg.flagArgs, 'list')) return null;
-			if (str) return this.client.arguments.get('rolename').run(str, possible, msg);
+			if (str) return msg.client.arguments.get('rolename').run(str, possible, msg);
 			throw msg.guild!.language.tget('commandAssignNoRoleProvided');
-		});
-	}
+		}
+	]
+])
+export default class extends SteveCommand {
 
 	public async run(msg: GuildMessage, roles: Role[]): Promise<Message | null> {
 		if (Reflect.has(msg.flagArgs, 'list')) return this.listAssignableRoles(msg);

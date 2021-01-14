@@ -1,7 +1,7 @@
 import { SteveCommand } from '@lib/structures/commands/SteveCommand';
 import { CommandOptions, KlasaMessage } from 'klasa';
 import { Message } from 'discord.js';
-import { ApplyOptions } from '@skyra/decorators';
+import { ApplyOptions, CreateResolvers } from '@skyra/decorators';
 
 const DICE_REGEX = /(?<count>\d{1,2})?d(?<sides>\d{1,4})(?<explode>!)?(?<keep>kl?(?<keepCount>\d{1,2}))?((?<plus>\+)?(?<minus>-)?(?<mod>\d{1,2})|$)/;
 
@@ -55,11 +55,11 @@ function NumComparator(a: number, b: number): number {
 	extendedHelp: lang => lang.tget('commandRollExtended'),
 	usage: '<spec:dice> [...]'
 })
-export default class extends SteveCommand {
-
-	public async init() {
-		this.createCustomResolver('dice', (arg): RollSpec => {
-			const match = DICE_REGEX.exec(arg);
+@CreateResolvers([
+	[
+		'dice',
+		(str): RollSpec => {
+			const match = DICE_REGEX.exec(str);
 
 			let count = parseInt(match!.groups!.count, 10) ?? 1;
 			if (isNaN(count)) count = 1;
@@ -89,8 +89,10 @@ export default class extends SteveCommand {
 			const keepCount = parseInt(match!.groups!.keepCount, 10);
 
 			return { input: match!.input, count, sides, operator, mod, explodes, keep, keepCount };
-		});
-	}
+		}
+	]
+])
+export default class extends SteveCommand {
 
 	public async run(msg: KlasaMessage, specs: RollSpec[]): Promise<Message> {
 		const results: DiceResult[] = [];

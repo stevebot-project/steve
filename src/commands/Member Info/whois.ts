@@ -3,7 +3,7 @@ import { CommandOptions } from 'klasa';
 import { User, Message, MessageEmbed, ColorResolvable } from 'discord.js';
 import { UserSettings } from '@lib/types/settings/UserSettings';
 import { getJoinDateString, userAccountCreated } from '@utils/UserInfo';
-import { ApplyOptions } from '@skyra/decorators';
+import { ApplyOptions, CreateResolvers } from '@skyra/decorators';
 import { GuildMessage } from '@lib/types/Messages';
 
 @ApplyOptions<CommandOptions>({
@@ -14,15 +14,19 @@ import { GuildMessage } from '@lib/types/Messages';
 	runIn: ['text'],
 	usage: '[user:username]'
 })
+@CreateResolvers([
+	[
+		'username',
+		(str, possible, msg) => {
+			const usernameArgument = msg.client.arguments.get('username');
+
+			return str
+				? usernameArgument.run(str, possible, msg)
+				: usernameArgument.run(msg.author.tag, possible, msg);
+		}
+	]
+])
 export default class extends SteveCommand {
-
-	public async init() {
-		this.createCustomResolver('username', (str, possible, msg) => {
-			const arg = this.client.arguments.get('username');
-
-			return str ? arg.run(str, possible, msg) : arg.run(msg.author.tag, possible, msg);
-		});
-	}
 
 	public async run(msg: GuildMessage, [user]: [User]): Promise<Message> {
 		user = await this.client.users.fetch(user.id);
