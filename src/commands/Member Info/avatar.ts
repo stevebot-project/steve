@@ -25,6 +25,7 @@ import { CommandOptions, KlasaMessage } from 'klasa';
 export default class extends SteveCommand {
 
 	public async run(msg: KlasaMessage, [user]: [User]): Promise<Message> {
+		if (!user) throw msg.language.tget('userNotFound');
 		const member = msg.guild ? await msg.guild.members.fetch(user.id) : null;
 
 		try {

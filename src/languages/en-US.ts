@@ -331,6 +331,7 @@ export default class extends Language {
 		 * #      GENERAL STUFF           #
 		 * ################################
 		 */
+		userNotFound: 'I could not find that user.',
 		userNotInGuild: (user: string) => `${user} is not in this server.`,
 		none: 'None',
 		noParentCategory: 'No Category',

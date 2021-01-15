@@ -29,7 +29,7 @@ import { GuildMessage } from '@lib/types/Messages';
 export default class extends SteveCommand {
 
 	public async run(msg: GuildMessage, [user]: [User]): Promise<Message> {
-		user = await this.client.users.fetch(user.id);
+		if (!user) throw msg.language.tget('userNotFound');
 		const member = await msg.guild.members.fetch(user);
 		if (!member) throw msg.guild.language.tget('userNotInGuild', user.tag);
 

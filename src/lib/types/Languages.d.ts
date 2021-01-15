@@ -146,6 +146,7 @@ declare module 'klasa' {
 		};
 		messagePromptTimeout: string;
 		textPromptAbortOptions: string[];
+		userNotFound: string;
 		userNotInGuild: (user: string) => string;
 		none: string;
 		noParentCategory: string;
