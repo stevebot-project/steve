@@ -5,8 +5,8 @@ import { Inhibitor, KlasaMessage } from 'klasa';
 module.exports = class extends Inhibitor {
 
 	public run(msg: KlasaMessage, cmd: SteveCommand) {
-		if (!cmd.enabled) throw msg.language.get('INHIBITOR_DISABLED_GLOBAL');
-		if (msg.guild && msg.guildSettings.get(GuildSettings.DisabledCommands).includes(cmd.name)) throw msg.language.get('INHIBITOR_DISABLED_GUILD');
+		if (!cmd.enabled) throw msg.language.tget('inhibitorDisabledGlobal');
+		if (msg.guild && msg.guildSettings.get(GuildSettings.DisabledCommands).includes(cmd.name)) throw msg.language.tget('inhibitorDisabledGuild');
 	}
 
 };

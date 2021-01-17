@@ -4,7 +4,7 @@ import { ApplyOptions } from '@skyra/decorators';
 import { CommandOptions, KlasaMessage, Piece } from 'klasa';
 
 @ApplyOptions<CommandOptions>({
-	description: language => language.get('COMMAND_ENABLE_DESCRIPTION'),
+	description: language => language.tget('commandEnableDescription'),
 	guarded: true,
 	permissionLevel: PermissionsLevels.OWNER,
 	usage: '<Piece:piece>'
@@ -18,7 +18,7 @@ export default class extends SteveCommand {
 				if (String(this.options.shards) !== '${this.client.options.shards}') this.${piece.store}.get('${piece.name}').enable();
 			`);
 		}
-		return msg.sendLocale('COMMAND_ENABLE', [piece.type, piece.name], { code: 'diff' });
+		return msg.sendLocale('commandEnable', [piece.type, piece.name], { code: 'diff' });
 	}
 
 }

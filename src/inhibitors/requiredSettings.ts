@@ -7,7 +7,7 @@ export default class extends Inhibitor {
 		if (!cmd.requiredSettings.length || msg.channel.type !== 'text') return;
 		// eslint-disable-next-line eqeqeq, no-eq-null
 		const requiredSettings = cmd.requiredSettings.filter(setting => msg.guild!.settings.get(setting) == null);
-		if (requiredSettings.length) throw msg.language.get('INHIBITOR_REQUIRED_SETTINGS', requiredSettings);
+		if (requiredSettings.length) throw msg.language.tget('inhibitorRequiredSettings', requiredSettings);
 	}
 
 }

@@ -20,7 +20,7 @@ export default class extends Inhibitor {
 			return;
 		}
 
-		if (existing && existing.limited) throw msg.language.get('INHIBITOR_COOLDOWN', Math.ceil(existing.remainingTime / 1000), cmd.cooldownLevel !== 'author');
+		if (existing && existing.limited) throw msg.language.tget('inhibitorCooldown', Math.ceil(existing.remainingTime / 1000), cmd.cooldownLevel !== 'author');
 	}
 
 }

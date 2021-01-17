@@ -20,7 +20,7 @@ export default class extends SteveCommand {
 		const piece = await (core ? this.tryEach(store, pathSplit) : store.load(store.userDirectory, pathSplit));
 
 		try {
-			if (!piece) throw msg.language.get('commandLoadFail');
+			if (!piece) throw msg.language.tget('commandLoadFail');
 			await piece.init();
 			if (this.client.shard) {
 				await this.client.shard.broadcastEval(`
@@ -33,7 +33,7 @@ export default class extends SteveCommand {
 			return msg.sendLocale('commandLoad', [timer.stop(), store.name, piece.name]);
 		} catch (error) {
 			timer.stop();
-			throw msg.language.get('commandLoadError', store.name, piece ? piece.name : pathSplit.join('/'), error);
+			throw msg.language.tget('commandLoadError', store.name, piece ? piece.name : pathSplit.join('/'), error);
 		}
 	}
 
