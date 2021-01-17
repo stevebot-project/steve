@@ -3,7 +3,6 @@
 import { Language, LanguageKeys, util } from 'klasa';
 import { HelpBuilder } from '@utils/HelpBuilder';
 import { NAME as botName } from '@root/config';
-import { ModerationCase } from '@lib/structures/ModerationCases';
 import { oneLine } from 'common-tags';
 import { Emojis } from '@lib/types/Enums';
 
@@ -102,67 +101,67 @@ export default class extends Language {
 		 * #      FRAMEWORK MESSAGES      #
 		 * ################################
 		 */
-		default: (key): string => `${key} has not been localized for en-US yet.`,
+		default: key => `${key} has not been localized for en-US yet.`,
 		defaultLanguage: 'Default Language',
-		prefixReminder: (prefix = `@${this.client.user!.tag}`): string => `The prefix${Array.isArray(prefix)
+		prefixReminder: (prefix = `@${this.client.user!.tag}`) => `The prefix${Array.isArray(prefix)
 			? `es for this guild are: ${prefix.map(pre => `\`${pre}\``).join(', ')}`
 			: ` in this guild is set to: \`${prefix}\``
 		}`,
 		settingGatewayExpectsGuild: 'The parameter <Guild> expects either a Guild or a Guild Object.',
-		settingGatewayValueForKeyNoext: (data, key): string => `The value ${data} for the key ${key} does not exist.`,
-		settingGatewayValueForKeyAlrext: (data, key): string => `The value ${data} for the key ${key} already exists.`,
+		settingGatewayValueForKeyNoext: (data, key) => `The value ${data} for the key ${key} does not exist.`,
+		settingGatewayValueForKeyAlrext: (data, key) => `The value ${data} for the key ${key} already exists.`,
 		settingGatewaySpecifyValue: 'You must specify the value to add or filter.',
-		settingGatewayKeyNotArray: (key): string => `The key ${key} is not an Array.`,
-		settingGatewayKeyNoext: (key): string => `The key ${key} does not exist in the current data schema.`,
+		settingGatewayKeyNotArray: key => `The key ${key} is not an Array.`,
+		settingGatewayKeyNoext: key => `The key ${key} does not exist in the current data schema.`,
 		settingGatewayInvalidType: 'The type parameter must be either add or remove.',
-		settingGatewayInvalidFilteredValue: (piece, value): string => `${piece.key} doesn't accept the value: ${value}`,
-		resolverMultiTooFew: (name, min = 1): string => `Provided too few ${name}s. At least ${min} ${min === 1 ? 'is' : 'are'} required.`,
-		resolverInvalidBool: (name): string => `${name} must be true or false.`,
-		resolverInvalidChannel: (name): string => `${name} must be a channel tag or valid channel id.`,
-		resolverInvalidCustom: (name, type): string => `${name} must be a valid ${type}.`,
-		resolverInvalidDate: (name): string => `${name} must be a valid date.`,
-		resolverInvalidDuration: (name): string => `${name} must be a valid duration string.`,
-		resolverInvalidEmoji: (name): string => `${name} must be a custom emoji tag or valid emoji id.`,
-		resolverInvalidFloat: (name): string => `${name} must be a valid number.`,
-		resolverInvalidGuild: (name): string => `${name} must be a valid guild id.`,
-		resolverInvalidInt: (name): string => `${name} must be an integer.`,
-		resolverInvalidLiteral: (name): string => `Your option did not match the only possibility: ${name}`,
-		resolverInvalidMember: (name): string => `${name} must be a mention or valid user id.`,
-		resolverInvalidMessage: (name): string => `${name} must be a valid message id.`,
-		resolverInvalidPiece: (name, piece): string => `${name} must be a valid ${piece} name.`,
-		resolverInvalidRegexMatch: (name, pattern): string => `${name} must follow this regex pattern \`${pattern}\`.`,
-		resolverInvalidRole: (name): string => `${name} must be a role mention or role id.`,
-		resolverInvalidString: (name): string => `${name} must be a valid string.`,
-		resolverInvalidTime: (name): string => `${name} must be a valid duration or date string.`,
-		resolverInvalidUrl: (name): string => `${name} must be a valid url.`,
-		resolverInvalidUser: (name): string => `${name} must be a mention or valid user id.`,
+		settingGatewayInvalidFilteredValue: (piece, value) => `${piece.key} doesn't accept the value: ${value}`,
+		resolverMultiTooFew: (name, min = 1) => `Provided too few ${name}s. At least ${min} ${min === 1 ? 'is' : 'are'} required.`,
+		resolverInvalidBool: name => `${name} must be true or false.`,
+		resolverInvalidChannel: name => `${name} must be a channel tag or valid channel id.`,
+		resolverInvalidCustom: (name, type) => `${name} must be a valid ${type}.`,
+		resolverInvalidDate: name => `${name} must be a valid date.`,
+		resolverInvalidDuration: name => `${name} must be a valid duration string.`,
+		resolverInvalidEmoji: name => `${name} must be a custom emoji tag or valid emoji id.`,
+		resolverInvalidFloat: name => `${name} must be a valid number.`,
+		resolverInvalidGuild: name => `${name} must be a valid guild id.`,
+		resolverInvalidInt: name => `${name} must be an integer.`,
+		resolverInvalidLiteral: name => `Your option did not match the only possibility: ${name}`,
+		resolverInvalidMember: name => `${name} must be a mention or valid user id.`,
+		resolverInvalidMessage: name => `${name} must be a valid message id.`,
+		resolverInvalidPiece: (name, piece) => `${name} must be a valid ${piece} name.`,
+		resolverInvalidRegexMatch: (name, pattern) => `${name} must follow this regex pattern \`${pattern}\`.`,
+		resolverInvalidRole: name => `${name} must be a role mention or role id.`,
+		resolverInvalidString: name => `${name} must be a valid string.`,
+		resolverInvalidTime: name => `${name} must be a valid duration or date string.`,
+		resolverInvalidUrl: name => `${name} must be a valid url.`,
+		resolverInvalidUser: name => `${name} must be a mention or valid user id.`,
 		resolverStringSuffix: ' characters',
-		resolverMinmaxExactly: (name, min, suffix): string => `${name} must be exactly ${min}${suffix}.`,
-		resolverMinmaxBoth: (name, min, max, suffix): string => `${name} must be between ${min} and ${max}${suffix}.`,
-		resolverMinmaxMin: (name, min, suffix): string => `${name} must be greater than ${min}${suffix}.`,
-		resolverMinmaxMax: (name, max, suffix): string => `${name} must be less than ${max}${suffix}.`,
+		resolverMinmaxExactly: (name, min, suffix) => `${name} must be exactly ${min}${suffix}.`,
+		resolverMinmaxBoth: (name, min, max, suffix) => `${name} must be between ${min} and ${max}${suffix}.`,
+		resolverMinmaxMin: (name, min, suffix) => `${name} must be greater than ${min}${suffix}.`,
+		resolverMinmaxMax: (name, max, suffix) => `${name} must be less than ${max}${suffix}.`,
 		reactionHandlerPrompt: 'Which page would you like to jump to?',
 		commandMessageMissing: 'Missing one or more required arguments after end of input.',
-		commandMessageMissingRequired: (name): string => `${name} is a required argument.`,
-		commandMessageMissingOptionals: (possibles): string => `Missing a required option: (${possibles})`,
-		commandMessageNoMatch: (possibles): string => `Your option didn't match any of the possibilities: (${possibles})`,
+		commandMessageMissingRequired: name => `${name} is a required argument.`,
+		commandMessageMissingOptionals: possibles => `Missing a required option: (${possibles})`,
+		commandMessageNoMatch: possibles => `Your option didn't match any of the possibilities: (${possibles})`,
 		// eslint-disable-next-line max-len
-		monitorCommandHandlerReprompt: (tag, error, time, abortOptions): string => `${tag} | **${error}** | You have **${time}** seconds to respond to this prompt with a valid argument. Type **${abortOptions.join('**, **')}** to abort this prompt.`,
+		monitorCommandHandlerReprompt: (tag, error, time, abortOptions) => `${tag} | **${error}** | You have **${time}** seconds to respond to this prompt with a valid argument. Type **${abortOptions.join('**, **')}** to abort this prompt.`,
 		// eslint-disable-next-line max-len
-		monitorCommandHandlerRepeatingReprompt: (tag, name, time, cancelOptions): string => `${tag} | **${name}** is a repeating argument | You have **${time}** seconds to respond to this prompt with additional valid arguments. Type **${cancelOptions.join('**, **')}** to cancel this prompt.`,
+		monitorCommandHandlerRepeatingReprompt: (tag, name, time, cancelOptions) => `${tag} | **${name}** is a repeating argument | You have **${time}** seconds to respond to this prompt with additional valid arguments. Type **${cancelOptions.join('**, **')}** to cancel this prompt.`,
 		monitorCommandHandlerAborted: 'Aborted',
 		// eslint-disable-next-line max-len
-		inhibitorCooldown: (remaining, guildCooldown): string => `${guildCooldown ? 'Someone has' : 'You have'} already used this command. You can use this command again in ${remaining} second${remaining === 1 ? '' : 's'}.`,
+		inhibitorCooldown: (remaining, guildCooldown) => `${guildCooldown ? 'Someone has' : 'You have'} already used this command. You can use this command again in ${remaining} second${remaining === 1 ? '' : 's'}.`,
 		inhibitorDisabledGuild: 'This command has been disabled by an admin in this guild.',
 		inhibitorDisabledGlobal: 'This command has been globally disabled by the bot owner.',
-		inhibitorMissingBotPerms: (missing): string => `Insufficient permissions, missing: **${missing}**`,
+		inhibitorMissingBotPerms: missing => `Insufficient permissions, missing: **${missing}**`,
 		inhibitorNsfw: 'You can only use NSFW commands in NSFW channels.',
 		inhibitorPermissions: cmdName => `You don't have the right permissions to use the **${cmdName}** command!`,
-		inhibitorRequiredSettings: (settings): string => `The guild is missing the **${settings.join(', ')}** guild setting${settings.length === 1 ? '' : 's'} and thus the command cannot run.`,
-		inhibitorRunIn: (types): string => `This command is only available in ${types} channels.`,
-		inhibitorRunInNone: (name): string => `The ${name} command is not configured to run in any channel.`,
+		inhibitorRequiredSettings: settings => `The guild is missing the **${settings.join(', ')}** guild setting${settings.length === 1 ? '' : 's'} and thus the command cannot run.`,
+		inhibitorRunIn: types => `This command is only available in ${types} channels.`,
+		inhibitorRunInNone: name => `The ${name} command is not configured to run in any channel.`,
 		commandBlacklistDescription: 'Blacklists or un-blacklists users and guilds from the bot.',
-		commandBlacklistSuccess: (usersAdded, usersRemoved, guildsAdded, guildsRemoved): string => [
+		commandBlacklistSuccess: (usersAdded, usersRemoved, guildsAdded, guildsRemoved) => [
 			usersAdded.length ? `**Users Added**\n${util.codeBlock('', usersAdded.join(', '))}` : '',
 			usersRemoved.length ? `**Users Removed**\n${util.codeBlock('', usersRemoved.join(', '))}` : '',
 			guildsAdded.length ? `**Guilds Added**\n${util.codeBlock('', guildsAdded.join(', '))}` : '',
@@ -178,32 +177,32 @@ export default class extends Language {
 			'The --showHidden flag will enable the showHidden option in util.inspect.',
 			'If the output is too large, it\'ll send the output as a file, or in the console if the bot does not have the ATTACH_FILES permission.'
 		].join('\n'),
-		commandEvalError: (time, output, type): string => `**Error**:${output}\n**Type**:${type}\n${time}`,
-		commandEvalOutput: (time, output, type): string => `**Output**:${output}\n**Type**:${type}\n${time}`,
-		commandEvalSendFile: (time, type): string => `Output was too long... sent the result as a file.\n**Type**:${type}\n${time}`,
-		commandEvalSendConsole: (time, type): string => `Output was too long... sent the result to console.\n**Type**:${type}\n${time}`,
-		commandUnload: (type, name): string => `✅ Unloaded ${type}: ${name}`,
+		commandEvalError: (time, output, type) => `**Error**:${output}\n**Type**:${type}\n${time}`,
+		commandEvalOutput: (time, output, type) => `**Output**:${output}\n**Type**:${type}\n${time}`,
+		commandEvalSendFile: (time, type) => `Output was too long... sent the result as a file.\n**Type**:${type}\n${time}`,
+		commandEvalSendConsole: (time, type) => `Output was too long... sent the result to console.\n**Type**:${type}\n${time}`,
+		commandUnload: (type, name) => `✅ Unloaded ${type}: ${name}`,
 		commandUnloadDescription: 'Unloads the klasa piece.',
 		commandUnloadWarn: 'You probably don\'t want to unload that, since you wouldn\'t be able to run any command to enable it again',
 		commandTransferError: '❌ That file has been transfered already or never existed.',
-		commandTransferSuccess: (type, name): string => `✅ Successfully transferred ${type}: ${name}.`,
-		commandTransferFailed: (type, name): string => `Transfer of ${type}: ${name} to Client has failed. Please check your Console.`,
+		commandTransferSuccess: (type, name) => `✅ Successfully transferred ${type}: ${name}.`,
+		commandTransferFailed: (type, name) => `Transfer of ${type}: ${name} to Client has failed. Please check your Console.`,
 		commandTransferDescription: 'Transfers a core piece to its respective folder.',
-		commandReload: (type, name, time): string => `✅ Reloaded ${type}: ${name}. (Took: ${time})`,
-		commandReloadFailed: (type, name): string => `❌ Failed to reload ${type}: ${name}. Please check your Console.`,
-		commandReloadAll: (type, time): string => `✅ Reloaded all ${type}. (Took: ${time})`,
-		commandReloadEverything: (time): string => `✅ Reloaded everything. (Took: ${time})`,
+		commandReload: (type, name, time) => `✅ Reloaded ${type}: ${name}. (Took: ${time})`,
+		commandReloadFailed: (type, name) => `❌ Failed to reload ${type}: ${name}. Please check your Console.`,
+		commandReloadAll: (type, time) => `✅ Reloaded all ${type}. (Took: ${time})`,
+		commandReloadEverything: time => `✅ Reloaded everything. (Took: ${time})`,
 		commandReloadDescription: 'Reloads a klasa piece, or all pieces of a klasa store.',
 		commandReboot: 'Rebooting...',
 		commandRebootDescription: 'Reboots the bot.',
-		commandLoad: (time, type, name): string => `✅ Successfully loaded ${type}: ${name}. (Took: ${time})`,
+		commandLoad: (time, type, name) => `✅ Successfully loaded ${type}: ${name}. (Took: ${time})`,
 		commandLoadFail: 'The file does not exist, or an error occurred while loading your file. Please check your console.',
-		commandLoadError: (type, name, error): string => `❌ Failed to load ${type}: ${name}. Reason:${util.codeBlock('js', error)}`,
+		commandLoadError: (type, name, error) => `❌ Failed to load ${type}: ${name}. Reason:${util.codeBlock('js', error)}`,
 		commandLoadDescription: 'Load a piece from your bot.',
 		commandPing: 'Ping?',
 		commandPingDescription: 'Runs a connection test to Discord.',
-		commandPingPong: (diff, ping): string => `Pong! (Roundtrip took: ${diff}ms. Heartbeat: ${ping}ms.)`,
-		commandInvite: (): string[] => [
+		commandPingPong: (diff, ping) => `Pong! (Roundtrip took: ${diff}ms. Heartbeat: ${ping}ms.)`,
+		commandInvite: () => [
 			`To add ${this.client.user!.username} to your discord guild:`,
 			`<${this.client.invite}>`,
 			util.codeBlock('', [
@@ -232,31 +231,31 @@ export default class extends Language {
 		commandInfoDescription: 'Provides some information about this bot.',
 		commandHelpDescription: `Show info about ${botName}'s commands`,
 		commandHelpData: {
-			title: (description: string) => `${description}`,
-			usage: (usage: string) => `📝 | ***Command Usage***\n\`${usage}\`\n`,
-			extended: (extendedHelp: string) => `🔍 | ***Extended Help***\n${extendedHelp}`,
-			footer: (name: string) => `Command help for ${name} | ${this.randomDftba}`
+			title: description => `${description}`,
+			usage: usage => `📝 | ***Command Usage***\n\`${usage}\`\n`,
+			extended: extendedHelp => `🔍 | ***Extended Help***\n${extendedHelp}`,
+			footer: name => `Command help for ${name} | ${this.randomDftba}`
 		},
-		commandHelpBeginning: (prefix: string) => `You can do \`${prefix}help <command>\` (without brackets) to get more information about an individual command!`,
+		commandHelpBeginning: prefix => `You can do \`${prefix}help <command>\` (without brackets) to get more information about an individual command!`,
 		commandHelpNoExtended: 'No extended help available.',
 		commandHelpDm: '📥 | The list of commands you have access to has been sent to your DMs.',
 		commandHelpNoDm: '❌ | You have DMs disabled, I couldn\'t send you the commands in DMs.',
-		commandHelpUsage: (usage): string => `Usage :: ${usage}`,
+		commandHelpUsage: usage => `Usage :: ${usage}`,
 		commandHelpExtended: 'Extended Help ::',
-		commandEnable: (type, name): string => `+ Successfully enabled ${type}: ${name}`,
+		commandEnable: (type, name) => `+ Successfully enabled ${type}: ${name}`,
 		commandEnableDescription: 'Re-enables or temporarily enables a command/inhibitor/monitor/finalizer. Default state restored on reboot.',
-		commandDisable: (type, name): string => `+ Successfully disabled ${type}: ${name}`,
+		commandDisable: (type, name) => `+ Successfully disabled ${type}: ${name}`,
 		commandDisableDescription: 'Re-disables or temporarily disables a command/inhibitor/monitor/finalizer/event. Default state restored on reboot.',
 		commandDisableWarn: 'You probably don\'t want to disable that, since you wouldn\'t be able to run any command to enable it again',
 		commandConfNoKey: 'You must provide a key',
 		commandConfNoValue: 'You must provide a value',
-		commandConfGuarded: (name): string => `${util.toTitleCase(name)} may not be disabled.`,
-		commandConfUpdated: (key, response): string => `Successfully updated the key **${key}**: \`${response}\``,
+		commandConfGuarded: name => `${util.toTitleCase(name)} may not be disabled.`,
+		commandConfUpdated: (key, response) => `Successfully updated the key **${key}**: \`${response}\``,
 		commandConfKeyNotArray: 'This key is not array type. Use the action \'reset\' instead.',
-		commandConfGetNoExt: (key): string => `The key **${key}** does not seem to exist.`,
-		commandConfGet: (key, value): string => `The value for the key **${key}** is: \`${value}\``,
-		commandConfReset: (key, response): string => `The key **${key}** has been reset to: \`${response}\``,
-		commandConfNoChange: (key): string => `The value for **${key}** was already that value.`,
+		commandConfGetNoExt: key => `The key **${key}** does not seem to exist.`,
+		commandConfGet: (key, value) => `The value for the key **${key}** is: \`${value}\``,
+		commandConfReset: (key, response) => `The key **${key}** has been reset to: \`${response}\``,
+		commandConfNoChange: key => `The value for **${key}** was already that value.`,
 		commandConfServerDescription: 'Define per-server settings.',
 		commandConfServerExtended: builder.display('conf', {
 			examples: [
@@ -273,7 +272,7 @@ export default class extends Language {
 			extendedHelp: 'This command can control and show all server settings.',
 			reminder: 'It\'s probably easier to use the individual server settings commands rather than this one, unless you know what you\'re doing.'
 		}),
-		commandConfServer: (key, list): string => `**Guild Settings${key}**\n${list}`,
+		commandConfServer: (key, list) => `**Guild Settings${key}**\n${list}`,
 		commandConfUserDescription: 'Define per-user settings.',
 		commandConfUserExtended: builder.display('userconf', {
 			examples: [
@@ -287,8 +286,8 @@ export default class extends Language {
 			extendedHelp: 'This command can control and show all user settings (currently there is only one user setting).',
 			reminder: 'It\'s probably easier to use the individual user settings commands than this one, unless you know what you\'re doing.'
 		}),
-		commandConfUser: (key, list): string => `**User Settings${key}**\n${list}`,
-		commandStats: (memUsage, uptime, users, guilds, channels, klasaVersion, discordVersion, processVersion): string[] => [
+		commandConfUser: (key, list) => `**User Settings${key}**\n${list}`,
+		commandStats: (memUsage, uptime, users, guilds, channels, klasaVersion, discordVersion, processVersion) => [
 			'= STATISTICS =',
 			'',
 			`• Mem Usage  :: ${memUsage} MB`,
@@ -321,8 +320,8 @@ export default class extends Language {
 		commandDiscordStatusDescription: 'See the current status of Discord.',
 		commandDiscordStatusError: 'An error occured when attempting to fetch Discord\'s status.',
 		commandDiscordStautsEmbed: {
-			decription: (incident): string => `[Discord Status](https://discordstatus.com/)\n**Current Incident:**\n${incident}`,
-			footer: (time): string => `Last changed: ${time} | ${this.randomDftba}`
+			decription: incident => `[Discord Status](https://discordstatus.com/)\n**Current Incident:**\n${incident}`,
+			footer: time => `Last changed: ${time} | ${this.randomDftba}`
 		},
 		messagePromptTimeout: 'The prompt has timed out.',
 		textPromptAbortOptions: ['abort', 'stop', 'cancel'],
@@ -332,7 +331,7 @@ export default class extends Language {
 		 * ################################
 		 */
 		userNotFound: 'I could not find that user.',
-		userNotInGuild: (user: string) => `${user} is not in this server.`,
+		userNotInGuild: user => `${user} is not in this server.`,
 		none: 'None',
 		noParentCategory: 'No Category',
 		working: 'Working...',
@@ -341,11 +340,11 @@ export default class extends Language {
 		 * #      ARGUMENTS               #
 		 * ################################
 		 */
-		argumentRoleNameCouldNotFind: (name: string, arg: string) => `Could not find a role match for **${arg}**; the ${name} argument must be a valid role name, id, or mention.`,
-		argumentRoleNameMultipleMatches: (matches: string, name: string) => `Found multiple role matches for **${name}**: \`${matches}\``,
-		argumentTimespanInvalid: (arg: string) => `**${arg}** is an invalid timespan.`,
-		argumentUsernameCannotFind: (search: string) => `Could not find a user by searching with **${search}**.`,
-		argumentUsernameMultiple: (users: string) => `Found multiple users: \`${users}\`.`,
+		argumentRoleNameCouldNotFind: (name, arg) => `Could not find a role match for **${arg}**; the ${name} argument must be a valid role name, id, or mention.`,
+		argumentRoleNameMultipleMatches: (matches, name) => `Found multiple role matches for **${name}**: \`${matches}\``,
+		argumentTimespanInvalid: arg => `**${arg}** is an invalid timespan.`,
+		argumentUsernameCannotFind: search => `Could not find a user by searching with **${search}**.`,
+		argumentUsernameMultiple: users => `Found multiple users: \`${users}\`.`,
 		/**
 		 * ################################
 		 * #      MISCELLANEOUS COMMANDS  #
@@ -378,7 +377,7 @@ export default class extends Language {
 			],
 			reminder: 'Choices have a maximum length of 500 characters.'
 		}),
-		commandChooseResponse: (choice: string) => `${botName} chooses... ${choice}!`,
+		commandChooseResponse: choice => `${botName} chooses... ${choice}!`,
 		commandChooseTooFew: 'You must provide at least two choices!',
 		commandRateDescription: `Have ${botName} rate an item of your choosing`,
 		commandRateExtended: builder.display('rate', {
@@ -388,7 +387,7 @@ export default class extends Language {
 			extendedHelp: 'This command has a cooldown of 5 seconds per user.',
 			reminder: 'Things to be rated have a maximum length of 500 characters.'
 		}),
-		commandRateResponse: (thing: string, rating: number) => `${botName} gives \`${thing}\` a ${rating}!`,
+		commandRateResponse: (thing, rating) => `${botName} gives \`${thing}\` a ${rating}!`,
 		commandRockPaperScissorsDescription: `Play a game of rock, paper, scissors against ${botName}`,
 		commandRockPaperScissorsExtended: builder.display('rps', {
 			examples: [
@@ -398,7 +397,7 @@ export default class extends Language {
 			],
 			extendedHelp: 'This command has a cooldown of 5 seconds per user.'
 		}),
-		commandRockPaperScissorsWinner: (playerMove: string, steveMove: string, winner: number) => `You threw ${playerMove} and ${botName} threw ${steveMove}. ${winner === 0 ? 'Nobody' : winner === -1 ? botName : 'You'} won!`,
+		commandRockPaperScissorsWinner: (playerMove, steveMove, winner) => `You threw ${playerMove} and ${botName} threw ${steveMove}. ${winner === 0 ? 'Nobody' : winner === -1 ? botName : 'You'} won!`,
 		commandRollDescription: 'Roll dice!',
 		commandRollExtended: builder.display('roll', {
 			examples: [
@@ -413,7 +412,7 @@ export default class extends Language {
 			extendedHelp: 'Using standard dice notation: You can roll up to 10 dice with up to 1,000 sides each. Add a \`!\` at the end of your roll to use exploding dice. To keep the highest n, add `k<n>`; to keep the lowest n, add `kl<n>` (with n < amount of dice). You can add a static positive or negative modifier to the sum of the roll using \`+<n>\` or \`-<n>\`. You can do multiple rolls at once, separated by `|`.'
 		}),
 		commandRollResponse: `You rolled:`,
-		commandRollEmojiResponse: (emoji: string, message: string) => `${emoji} You rolled: ${message} ${emoji}`,
+		commandRollEmojiResponse: (emoji, message) => `${emoji} You rolled: ${message} ${emoji}`,
 		commandAudinoDescription: 'When the audio cuts out and you must screm',
 		commandAudinoExtended: builder.display('audino', {
 			extendedHelp: 'This command has a cooldown of 60 seconds per channel. The image this command displays came from a reading livestream [John](https://en.wikipedia.org/wiki/John_Green_(author)) did; it\'s the face he made when his audio cut out *again*.'
@@ -463,13 +462,13 @@ export default class extends Language {
 		moderationNoReason: 'No reason provided.',
 		moderationNoSteve: 'hahahahaha... no.',
 		moderationNoSelf: 'Come on fam, don\'t do that to yourself.',
-		moderationHigherRole: (user: string) => `${user} has a higher role than you.`,
+		moderationHigherRole: user => `${user} has a higher role than you.`,
 		moderationCaseDisplayFieldTarget: 'Target',
 		moderationCaseDisplayFieldModerator: 'Moderator',
 		moderationCaseDisplayFieldDuration: 'Duration',
 		moderationCaseDisplayFieldReason: 'Reason',
-		moderationCaseDisplayFooter: (caseNumber: number, targetID: string) => `Case ${caseNumber} (${targetID})`,
-		moderationCaseDisplayTimeRemaining: (time: string) => `(${time} left)`,
+		moderationCaseDisplayFooter: (caseNumber, targetID) => `Case ${caseNumber} (${targetID})`,
+		moderationCaseDisplayTimeRemaining: time => `(${time} left)`,
 		commandMuteDescription: 'Add the server\'s Muted role to the specified user',
 		commandMuteExtended: builder.display('mute', {
 			examples: [
@@ -483,8 +482,8 @@ export default class extends Language {
 			extendedHelp: `This command requires me to have the **${this.PERMISSIONS.MANAGE_ROLES}** permission.`,
 			reminder: 'You must set up the server\'s Muted role before this command can be used.'
 		}),
-		commandMuteSuccess: (target: string, thisCase: ModerationCase) => `Muted ${target} and created case number ${thisCase.number} with reason: *${thisCase.reason}*.`,
-		commandMuteUnable: (target: string) => `Unable to mute ${target}.`,
+		commandMuteSuccess: (target, thisCase) => `Muted ${target} and created case number ${thisCase.number} with reason: *${thisCase.reason}*.`,
+		commandMuteUnable: target => `Unable to mute ${target}.`,
 		commandDeafenDescription: 'Add the server\'s Deafened role to the specified user',
 		commandDeafenExtended: builder.display('deafen', {
 			examples: [
@@ -498,8 +497,8 @@ export default class extends Language {
 			extendedHelp: `This command requires me to have the **${this.PERMISSIONS.MANAGE_ROLES}** permission.`,
 			reminder: 'You must set up the server\'s Deafened role before you can use this command. The Deafened role should prevent users from seeing most (or all) channels in the server.'
 		}),
-		commandDeafenUnable: (target: string) => `Unable to deafen ${target}.`,
-		commandDeafenSuccess: (target: string, thisCase: ModerationCase) => `Deafened ${target} and created case number ${thisCase.number} with reason: *${thisCase.reason}*.`,
+		commandDeafenUnable: target => `Unable to deafen ${target}.`,
+		commandDeafenSuccess: (target, thisCase) => `Deafened ${target} and created case number ${thisCase.number} with reason: *${thisCase.reason}*.`,
 		commandBanDescription: 'Ban a user from the server',
 		commandBanExtended: builder.display('ban', {
 			examples: [
@@ -513,8 +512,8 @@ export default class extends Language {
 			extendedHelp: `This command requires me to have the **${this.PERMISSIONS.BAN_MEMBERS}** permission.`,
 			reminder: 'You can change the `moderation.banDeleteDays` setting to control how many days worth of messages from the banned user are deleted.'
 		}),
-		commandBanUnable: (target: string) => `Unable to ban ${target}.`,
-		commandBanSuccess: (target: string, thisCase: ModerationCase) => `Banned ${target} and created case number ${thisCase.number} with reason: *${thisCase.reason}*.`,
+		commandBanUnable: target => `Unable to ban ${target}.`,
+		commandBanSuccess: (target, thisCase) => `Banned ${target} and created case number ${thisCase.number} with reason: *${thisCase.reason}*.`,
 		commandKickDescription: 'Kick a user from the server',
 		commandKickExtended: builder.display('kick', {
 			examples: [
@@ -526,8 +525,8 @@ export default class extends Language {
 			],
 			extendedHelp: `This command requires me to have the **${this.PERMISSIONS.KICK_MEMBERS}** permission.`
 		}),
-		commandKickUnable: (target: string) => `Unable to kick ${target}.`,
-		commandKickSuccess: (target: string, thisCase: ModerationCase) => `Kicked ${target} and created case number ${thisCase.number} with reason: *${thisCase.reason}*.`,
+		commandKickUnable: target => `Unable to kick ${target}.`,
+		commandKickSuccess: (target, thisCase) => `Kicked ${target} and created case number ${thisCase.number} with reason: *${thisCase.reason}*.`,
 		commandUnbanDescription: 'Unban a user from the server',
 		commandUnbanExtended: builder.display('unban', {
 			examples: [
@@ -540,8 +539,8 @@ export default class extends Language {
 			],
 			extendedHelp: `This command requires me to have the **${this.PERMISSIONS.BAN_MEMBERS}** permission.`
 		}),
-		commandUnbanUnable: (target: string) => `Unable to unban ${target}.`,
-		commandUnbanSuccess: (target: string, thisCase: ModerationCase) => `Unbanned ${target} and created case number ${thisCase.number} with reason: *${thisCase.reason}*.`,
+		commandUnbanUnable: target => `Unable to unban ${target}.`,
+		commandUnbanSuccess: (target, thisCase) => `Unbanned ${target} and created case number ${thisCase.number} with reason: *${thisCase.reason}*.`,
 		commandUnmuteDescription: 'Remove a member from the server\'s Muted role',
 		commandUnmuteExtended: builder.display('unmute', {
 			examples: [
@@ -553,8 +552,8 @@ export default class extends Language {
 			extendedHelp: `This command requires me to have the **${this.PERMISSIONS.MANAGE_ROLES}** permission.`,
 			reminder: 'You must set up the server\'s Muted role before using this command.'
 		}),
-		commandUnmuteUnable: (target: string) => `Unable to unmute ${target}.`,
-		commandUnmuteSuccess: (target: string, thisCase: ModerationCase) => `Unmuted ${target} and created case number ${thisCase.number} with reason: *${thisCase.reason}*.`,
+		commandUnmuteUnable: target => `Unable to unmute ${target}.`,
+		commandUnmuteSuccess: (target, thisCase) => `Unmuted ${target} and created case number ${thisCase.number} with reason: *${thisCase.reason}*.`,
 		commandUndeafenDescription: 'Remove a member from the server\'s Deafened role',
 		commandUndeafenExtended: builder.display('undeafen', {
 			examples: [
@@ -566,18 +565,18 @@ export default class extends Language {
 			extendedHelp: `This command requires me to have the **${this.PERMISSIONS.MANAGE_ROLES}** permission.`,
 			reminder: 'You must set up the server\'s Deafened role before using this command.'
 		}),
-		commandUndeafenUnable: (target: string) => `Unable to undeafen ${target}.`,
-		commandUndeafenSuccess: (target: string, thisCase: ModerationCase) => `Undeafened ${target} and created case number ${thisCase.number} with reason: *${thisCase.reason}*.`,
+		commandUndeafenUnable: target => `Unable to undeafen ${target}.`,
+		commandUndeafenSuccess: (target, thisCase) => `Undeafened ${target} and created case number ${thisCase.number} with reason: *${thisCase.reason}*.`,
 		commandPermissionsDescription: 'View the permissions of the specified user.',
-		commandPermissionsHasAll: (user: string) => `${user} has the Administrator permission; they have all permissions by default.`,
+		commandPermissionsHasAll: user => `${user} has the Administrator permission; they have all permissions by default.`,
 		commandClearRoleDescription: 'Quickly remove all members from the specified role',
 		commandClearRoleExtended: builder.display('clearrole', {
 			examples: [
 				'gmt-4'
 			]
 		}),
-		commandClearRoleRoleEmpty: (role: string) => `There are no members in the ${role} role.`,
-		commandClearRole: (size: number, role: string) => `${size} members were removed from the ${role} role.`,
+		commandClearRoleRoleEmpty: role => `There are no members in the ${role} role.`,
+		commandClearRole: (size, role) => `${size} members were removed from the ${role} role.`,
 		commandNicknameDescription: 'Set or clear a member\'s nickname',
 		commandNicknameExtended: builder.display('nickname', {
 			examples: [
@@ -590,8 +589,8 @@ export default class extends Language {
 			extendedHelp: `This command requires me to have the **${this.PERMISSIONS.MANAGE_NICKNAMES}** permisson.`,
 			reminder: 'Not specifying a nickname for this command will clear the member\'s nickname.'
 		}),
-		commandNicknameSet: (user: string) => `${user}'s nickname has been set.`,
-		commandNicknameCleared: (user: string) => `${user}'s nickname has been cleared.`,
+		commandNicknameSet: user => `${user}'s nickname has been set.`,
+		commandNicknameCleared: user => `${user}'s nickname has been cleared.`,
 		commandRoleDescription: 'Add or remove a role from a member',
 		commandRoleExtended: builder.display('role', {
 			examples: [
@@ -603,8 +602,8 @@ export default class extends Language {
 			extendedHelp: `This command requires me to have the **${this.PERMISSIONS.MANAGE_ROLES}** permission.`,
 			reminder: 'This command works on a toggle; there is no need to specify if you want to add or remove the command.'
 		}),
-		commandRoleRemove: (roles: string) => `${Emojis.MINUS} Removed roles: \`${roles}\``,
-		commandRoleAdd: (roles: string) => `${Emojis.PLUS} Added roles: \`${roles}\``,
+		commandRoleRemove: roles => `${Emojis.MINUS} Removed roles: \`${roles}\``,
+		commandRoleAdd: roles => `${Emojis.PLUS} Added roles: \`${roles}\``,
 		commandLockDescription: 'Lock a channel from public posting',
 		commandLockExtended: builder.display('lock', {
 			extendedHelp: `This command takes away the **${this.PERMISSIONS.SEND_MESSAGES}** permission from the everyone role in the channel. I need the **${this.PERMISSIONS.MANAGE_CHANNELS}** permission to run it.`
@@ -625,7 +624,7 @@ export default class extends Language {
 			reminder: 'Using "reset" as the argument will turn slowmode off.'
 		}),
 		commandSlowModeReset: 'Slowmode has been turned off.',
-		commandSlowModeSet: (duration: string) => `Slowmode has been set to 1 message per member per ${duration}.`,
+		commandSlowModeSet: duration => `Slowmode has been set to 1 message per member per ${duration}.`,
 		commandPurgeDescription: 'Quickly delete a specified number of messages',
 		commandPurgeExtended: builder.display('purge', {
 			examples: [
@@ -637,7 +636,7 @@ export default class extends Language {
 			extendedHelp: `This command requires me to have the **${this.PERMISSIONS.MANAGE_MESSAGES}** permission to run it.`,
 			reminder: 'The command message is automatically counted towards the number of messages deleted, so there is no need to account for it when specifying a number.'
 		}),
-		commandPurgePurged: (size: number) => `${size} messages were deleted.`,
+		commandPurgePurged: size => `${size} messages were deleted.`,
 		/**
 		 * ################################
 		 * #         ROLE ALIASES         #
@@ -651,10 +650,10 @@ export default class extends Language {
 			]
 			// TODO: add better help for role alias command
 		}),
-		commandRoleAliasAlreadyExists: (alias: string) => `The ${alias} role alias already exists.`,
-		commandRoleAliasDoesNotExist: (alias: string) => `There is no ${alias} role alias.`,
-		commandRoleAliasAdd: (alias: string, role: string) => `Added the ${alias} alias for the ${role} role.`,
-		commandRoleAliasRemove: (alias: string) => `The ${alias} role alias has been removed.`,
+		commandRoleAliasAlreadyExists: alias => `The ${alias} role alias already exists.`,
+		commandRoleAliasDoesNotExist: alias => `There is no ${alias} role alias.`,
+		commandRoleAliasAdd: (alias, role) => `Added the ${alias} alias for the ${role} role.`,
+		commandRoleAliasRemove: alias => `The ${alias} role alias has been removed.`,
 		/**
 		 * ################################
 		 * #      SNIPPETS                #
@@ -681,12 +680,12 @@ export default class extends Language {
 			],
 			reminder: 'NOTE: If a snippet shares a name with an assignable role, the snippet will be inaccessible using custom command syntax.'
 		}, true),
-		commandSnippetAdd: (name: string) => `Added a snippet with the name: ${name}.`,
-		commandSnippetEdit: (name: string) => `Edited the ${name} snippet.`,
-		commandSnippetRemove: (name: string) => `Removed the ${name} snippet.`,
+		commandSnippetAdd: name => `Added a snippet with the name: ${name}.`,
+		commandSnippetEdit: name => `Edited the ${name} snippet.`,
+		commandSnippetRemove: name => `Removed the ${name} snippet.`,
 		commandSnippetNoPermission: 'You do not have permissions to edit snippets for this server.',
-		commandSnippetAlreadyExists: (name: string) => `There is already a snippet named ${name}.`,
-		commandSnippetInvalid: (name: string) => `There is no snippet with the name: ${name}.`,
+		commandSnippetAlreadyExists: name => `There is already a snippet named ${name}.`,
+		commandSnippetInvalid: name => `There is no snippet with the name: ${name}.`,
 		commandSnippetNoSnipsInGuild: 'This server has no snippets!',
 		commandSnippetReset: 'This server\'s snippets have been reset.',
 		/**
@@ -707,9 +706,9 @@ export default class extends Language {
 			reminder: 'Unfortunately, only one reminder can be deleted per command.'
 		}),
 		resolverReminderLength: 'Reminders have a maximum length of 140 characters.',
-		resolverReminderInvalid: (arg: string | number) => `**${arg}** is not a valid reminder number.`,
-		commandRemindCreated: (duration: string) => `I'll remind you about that in ${duration}.`,
-		commandRemindCanceled: (content: string) => `I cancelled the reminder: **${content}**.`,
+		resolverReminderInvalid: arg => `**${arg}** is not a valid reminder number.`,
+		commandRemindCreated: duration => `I'll remind you about that in ${duration}.`,
+		commandRemindCanceled: content => `I cancelled the reminder: **${content}**.`,
 		commandRemindNoReminders: 'You have no reminders currently set.',
 		commandReminderDisplayHidden: 'Private reminder: content hidden',
 		commandRemindViewEmbed: {
@@ -743,10 +742,10 @@ export default class extends Language {
 			reminder: 'Only roles that have been designated as self-assignable by server staff can be used with this command.'
 		}),
 		commandAssignNoRoleProvided: 'You must provide a role name, id, or mention.',
-		commandAssignNotAssignable: (role: string) => `${Emojis.REDX} The ${role} role is not self-assignable.`,
-		commandAssignRoleAdd: (roles: string) => `${Emojis.PLUS} Added role(s): \`${roles}\``,
-		commandAssignRoleRemove: (roles: string) => `${Emojis.MINUS} Removed role(s): \`${roles}\``,
-		commandAssignRoleNeedTrusted: (role: string) => `You need to have the **${role}** role to do that!`,
+		commandAssignNotAssignable: role => `${Emojis.REDX} The ${role} role is not self-assignable.`,
+		commandAssignRoleAdd: roles => `${Emojis.PLUS} Added role(s): \`${roles}\``,
+		commandAssignRoleRemove: roles => `${Emojis.MINUS} Removed role(s): \`${roles}\``,
+		commandAssignRoleNeedTrusted: role => `You need to have the **${role}** role to do that!`,
 		/**
 		 * ################################
 		 * #      MEMBER INFO             #
@@ -760,8 +759,8 @@ export default class extends Language {
 			extendedHelp: `Displayed information: Display Name, Account Age, Server Join Date, List of Roles`,
 			reminder: 'Not providing a username for this command will display information about yourself.'
 		}),
-		commandWhoIsDate: (duration: string, date: string) => `${duration} ago (${date})`,
-		commandWhoIsJoinedGuildHours: (hours: number, date: string) => `${hours} hours ago (${date})`,
+		commandWhoIsDate: (duration, date) => `${duration} ago (${date})`,
+		commandWhoIsJoinedGuildHours: (hours, date) => `${hours} hours ago (${date})`,
 		commandWhoIsEmbed: {
 			fieldTitles: {
 				displayName: 'Display Name',
@@ -769,10 +768,10 @@ export default class extends Language {
 				joinedGuild: 'Joined Server',
 				roles: 'Roles'
 			},
-			footer: (id: string) => `Member ID: ${id} | ${this.randomDftba}`
+			footer: id => `Member ID: ${id} | ${this.randomDftba}`
 		},
 		commandAvatarDescription: 'See a larger version user\'s avatar',
-		commandAvatarCannotDisplay: (user: string) => `Unable to display avatar for ${user}.`,
+		commandAvatarCannotDisplay: user => `Unable to display avatar for ${user}.`,
 		/**
 		 * ################################
 		 * #      SERVER INFO             #
@@ -792,7 +791,7 @@ export default class extends Language {
 				roles: 'Roles',
 				emojis: 'Emojis'
 			},
-			footer: (date: string, duration: string) => `Created ${date} (${duration} ago) | ${this.randomDftba}`
+			footer: (date, duration) => `Created ${date} (${duration} ago) | ${this.randomDftba}`
 		},
 		commandRoleInfoDescription: 'Display basic information about a role, along with a list of members who have it',
 		commandRoleInfoExtended: builder.display('roleinfo', {
@@ -808,12 +807,12 @@ export default class extends Language {
 		commandRoleInfoNoMembers: 'There are no members in this role.',
 		commandRoleInfoTooMany: 'There are too many members in this role to display.',
 		commandRoleInfoEmbed: {
-			description: (role: string, date: string) => `The ${role} role was created on ${date}.`,
+			description: (role, date) => `The ${role} role was created on ${date}.`,
 			fieldTitles: {
 				aliases: 'Aliases',
-				members: (num: number) => `${num} Member${num === 1 ? '' : 's'}`
+				members: num => `${num} Member${num === 1 ? '' : 's'}`
 			},
-			footer: (assignable: boolean) => `This role is ${assignable ? '' : 'not '}self-assignable.`
+			footer: assignable => `This role is ${assignable ? '' : 'not '}self-assignable.`
 		},
 		/**
 		 * ################################
@@ -843,7 +842,7 @@ export default class extends Language {
 				'- Unbans'
 			]
 		}),
-		commandSetMemberLogSet: (channel: string) => `<#${channel}> will be used as this server's memberlog.`,
+		commandSetMemberLogSet: channel => `<#${channel}> will be used as this server's memberlog.`,
 		commandServerLogDescription: `Set what channel ${botName} will use as the serverlog`,
 		commandServerLogExtended: builder.display('setserverlog', {
 			explainedUsage: [
@@ -858,7 +857,7 @@ export default class extends Language {
 				'- Role creates, deletes, and name updates'
 			]
 		}),
-		commandServerLogSet: (channel: string) => `<#${channel}> will be used as this server's serverlog.`,
+		commandServerLogSet: channel => `<#${channel}> will be used as this server's serverlog.`,
 		commandSetReminderChannelDescription: `Set what channel ${botName} will use as the reminder channel`,
 		commandSetReminderChannelExtended: builder.display('setreminderchannel', {
 			explainedUsage: [
@@ -866,7 +865,7 @@ export default class extends Language {
 			],
 			extendedHelp: 'If a reminder channel is set, all reminder set in the server will go off in the specified channel.'
 		}),
-		commandSetReminderChannelSet: (channel: string) => `<#${channel}> will be used as this server's reminder channel.`,
+		commandSetReminderChannelSet: channel => `<#${channel}> will be used as this server's reminder channel.`,
 		commandSetAdministratorRoleDescription: 'Set the server\'s administrator role',
 		commandSetAdministratorRoleExtended: builder.display('setadministratorrole', {
 			explainedUsage: [
@@ -874,7 +873,7 @@ export default class extends Language {
 			],
 			reminder: 'This command does not add any extra Discord permissions to the role, it just gives this role access to server staff commands.'
 		}),
-		commandSetAdministratorRoleSet: (role: string) => `The ${role} role will be used as this server's administrator role.`,
+		commandSetAdministratorRoleSet: role => `The ${role} role will be used as this server's administrator role.`,
 		commandSetModeratorRoleDescription: 'Set the server\'s moderator role',
 		commandSetModeratorRoleExtended: builder.display('setmoderatorrole', {
 			explainedUsage: [
@@ -882,7 +881,7 @@ export default class extends Language {
 			],
 			reminder: 'This command does not add any extra Discord permissions to the role, it just gives this role access to server staff commands.'
 		}),
-		commandSetModeratorRoleSet: (role: string) => `The ${role} role will be used as this server's moderator role.`,
+		commandSetModeratorRoleSet: role => `The ${role} role will be used as this server's moderator role.`,
 		commandSetTrustedRoleDescription: 'Set the server\'s trusted role',
 		commandSetTrustedRoleExtended: builder.display('settrustedrole', {
 			explainedUsage: [
@@ -890,7 +889,7 @@ export default class extends Language {
 			],
 			reminder: 'This command does not add any extra Discord permissions to the role.'
 		}),
-		commandSetTrustedRoleSet: (role: string) => `The ${role} role will be used as this server's trusted role.`,
+		commandSetTrustedRoleSet: role => `The ${role} role will be used as this server's trusted role.`,
 		commandSetMutedRoleDescription: 'Set the server\'s muted role',
 		commandSetMutedRoleExtended: builder.display('setmutedrole', {
 			explainedUsage: [
@@ -898,7 +897,7 @@ export default class extends Language {
 			],
 			reminder: 'This command does not add or remove any extra Discord permissions to the role.'
 		}),
-		commandSetMutedRoleSet: (role: string) => `The ${role} role will be used as this server's muted role.`,
+		commandSetMutedRoleSet: role => `The ${role} role will be used as this server's muted role.`,
 		commandSetDeafenedRoleDescription: 'Set the server\'s deafened role',
 		commandSetDeafenedRoleExtended: builder.display('setdeafenedrole', {
 			explainedUsage: [
@@ -906,7 +905,7 @@ export default class extends Language {
 			],
 			reminder: 'This command does not add or remove any extra Discord permissions to the role.'
 		}),
-		commandSetDeafenedRoleSet: (role: string) => `The ${role} role will be used as this server's deafened role.`,
+		commandSetDeafenedRoleSet: role => `The ${role} role will be used as this server's deafened role.`,
 		commandSetBanDeleteDaysDescription: 'Set how many days of messages from a banned user will be deleted',
 		commandSetBanDeleteDaysExtended: builder.display('setbandeletedays', {
 			examples: [
@@ -914,7 +913,7 @@ export default class extends Language {
 			],
 			reminder: `This setting will only function properly if a user is banned using ${botName}`
 		}),
-		commandSetBanDeleteDaysSet: (days: number) => `${days} days of messages will be deleted from a banned user.`,
+		commandSetBanDeleteDaysSet: days => `${days} days of messages will be deleted from a banned user.`,
 		commandManageRestrictedRolesDescription: 'Manage the list of restricted roles for this server',
 		commandManageRestrictedRolesExtended: builder.display('managerestrictedroles', {
 			examples: [
@@ -929,8 +928,8 @@ export default class extends Language {
 			],
 			extendedHelp: 'Restricted roles cannot be viewed with the `roleinfo` command, except for when a server staff member is the person using the command. Members who receive a restricted role as their first role will not be given the server\'s trusted role if one has been set.'
 		}),
-		commandManageRestrictedRolesManageRemoved: (removedRoles: string) => `${Emojis.MINUS} Removed roles: ${removedRoles}\n`,
-		commandManageRestrictedRolesManageAdded: (addedRoles: string) => `${Emojis.PLUS} Added roles: ${addedRoles}`,
+		commandManageRestrictedRolesManageRemoved: removedRoles => `${Emojis.MINUS} Removed roles: ${removedRoles}\n`,
+		commandManageRestrictedRolesManageAdded: addedRoles => `${Emojis.PLUS} Added roles: ${addedRoles}`,
 		commandManageRestrictedRolesReset: 'The list of restricted roles has been cleared.',
 		commandManageRestrictedrolesShowNoRoles: 'There are no restricted roles in this server.',
 		commandManageRestrictedrolesShowRoleNotFound: 'Role not found',
@@ -949,8 +948,8 @@ export default class extends Language {
 			extendedHelp: 'Adding a role to the list of assignable roles allows members to assign that role to themselves without staff intervention.',
 			reminder: 'NOTE: If an assignable role shares a name with a snippet, the snippet will be inaccessible using custom command syntax.'
 		}),
-		commandManageAssignableRolesManageRemoved: (removedRoles: string) => `${Emojis.MINUS} Removed roles: ${removedRoles}\n`,
-		commandManageAssignableRolesManageAdded: (addedRoles: string) => `${Emojis.PLUS} Added roles: ${addedRoles}`,
+		commandManageAssignableRolesManageRemoved: removedRoles => `${Emojis.MINUS} Removed roles: ${removedRoles}\n`,
+		commandManageAssignableRolesManageAdded: addedRoles => `${Emojis.PLUS} Added roles: ${addedRoles}`,
 		commandManageAssignableRolesReset: 'The list of assignable roles has been cleared.',
 		commandManageAssignableRolesShowNoRoles: 'There are no assignable roles in this server.',
 		commandManageAssignableRolesShowRoleNotFound: 'Role not found',
@@ -971,7 +970,7 @@ export default class extends Language {
 		commandManageWordBlacklistEnabled: 'The word blacklist feature has been enabled in this server.',
 		commandManageWordBlacklistDisabled: 'The word blacklist feature has been disabled in this server.',
 		commandManageWordBlacklistReset: 'The list of blacklisted words has been reset/cleared.',
-		commandManageWordBlacklistUpdate: (removing: boolean) => `Your word has been ${removing ? 'removed from' : 'added to'} the word blacklist.`,
+		commandManageWordBlacklistUpdate: removing => `Your word has been ${removing ? 'removed from' : 'added to'} the word blacklist.`,
 		commandToggleTrustedRoleRequirementDescription: 'Choose whether the server\'s trusted role is required to self-assign roles',
 		commandToggleTrustedRoleRequirementExtended: builder.display('toggletrustedrolerequirement', {
 			extendedHelp: 'The server must have a trusted role set before this command can be used.'
@@ -998,11 +997,11 @@ export default class extends Language {
 			],
 			extendedHelp: 'This command will set the color of the embeds for your list of pending reminders and the `whois` command.'
 		}),
-		resolverInvalidColor: (hex: string) => `**${hex}** is not a valid hex code.`,
+		resolverInvalidColor: hex => `**${hex}** is not a valid hex code.`,
 		commandSetEmbedColorReset: 'Your embed color has been reset.',
-		commandSetEmbedColorShow: (hex: string) => `Your embed color is currently set to: **${hex}**.`,
+		commandSetEmbedColorShow: hex => `Your embed color is currently set to: **${hex}**.`,
 		commandSetEmbedColorShowNone: 'You do not currently have an embed color set.',
-		commandSetEmbedColorSet: (hex: string) => `Your embed color has been set to **${hex}**.`,
+		commandSetEmbedColorSet: hex => `Your embed color has been set to **${hex}**.`,
 		/**
 		 * ################################
 		 * #      SYSTEM COMMANDS         #
@@ -1025,117 +1024,117 @@ export default class extends Language {
 		 * ################################
 		 */
 		commandToggleChannelCreateDescription: 'Toggle whether channel creations are logged in the serverlog',
-		commandToggleChannelCreate: (disabled: boolean) => `Channel creation logging has been turned ${disabled ? 'off' : 'on'}.`,
+		commandToggleChannelCreate: disabled => `Channel creation logging has been turned ${disabled ? 'off' : 'on'}.`,
 		commandToggleChannelDeleteDescription: 'Toggle whether channel deletions are logged in the serverlog',
-		commandToggleChannelDelete: (disabled: boolean) => `Channel deletion logging has been turned ${disabled ? 'off' : 'on'}.`,
+		commandToggleChannelDelete: disabled => `Channel deletion logging has been turned ${disabled ? 'off' : 'on'}.`,
 		commandToggleChannelUpdateDescription: 'Toggle whether channel updates are logged in the serverlog',
 		commandToggleChannelUpdateExtended: builder.display('togglechannelupdate', {
 			extendedHelp: 'Channel update log embeds include: channel name changes.'
 		}),
-		commandToggleChannelUpdate: (disabled: boolean) => `Channel update logging has been turned ${disabled ? 'off' : 'on'}.`,
+		commandToggleChannelUpdate: disabled => `Channel update logging has been turned ${disabled ? 'off' : 'on'}.`,
 		commandToggleEmojiCreateDescription: 'Toggle whether emoji creations are logged in the serverlog',
-		commandToggleEmojiCreate: (disabled: boolean) => `Emoji creation logging has been turned ${disabled ? 'off' : 'on'}.`,
+		commandToggleEmojiCreate: disabled => `Emoji creation logging has been turned ${disabled ? 'off' : 'on'}.`,
 		commandToggleEmojiDeleteDescription: 'Toggle whether emoji deletions are logged in the serverlog',
-		commandToggleEmojiDelete: (disabled: boolean) => `Emoji deletion logging has been turned ${disabled ? 'off' : 'on'}.`,
+		commandToggleEmojiDelete: disabled => `Emoji deletion logging has been turned ${disabled ? 'off' : 'on'}.`,
 		commandToggleEmojiUpdateDescription: 'Toggle whether emoji updates are logged in the serverlog',
 		commandToggleEmojiUpdateExtended: builder.display('toggleemojiupdate', {
 			extendedHelp: 'Emoji update log embeds include: emoji name changes.'
 		}),
-		commandToggleEmojiUpdate: (disabled: boolean) => `Emoji update logging has been turned ${disabled ? 'off' : 'on'}.`,
+		commandToggleEmojiUpdate: disabled => `Emoji update logging has been turned ${disabled ? 'off' : 'on'}.`,
 		commandToggleGuildBanAddDescription: 'Toggle whether bans are logged in the memberlog',
-		commandToggleGuildBanAdd: (disabled: boolean) => `Ban logging has been turned ${disabled ? 'off' : 'on'}.`,
+		commandToggleGuildBanAdd: disabled => `Ban logging has been turned ${disabled ? 'off' : 'on'}.`,
 		commandToggleGuildBanRemoveDescription: 'Toggle whether unbans are logged in the memberlog',
-		commandToggleGuildBanRemove: (disabled: boolean) => `Unban logging has been turned ${disabled ? 'off' : 'on'}.`,
+		commandToggleGuildBanRemove: disabled => `Unban logging has been turned ${disabled ? 'off' : 'on'}.`,
 		commandToggleGuildMemberAddDescription: 'Toggle whether member joins are logged in the memberlog',
-		commandToggleGuildMemberAdd: (disabled: boolean) => `Member join logging hsa been turned ${disabled ? 'off' : 'on'}.`,
+		commandToggleGuildMemberAdd: disabled => `Member join logging hsa been turned ${disabled ? 'off' : 'on'}.`,
 		commandToggleGuildMemberRemoveDescription: 'Toggle whether member leaves are tracked in the memberlog',
-		commandToggleGuildMemberRemove: (disabled: boolean) => `Member leave logging has been turned ${disabled ? 'off' : 'on'}.`,
+		commandToggleGuildMemberRemove: disabled => `Member leave logging has been turned ${disabled ? 'off' : 'on'}.`,
 		commandToggleGuildMemberUpdateDescription: 'Toggle whether member updates are logged in the memberlog',
 		commandToggleGuildMemberUpdateExtended: builder.display('toggleguildmemberupdate', {
 			extendedHelp: 'Member update log embeds include: display name changes and member role updates.'
 		}),
-		commandToggleGuildMemberUpdate: (disabled: boolean) => `Member update logging has been turned ${disabled ? 'off' : 'on'}.`,
+		commandToggleGuildMemberUpdate: disabled => `Member update logging has been turned ${disabled ? 'off' : 'on'}.`,
 		commandToggleInviteCreateDescription: 'Toggle whether invite creates are logged in the serverlog',
-		commandToggleInviteCreate: (disabled: boolean) => `Invite creation logging has been turned ${disabled ? 'off' : 'on'}.`,
+		commandToggleInviteCreate: disabled => `Invite creation logging has been turned ${disabled ? 'off' : 'on'}.`,
 		commandToggleInviteDeleteDescription: 'Toggle whether invite deletes are logged in the serverlog',
-		commandToggleInviteDelete: (disabled: boolean) => `Invite deletion logging has been turned ${disabled ? 'off' : 'on'}.`,
+		commandToggleInviteDelete: disabled => `Invite deletion logging has been turned ${disabled ? 'off' : 'on'}.`,
 		commandToggleMessageDeleteDescription: 'Toggle whether message deletes are logged in the serverlog',
-		commandToggleMessageDelete: (disabled: boolean) => `Message delete logging has been turned ${disabled ? 'off' : 'on'}.`,
+		commandToggleMessageDelete: disabled => `Message delete logging has been turned ${disabled ? 'off' : 'on'}.`,
 		commandToggleMessageDeleteBulkDescription: 'Toggle whether message purges are logged in the serverlog',
-		commandToggleMessageDeleteBulk: (disabled: boolean) => `Message purge logging has been turned ${disabled ? 'off' : 'on'}.`,
+		commandToggleMessageDeleteBulk: disabled => `Message purge logging has been turned ${disabled ? 'off' : 'on'}.`,
 		commandToggleRoleCreateDescription: 'Toggle whether role creates are logged in the serverlog',
-		commandToggleRoleCreate: (disabled: boolean) => `Role creation logging has been turned ${disabled ? 'off' : 'on'}.`,
+		commandToggleRoleCreate: disabled => `Role creation logging has been turned ${disabled ? 'off' : 'on'}.`,
 		commandToggleRoleDeleteDescription: 'Toggle whether role deletes are logged in the serverlog',
-		commandToggleRoleDelete: (disabled: boolean) => `Role deletion logging has been turned ${disabled ? 'off' : 'on'}.`,
+		commandToggleRoleDelete: disabled => `Role deletion logging has been turned ${disabled ? 'off' : 'on'}.`,
 		commandToggleRoleUpdateDescription: `Toggle whether role updates are logged in the serverlog`,
 		commandToggleRoleUpdateExtended: builder.display('toggleroleupdate', {
 			extendedHelp: 'Role update log embeds include: role name changes.'
 		}),
-		commandToggleRoleUpdate: (disabled: boolean) => `Role update logging has been turned ${disabled ? 'off' : 'on'}.`,
+		commandToggleRoleUpdate: disabled => `Role update logging has been turned ${disabled ? 'off' : 'on'}.`,
 		/**
 		 * ################################
 		 * #      LOG EVENTS              #
 		 * ################################
 		 */
 		eventChannelCreateEmbed: {
-			footer: (id: string) => `Channel ID: ${id}`,
-			title: (type: string, name: string) => `${util.toTitleCase(type)} Channel Created | ${name}`
+			footer: id => `Channel ID: ${id}`,
+			title: (type, name) => `${util.toTitleCase(type)} Channel Created | ${name}`
 		},
 		eventChannelDeleteEmbed: {
-			footer: (id: string) => `Channel ID: ${id}`,
-			title: (type: string, name: string) => `${util.toTitleCase(type)} Channel Deleted | ${name}`
+			footer: id => `Channel ID: ${id}`,
+			title: (type, name) => `${util.toTitleCase(type)} Channel Deleted | ${name}`
 		},
 		eventChannelUpdateNameChangeEmbed: {
-			footer: (id: string) => `Channel ID: ${id}`,
-			title: (oldName: string, newName: string, type: string) => `${oldName} ${type} channel name changed to ${newName}`
+			footer: id => `Channel ID: ${id}`,
+			title: (oldName, newName, type) => `${oldName} ${type} channel name changed to ${newName}`
 		},
 		eventEmojiCreateEmbed: {
-			footer: (id: string) => `Emoji ID: ${id}`,
-			title: (name: string) => `Emoji Created | ${name}`
+			footer: id => `Emoji ID: ${id}`,
+			title: name => `Emoji Created | ${name}`
 		},
 		eventEmojiDeleteEmbed: {
-			footer: (id: string) => `Emoji ID: ${id}`,
-			title: (name: string) => `Emoji Deleted | ${name}`
+			footer: id => `Emoji ID: ${id}`,
+			title: name => `Emoji Deleted | ${name}`
 		},
 		eventEmojiUpdateNameChangeEmbedx: {
-			footer: (id: string) => `Emoji ID: ${id}`,
-			title: (oldName: string, newName: string, animated: boolean) => `${oldName} ${animated ? 'animated ' : ''}emoji name changed to ${newName}`
+			footer: id => `Emoji ID: ${id}`,
+			title: (oldName, newName, animated) => `${oldName} ${animated ? 'animated ' : ''}emoji name changed to ${newName}`
 		},
 		eventRoleCreateEmbed: {
-			footer: (id: string) => `Role ID: ${id}`,
-			title: (name: string) => `Role Created | ${name}`
+			footer: id => `Role ID: ${id}`,
+			title: name => `Role Created | ${name}`
 		},
 		eventRoleDeleteEmbed: {
-			footer: (id: string) => `Role ID: ${id}`,
-			title: (name: string) => `Role Deleted | ${name}`
+			footer: id => `Role ID: ${id}`,
+			title: name => `Role Deleted | ${name}`
 		},
 		eventRoleUpdateNameChangeEmbed: {
-			footer: (id: string) => `Role ID: ${id}`,
-			title: (oldName: string, newName: string) => `${oldName} role name changed to ${newName}`
+			footer: id => `Role ID: ${id}`,
+			title: (oldName, newName) => `${oldName} role name changed to ${newName}`
 		},
 		eventGuildMemberAddEmbed: {
 			fieldTitles: {
-				bot: (executor: string) => `Bot added by ${executor}`,
+				bot: executor => `Bot added by ${executor}`,
 				human: 'Member Joined Server'
 			},
 			fieldValues: {
-				accountAge: (duration: string) => `Account created ${duration} ago`
+				accountAge: duration => `Account created ${duration} ago`
 			},
-			footer: (id: string) => `Member ID: ${id}`
+			footer: id => `Member ID: ${id}`
 		},
 		eventGuildMemberRemoveEmbed: {
 			fieldTitles: {
-				joinDate: (bot: boolean) => `${bot ? 'Bot' : 'Member'} Left Server`,
+				joinDate: bot => `${bot ? 'Bot' : 'Member'} Left Server`,
 				roles: 'Roles'
 			},
 			fieldValues: {
-				joinDate: (duration: string) => `Joined ${duration} ago`
+				joinDate: duration => `Joined ${duration} ago`
 			},
-			footer: (id: string) => `Member ID: ${id}`
+			footer: id => `Member ID: ${id}`
 		},
 		eventGuildMemberUpdateRoleUpdateEmbed: {
-			footer: (id: string) => `Member ID: ${id}`,
-			title: (type: string, role: string, executor: string) => `${type} the ${role} role by ${executor}`
+			footer: id => `Member ID: ${id}`,
+			title: (type, role, executor) => `${type} the ${role} role by ${executor}`
 		},
 		eventGuildMemberUpdateRoleUpdateRemovedFrom: 'Removed from',
 		eventGuildMemberUpdateRoleUpdateAddedTo: 'Added to',
@@ -1143,34 +1142,34 @@ export default class extends Language {
 			fieldTitles: {
 				newDisplayName: 'New Display Name'
 			},
-			footer: (id: string) => `Member ID: ${id}`
+			footer: id => `Member ID: ${id}`
 		},
 		eventInviteCreateEmbed: {
-			footer: (code: string) => `Invite Code: ${code}`,
-			title: (channel: string) => `Invite created for ${channel}`
+			footer: code => `Invite Code: ${code}`,
+			title: channel => `Invite created for ${channel}`
 		},
 		eventInviteDeleteEmbed: {
-			footer: (code: string) => `Invite Code: ${code}`,
-			title: (channel: string) => `Invite for ${channel} deleted`
+			footer: code => `Invite Code: ${code}`,
+			title: channel => `Invite for ${channel} deleted`
 		},
 		eventMessageDeleteUnableToDisplay: 'Message is unable to be displayed.',
 		eventMessageDeleteEmbed: {
 			fieldTitles: {
-				channel: (name: string, parent: string) => `Message Deleted in ${name} (${parent})`
+				channel: (name, parent) => `Message Deleted in ${name} (${parent})`
 			},
-			footer: (id: string, time: string) => `Message ID: ${id} | Message sent ${time} ago`
+			footer: (id, time) => `Message ID: ${id} | Message sent ${time} ago`
 		},
 		eventMessageDeleteBulkEmbed: {
-			footer: (id: string) => `Channel ID: ${id}`,
-			title: (size: number, name: string, parent: string) => `${size} messages purged from ${name} (${parent})`
+			footer: id => `Channel ID: ${id}`,
+			title: (size, name, parent) => `${size} messages purged from ${name} (${parent})`
 		},
 		eventGuildBanAddEmbed: {
-			footer: (id: string) => `User ID: ${id}`,
-			title: (executor: string) => `Banned by ${executor}`
+			footer: id => `User ID: ${id}`,
+			title: executor => `Banned by ${executor}`
 		},
 		eventGuildBanRemoveEmbed: {
-			footer: (id: string) => `User ID: ${id}`,
-			title: (executor: string) => `Unbanned by ${executor}`
+			footer: id => `User ID: ${id}`,
+			title: executor => `Unbanned by ${executor}`
 		},
 		/**
 		 * ################################
@@ -1178,7 +1177,7 @@ export default class extends Language {
 		 * ################################
 		 */
 		monitorWordBlacklistFiltered: 'Please refrain from using words that are blacklisted!',
-		monitorMentionSpamMax: (maxMentions: number) => `You tagged more than ${maxMentions} people, chill out please.`,
+		monitorMentionSpamMax: maxMentions => `You tagged more than ${maxMentions} people, chill out please.`,
 		/**
 		 * ################################
 		 * #         INHIBITORS           #
@@ -1191,8 +1190,8 @@ export default class extends Language {
 		 * #         SERIALIZERS           #
 		 * ################################
 		 */
-		serializerColorInvalidHex: (code: string) => `${code} is not a valid hex.`,
-		serializerTrustedRoleSettingInvalidSetting: (setting: string) => `${setting} is not a valid setting for giveTrustedRoleOn.`
+		serializerColorInvalidHex: code => `${code} is not a valid hex.`,
+		serializerTrustedRoleSettingInvalidSetting: setting => `${setting} is not a valid setting for giveTrustedRoleOn.`
 	};
 
 
