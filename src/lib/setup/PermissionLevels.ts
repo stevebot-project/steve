@@ -19,5 +19,6 @@ export default Client.defaultPermissionLevels = new PermissionLevels()
 		? msg.guild!.settings.get(GuildSettings.Roles.Administrator)
 			? msg.member.roles.cache.has(msg.guild!.settings.get(GuildSettings.Roles.Administrator))
 			: msg.member.permissions.has(Permissions.FLAGS.MANAGE_GUILD)
-		: false, { fetch: true })
+		// eslint-disable-next-line quote-props
+		: false, { break: true, fetch: true })
 	.add(PermissionsLevels.OWNER, ({ author, client }) => client.owners.has(author));

@@ -51,7 +51,7 @@ declare module 'klasa' {
 		inhibitorDisabledGlobal: string;
 		inhibitorMissingBotPerms: (missing: string) => string;
 		inhibitorNsfw: string;
-		inhibitorPermissions: string;
+		inhibitorPermissions: (cmdName: string) => string;
 		inhibitorRequiredSettings: (settings: string[]) => string;
 		inhibitorRunIn: (types: string) => string;
 		inhibitorRunInNone: (name: string) => string;
