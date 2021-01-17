@@ -101,11 +101,11 @@ export default class extends Language {
 		 * #      FRAMEWORK MESSAGES      #
 		 * ################################
 		 */
-		default: key => `${key} has not been localized for en-US yet.`,
+		default: key => `${key} has not been localized for en-US yet. You can let my developers know about this with my feedback command!`,
 		defaultLanguage: 'Default Language',
 		prefixReminder: (prefix = `@${this.client.user!.tag}`) => `The prefix${Array.isArray(prefix)
-			? `es for this guild are: ${prefix.map(pre => `\`${pre}\``).join(', ')}`
-			: ` in this guild is set to: \`${prefix}\``
+			? `es for this server are: ${prefix.map(pre => `\`${pre}\``).join(', ')}`
+			: ` in this server is set to: \`${prefix}\``
 		}`,
 		settingGatewayExpectsGuild: 'The parameter <Guild> expects either a Guild or a Guild Object.',
 		settingGatewayValueForKeyNoext: (data, key) => `The value ${data} for the key ${key} does not exist.`,
@@ -142,9 +142,9 @@ export default class extends Language {
 		resolverMinmaxMax: (name, max, suffix) => `${name} must be less than ${max}${suffix}.`,
 		reactionHandlerPrompt: 'Which page would you like to jump to?',
 		commandMessageMissing: 'Missing one or more required arguments after end of input.',
-		commandMessageMissingRequired: name => `${name} is a required argument.`,
+		commandMessageMissingRequired: name => ` The ${name} argument is required.`,
 		commandMessageMissingOptionals: possibles => `Missing a required option: (${possibles})`,
-		commandMessageNoMatch: possibles => `Your option didn't match any of the possibilities: (${possibles})`,
+		commandMessageNoMatch: possibles => `Your input didn't match any of the possibilities: (${possibles})`,
 		// eslint-disable-next-line max-len
 		monitorCommandHandlerReprompt: (tag, error, time, abortOptions) => `${tag} | **${error}** | You have **${time}** seconds to respond to this prompt with a valid argument. Type **${abortOptions.join('**, **')}** to abort this prompt.`,
 		// eslint-disable-next-line max-len
@@ -152,22 +152,22 @@ export default class extends Language {
 		monitorCommandHandlerAborted: 'Aborted',
 		// eslint-disable-next-line max-len
 		inhibitorCooldown: (remaining, guildCooldown) => `${guildCooldown ? 'Someone has' : 'You have'} already used this command. You can use this command again in ${remaining} second${remaining === 1 ? '' : 's'}.`,
-		inhibitorDisabledGuild: 'This command has been disabled by an admin in this guild.',
-		inhibitorDisabledGlobal: 'This command has been globally disabled by the bot owner.',
-		inhibitorMissingBotPerms: missing => `Insufficient permissions, missing: **${missing}**`,
+		inhibitorDisabledGuild: 'This command has been disabled by an admin/mod in this server.',
+		inhibitorDisabledGlobal: 'This command has been globally disabled by my owner(s).',
+		inhibitorMissingBotPerms: missing => `I can't do that because I'm missing some permissions: **${missing}**.`,
 		inhibitorNsfw: 'You can only use NSFW commands in NSFW channels.',
 		inhibitorPermissions: cmdName => `You don't have the right permissions to use the **${cmdName}** command!`,
-		inhibitorRequiredSettings: settings => `The guild is missing the **${settings.join(', ')}** guild setting${settings.length === 1 ? '' : 's'} and thus the command cannot run.`,
+		inhibitorRequiredSettings: settings => `I can't run that command because this server has not set up the **${settings.join(', ')}** setting${settings.length === 1 ? '' : 's'}.`,
 		inhibitorRunIn: types => `This command is only available in ${types} channels.`,
 		inhibitorRunInNone: name => `The ${name} command is not configured to run in any channel.`,
-		commandBlacklistDescription: 'Blacklists or un-blacklists users and guilds from the bot.',
+		commandBlacklistDescription: 'Add/remove users and/or servers from my blacklist.',
 		commandBlacklistSuccess: (usersAdded, usersRemoved, guildsAdded, guildsRemoved) => [
 			usersAdded.length ? `**Users Added**\n${util.codeBlock('', usersAdded.join(', '))}` : '',
 			usersRemoved.length ? `**Users Removed**\n${util.codeBlock('', usersRemoved.join(', '))}` : '',
 			guildsAdded.length ? `**Guilds Added**\n${util.codeBlock('', guildsAdded.join(', '))}` : '',
 			guildsRemoved.length ? `**Guilds Removed**\n${util.codeBlock('', guildsRemoved.join(', '))}` : ''
 		].filter(val => val !== '').join('\n'),
-		commandEvalDescription: 'Evaluates arbitrary Javascript. Reserved for bot owner.',
+		commandEvalDescription: 'Evaluates arbitrary JavaScript. Reserved for my owner(s).',
 		commandEvalExtended: [
 			'The eval command evaluates code as-in, any error thrown from it will be handled.',
 			'It also uses the flags feature. Write --silent, --depth=number or --async to customize the output.',
@@ -201,16 +201,16 @@ export default class extends Language {
 		commandLoadDescription: 'Load a piece from your bot.',
 		commandPing: 'Ping?',
 		commandPingDescription: 'Runs a connection test to Discord.',
-		commandPingPong: (diff, ping) => `Pong! (Roundtrip took: ${diff}ms. Heartbeat: ${ping}ms.)`,
+		commandPingPong: (diff, ping) => `Pong! Your ping is ${diff}ms, and the hearbeat is ${ping}ms. Can I sleep now?`,
 		commandInvite: () => [
-			`To add ${this.client.user!.username} to your discord guild:`,
+			`To add ${botName} to your Discord server:`,
 			`<${this.client.invite}>`,
 			util.codeBlock('', [
-				'The above link is generated requesting the minimum permissions required to use every command currently.',
+				'The above link is generated requesting the minimum permissions required to use all of my commands.',
 				'I know not all permissions are right for every guild, so don\'t be afraid to uncheck any of the boxes.',
-				'If you try to use a command that requires more permissions than the bot is granted, it will let you know.'
+				'If you try to use a command that requires more permissions than I am granted, I\'ll let you know!'
 			].join(' ')),
-			'Please file an issue at <https://github.com/dirigeants/klasa> if you find any bugs.'
+			'Please file an issue at <https://github.com/tuataria/steve> if you find any bugs.'
 		],
 		commandInviteDescription: 'Displays the invite link of the bot, to invite it to your guild.',
 		commandInfo: [
@@ -228,7 +228,7 @@ export default class extends Language {
 			'',
 			'If you\'re interested in how Steve works, you can check his code out at <https://github.com/tuataria/steve>.'
 		],
-		commandInfoDescription: 'Provides some information about this bot.',
+		commandInfoDescription: `Provides some information about ${botName}`,
 		commandHelpDescription: `Show info about ${botName}'s commands`,
 		commandHelpData: {
 			title: description => `${description}`,
