@@ -820,6 +820,14 @@ export default class extends Language {
 		 * #   SERVER SETTINGS COMMANDS   #
 		 * ################################
 		 */
+		commandManageDisabledCommandsDescription: 'Manage which commands are disabled in a server',
+		commandManageDisabledCommandsExtended: builder.display('managedisabledcommands', {
+			examples: [
+				'xkcd'
+			]
+		}),
+		commandManageDisabledCommandsNoCommandsDisabled: 'This server has no disabled commands.',
+		commandManageDisabledCommands: (cmdName, enabling) => `The ${cmdName} command has been ${enabling ? 'enabled' : 'disabled'} in this server.`,
 		commandSetMemberLogDescription: `Set what channel ${botName} will use as the memberlog`,
 		commandSetMemberLogExtended: builder.display('setmemberlog', {
 			explainedUsage: [

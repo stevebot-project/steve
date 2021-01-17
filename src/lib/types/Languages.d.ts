@@ -334,6 +334,10 @@ declare module 'klasa' {
 			};
 			footer: (assignable: boolean) => string;
 		};
+		commandManageDisabledCommandsDescription: string;
+		commandManageDisabledCommandsExtended: string;
+		commandManageDisabledCommandsNoCommandsDisabled: string;
+		commandManageDisabledCommands: (cmdName: string, enabling: boolean) => string;
 		commandSetMemberLogDescription: string;
 		commandSetMemberLogExtended: string;
 		commandSetMemberLogSet: (channel: string) => string;
