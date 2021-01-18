@@ -385,6 +385,9 @@ declare module 'klasa' {
 		commandManageWordBlacklistDisabled: string;
 		commandManageWordBlacklistReset: string;
 		commandManageWordBlacklistUpdate: (removing: boolean) => string;
+		commandToggleDeletePinMessagesDescription: string;
+		commandToggleDeletePinMessagesExtended: string;
+		commandToggleDeletePinMessages: (disabling: boolean) => string;
 		commandToggleTrustedRoleRequirementDescription: string;
 		commandToggleTrustedRoleRequirementExtended: string;
 		commandToggleTrustedRoleRequirementDisable: string;

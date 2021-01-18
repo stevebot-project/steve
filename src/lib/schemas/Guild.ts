@@ -5,6 +5,7 @@ export default Client.defaultGuildSchema
 		.add('memberlog', 'TextChannel')
 		.add('reminderChannel', 'TextChannel')
 		.add('serverlog', 'TextChannel'))
+	.add('deletePinMessages', 'Boolean', { 'default': false })
 	.add('logEvents', logEvents => logEvents
 		.add('channelCreate', 'Boolean', { 'default': true })
 		.add('channelDelete', 'Boolean', { 'default': true })

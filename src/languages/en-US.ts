@@ -971,6 +971,11 @@ export default class extends Language {
 		commandManageWordBlacklistDisabled: 'The word blacklist feature has been disabled in this server.',
 		commandManageWordBlacklistReset: 'The list of blacklisted words has been reset/cleared.',
 		commandManageWordBlacklistUpdate: removing => `Your word has been ${removing ? 'removed from' : 'added to'} the word blacklist.`,
+		commandToggleDeletePinMessagesDescription: 'Toggle whether notifications of new pinned messages are deleted',
+		commandToggleDeletePinMessagesExtended: builder.display('toggledeletepinmessages', {
+			extendedHelp: 'This setting defaults to being off.'
+		}),
+		commandToggleDeletePinMessages: disabling => `Pinned message notifications will ${disabling ? 'no longer' : 'now'} be deleted.`,
 		commandToggleTrustedRoleRequirementDescription: 'Choose whether the server\'s trusted role is required to self-assign roles',
 		commandToggleTrustedRoleRequirementExtended: builder.display('toggletrustedrolerequirement', {
 			extendedHelp: 'The server must have a trusted role set before this command can be used.'

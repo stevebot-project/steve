@@ -2,6 +2,7 @@
 
 export namespace GuildSettings {
 
+	export const DeletePinMessages = 'deletePinMessages';
 	export const DisabledCommands = 'disabledCommands';
 	export const DisableNaturalPrefix = 'disableNaturalPrefix';
 	export const Language = 'language';
