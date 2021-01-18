@@ -239,6 +239,9 @@ declare module 'klasa' {
 		commandClearRoleExtended: string;
 		commandClearRoleRoleEmpty: (role: string) => string;
 		commandClearRole: (size: number, role: string) => string;
+		commandMentionableDescription: string;
+		commandMentionableExtended: string;
+		commandMentionable: (roleName: string, makingMentionable: boolean) => string;
 		commandNicknameDescription: string;
 		commandNicknameExtended: string;
 		commandNicknameSet: (user: string) => string;

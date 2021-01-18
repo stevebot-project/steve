@@ -582,6 +582,11 @@ export default class extends Language {
 		}),
 		commandClearRoleRoleEmpty: role => `There are no members in the ${role} role.`,
 		commandClearRole: (size, role) => `${size} members were removed from the ${role} role.`,
+		commandMentionableDescription: 'Toggle whether a role is mentionable',
+		commandMentionableExtended: builder.display('mentionable', {
+			extendedHelp: `This command requires me to have the ${this.PERMISSIONS.MANAGE_ROLES} permission.`
+		}),
+		commandMentionable: (roleName, makingMentionable) => `The ${roleName} role is ${makingMentionable ? 'now' : 'no longer'} mentionable.`,
 		commandNicknameDescription: 'Set or clear a member\'s nickname',
 		commandNicknameExtended: builder.display('nickname', {
 			examples: [
