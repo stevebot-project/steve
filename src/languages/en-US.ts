@@ -361,6 +361,11 @@ export default class extends Language {
 			title: 'Genius Results'
 		},
 		commandLyricsNoLyrics: `I couldn't find any lyrics on Genius!`,
+		commandSharedDescription: 'Get a list of the servers you share with me',
+		commandSharedExtended: builder.display('shared', {
+			extendedHelp: 'Sometimes this command will not display some servers that we share; this is due to issues with caching and is not a bug. Give it some time and it should work itself out!'
+		}),
+		commandShared: sharedGuilds => `We share ${sharedGuilds.size} server${sharedGuilds.size === 1 ? '' : 's'}: **${sharedGuilds.map(guild => guild.name).join(', ')}**.`,
 		/**
 		 * ################################
 		 * #      FUN COMMANDS            #

@@ -1,4 +1,5 @@
 import { ModerationCase } from '@lib/structures/ModerationCases';
+import { Collection, Guild } from 'discord.js';
 
 declare module 'klasa' {
 	export interface LanguageKeys {
@@ -162,6 +163,9 @@ declare module 'klasa' {
 			title: string;
 		};
 		commandLyricsNoLyrics: string;
+		commandSharedDescription: string;
+		commandSharedExtended: string;
+		commandShared: (sharedGuilds: Collection<string, Guild>) => string;
 		commandChooseDescription: string;
 		commandChooseExtended: string;
 		commandChooseResponse: (choice: string) => string;
