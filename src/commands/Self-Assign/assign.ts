@@ -7,6 +7,7 @@ import { ApplyOptions, CreateResolvers, requiredPermissions } from '@skyra/decor
 import { GuildMessage } from '@lib/types/Messages';
 
 @ApplyOptions<CommandOptions>({
+	aliases: ['rank'],
 	description: lang => lang.tget('commandAssignDescription'),
 	extendedHelp: lang => lang.tget('commandAssignExtended'),
 	flagSupport: true,
