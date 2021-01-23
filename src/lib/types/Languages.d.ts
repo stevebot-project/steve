@@ -352,6 +352,16 @@ declare module 'klasa' {
 		commandUnignoreChannel: (channel: string) => string;
 		commandShowIgnoredChannelsDescription: string;
 		commandShowIgnoredChannelsNoChannels: string;
+		commandIgnoreRoleDescription: string;
+		commandIgnoreRoleExtended: string;
+		commandIgnoreRoleAlreadyIgnored: (roleName: string) => string;
+		commandIgnoreRole: (roleName: string) => string;
+		commandUnignoreRoleDescription: string;
+		commandUnignoreRoleExtended: string;
+		commandUnignoreRoleNotIgnored: (roleName: string) => string;
+		commandUnignoreRole: (roleName: string) => string;
+		commandShowIgnoredRolesDescription: string;
+		commandShowIgnoredRolesNoRoles: string;
 		commandManageDisabledCommandsDescription: string;
 		commandManageDisabledCommandsExtended: string;
 		commandManageDisabledCommandsNoCommandsDisabled: string;

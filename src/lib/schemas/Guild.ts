@@ -7,6 +7,7 @@ export default Client.defaultGuildSchema
 		.add('serverlog', 'TextChannel'))
 	.add('deletePinMessages', 'Boolean', { 'default': false })
 	.add('ignoredChannels', 'TextChannel', { array: true })
+	.add('ignoredRoles', 'Role', { array: true })
 	.add('logEvents', logEvents => logEvents
 		.add('channelCreate', 'Boolean', { 'default': true })
 		.add('channelDelete', 'Boolean', { 'default': true })

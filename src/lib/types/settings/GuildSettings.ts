@@ -6,6 +6,7 @@ export namespace GuildSettings {
 	export const DisabledCommands = 'disabledCommands';
 	export const DisableNaturalPrefix = 'disableNaturalPrefix';
 	export const IgnoredChannels = 'ignoredChannels';
+	export const IgnoredRoles = 'ignoredRoles';
 	export const Language = 'language';
 	export const MaxMentions = 'maxMentions';
 	export const Prefix = 'prefix';

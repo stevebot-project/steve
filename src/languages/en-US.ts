@@ -858,6 +858,26 @@ export default class extends Language {
 		commandUnignoreChannel: channel => `<#${channel}> is now unignored.`,
 		commandShowIgnoredChannelsDescription: 'Show the list of ignored channels in a server',
 		commandShowIgnoredChannelsNoChannels: 'I\'m not ignoring any channels in this server.',
+		commandIgnoreRoleDescription: `Have ${botName} ignore commands from members in a specified role`,
+		commandIgnoreRoleExtended: builder.display('ignorerole', {
+			explainedUsage: [
+				['rolename', 'You can use the name of a role, it\'s snowflake (long id), or tag the role (if it is taggable).']
+			],
+			extendedHelp: `${botName} will still respond to commands from server staff even if a staff member is in an ignored role.`
+		}),
+		commandIgnoreRoleAlreadyIgnored: roleName => `The ${roleName} role is already ignored.`,
+		commandIgnoreRole: roleName => `The ${roleName} role will now be ignored.`,
+		commandUnignoreRoleDescription: 'Unignore a previously ignored role',
+		commandUnignoreRoleExtended: builder.display('unignorerole', {
+			explainedUsage: [
+				['rolename', 'You can use the name of a role, it\'s snowflake (long id), or tag the role (if it is taggable).']
+			],
+			extendedHelp: `${botName} will still respond to commands from server staff even if a staff member is in an ignored role.`
+		}),
+		commandUnignoreRoleNotIgnored: roleName => `The ${roleName} role is not ignored.`,
+		commandUnignoreRole: roleName => `The ${roleName} role will no longer be ignored.`,
+		commandShowIgnoredRolesDescription: 'Show the list of ignored roles in a server',
+		commandShowIgnoredRolesNoRoles: 'I\'m not ignoring any roles in this server.',
 		commandSetMemberLogDescription: `Set what channel ${botName} will use as the memberlog`,
 		commandSetMemberLogExtended: builder.display('setmemberlog', {
 			explainedUsage: [
