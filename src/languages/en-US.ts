@@ -837,6 +837,27 @@ export default class extends Language {
 		}),
 		commandManageDisabledCommandsNoCommandsDisabled: 'This server has no disabled commands.',
 		commandManageDisabledCommands: (cmdName, enabling) => `The ${cmdName} command has been ${enabling ? 'enabled' : 'disabled'} in this server.`,
+		commandIgnoreChannelDescription: `Have ${botName} ignore commands that are sent in the specified channel`,
+		commandIgnoreChannelExtended: builder.display('ignorechannel', {
+			explainedUsage: [
+				['channel', 'You must tag a text channel for this command to function properly.']
+			],
+			extendedHelp: 'Server staff will still be allowed to do commands in ignored channels.'
+		}),
+		commandIgnoreChannelTextChannelRequired: 'I can only ignore text channels!',
+		commandIgnoreChannelAlreadyIgnored: channel => `<#${channel}> is already ignored.`,
+		commandIgnoreChannel: channel => `<#${channel}> will now be ignored.`,
+		commandUnignoreChannelDescription: `Unignore a previously ingored channel`,
+		commandUnignoreChannelExtended: builder.display('unignorechannel', {
+			explainedUsage: [
+				['channel', 'You must tag a text channel for this command to function properly.']
+			],
+			extendedHelp: 'Server staff are still be allowed to do commands in ignored channels.'
+		}),
+		commandUnignoreChannelNotIgnored: channel => `<#${channel}> is not ignored.`,
+		commandUnignoreChannel: channel => `<#${channel}> is now unignored.`,
+		commandShowIgnoredChannelsDescription: 'Show the list of ignored channels in a server',
+		commandShowIgnoredChannelsNoChannels: 'I\'m not ignoring any channels in this server.',
 		commandSetMemberLogDescription: `Set what channel ${botName} will use as the memberlog`,
 		commandSetMemberLogExtended: builder.display('setmemberlog', {
 			explainedUsage: [

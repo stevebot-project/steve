@@ -341,6 +341,17 @@ declare module 'klasa' {
 			};
 			footer: (assignable: boolean) => string;
 		};
+		commandIgnoreChannelDescription: string;
+		commandIgnoreChannelExtended: string;
+		commandIgnoreChannelTextChannelRequired: string;
+		commandIgnoreChannelAlreadyIgnored: (channel: string) => string;
+		commandIgnoreChannel: (channel: string) => string;
+		commandUnignoreChannelDescription: string;
+		commandUnignoreChannelExtended: string;
+		commandUnignoreChannelNotIgnored: (channel: string) => string;
+		commandUnignoreChannel: (channel: string) => string;
+		commandShowIgnoredChannelsDescription: string;
+		commandShowIgnoredChannelsNoChannels: string;
 		commandManageDisabledCommandsDescription: string;
 		commandManageDisabledCommandsExtended: string;
 		commandManageDisabledCommandsNoCommandsDisabled: string;
