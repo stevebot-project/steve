@@ -891,7 +891,8 @@ export default class extends Language {
 				'- Display name changes',
 				'- Bans',
 				'- Unbans'
-			]
+			],
+			reminder: `I need to have the **${this.PERMISSIONS.VIEW_AUDIT_LOG} permission for the memberlog to work properly!`
 		}),
 		commandSetMemberLogSet: channel => `<#${channel}> will be used as this server's memberlog.`,
 		commandServerLogDescription: `Set what channel ${botName} will use as the serverlog`,
@@ -906,7 +907,8 @@ export default class extends Language {
 				'- Channel creates, deletes, and name updates',
 				'- Emoji creates, deletes, and name updates',
 				'- Role creates, deletes, and name updates'
-			]
+			],
+			reminder: `I need to have the **${this.PERMISSIONS.VIEW_AUDIT_LOG} permission for the serverlog to work properly!`
 		}),
 		commandServerLogSet: channel => `<#${channel}> will be used as this server's serverlog.`,
 		commandSetReminderChannelDescription: `Set what channel ${botName} will use as the reminder channel`,
