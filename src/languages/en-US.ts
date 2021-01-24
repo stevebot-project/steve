@@ -152,7 +152,7 @@ export default class extends Language {
 		monitorCommandHandlerAborted: 'Aborted',
 		// eslint-disable-next-line max-len
 		inhibitorCooldown: (remaining, guildCooldown) => `${guildCooldown ? 'Someone has' : 'You have'} already used this command. You can use this command again in ${remaining} second${remaining === 1 ? '' : 's'}.`,
-		inhibitorDisabledGuild: 'This command has been disabled in this server by and admin/mod.',
+		inhibitorDisabledGuild: 'This command has been disabled in this server by an admin/mod.',
 		inhibitorDisabledGlobal: 'This command has been globally disabled by my owner(s).',
 		inhibitorMissingBotPerms: missing => `I can't do that because I'm missing some permissions: **${missing}**.`,
 		inhibitorNsfw: 'You can only use NSFW commands in NSFW channels.',
