@@ -1,7 +1,7 @@
 import { CommandOptions, KlasaMessage } from 'klasa';
 import { SteveCommand } from '@lib/structures/commands/SteveCommand';
 import { Message } from 'discord.js';
-import { plays, checkWinner, chooseRandomPlay } from '@lib/util/RockPaperScissors';
+import { checkWinner, chooseRandomPlay, rpsPlay } from '@lib/util/RockPaperScissors';
 import { ApplyOptions } from '@skyra/decorators';
 
 @ApplyOptions<CommandOptions>({
@@ -14,9 +14,9 @@ import { ApplyOptions } from '@skyra/decorators';
 })
 export default class extends SteveCommand {
 
-	public async run(msg: KlasaMessage, [playerMove]: [string]): Promise<Message> {
+	public async run(msg: KlasaMessage, [playerMove]: [rpsPlay]): Promise<Message> {
 		const steveMove = chooseRandomPlay();
-		const winner = checkWinner(plays.indexOf(playerMove), plays.indexOf(steveMove));
+		const winner = checkWinner(steveMove, playerMove);
 		return msg.channel.send(msg.language.tget('commandRockPaperScissorsWinner', playerMove, steveMove, winner));
 	}
 
