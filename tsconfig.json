@@ -14,7 +14,8 @@
 		"types": [
 			"node",
 			"discord.js",
-			"klasa"
+			"klasa",
+			"jest"
 		],
 	},
 	"include": ["."],

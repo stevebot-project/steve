@@ -9,7 +9,7 @@
     "build-clear": "rm -rf dist && tsc -p .",
     "dev": "tsc -p . && node --harmony dist/src/Steve.js",
     "dev-clear": "rm -rf dist && tsc -p . && node --harmony dist/src/Steve.js",
-    "test": "eslint src --ext .ts",
+    "test": "jest",
     "lint": "eslint src --ext .ts --fix",
     "contrib:add": "all-contributors add"
   },
@@ -44,8 +44,11 @@
     "@utils": "dist/src/lib/util"
   },
   "devDependencies": {
+    "@babel/core": "^7.12.10",
+    "@babel/preset-env": "^7.12.11",
     "@types/backoff": "^2.5.1",
     "@types/common-tags": "^1.8.0",
+    "@types/jest": "^26.0.20",
     "@types/mongodb": "^3.3.16",
     "@types/node-fetch": "^2.5.4",
     "@types/ws": "^7.2.4",
@@ -54,6 +57,10 @@
     "all-contributors-cli": "^6.19.0",
     "eslint": "^7.0.0",
     "eslint-config-bamboo": "^5.0.0",
+    "jest": "^26.6.3",
+    "jest-circus": "^26.6.3",
+    "ts-jest": "^26.4.4",
+    "ts-node": "^9.1.1",
     "typescript": "^3.9.3"
   }
 }
