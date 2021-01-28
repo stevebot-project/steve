@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 
-import { formatDate, friendlyDuration } from '../src/lib/util/util';
-import { Time } from '../src/lib/types/Enums';
+import { formatDate, friendlyDuration } from '../../src/lib/util/util';
+import { Time } from '../../src/lib/types/Enums';
 
 describe('Util', () => {
 

@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import { checkWinner } from '../src/lib/util/RockPaperScissors';
+import { checkWinner } from '../../src/lib/util/RockPaperScissors';
 
 describe('RockPaperScissors', () => {
 	describe('checkWinner', () => {
