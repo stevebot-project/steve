@@ -12,7 +12,7 @@ import { CommandOptions } from 'klasa';
 	permissionLevel: PermissionsLevels.MODERATOR,
 	requiredPermissions: ['MANAGE_NICKNAMES'],
 	runIn: ['text'],
-	usage: '<user:username> [nickname:string]'
+	usage: '<user:username> [nickname:string{,32}]'
 })
 export default class extends SteveCommand {
 
@@ -20,11 +20,15 @@ export default class extends SteveCommand {
 		const member = await msg.guild.members.fetch(user);
 		if (!member) return msg.channel.send(msg.guild.language.tget('userNotInGuild', user.tag));
 
-		await member.setNickname(nickname);
+		try {
+			await member.setNickname(nickname);
 
-		return msg.channel.send(nickname
-			? msg.guild.language.tget('commandNicknameSet', user.tag)
-			: msg.guild.language.tget('commandNicknameCleared', user.tag));
+			return msg.channel.send(nickname
+				? msg.guild.language.tget('commandNicknameSet', user.tag)
+				: msg.guild.language.tget('commandNicknameCleared', user.tag));
+		} catch (err) {
+			return msg.channel.send(msg.guild.language.tget('commandNicknameUnableToSet', err, user.tag));
+		}
 	}
 
 }

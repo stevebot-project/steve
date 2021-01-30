@@ -601,6 +601,7 @@ export default class extends Language {
 		}),
 		commandNicknameSet: user => `${user}'s nickname has been set.`,
 		commandNicknameCleared: user => `${user}'s nickname has been cleared.`,
+		commandNicknameUnableToSet: (error, userTag) => `Unable to change ${userTag}'s nickname: **${error}**`,
 		commandRoleDescription: 'Add or remove a role from a member',
 		commandRoleExtended: builder.display('role', {
 			examples: [

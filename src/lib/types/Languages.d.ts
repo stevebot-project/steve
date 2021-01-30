@@ -246,6 +246,7 @@ declare module 'klasa' {
 		commandNicknameExtended: string;
 		commandNicknameSet: (user: string) => string;
 		commandNicknameCleared: (user: string) => string;
+		commandNicknameUnableToSet: (error: string, userTag: string) => string;
 		commandRoleDescription: string;
 		commandRoleExtended: string;
 		commandRoleRemove: (roles: string) => string;
