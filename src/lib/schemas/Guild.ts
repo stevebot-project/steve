@@ -37,10 +37,7 @@ export default Client.defaultGuildSchema
 		.add('deafened', 'Role')
 		.add('moderator', 'Role')
 		.add('muted', 'Role')
-		.add('restricted', 'Role', { array: true })
-		.add('trusted', 'Role')
-		.add('giveTrustedRoleOn', 'TrustedRoleSetting', { 'default': 'none' })
-		.add('requireTrustedRoleForSelfAssign', 'Boolean', { 'default': false }))
+		.add('restricted', 'Role', { array: true }))
 	.add('roleAliases', 'any', { array: true, configurable: false })
 	.add('snippets', 'any', { array: true, configurable: false })
 	.add('wordBlacklist', wordBlacklist => wordBlacklist

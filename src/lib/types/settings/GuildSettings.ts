@@ -52,9 +52,6 @@ export namespace GuildSettings {
 		export const Moderator = 'roles.moderator';
 		export const Muted = 'roles.muted';
 		export const Restricted = 'roles.restricted';
-		export const Trusted = 'roles.trusted';
-		export const GiveTrustedRoleOn = 'roles.giveTrustedRoleOn';
-		export const RequireTrustedRoleForSelfAssign = 'roles.requireTrustedRoleForSelfAssign';
 	}
 
 	export namespace WordBlacklist {

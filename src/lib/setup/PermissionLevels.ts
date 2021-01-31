@@ -5,11 +5,6 @@ import { Permissions } from 'discord.js';
 
 export default Client.defaultPermissionLevels = new PermissionLevels()
 	.add(PermissionsLevels.EVERYONE, () => true)
-	.add(PermissionsLevels.TRUSTED, msg => msg.member
-		? msg.guild!.settings.get(GuildSettings.Roles.Trusted)
-			? msg.member.roles.cache.has(msg.guild!.settings.get(GuildSettings.Roles.Trusted))
-			: false
-		: false, { fetch: true })
 	.add(PermissionsLevels.MODERATOR, msg => msg.member
 		? msg.guild!.settings.get(GuildSettings.Roles.Moderator)
 			? msg.member.roles.cache.has(msg.guild!.settings.get(GuildSettings.Roles.Moderator))

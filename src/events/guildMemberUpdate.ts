@@ -15,8 +15,6 @@ export default class extends Event {
 				if (!oldMember.roles.cache.equals(newMember.roles.cache)) floatPromise(this, this.logRoleUpdate(oldMember, newMember, memberlog));
 			}
 		}
-
-		if (!oldMember.roles.cache.equals(newMember.roles.cache)) floatPromise(this, this.handleTrustedRole(oldMember, newMember));
 	}
 
 	private async logDisplayNameChange(oldMember: GuildMember, newMember: GuildMember, memberlog: TextChannel): Promise<Message> {
@@ -54,29 +52,9 @@ export default class extends Event {
 		return memberlog.send(embed);
 	}
 
-	private async handleTrustedRole(oldMember: GuildMember, newMember: GuildMember): Promise<void> {
-		const { guild } = newMember;
-		const role = await this.getRoleFromAuditLogs(newMember.guild);
-		const trustedRole = guild.roles.cache.get(guild.settings.get(GuildSettings.Roles.Trusted));
-		const trustedRoleSetting: TrustedRoleSetting = guild.settings.get(GuildSettings.Roles.GiveTrustedRoleOn);
-		const restrictedRoles = guild.settings.get(GuildSettings.Roles.Restricted) as string[];
-
-		if (trustedRoleSetting === 'role') {
-			if (newMember.roles.cache.size === 2 && oldMember.roles.cache.size < newMember.roles.cache.size) {
-				if (!restrictedRoles.includes(role.id)) {
-					if (trustedRole && !newMember.roles.cache.has(trustedRole.id)) {
-						floatPromise(this, newMember.roles.add(trustedRole));
-					}
-				}
-			}
-		}
-	}
-
 	private async getRoleFromAuditLogs(guild: Guild): Promise<Role> {
 		const logs = await guild.fetchAuditLogs({ limit: 1, type: 'MEMBER_ROLE_UPDATE' });
 		return logs.entries.first()!.changes![0].new[0];
 	}
 
 }
-
-export type TrustedRoleSetting = 'none' | 'join' | 'role';
