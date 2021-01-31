@@ -194,6 +194,9 @@ declare module 'klasa' {
 		commandXkcdDescription: string;
 		commandXkcdExtended: string;
 		commandXkcdInvalid: string;
+		commandDoubtDescription: string;
+		commandDoubtExtended: string;
+		commandDoubtFail: string;
 		moderationNoDuration: string;
 		moderationNoReason: string;
 		moderationNoSteve: string;
