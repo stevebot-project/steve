@@ -928,7 +928,7 @@ export default class extends Language {
 		}),
 		commandSetAdministratorRoleSet: role => `The ${role} role will be used as this server's administrator role.`,
 		commandSetAutoRoleDescription: 'Set the server\'s auto role',
-		commandSetAutoRoleExtended: builder.display('setautorole', {
+		commandSetAutoRoleExtended: builder.display('setautorole', { // TODO: better help
 			explainedUsage: [
 				['rolename', 'You can use the name of a role, it\'s snowflake (long id), or tag the role (if it is taggable).']
 			]
