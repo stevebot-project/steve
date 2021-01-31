@@ -48,6 +48,8 @@ export namespace GuildSettings {
 	export namespace Roles {
 		export const Administrator = 'roles.administrator';
 		export const Assignable = 'roles.assignable';
+		export const Auto = 'roles.auto';
+		export const AutoRoleSetting = 'roles.autoRoleSetting';
 		export const Deafened = 'roles.deafened';
 		export const Moderator = 'roles.moderator';
 		export const Muted = 'roles.muted';

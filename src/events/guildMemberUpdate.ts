@@ -1,5 +1,5 @@
 import { Event } from 'klasa';
-import { GuildMember, TextChannel, Role, Guild, Message, MessageEmbed } from 'discord.js';
+import { GuildMember, TextChannel, Guild, Message, MessageEmbed } from 'discord.js';
 import { GuildSettings } from '@lib/types/settings/GuildSettings';
 import { floatPromise, getExecutor } from '@utils/util';
 import { LogColors } from '@lib/types/Enums';
@@ -15,6 +15,8 @@ export default class extends Event {
 				if (!oldMember.roles.cache.equals(newMember.roles.cache)) floatPromise(this, this.logRoleUpdate(oldMember, newMember, memberlog));
 			}
 		}
+
+		if (!oldMember.roles.cache.equals(newMember.roles.cache)) floatPromise(this, this.handleAutoRole(oldMember, newMember));
 	}
 
 	private async logDisplayNameChange(oldMember: GuildMember, newMember: GuildMember, memberlog: TextChannel): Promise<Message> {
@@ -52,9 +54,28 @@ export default class extends Event {
 		return memberlog.send(embed);
 	}
 
-	private async getRoleFromAuditLogs(guild: Guild): Promise<Role> {
+	private async getRoleFromAuditLogs(guild: Guild) {
 		const logs = await guild.fetchAuditLogs({ limit: 1, type: 'MEMBER_ROLE_UPDATE' });
 		return logs.entries.first()!.changes![0].new[0];
+	}
+
+	private async handleAutoRole(oldMember: GuildMember, newMember: GuildMember) {
+		const { guild } = newMember;
+		const role = await this.getRoleFromAuditLogs(newMember.guild);
+		const autoRole = guild.roles.cache.get(guild.settings.get(GuildSettings.Roles.Auto));
+		const autoRoleSetting = guild.settings.get(GuildSettings.Roles.AutoRoleSetting);
+
+		const restrictedRoles = guild.settings.get(GuildSettings.Roles.Restricted) as string[];
+
+		if (autoRoleSetting === 'role') {
+			if (newMember.roles.cache.size === 2 && oldMember.roles.cache.size < newMember.roles.cache.size) { // TODO: handle multiple roles being added at once
+				if (!restrictedRoles.includes(role.id)) {
+					if (autoRole && !newMember.roles.cache.has(autoRole.id)) {
+						floatPromise(this, newMember.roles.add(autoRole));
+					}
+				}
+			}
+		}
 	}
 
 }

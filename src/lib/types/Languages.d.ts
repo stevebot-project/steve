@@ -378,6 +378,9 @@ declare module 'klasa' {
 		commandSetAdministratorRoleDescription: string;
 		commandSetAdministratorRoleExtended: string;
 		commandSetAdministratorRoleSet: (role: string) => string;
+		commandSetAutoRoleDescription: string;
+		commandSetAutoRoleExtended: string;
+		commandSetAutoRoleSet: (roleName: string) => string;
 		commandSetModeratorRoleDescription: string;
 		commandSetModeratorRoleExtended: string;
 		commandSetModeratorRoleSet: (role: string) => string;
@@ -566,5 +569,6 @@ declare module 'klasa' {
 		inhibitorPingProtectionEveryone: string;
 		inhibitorPingprotectionEveryone: string;
 		serializerColorInvalidHex: (code: string) => string;
+		serializerAutoRoleInvalid: (setting: string) => string;
 	}
 }

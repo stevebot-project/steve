@@ -11,6 +11,8 @@ export default class extends Event {
 			const memberlog = member.guild.channels.cache.get(member.guild.settings.get(GuildSettings.Channels.Memberlog));
 			if (memberlog && memberlog.isGuildTextChannel()) floatPromise(this, this.handleLog(member, memberlog));
 		}
+
+		floatPromise(this, this.handleAutoRole(member));
 	}
 
 	private async handleLog(member: GuildMember, memberlog: TextChannel): Promise<Message> {
@@ -36,6 +38,17 @@ export default class extends Event {
 		}
 
 		return memberlog.send(embed);
+	}
+
+	private async handleAutoRole(member: GuildMember) {
+		const autoRoleSetting = member.guild.settings.get(GuildSettings.Roles.AutoRoleSetting) as string;
+
+		if (autoRoleSetting === 'join') {
+			const autoRoleID = member.guild.settings.get(GuildSettings.Roles.Auto);
+			const role = member.guild.roles.cache.get(autoRoleID);
+
+			if (role) await member.roles.add(role);
+		}
 	}
 
 }

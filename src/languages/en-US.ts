@@ -927,6 +927,13 @@ export default class extends Language {
 			reminder: 'This command does not add any extra Discord permissions to the role, it just gives this role access to server staff commands.'
 		}),
 		commandSetAdministratorRoleSet: role => `The ${role} role will be used as this server's administrator role.`,
+		commandSetAutoRoleDescription: 'Set the server\'s auto role',
+		commandSetAutoRoleExtended: builder.display('setautorole', {
+			explainedUsage: [
+				['rolename', 'You can use the name of a role, it\'s snowflake (long id), or tag the role (if it is taggable).']
+			]
+		}),
+		commandSetAutoRoleSet: roleName => `The ${roleName} will be used as this server's auto role.`,
 		commandSetModeratorRoleDescription: 'Set the server\'s moderator role',
 		commandSetModeratorRoleExtended: builder.display('setmoderatorrole', {
 			explainedUsage: [
