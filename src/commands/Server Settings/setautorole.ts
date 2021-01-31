@@ -7,8 +7,8 @@ import { Message, Role } from 'discord.js';
 import { CommandOptions } from 'klasa';
 
 @ApplyOptions<CommandOptions>({
-	description: lang => lang.tget('commandSetTrustedRoleDescription'),
-	extendedHelp: lang => lang.tget('commandSetTrustedRoleExtended'),
+	description: lang => lang.tget('commandSetAutoRoleDescription'),
+	extendedHelp: lang => lang.tget('commandSetAutoRoleExtended'),
 	permissionLevel: PermissionsLevels.MODERATOR,
 	runIn: ['text'],
 	usage: '<role:rolename>'
@@ -16,9 +16,9 @@ import { CommandOptions } from 'klasa';
 export default class extends SteveCommand {
 
 	public async run(msg: GuildMessage, [role]: [Role]): Promise<Message> {
-		await msg.guild.settings.update(GuildSettings.Roles.Trusted, role.id, msg.guild.id);
+		await msg.guild.settings.update(GuildSettings.Roles.Auto, role.id, msg.guild.id);
 
-		return msg.channel.send(msg.guild.language.tget('commandSetTrustedRoleSet', role.name));
+		return msg.channel.send(msg.guild.language.tget('commandSetAutoRoleSet', role.name));
 	}
 
 }

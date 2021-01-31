@@ -756,7 +756,6 @@ export default class extends Language {
 		commandAssignNotAssignable: role => `${Emojis.REDX} The ${role} role is not self-assignable.`,
 		commandAssignRoleAdd: roles => `${Emojis.PLUS} Added role(s): \`${roles}\``,
 		commandAssignRoleRemove: roles => `${Emojis.MINUS} Removed role(s): \`${roles}\``,
-		commandAssignRoleNeedTrusted: role => `You need to have the **${role}** role to do that!`,
 		/**
 		 * ################################
 		 * #      MEMBER INFO             #
@@ -928,6 +927,13 @@ export default class extends Language {
 			reminder: 'This command does not add any extra Discord permissions to the role, it just gives this role access to server staff commands.'
 		}),
 		commandSetAdministratorRoleSet: role => `The ${role} role will be used as this server's administrator role.`,
+		commandSetAutoRoleDescription: 'Set the server\'s auto role',
+		commandSetAutoRoleExtended: builder.display('setautorole', { // TODO: better help
+			explainedUsage: [
+				['rolename', 'You can use the name of a role, it\'s snowflake (long id), or tag the role (if it is taggable).']
+			]
+		}),
+		commandSetAutoRoleSet: roleName => `The ${roleName} will be used as this server's auto role.`,
 		commandSetModeratorRoleDescription: 'Set the server\'s moderator role',
 		commandSetModeratorRoleExtended: builder.display('setmoderatorrole', {
 			explainedUsage: [
@@ -936,14 +942,6 @@ export default class extends Language {
 			reminder: 'This command does not add any extra Discord permissions to the role, it just gives this role access to server staff commands.'
 		}),
 		commandSetModeratorRoleSet: role => `The ${role} role will be used as this server's moderator role.`,
-		commandSetTrustedRoleDescription: 'Set the server\'s trusted role',
-		commandSetTrustedRoleExtended: builder.display('settrustedrole', {
-			explainedUsage: [
-				['rolename', 'You can use the name of a role, it\'s snowflake (long id), or tag the role (if it is taggable).']
-			],
-			reminder: 'This command does not add any extra Discord permissions to the role.'
-		}),
-		commandSetTrustedRoleSet: role => `The ${role} role will be used as this server's trusted role.`,
 		commandSetMutedRoleDescription: 'Set the server\'s muted role',
 		commandSetMutedRoleExtended: builder.display('setmutedrole', {
 			explainedUsage: [
@@ -980,7 +978,7 @@ export default class extends Language {
 				['reset', 'Clears the list of restricted roles.'],
 				['show', 'Displays the list of restricted roles.']
 			],
-			extendedHelp: 'Restricted roles cannot be viewed with the `roleinfo` command, except for when a server staff member is the person using the command. Members who receive a restricted role as their first role will not be given the server\'s trusted role if one has been set.'
+			extendedHelp: 'Restricted roles cannot be viewed with the `roleinfo` command, except for when a server staff member is the person using the command.'
 		}),
 		commandManageRestrictedRolesManageRemoved: removedRoles => `${Emojis.MINUS} Removed roles: ${removedRoles}\n`,
 		commandManageRestrictedRolesManageAdded: addedRoles => `${Emojis.PLUS} Added roles: ${addedRoles}`,
@@ -1030,12 +1028,6 @@ export default class extends Language {
 			extendedHelp: 'This setting defaults to being off.'
 		}),
 		commandToggleDeletePinMessages: disabling => `Pinned message notifications will ${disabling ? 'no longer' : 'now'} be deleted.`,
-		commandToggleTrustedRoleRequirementDescription: 'Choose whether the server\'s trusted role is required to self-assign roles',
-		commandToggleTrustedRoleRequirementExtended: builder.display('toggletrustedrolerequirement', {
-			extendedHelp: 'The server must have a trusted role set before this command can be used.'
-		}),
-		commandToggleTrustedRoleRequirementDisable: 'The trusted role is no longer required to self-assign roles.',
-		commandToggleTrustedRoleRequirementEnable: 'The trusted role is now required to self-assign roles.',
 		/**
 		 * ################################
 		 * #   USER SETTINGS COMMANDS     #
@@ -1249,8 +1241,7 @@ export default class extends Language {
 		 * #         SERIALIZERS           #
 		 * ################################
 		 */
-		serializerColorInvalidHex: code => `${code} is not a valid hex.`,
-		serializerTrustedRoleSettingInvalidSetting: setting => `${setting} is not a valid setting for giveTrustedRoleOn.`
+		serializerColorInvalidHex: code => `${code} is not a valid hex.`
 	};
 
 

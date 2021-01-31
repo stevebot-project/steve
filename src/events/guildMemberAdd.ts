@@ -3,7 +3,6 @@ import { GuildMember, Message, MessageEmbed, TextChannel } from 'discord.js';
 import { GuildSettings } from '@lib/types/settings/GuildSettings';
 import { friendlyDuration, getExecutor, floatPromise } from '@utils/util';
 import { LogColors } from '@lib/types/Enums';
-import { TrustedRoleSetting } from './guildMemberUpdate';
 
 export default class extends Event {
 
@@ -13,7 +12,7 @@ export default class extends Event {
 			if (memberlog && memberlog.isGuildTextChannel()) floatPromise(this, this.handleLog(member, memberlog));
 		}
 
-		this.handleTrustedRole(member);
+		floatPromise(this, this.handleAutoRole(member));
 	}
 
 	private async handleLog(member: GuildMember, memberlog: TextChannel): Promise<Message> {
@@ -41,12 +40,15 @@ export default class extends Event {
 		return memberlog.send(embed);
 	}
 
-	private handleTrustedRole(member: GuildMember): void {
-		const { guild } = member;
-		const trustedRole = guild.roles.cache.get(guild.settings.get(GuildSettings.Roles.Trusted));
-		const trustedRoleSetting: TrustedRoleSetting = guild.settings.get(GuildSettings.Roles.GiveTrustedRoleOn);
+	private async handleAutoRole(member: GuildMember) {
+		const autoRoleSetting = member.guild.settings.get(GuildSettings.Roles.AutoRoleSetting) as string;
 
-		if (trustedRole && trustedRoleSetting === 'join') floatPromise(this, member.roles.add(trustedRole));
+		if (autoRoleSetting === 'join') {
+			const autoRoleID = member.guild.settings.get(GuildSettings.Roles.Auto);
+			const role = member.guild.roles.cache.get(autoRoleID);
+
+			if (role) await member.roles.add(role);
+		}
 	}
 
 }

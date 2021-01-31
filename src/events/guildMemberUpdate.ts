@@ -1,5 +1,5 @@
 import { Event } from 'klasa';
-import { GuildMember, TextChannel, Role, Guild, Message, MessageEmbed } from 'discord.js';
+import { GuildMember, TextChannel, Guild, Message, MessageEmbed } from 'discord.js';
 import { GuildSettings } from '@lib/types/settings/GuildSettings';
 import { floatPromise, getExecutor } from '@utils/util';
 import { LogColors } from '@lib/types/Enums';
@@ -16,7 +16,7 @@ export default class extends Event {
 			}
 		}
 
-		if (!oldMember.roles.cache.equals(newMember.roles.cache)) floatPromise(this, this.handleTrustedRole(oldMember, newMember));
+		if (!oldMember.roles.cache.equals(newMember.roles.cache)) floatPromise(this, this.handleAutoRole(oldMember, newMember));
 	}
 
 	private async logDisplayNameChange(oldMember: GuildMember, newMember: GuildMember, memberlog: TextChannel): Promise<Message> {
@@ -54,29 +54,28 @@ export default class extends Event {
 		return memberlog.send(embed);
 	}
 
-	private async handleTrustedRole(oldMember: GuildMember, newMember: GuildMember): Promise<void> {
+	private async getRoleFromAuditLogs(guild: Guild) {
+		const logs = await guild.fetchAuditLogs({ limit: 1, type: 'MEMBER_ROLE_UPDATE' });
+		return logs.entries.first()!.changes![0].new[0];
+	}
+
+	private async handleAutoRole(oldMember: GuildMember, newMember: GuildMember) {
 		const { guild } = newMember;
 		const role = await this.getRoleFromAuditLogs(newMember.guild);
-		const trustedRole = guild.roles.cache.get(guild.settings.get(GuildSettings.Roles.Trusted));
-		const trustedRoleSetting: TrustedRoleSetting = guild.settings.get(GuildSettings.Roles.GiveTrustedRoleOn);
+		const autoRole = guild.roles.cache.get(guild.settings.get(GuildSettings.Roles.Auto));
+		const autoRoleSetting = guild.settings.get(GuildSettings.Roles.AutoRoleSetting);
+
 		const restrictedRoles = guild.settings.get(GuildSettings.Roles.Restricted) as string[];
 
-		if (trustedRoleSetting === 'role') {
-			if (newMember.roles.cache.size === 2 && oldMember.roles.cache.size < newMember.roles.cache.size) {
+		if (autoRoleSetting === 'role') {
+			if (newMember.roles.cache.size === 2 && oldMember.roles.cache.size < newMember.roles.cache.size) { // TODO: handle multiple roles being added at once
 				if (!restrictedRoles.includes(role.id)) {
-					if (trustedRole && !newMember.roles.cache.has(trustedRole.id)) {
-						floatPromise(this, newMember.roles.add(trustedRole));
+					if (autoRole && !newMember.roles.cache.has(autoRole.id)) {
+						floatPromise(this, newMember.roles.add(autoRole));
 					}
 				}
 			}
 		}
 	}
 
-	private async getRoleFromAuditLogs(guild: Guild): Promise<Role> {
-		const logs = await guild.fetchAuditLogs({ limit: 1, type: 'MEMBER_ROLE_UPDATE' });
-		return logs.entries.first()!.changes![0].new[0];
-	}
-
 }
-
-export type TrustedRoleSetting = 'none' | 'join' | 'role';

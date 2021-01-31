@@ -34,13 +34,12 @@ export default Client.defaultGuildSchema
 	.add('roles', roles => roles
 		.add('administrator', 'Role')
 		.add('assignable', 'Role', { array: true })
+		.add('auto', 'Role')
+		.add('autoRoleSetting', 'AutoRole', { 'default': 'none' })
 		.add('deafened', 'Role')
 		.add('moderator', 'Role')
 		.add('muted', 'Role')
-		.add('restricted', 'Role', { array: true })
-		.add('trusted', 'Role')
-		.add('giveTrustedRoleOn', 'TrustedRoleSetting', { 'default': 'none' })
-		.add('requireTrustedRoleForSelfAssign', 'Boolean', { 'default': false }))
+		.add('restricted', 'Role', { array: true }))
 	.add('roleAliases', 'any', { array: true, configurable: false })
 	.add('snippets', 'any', { array: true, configurable: false })
 	.add('wordBlacklist', wordBlacklist => wordBlacklist

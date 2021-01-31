@@ -300,7 +300,6 @@ declare module 'klasa' {
 		commandAssignNotAssignable: (role: string) => string;
 		commandAssignRoleAdd: (roles: string) => string;
 		commandAssignRoleRemove: (roles: string) => string;
-		commandAssignRoleNeedTrusted: (role: string) => string;
 		commandWhoIsDescription: string;
 		commandWhoIsExtended: string;
 		commandWhoIsDate: (duration: string, date: string) => string;
@@ -379,12 +378,12 @@ declare module 'klasa' {
 		commandSetAdministratorRoleDescription: string;
 		commandSetAdministratorRoleExtended: string;
 		commandSetAdministratorRoleSet: (role: string) => string;
+		commandSetAutoRoleDescription: string;
+		commandSetAutoRoleExtended: string;
+		commandSetAutoRoleSet: (roleName: string) => string;
 		commandSetModeratorRoleDescription: string;
 		commandSetModeratorRoleExtended: string;
 		commandSetModeratorRoleSet: (role: string) => string;
-		commandSetTrustedRoleDescription: string;
-		commandSetTrustedRoleExtended: string;
-		commandSetTrustedRoleSet: (role: string) => string;
 		commandSetMutedRoleDescription: string;
 		commandSetMutedRoleExtended: string;
 		commandSetMutedRoleSet: (role: string) => string;
@@ -417,10 +416,6 @@ declare module 'klasa' {
 		commandToggleDeletePinMessagesDescription: string;
 		commandToggleDeletePinMessagesExtended: string;
 		commandToggleDeletePinMessages: (disabling: boolean) => string;
-		commandToggleTrustedRoleRequirementDescription: string;
-		commandToggleTrustedRoleRequirementExtended: string;
-		commandToggleTrustedRoleRequirementDisable: string;
-		commandToggleTrustedRoleRequirementEnable: string;
 		commandSetEmbedColorDescription: string;
 		commandSetEmbedColorExtended: string;
 		resolverInvalidColor: (hex: string) => string;
@@ -574,6 +569,6 @@ declare module 'klasa' {
 		inhibitorPingProtectionEveryone: string;
 		inhibitorPingprotectionEveryone: string;
 		serializerColorInvalidHex: (code: string) => string;
-		serializerTrustedRoleSettingInvalidSetting: (setting: string) => string;
+		serializerAutoRoleInvalid: (setting: string) => string;
 	}
 }
