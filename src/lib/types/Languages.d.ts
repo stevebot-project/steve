@@ -194,6 +194,12 @@ declare module 'klasa' {
 		commandXkcdDescription: string;
 		commandXkcdExtended: string;
 		commandXkcdInvalid: string;
+		commandPollDescription: string;
+		commandPollExtended: string;
+		commandPollTooFew: string;
+		commandPollTooMany: string;
+		commandPollEnd: (options: string[], votes: number) => string;
+		commandPollFail: string;
 		moderationNoDuration: string;
 		moderationNoReason: string;
 		moderationNoSteve: string;

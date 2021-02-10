@@ -458,6 +458,19 @@ export default class extends Language {
 			extendedHelp: 'The ability to search for a relevant XKCD is coming soon!'
 		}),
 		commandXkcdInvalid: 'I was unable to find that XKCD.',
+		commandPollDescription: `Have ${botName} create a poll for you`,
+		commandPollExtended: builder.display('poll', {
+			examples: [
+				'Is butt legs?|Butt is legs|Butt is butt'
+			],
+			extendedHelp: 'This command requires you to have at least two options and no more than ten.'
+		}),
+		commandPollTooFew: 'I need more than one choice to create a poll.',
+		commandPollTooMany: 'I can\'t create a poll with more than ten choices.',
+		commandPollEnd: (options, votes) => options.length === 1
+			? `${options} won the poll with ${votes} vote${votes === 1 ? '' : 's'}.`
+			: `${options.join(' & ')} tied the poll with ${votes} vote${votes === 1 ? '' : 's'} each.`,
+		commandPollFail: 'It looks like no one voted in the poll.',
 		/**
 		 * ################################
 		 * #      MODERATION SYSTEM       #
