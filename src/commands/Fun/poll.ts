@@ -21,12 +21,12 @@ export default class extends SteveCommand {
 
 		const emotes = ['1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6️⃣', '7️⃣', '8️⃣', '9️⃣', '🔟'].slice(0, choices.length);
 
-		let out = `**${name}**\n`;
+		let pollText = `**${name}**\n`;
 		choices.forEach((choice, option) => {
-			out += `${emotes[option]} ${choice}\n`;
+			pollText += `${emotes[option]} ${choice}\n`;
 		});
 
-		const pollMsg = await msg.channel.send(out);
+		const pollMsg = await msg.channel.send(pollText);
 
 		emotes.forEach(emote => {
 			floatPromise(this, pollMsg.react(emote));
@@ -50,6 +50,7 @@ export default class extends SteveCommand {
 				.map(reaction => choices[emotes.indexOf(reaction.emoji.name)]);
 
 			// Replies here are for when djs 13 switches this function to using inline replies
+			floatPromise(this, pollMsg.edit(`${pollText}${msg.language.tget('commandPollEnd', winners, maxVotes - 1)}`));
 			return pollMsg.reply(msg.language.tget('commandPollEnd', winners, maxVotes - 1));
 		});
 	}
