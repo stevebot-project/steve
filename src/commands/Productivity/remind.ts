@@ -1,11 +1,12 @@
 import { SteveCommand } from '@lib/structures/commands/SteveCommand';
-import { CommandOptions, KlasaMessage } from 'klasa';
-import { ColorResolvable, Message, MessageEmbed, TextChannel } from 'discord.js';
+import { CommandOptions, KlasaMessage, RichDisplay } from 'klasa';
+import { ColorResolvable, EmbedField, Message, MessageEmbed, TextChannel } from 'discord.js';
 import { GuildSettings } from '@lib/types/settings/GuildSettings';
-import { friendlyDuration } from '@utils/util';
 import { Reminder } from '@root/src/extendables/Schedule';
 import { UserSettings } from '@lib/types/settings/UserSettings';
 import { ApplyOptions, CreateResolvers } from '@skyra/decorators';
+import { chunk } from '@klasa/utils';
+import * as prettyMilliseconds from 'pretty-ms';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['remindme', 'reminders', 'myreminders'],
@@ -44,30 +45,40 @@ export default class extends SteveCommand {
 
 		await this.client.schedule.createReminder(duration, msg.author.id, reminder, msg.channel instanceof TextChannel && reminderChannel ? reminderChannel : msg.channel.id);
 
-		return msg.channel.send(msg.language.tget('commandRemindCreated', friendlyDuration(duration)));
+		return msg.channel.send(msg.language.tget('commandRemindCreated', this.getTimeUntilRemind(duration)));
 	}
 
 	public async view(msg: KlasaMessage): Promise<Message> {
-		let output = '';
 		const reminders = this.client.schedule.getUserReminders(msg.author.id);
 		if (reminders.length < 1) throw msg.language.tget('commandRemindNoReminders');
 
-		for (let i = 0; i < reminders.length; i++) {
-			const reminder = reminders[i];
-			const display = await this.getReminderDisplayContent(msg, reminder);
-			output += `**${i + 1}**: ${display} (${friendlyDuration(reminder.time.getTime() - Date.now())} left!)\n\n`;
+		const response = await msg.send(new MessageEmbed()
+			.setDescription('Loading...')
+			.setColor(msg.author.settings.get(UserSettings.EmbedColor) as ColorResolvable || 0xadcb27));
+
+		const EMBED_DATA = msg.language.tget('commandRemindViewEmbed');
+		const display = new RichDisplay(new MessageEmbed()
+			.setColor(msg.author.settings.get(UserSettings.EmbedColor) as ColorResolvable || 0xadcb27)
+			.setTitle(EMBED_DATA.title)
+			.setThumbnail('https://github.com/tuataria/steve/blob/master/assets/images/alarmclock.png?raw=true'));
+
+		for (const page of chunk(reminders, 5)) {
+			const fields: Array<EmbedField> = [];
+
+			for (let i = 0; i < page.length; i++) {
+				const displayMessage = await this.getReminderDisplayContent(msg, page[i]);
+				fields.push({
+					name: `**${reminders.indexOf(page[i]) + 1}: ${displayMessage}**`,
+					value: EMBED_DATA.fieldValues(this.getTimeUntilRemind(page[i])),
+					inline: false
+				});
+			}
+
+			display.addPage((template: MessageEmbed) =>	template.addFields(fields));
 		}
 
-		const embedData = msg.language.tget('commandRemindViewEmbed');
-
-		const embed = new MessageEmbed()
-			.attachFiles(['./assets/images/alarmclock.png'])
-			.setColor(msg.author.settings.get(UserSettings.EmbedColor) as ColorResolvable || 0xadcb27)
-			.setDescription(output)
-			.setTitle(embedData.title)
-			.setThumbnail('attachment://alarmclock.png');
-
-		return msg.channel.send(embed);
+		await display.run(response);
+		return response;
 	}
 
 	public async cancel(msg: KlasaMessage, [reminderNum]: [number]): Promise<Message> {
@@ -90,6 +101,11 @@ export default class extends SteveCommand {
 		return channelID === reminderUser.dmChannel.id && msg.channel.id !== reminderUser.dmChannel.id
 			? msg.language.tget('commandReminderDisplayHidden')
 			: reminder.data.content;
+	}
+
+	private getTimeUntilRemind(reminder: Reminder | number): string {
+		if (typeof (reminder) === 'number') return prettyMilliseconds(reminder, { verbose: true, secondsDecimalDigits: 0 });
+		return prettyMilliseconds(reminder.time.getTime() - Date.now(), { verbose: true, secondsDecimalDigits: 0 });
 	}
 
 }

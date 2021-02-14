@@ -723,7 +723,8 @@ export default class extends Language {
 		commandRemindNoReminders: 'You have no reminders currently set.',
 		commandReminderDisplayHidden: 'Private reminder: content hidden',
 		commandRemindViewEmbed: {
-			title: 'Pending Reminders'
+			title: 'Pending Reminders',
+			fieldValues: time => `${time} left!`
 		},
 		/**
 		 * ################################
