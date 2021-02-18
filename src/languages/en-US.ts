@@ -740,6 +740,16 @@ export default class extends Language {
 		 * #      SELF-ASSIGN             #
 		 * ################################
 		 */
+		commandAddAssignableRoleDescription: 'Add a role (or multiple roles) to the list of assignable roles',
+		commandAddAssignableRoleExtended: builder.display('addassignablerole', {
+			examples: [
+				'gmt-4'
+			],
+			explainedUsage: [
+				['rolename', 'You can use the name of a role, it\'s snowflake (long id), or tag the role (if it is taggable).']
+			]
+		}),
+		commandAddAssignableRole: addedRoles => `${Emojis.PLUS} Added roles: ${addedRoles.join(', ')}`,
 		commandAssignDescription: `Assign roles to yourself using ${botName}`,
 		commandAssignExtended: builder.display('assign', {
 			examples: [
@@ -757,6 +767,16 @@ export default class extends Language {
 		commandAssignRoleAdd: roles => `${Emojis.PLUS} Added role(s): \`${roles}\``,
 		commandAssignRoleRemove: roles => `${Emojis.MINUS} Removed role(s): \`${roles}\``,
 		commandAssignRoleNeedTrusted: role => `You need to have the **${role}** role to do that!`,
+		commandRemoveAssignableRoleDescription: 'Remove a role (or multiple roles) from the list of assignable roles',
+		commandRemoveAssignableRoleExtended: builder.display('removeassignableroles', {
+			examples: [
+				'gmt-4'
+			],
+			explainedUsage: [
+				['rolename', 'You can use the name of a role, it\'s snowflake (long id), or tag the role (if it is taggable).']
+			]
+		}),
+		commandRemoveAssignableRole: removedRoles => `${Emojis.MINUS} Removed roles: ${removedRoles.join(', ')}`,
 		/**
 		 * ################################
 		 * #      MEMBER INFO             #
