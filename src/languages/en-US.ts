@@ -5,6 +5,7 @@ import { HelpBuilder } from '@utils/HelpBuilder';
 import { NAME as botName } from '@root/config';
 import { oneLine } from 'common-tags';
 import { Emojis } from '@lib/types/Enums';
+import { formatDate } from '@utils/util';
 
 const builder = new HelpBuilder()
 	.setExamples('👀 | **Examples**')
@@ -699,6 +700,24 @@ export default class extends Language {
 		commandSnippetInvalid: name => `There is no snippet with the name: ${name}.`,
 		commandSnippetNoSnipsInGuild: 'This server has no snippets!',
 		commandSnippetReset: 'This server\'s snippets have been reset.',
+		/**
+		 * ################################
+		 * #      SPACE COMMANDS          #
+		 * ################################
+		 */
+		commandSpacePicDescription: 'Get a space picture!',
+		commandSpacePicExtended: builder.display('spacepic', {
+			examples: [
+				'',
+				'2017-01-25',
+				'2017/4/1'
+			],
+			explainedUsage: [
+				['date', 'The date must be in YYYY-MM-DD format.']
+			],
+			extendedHelp: `This command uses NASA\'s Astronomy Picture of the Day API to get the pictures. The earliest date with an avaliable picture is ${formatDate(new Date(1995, 5, 20), 'DD MMMM YYYY')}.`
+		}),
+		commandSpacePicError: 'I was unable to retrieve a picture!',
 		/**
 		 * ################################
 		 * #      REMINDERS               #

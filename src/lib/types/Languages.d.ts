@@ -280,6 +280,9 @@ declare module 'klasa' {
 		commandSnippetInvalid: (name: string) => string;
 		commandSnippetNoSnipsInGuild: string;
 		commandSnippetReset: string;
+		commandSpacePicDescription: string;
+		commandSpacePicExtended: string;
+		commandSpacePicError: string;
 		commandRemindDescription: string;
 		commandRemindExtended: string;
 		resolverReminderLength: string;
