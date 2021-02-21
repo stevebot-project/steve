@@ -23,7 +23,7 @@ export default class extends SteveCommand {
 			return msg.channel.send(msg.language.tget('commandDiscordStatusError'));
 		}
 
-		const fields: Array<EmbedField> = [];
+		const fields: EmbedField[] = [];
 
 		if (currentStatus.components?.every(component => component.status === 'operational')) {
 			fields.push({
@@ -71,9 +71,9 @@ export default class extends SteveCommand {
 interface DiscordStatus {
 	page: Page;
 	status: Status;
-	components: (ComponentsEntity)[];
-	incidents: (IncidentsEntity)[];
-	scheduled_maintenances: (ScheduledMaintenancesEntity)[];
+	components: ComponentsEntity[];
+	incidents: IncidentsEntity[];
+	scheduled_maintenances: ScheduledMaintenancesEntity[];
 }
 interface Page {
 	id: string;
@@ -100,7 +100,7 @@ interface IncidentsEntity {
 	created_at: string;
 	id: string;
 	impact: string;
-	incident_updates?: (IncidentUpdatesEntity)[] | null;
+	incident_updates?: IncidentUpdatesEntity[] | null;
 	monitoring_at?: null;
 	name: string;
 	page_id: string;
@@ -122,7 +122,7 @@ interface ScheduledMaintenancesEntity {
 	created_at: string;
 	id: string;
 	impact: string;
-	incident_updates?: (IncidentUpdatesEntity)[] | null;
+	incident_updates?: IncidentUpdatesEntity[] | null;
 	monitoring_at?: null;
 	name: string;
 	page_id: string;
