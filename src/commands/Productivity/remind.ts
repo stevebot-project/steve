@@ -56,10 +56,10 @@ export default class extends SteveCommand {
 			.setDescription('Loading...')
 			.setColor(msg.author.settings.get(UserSettings.EmbedColor) as ColorResolvable || 0xadcb27));
 
-		const EMBED_DATA = msg.language.tget('commandRemindViewEmbed');
+		const embedData = msg.language.tget('commandRemindViewEmbed');
 		const display = new RichDisplay(new MessageEmbed()
 			.setColor(msg.author.settings.get(UserSettings.EmbedColor) as ColorResolvable || 0xadcb27)
-			.setTitle(EMBED_DATA.title)
+			.setTitle(embedData.title)
 			.setThumbnail('https://github.com/tuataria/steve/blob/master/assets/images/alarmclock.png?raw=true'));
 
 		for (const page of chunk(reminders, 5)) {
@@ -69,7 +69,7 @@ export default class extends SteveCommand {
 				const displayMessage = await this.getReminderDisplayContent(msg, page[i]);
 				fields.push({
 					name: `**${reminders.indexOf(page[i]) + 1}: ${displayMessage}**`,
-					value: EMBED_DATA.fieldValues(this.getTimeUntilRemind(page[i])),
+					value: embedData.fieldValues(this.getTimeUntilRemind(page[i])),
 					inline: false
 				});
 			}
