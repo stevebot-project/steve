@@ -7,6 +7,7 @@ import { UserSettings } from '@lib/types/settings/UserSettings';
 import { ApplyOptions, CreateResolvers } from '@skyra/decorators';
 import { chunk } from '@klasa/utils';
 import * as prettyMilliseconds from 'pretty-ms';
+import { floatPromise } from '@utils/util';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['remindme', 'reminders', 'myreminders'],
@@ -57,13 +58,33 @@ export default class extends SteveCommand {
 			.setColor(msg.author.settings.get(UserSettings.EmbedColor) as ColorResolvable || 0xadcb27));
 
 		const embedData = msg.language.tget('commandRemindViewEmbed');
-		const display = new RichDisplay(new MessageEmbed()
-			.setColor(msg.author.settings.get(UserSettings.EmbedColor) as ColorResolvable || 0xadcb27)
-			.setTitle(embedData.title)
-			.setThumbnail('https://github.com/tuataria/steve/blob/master/assets/images/alarmclock.png?raw=true'));
 
-		for (const page of chunk(reminders, 5)) {
-			const fields: Array<EmbedField> = [];
+		if (msg.channel.type !== 'dm') {
+			const display = new RichDisplay(this.buildViewEmbed(msg));
+
+			for (const page of chunk(reminders, 5)) {
+				const fields: EmbedField[] = [];
+
+				for (let i = 0; i < page.length; i++) {
+					const displayMessage = await this.getReminderDisplayContent(msg, page[i]);
+					fields.push({
+						name: `**${reminders.indexOf(page[i]) + 1}: ${displayMessage}**`,
+						value: embedData.fieldValues(this.getTimeUntilRemind(page[i])),
+						inline: false
+					});
+				}
+
+				display.addPage((template: MessageEmbed) => template.addFields(fields));
+			}
+
+			await display.run(response);
+			return response;
+		}
+
+		const embeds: MessageEmbed[] = [];
+
+		for (const page of chunk(reminders, 25)) {
+			const fields: EmbedField[] = [];
 
 			for (let i = 0; i < page.length; i++) {
 				const displayMessage = await this.getReminderDisplayContent(msg, page[i]);
@@ -74,10 +95,12 @@ export default class extends SteveCommand {
 				});
 			}
 
-			display.addPage((template: MessageEmbed) =>	template.addFields(fields));
+			embeds.push(this.buildViewEmbed(msg).addFields(fields));
 		}
+		embeds.reverse();
 
-		await display.run(response);
+		floatPromise(this, response.edit(embeds.pop()));
+		embeds.forEach(embed => msg.channel.send(embed));
 		return response;
 	}
 
@@ -106,6 +129,14 @@ export default class extends SteveCommand {
 	private getTimeUntilRemind(reminder: Reminder | number): string {
 		if (typeof (reminder) === 'number') return prettyMilliseconds(reminder, { verbose: true, secondsDecimalDigits: 0 });
 		return prettyMilliseconds(reminder.time.getTime() - Date.now(), { verbose: true, secondsDecimalDigits: 0 });
+	}
+
+	private buildViewEmbed(msg: Message): MessageEmbed {
+		const embedData = msg.language.tget('commandRemindViewEmbed');
+		return new MessageEmbed()
+			.setColor(msg.author.settings.get(UserSettings.EmbedColor) as ColorResolvable || 0xadcb27)
+			.setTitle(embedData.title)
+			.setThumbnail('https://github.com/tuataria/steve/blob/master/assets/images/alarmclock.png?raw=true');
 	}
 
 }
