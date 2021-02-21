@@ -5,6 +5,7 @@ import { HelpBuilder } from '@utils/HelpBuilder';
 import { NAME as botName } from '@root/config';
 import { oneLine } from 'common-tags';
 import { Emojis } from '@lib/types/Enums';
+import { formatDate } from '@utils/util';
 
 const builder = new HelpBuilder()
 	.setExamples('👀 | **Examples**')
@@ -318,9 +319,20 @@ export default class extends Language {
 			title: 'Statistics'
 		},
 		commandDiscordStatusDescription: 'See the current status of Discord.',
-		commandDiscordStatusError: 'An error occured when attempting to fetch Discord\'s status.',
-		commandDiscordStautsEmbed: {
-			decription: incident => `[Discord Status](https://discordstatus.com/)\n**Current Incident:**\n${incident}`,
+		commandDiscordStatusError: 'An error occurred when attempting to fetch Discord\'s status.',
+		commandDiscordStatusEmbed: {
+			description: incident => `[Discord Status](https://discordstatus.com/)\n**Current Incident:**\n${incident}`,
+			noIncidents: 'There is no active incidents.',
+			fields: {
+				operational: {
+					title: 'All components operational',
+					value: 'No errors to report'
+				},
+				maintenance: {
+					title: 'Scheduled Maintenance',
+					value: (name, impact) => `${name} | Impact: ${impact}`
+				}
+			},
 			footer: time => `Last changed: ${time} | ${this.randomDftba}`
 		},
 		messagePromptTimeout: 'The prompt has timed out.',
@@ -701,6 +713,24 @@ export default class extends Language {
 		commandSnippetReset: 'This server\'s snippets have been reset.',
 		/**
 		 * ################################
+		 * #      SPACE COMMANDS          #
+		 * ################################
+		 */
+		commandSpacePicDescription: 'Get a space picture!',
+		commandSpacePicExtended: builder.display('spacepic', {
+			examples: [
+				'',
+				'2017-01-25',
+				'2017/4/1'
+			],
+			explainedUsage: [
+				['date', 'The date must be in YYYY-MM-DD format.']
+			],
+			extendedHelp: `This command uses NASA\'s Astronomy Picture of the Day API to get the pictures. The earliest date with an avaliable picture is ${formatDate(new Date(1995, 5, 20), 'DD MMMM YYYY')}.`
+		}),
+		commandSpacePicError: 'I was unable to retrieve a picture!',
+		/**
+		 * ################################
 		 * #      REMINDERS               #
 		 * ################################
 		 */
@@ -741,6 +771,16 @@ export default class extends Language {
 		 * #      SELF-ASSIGN             #
 		 * ################################
 		 */
+		commandAddAssignableRoleDescription: 'Add a role (or multiple roles) to the list of assignable roles',
+		commandAddAssignableRoleExtended: builder.display('addassignablerole', {
+			examples: [
+				'gmt-4'
+			],
+			explainedUsage: [
+				['rolename', 'You can use the name of a role, it\'s snowflake (long id), or tag the role (if it is taggable).']
+			]
+		}),
+		commandAddAssignableRole: addedRoles => `${Emojis.PLUS} Added roles: ${addedRoles.join(', ')}`,
 		commandAssignDescription: `Assign roles to yourself using ${botName}`,
 		commandAssignExtended: builder.display('assign', {
 			examples: [
@@ -758,6 +798,16 @@ export default class extends Language {
 		commandAssignRoleAdd: roles => `${Emojis.PLUS} Added role(s): \`${roles}\``,
 		commandAssignRoleRemove: roles => `${Emojis.MINUS} Removed role(s): \`${roles}\``,
 		commandAssignRoleNeedTrusted: role => `You need to have the **${role}** role to do that!`,
+		commandRemoveAssignableRoleDescription: 'Remove a role (or multiple roles) from the list of assignable roles',
+		commandRemoveAssignableRoleExtended: builder.display('removeassignableroles', {
+			examples: [
+				'gmt-4'
+			],
+			explainedUsage: [
+				['rolename', 'You can use the name of a role, it\'s snowflake (long id), or tag the role (if it is taggable).']
+			]
+		}),
+		commandRemoveAssignableRole: removedRoles => `${Emojis.MINUS} Removed roles: ${removedRoles.join(', ')}`,
 		/**
 		 * ################################
 		 * #      MEMBER INFO             #
