@@ -141,8 +141,19 @@ declare module 'klasa' {
 		};
 		commandDiscordStatusDescription: string;
 		commandDiscordStatusError: string;
-		commandDiscordStautsEmbed: {
-			decription: (incident: string) => string;
+		commandDiscordStatusEmbed: {
+			description: (incident: string) => string;
+			noIncidents: string;
+			fields: {
+				operational: {
+					title: string;
+					value: string;
+				};
+				maintenance: {
+					title: string;
+					value: (name: string, impact: string) => string;
+				};
+			};
 			footer: (time: string) => string;
 		};
 		messagePromptTimeout: string;

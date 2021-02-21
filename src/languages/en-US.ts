@@ -319,9 +319,20 @@ export default class extends Language {
 			title: 'Statistics'
 		},
 		commandDiscordStatusDescription: 'See the current status of Discord.',
-		commandDiscordStatusError: 'An error occured when attempting to fetch Discord\'s status.',
-		commandDiscordStautsEmbed: {
-			decription: incident => `[Discord Status](https://discordstatus.com/)\n**Current Incident:**\n${incident}`,
+		commandDiscordStatusError: 'An error occurred when attempting to fetch Discord\'s status.',
+		commandDiscordStatusEmbed: {
+			description: incident => `[Discord Status](https://discordstatus.com/)\n**Current Incident:**\n${incident}`,
+			noIncidents: 'There is no active incidents.',
+			fields: {
+				operational: {
+					title: 'All components operational',
+					value: 'No errors to report'
+				},
+				maintenance: {
+					title: 'Scheduled Maintenance',
+					value: (name, impact) => `${name} | Impact: ${impact}`
+				}
+			},
 			footer: time => `Last changed: ${time} | ${this.randomDftba}`
 		},
 		messagePromptTimeout: 'The prompt has timed out.',
