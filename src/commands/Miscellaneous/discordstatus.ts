@@ -2,8 +2,8 @@ import { SteveCommand } from '@lib/structures/commands/SteveCommand';
 import { CommandOptions, KlasaMessage } from 'klasa';
 import { EmbedField, Message, MessageEmbed } from 'discord.js';
 import { formatDate } from '@utils/util';
-import fetch from 'node-fetch';
 import { ApplyOptions } from '@skyra/decorators';
+import axios from 'axios';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['ds', 'discstatus', 'isdiscordbroke'],
@@ -17,9 +17,9 @@ export default class extends SteveCommand {
 		const url = 'https://srhpyqt94yxb.statuspage.io/api/v2/summary.json';
 		const embedData = msg.language.tget('commandDiscordStatusEmbed');
 
-		const currentStatus = await fetch(url, { method: 'Get' }).then(r => r.json()) as DiscordStatus;
+		const { data: currentStatus, statusText } = await axios.get<DiscordStatus>(url);
 
-		if (!currentStatus) {
+		if (statusText !== 'OK') {
 			return msg.channel.send(msg.language.tget('commandDiscordStatusError'));
 		}
 
