@@ -394,6 +394,10 @@ export default class extends Language {
 			reminder: 'Things to be rated have a maximum length of 500 characters.'
 		}),
 		commandRateResponse: (thing, rating) => `${botName} gives \`${thing}\` a ${rating}!`,
+		commandDogDescription: 'Get a random dog picture',
+		commandDogExtended: builder.display('dog', {
+			extendedHelp: 'This command grabs random dog images from the Dog API at https://dog.ceo/dog-api.'
+		}),
 		commandRockPaperScissorsDescription: `Play a game of rock, paper, scissors against ${botName}`,
 		commandRockPaperScissorsExtended: builder.display('rps', {
 			examples: [

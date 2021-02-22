@@ -173,6 +173,8 @@ declare module 'klasa' {
 		commandRateDescription: string;
 		commandRateExtended: string;
 		commandRateResponse: (thing: string, rating: number) => string;
+		commandDogDescription: string;
+		commandDogExtended: string;
 		commandRockPaperScissorsDescription: string;
 		commandRockPaperScissorsExtended: string;
 		commandRockPaperScissorsWinner: (playerMove: string, steveMove: string, winner: number) => string;
