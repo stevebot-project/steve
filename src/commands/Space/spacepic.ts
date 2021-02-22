@@ -12,6 +12,7 @@ import { formatDate } from '@utils/util';
 	cooldownLevel: 'author',
 	description: lang => lang.tget('commandSpacePicDescription'),
 	extendedHelp: lang => lang.tget('commandSpacePicExtended'),
+	requiredPermissions: ['EMBED_LINKS'],
 	usage: '[date:date]'
 })
 export default class extends SteveCommand {
