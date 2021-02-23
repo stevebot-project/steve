@@ -184,6 +184,8 @@ declare module 'klasa' {
 		commandRateDescription: string;
 		commandRateExtended: string;
 		commandRateResponse: (thing: string, rating: number) => string;
+		commandCatDescription: string;
+		commandCatExtended: string;
 		commandDogDescription: string;
 		commandDogExtended: string;
 		commandRockPaperScissorsDescription: string;
