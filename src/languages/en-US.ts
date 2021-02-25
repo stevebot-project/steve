@@ -785,7 +785,7 @@ export default class extends Language {
 				'derive 4x^2 + 3x +7'
 			]
 		}),
-		commandWolframLoading: 'Using mad maths skillz...',
+		commandWolframLoading: 'Using mad math skillz...',
 		commandWolframError: 'There was too much math and something went wrong.',
 		commandWolframEmbed: {
 			title: 'The math is done!',
