@@ -1152,6 +1152,18 @@ export default class extends Language {
 			]
 		}),
 		commandTempConvertInvalidUnit: unit => `**${unit}** is not a valid/supported unit.`,
+		commandLengthConvertDescription: 'Easily convert lengths',
+		commandLengthConvertExtended: builder.display('lengthconvert', {
+			examples: [
+				'100|cm|m',
+				'5|miles|feet'
+			],
+			explainedUsage: [
+				['unit', 'Supported units: millimeters (mm), centimeters (cm), meters (m), kilometers (km), inches (in), International Feet (ft), U.S. Survey Feet (ft-us), miles (mi). Using "feet" as an argument will map to International Feet.']
+			],
+			reminder: 'There\'s functionally no difference between the two kinds of feet.'
+		}),
+		commandLengthConvertInvalidUnit: unit => `**${unit}** is not a valid unit.`,
 		/**
 		 * ################################
 		 * #  LOG EVENT  TOGGLE COMMANDS  #
