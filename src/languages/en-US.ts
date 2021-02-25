@@ -46,7 +46,8 @@ const dftba = [
 	'Dead Frogs Teach Bored Anatomists',
 	'Duel For The Best Acronym',
 	'Dandelions Fly Through Blue Air',
-	'Dragons Fight Ten Bald Assassins'
+	'Dragons Fight Ten Bald Assassins',
+	'Dynamic Flavors That Bring Amazement'
 ];
 
 const Perms = {
