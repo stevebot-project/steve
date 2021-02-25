@@ -1137,6 +1137,22 @@ export default class extends Language {
 		commandSupportDescription: `Get a link to ${botName}'s support server.`,
 		/**
 		 * ################################
+		 * #   UNIT CONVERSION COMMANDS   #
+		 * ################################
+		 */
+		commandTempConvertDescription: 'Easily convert temperatures',
+		commandTempConvertExtended: builder.display('tempconvert', {
+			examples: [
+				'32|f|c',
+				'0|celsius|fahrenheit'
+			],
+			explainedUsage: [
+				['unit', 'Supported units: Celsius (C), Fahrenheit (F), Kelvin (K), Rankine (R)']
+			]
+		}),
+		commandTempConvertInvalidUnit: unit => `**${unit}** is not a valid/supported unit.`,
+		/**
+		 * ################################
 		 * #  LOG EVENT  TOGGLE COMMANDS  #
 		 * ################################
 		 */

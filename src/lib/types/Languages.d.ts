@@ -458,6 +458,9 @@ declare module 'klasa' {
 		commandFeedbackNoChannel: string;
 		commandFeedbackSent: string;
 		commandSupportDescription: string;
+		commandTempConvertDescription: string;
+		commandTempConvertExtended: string;
+		commandTempConvertInvalidUnit: (unit: string) => string;
 		commandToggleChannelCreateDescription: string;
 		commandToggleChannelCreate: (disabled: boolean) => string;
 		commandToggleChannelDeleteDescription: string;
