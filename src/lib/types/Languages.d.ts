@@ -312,6 +312,17 @@ declare module 'klasa' {
 		commandPomodoroDescription: string;
 		commandPomodoroExtended: string;
 		commandPomodoroUnderConstruction: string;
+		commandWolframDescription: string;
+		commandWolframExtended: string;
+		commandWolframLoading: string;
+		commandWolframError: string;
+		commandWolframEmbed: {
+			title: string;
+			description: string;
+			queryHeader: string;
+			resultHeader: string;
+			footer: string;
+		};
 		commandAddAssignableRoleDescription: string;
 		commandAddAssignableRoleExtended: string;
 		commandAddAssignableRole: (addedRoles: string[]) => string;

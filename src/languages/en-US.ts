@@ -107,7 +107,7 @@ export default class extends Language {
 		prefixReminder: (prefix = `@${this.client.user!.tag}`) => `The prefix${Array.isArray(prefix)
 			? `es for this server are: ${prefix.map(pre => `\`${pre}\``).join(', ')}`
 			: ` in this server is set to: \`${prefix}\``
-		}`,
+			}`,
 		settingGatewayExpectsGuild: 'The parameter <Guild> expects either a Guild or a Guild Object.',
 		settingGatewayValueForKeyNoext: (data, key) => `The value ${data} for the key ${key} does not exist.`,
 		settingGatewayValueForKeyAlrext: (data, key) => `The value ${data} for the key ${key} already exists.`,
@@ -773,6 +773,27 @@ export default class extends Language {
 			extendedHelp: 'This command helps facilitate use of the Pomodoro technique; it is currently under reconstruction and thus its functions are not available. Check back soon!'
 		}),
 		commandPomodoroUnderConstruction: 'This command is under reconstruction and is not currently available. Check back soon!',
+		/**
+		 * ################################
+		 * #      WOLFRAM-ALPHA           #
+		 * ################################
+		 */
+		commandWolframDescription: 'Use Wolfram Alpha to do some math.',
+		commandWolframExtended: builder.display('wolfram', {
+			examples: [
+				'(3 + 9) / 7',
+				'derive 4x^2 + 3x +7'
+			]
+		}),
+		commandWolframLoading: 'Using mad maths skillz...',
+		commandWolframError: 'There was too much math and something went wrong.',
+		commandWolframEmbed: {
+			title: 'The math is done!',
+			description: 'Powered by [Wolfram Alpha](https://www.wolframalpha.com/).',
+			queryHeader: 'Your Question',
+			resultHeader: 'The Result',
+			footer: this.randomDftba
+		},
 		/**
 		 * ################################
 		 * #      SELF-ASSIGN             #
