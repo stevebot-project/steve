@@ -107,7 +107,7 @@ export default class extends Language {
 		prefixReminder: (prefix = `@${this.client.user!.tag}`) => `The prefix${Array.isArray(prefix)
 			? `es for this server are: ${prefix.map(pre => `\`${pre}\``).join(', ')}`
 			: ` in this server is set to: \`${prefix}\``
-			}`,
+		}`,
 		settingGatewayExpectsGuild: 'The parameter <Guild> expects either a Guild or a Guild Object.',
 		settingGatewayValueForKeyNoext: (data, key) => `The value ${data} for the key ${key} does not exist.`,
 		settingGatewayValueForKeyAlrext: (data, key) => `The value ${data} for the key ${key} already exists.`,
