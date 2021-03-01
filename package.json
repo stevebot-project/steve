@@ -10,7 +10,8 @@
     "dev": "tsc -p . && node --harmony dist/src/Steve.js",
     "dev-clear": "rm -rf dist && tsc -p . && node --harmony dist/src/Steve.js",
     "test": "jest",
-    "lint": "eslint src --ext .ts --fix",
+	"lint": "eslint src --ext .ts",
+    "lint-fix": "eslint src --ext .ts --fix",
     "contrib:add": "all-contributors add"
   },
   "repository": {
