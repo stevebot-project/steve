@@ -1141,6 +1141,7 @@ export default class extends Language {
 		 * #   UNIT CONVERSION COMMANDS   #
 		 * ################################
 		 */
+		invalidUnit: unit => `**${unit}** is not vaild/supported unit.`,
 		commandTempConvertDescription: 'Easily convert temperatures',
 		commandTempConvertExtended: builder.display('tempconvert', {
 			examples: [
@@ -1164,6 +1165,16 @@ export default class extends Language {
 			reminder: 'There\'s functionally no difference between the two kinds of feet.'
 		}),
 		commandLengthConvertInvalidUnit: unit => `**${unit}** is not a valid unit.`,
+		commandMassConvertDescription: 'Easily convert masses',
+		commandMassConvertExtended: builder.display('massconvert', {
+			examples: [
+				'1000|g|kg',
+				'16|ounces|pounds'
+			],
+			explainedUsage: [
+				['unit', 'Supported units: micrograms (mcg), milligrams (mg), grams (g), kilograms (kg), ounces (oz), pounds (lb), metric tonnes (mt), tons (t).']
+			]
+		}),
 		/**
 		 * ################################
 		 * #  LOG EVENT  TOGGLE COMMANDS  #
