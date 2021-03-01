@@ -20,7 +20,7 @@ import { temperatureUnits, TemperatureUnit, getConvertedValue, getFullUnitName }
 			if (temperatureUnits.includes(str)) return str;
 			if (str === 'CELSIUS' || str === 'FAHRENHEIT' || str === 'KELVIN' || str === 'RANKINE') return str[1];
 
-			throw msg.language.tget('commandTempConvertInvalidUnit', str);
+			throw msg.language.tget('invalidUnit', str);
 		}
 	]
 ])

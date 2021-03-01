@@ -462,10 +462,8 @@ declare module 'klasa' {
 		invalidUnit: (unit: string) => string;
 		commandTempConvertDescription: string;
 		commandTempConvertExtended: string;
-		commandTempConvertInvalidUnit: (unit: string) => string;
 		commandLengthConvertDescription: string;
 		commandLengthConvertExtended: string;
-		commandLengthConvertInvalidUnit: (unit: string) => string;
 		commandMassConvertDescription: string;
 		commandMassConvertExtended: string;
 		commandToggleChannelCreateDescription: string;

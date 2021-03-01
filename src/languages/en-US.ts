@@ -1152,7 +1152,6 @@ export default class extends Language {
 				['unit', 'Supported units: Celsius (C), Fahrenheit (F), Kelvin (K), Rankine (R)']
 			]
 		}),
-		commandTempConvertInvalidUnit: unit => `**${unit}** is not a valid/supported unit.`,
 		commandLengthConvertDescription: 'Easily convert lengths',
 		commandLengthConvertExtended: builder.display('lengthconvert', {
 			examples: [
@@ -1164,7 +1163,6 @@ export default class extends Language {
 			],
 			reminder: 'There\'s functionally no difference between the two kinds of feet.'
 		}),
-		commandLengthConvertInvalidUnit: unit => `**${unit}** is not a valid unit.`,
 		commandMassConvertDescription: 'Easily convert masses',
 		commandMassConvertExtended: builder.display('massconvert', {
 			examples: [

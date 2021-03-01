@@ -49,7 +49,7 @@ import { lengthUnits, LengthUnit, getConvertedValue, getFullUnitName } from '@li
 				case 'kilometer':
 					return 'km';
 				default:
-					throw msg.language.tget('commandLengthConvertInvalidUnit', str);
+					throw msg.language.tget('invalidUnit', str);
 			}
 		}
 	]
