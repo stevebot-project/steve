@@ -20,8 +20,11 @@ export default class extends Event {
 		}
 
 		if (!this.client.options.owners.length) {
-			if (this.client.application.owner instanceof Team) this.client.options.owners.push(...this.client.application.owner.members.keys());
-			else this.client.options.owners.push(this.client.application.owner!.id);
+			if (this.client.application.owner instanceof Team) {
+				this.client.options.owners.push(...this.client.application.owner.members.keys());
+			} else {
+				this.client.options.owners.push(this.client.application.owner!.id);
+			}
 		}
 
 		this.client.mentionPrefix = new RegExp(`^<@!?${this.client.user!.id}>`);

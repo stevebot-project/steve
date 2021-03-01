@@ -37,6 +37,7 @@ export abstract class ModerationCommand extends SteveCommand {
 
 	public abstract prehandle(target: User, guild: Guild): Promise<GuildMember | User>; // choose target type
 	public abstract handle(msg: GuildMessage, target: GuildMember | User, reason: string): Promise<GuildMember | User>; // do the thing
+	// eslint-disable-next-line max-len
 	public abstract posthandle(msg: GuildMessage, target: GuildMember | User, reason: string, duration: number | undefined): Promise<Message>; // handle modlog and case
 
 	private checkModeratable(target: GuildMember, moderator: GuildMember): boolean {

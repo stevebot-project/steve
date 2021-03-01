@@ -122,7 +122,8 @@ declare module 'klasa' {
 		commandConfUserDescription: string;
 		commandConfUserExtended: string;
 		commandConfUser: (key: string, list: string) => string;
-		commandStats: (memUsage: number, uptime: string, users: number, guilds: number, channels: number, klasaVersion: string, discordVersion: string, processVersion: string) => string[];
+		commandStats: (memUsage: number, uptime: string, users: number, guilds: number, channels: number, klasaVersion: string,
+			discordVersion: string, processVersion: string) => string[];
 		commandStatsDescription: string;
 		commandStatsExtended: string;
 		commandStatsEmbed: {

@@ -11,9 +11,12 @@ export default class extends Event {
 		if (newChannel instanceof DMChannel) return;
 
 		if ((newChannel as GuildChannel).guild.settings.get(GuildSettings.LogEvents.ChannelUpdate) as boolean) {
+			// eslint-disable-next-line max-len
 			const serverlog = (newChannel as GuildChannel).guild.channels.cache.get((newChannel as GuildChannel).guild.settings.get(GuildSettings.Channels.Serverlog));
 			if (serverlog && serverlog.isGuildTextChannel()) {
-				if ((oldChannel as GuildChannel).name !== (newChannel as GuildChannel).name) floatPromise(this, this.logChannelNameChange(oldChannel as GuildChannel, newChannel as GuildChannel, serverlog));
+				if ((oldChannel as GuildChannel).name !== (newChannel as GuildChannel).name) {
+					floatPromise(this, this.logChannelNameChange(oldChannel as GuildChannel, newChannel as GuildChannel, serverlog));
+				}
 			}
 		}
 	}

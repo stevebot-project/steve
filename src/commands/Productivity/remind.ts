@@ -42,7 +42,9 @@ export default class extends SteveCommand {
 	public async create(msg: KlasaMessage, [reminder, duration]: [string, number]): Promise<Message> {
 		const reminderChannel = msg.guild ? msg.guild.settings.get(GuildSettings.Channels.ReminderChannel) : null;
 
-		await this.client.schedule.createReminder(duration, msg.author.id, reminder, msg.channel instanceof TextChannel && reminderChannel ? reminderChannel : msg.channel.id);
+		await this.client.schedule.createReminder(duration, msg.author.id, reminder, msg.channel instanceof TextChannel && reminderChannel
+			? reminderChannel
+			: msg.channel.id);
 
 		return msg.channel.send(msg.language.tget('commandRemindCreated', friendlyDuration(duration)));
 	}

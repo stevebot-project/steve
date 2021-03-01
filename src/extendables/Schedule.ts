@@ -6,6 +6,7 @@ import { Extendable, ExtendableOptions, Schedule, ScheduledTask } from 'klasa';
 })
 export default class extends Extendable {
 
+	// eslint-disable-next-line max-len
 	public createModerationTask(this: Schedule, taskName: ModerationTask, duration: number, taskData: ModerationTaskData): Promise<ScheduledTask> {
 		return this.create(taskName, Date.now() + duration, {
 			catchUp: true,
