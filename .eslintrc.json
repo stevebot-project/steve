@@ -2,6 +2,14 @@
 {
 	"extends": "bamboo",
 	"rules": {
+		"max-len": [
+			"warn",
+			{
+				"code": 140,
+				"ignoreStrings": true,
+				"ignoreTemplateLiterals": true
+			}
+		],
 		"@typescript-eslint/no-throw-literal": 0,
 		"@typescript-eslint/restrict-plus-operands": 0,
 		"@typescript-eslint/no-unnecessary-condition": 0,
