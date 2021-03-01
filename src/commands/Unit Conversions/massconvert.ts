@@ -1,14 +1,11 @@
-import { SteveCommand } from '@lib/structures/commands/SteveCommand';
 import { ApplyOptions, CreateResolvers } from '@skyra/decorators';
-import { getConvertedValue, getFullUnitName, MassUnit, massUnits } from '@utils/UnitConversion';
-import { MessageEmbed } from 'discord.js';
-import { CommandOptions, KlasaMessage } from 'klasa';
+import { CommandOptions } from 'klasa';
+import { UnitConversionCommand, massUnits } from '@lib/structures/commands/UnitConversionCommand';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['mass'],
 	description: lang => lang.tget('commandMassConvertDescription'),
-	extendedHelp: lang => lang.tget('commandMassConvertExtended'),
-	usage: '<number:number> <firstUnit:unit> <secondUnit:unit>'
+	extendedHelp: lang => lang.tget('commandMassConvertExtended')
 })
 @CreateResolvers([
 	[
@@ -58,19 +55,4 @@ import { CommandOptions, KlasaMessage } from 'klasa';
 		}
 	]
 ])
-export default class extends SteveCommand {
-
-	public async run(msg: KlasaMessage, [num, firstUnit, secondUnit]: [number, MassUnit, MassUnit]) {
-		const convertedValue = getConvertedValue(num, firstUnit, secondUnit);
-
-		const embed = new MessageEmbed()
-			.addFields(
-				{ name: getFullUnitName(firstUnit, true), value: num, inline: true },
-				{ name: getFullUnitName(secondUnit, true), value: convertedValue, inline: true }
-			)
-			.setColor(0x71adcf);
-
-		return msg.channel.send(embed);
-	}
-
-}
+export default class extends UnitConversionCommand { }

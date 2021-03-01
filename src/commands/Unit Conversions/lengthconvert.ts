@@ -1,14 +1,10 @@
 import { ApplyOptions, CreateResolvers } from '@skyra/decorators';
-import { SteveCommand } from '@lib/structures/commands/SteveCommand';
-import { CommandOptions, KlasaMessage } from 'klasa';
-import { MessageEmbed } from 'discord.js';
-import { lengthUnits, LengthUnit, getConvertedValue, getFullUnitName } from '@lib/util/UnitConversion';
-
+import { CommandOptions } from 'klasa';
+import { UnitConversionCommand, lengthUnits } from '@lib/structures/commands/UnitConversionCommand';
 @ApplyOptions<CommandOptions>({
 	aliases: ['length'],
 	description: lang => lang.tget('commandLengthConvertDescription'),
-	extendedHelp: lang => lang.tget('commandLengthConvertExtended'),
-	usage: '<number:number> <firstUnit:unit> <secondUnit:unit>'
+	extendedHelp: lang => lang.tget('commandLengthConvertExtended')
 })
 @CreateResolvers([
 	[
@@ -54,19 +50,4 @@ import { lengthUnits, LengthUnit, getConvertedValue, getFullUnitName } from '@li
 		}
 	]
 ])
-export default class extends SteveCommand {
-
-	public async run(msg: KlasaMessage, [num, firstUnit, secondUnit]: [number, LengthUnit, LengthUnit]) {
-		const convertedValue = getConvertedValue(num, firstUnit, secondUnit);
-
-		const embed = new MessageEmbed()
-			.addFields(
-				{ name: getFullUnitName(firstUnit, true), value: num, inline: true },
-				{ name: getFullUnitName(secondUnit, true), value: convertedValue, inline: true }
-			)
-			.setColor(0x71adcf);
-
-		return msg.channel.send(embed);
-	}
-
-}
+export default class extends UnitConversionCommand { }

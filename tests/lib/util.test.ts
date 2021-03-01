@@ -1,33 +1,7 @@
 /* eslint-disable no-undef */
 
 import { formatDate, friendlyDuration } from '../../src/lib/util/util';
-import { getConvertedValue, getFullUnitName } from '../../src/lib/util/UnitConversion';
 import { Time } from '../../src/lib/types/Enums';
-
-describe('UnitConversion', () => {
-
-	describe('getConvertedValue', () => {
-
-		test('GIVEN temperatures THEN return correctly rounded value', () => {
-			expect(getConvertedValue(25.7, 'C', 'R')).toBe(537.93);
-		});
-
-	});
-
-	describe('getFullUnitName', () => {
-
-		test('GIVEN only unit abbreviation, THEN return singular unit name', () => {
-			expect(getFullUnitName('cm')).toBe('Centimeter');
-			expect(getFullUnitName('F')).toBe('degree Fahrenheit');
-		});
-
-		test('GIVEN unit abbreviation and true boolean, THEN return plural unit name', () => {
-			expect(getFullUnitName('cm', true)).toBe('Centimeters');
-			expect(getFullUnitName('F', true)).toBe('degrees Fahrenheit');
-		});
-	});
-
-});
 
 describe('Util', () => {
 
