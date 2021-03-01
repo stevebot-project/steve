@@ -1,12 +1,8 @@
 import { ApplyOptions, CreateResolvers } from '@skyra/decorators';
 import { SteveCommand } from '@lib/structures/commands/SteveCommand';
 import { CommandOptions, KlasaMessage } from 'klasa';
-import convert = require('convert-units');
 import { MessageEmbed } from 'discord.js';
-
-const lengthUnits = ['mm', 'cm', 'm', 'in', 'ft-us', 'ft', 'mi', 'km'] as const;
-type LengthUnitTuple = typeof lengthUnits;
-type LengthUnit = LengthUnitTuple[number];
+import { lengthUnits, LengthUnit, getConvertedValue, getFullUnitName } from '@lib/util/UnitConversion';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['length'],
@@ -61,25 +57,16 @@ type LengthUnit = LengthUnitTuple[number];
 export default class extends SteveCommand {
 
 	public async run(msg: KlasaMessage, [num, firstUnit, secondUnit]: [number, LengthUnit, LengthUnit]) {
-		const convertedValue = this.getConvertedValue(num, firstUnit, secondUnit);
+		const convertedValue = getConvertedValue(num, firstUnit, secondUnit);
 
 		const embed = new MessageEmbed()
 			.addFields(
-				{ name: this.getFullUnitName(firstUnit), value: num, inline: true },
-				{ name: this.getFullUnitName(secondUnit), value: convertedValue, inline: true }
+				{ name: getFullUnitName(firstUnit, true), value: num, inline: true },
+				{ name: getFullUnitName(secondUnit, true), value: convertedValue, inline: true }
 			)
 			.setColor(0x71adcf);
 
 		return msg.channel.send(embed);
-	}
-
-	private getConvertedValue(num: number, firstUnit: LengthUnit, secondUnit: LengthUnit) {
-		// eslint-disable-next-line newline-per-chained-call
-		return Number(convert(num).from(firstUnit).to(secondUnit).toFixed(2));
-	}
-
-	private getFullUnitName(unit: LengthUnit) {
-		return convert().describe(unit).plural;
 	}
 
 }

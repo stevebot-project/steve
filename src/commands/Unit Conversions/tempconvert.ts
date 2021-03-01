@@ -2,8 +2,7 @@ import { SteveCommand } from '@lib/structures/commands/SteveCommand';
 import { ApplyOptions, CreateResolvers } from '@skyra/decorators';
 import { MessageEmbed } from 'discord.js';
 import { CommandOptions, KlasaMessage } from 'klasa';
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const convert = require('convert-units');
+import { temperatureUnits, TemperatureUnit, getConvertedValue, getFullUnitName } from '@lib/util/UnitConversion';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['temp'],
@@ -17,7 +16,8 @@ const convert = require('convert-units');
 		(str, possible, msg) => {
 			str = str.toUpperCase();
 
-			if (['C', 'F', 'K', 'R'].includes(str)) return str;
+			// @ts-expect-error 2345
+			if (temperatureUnits.includes(str)) return str;
 			if (str === 'CELSIUS' || str === 'FAHRENHEIT' || str === 'KELVIN' || str === 'RANKINE') return str[1];
 
 			throw msg.language.tget('commandTempConvertInvalidUnit', str);
@@ -26,24 +26,17 @@ const convert = require('convert-units');
 ])
 export default class extends SteveCommand {
 
-	public async run(msg: KlasaMessage, [num, unitConvertingFrom, unitConvertingTo]: [number, temperatureUnit, temperatureUnit]) {
-		// eslint-disable-next-line newline-per-chained-call
-		const convertedValue = Number(convert(num).from(unitConvertingFrom).to(unitConvertingTo).toFixed(2));
+	public async run(msg: KlasaMessage, [num, firstUnit, secondUnit]: [number, TemperatureUnit, TemperatureUnit]) {
+		const convertedValue = getConvertedValue(num, firstUnit, secondUnit);
 
 		const embed = new MessageEmbed()
 			.addFields(
-				{ name: this.getFullUnitName(unitConvertingFrom), value: num, inline: true },
-				{ name: this.getFullUnitName(unitConvertingTo), value: convertedValue, inline: true }
+				{ name: getFullUnitName(firstUnit).split(' ')[1], value: num, inline: true },
+				{ name: getFullUnitName(secondUnit).split(' ')[1], value: convertedValue, inline: true }
 			)
 			.setColor(0x71adcf);
 
 		return msg.channel.send(embed);
 	}
 
-	private getFullUnitName(unit: temperatureUnit) {
-		return convert().describe(unit).singular.split(' ')[1];
-	}
-
 }
-
-type temperatureUnit = 'C' | 'F' | 'K' | 'R';
