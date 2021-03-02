@@ -189,6 +189,8 @@ declare module 'klasa' {
 		commandCatExtended: string;
 		commandDogDescription: string;
 		commandDogExtended: string;
+		commandFoxDescription: string;
+		commandFoxExtended: string;
 		commandRockPaperScissorsDescription: string;
 		commandRockPaperScissorsExtended: string;
 		commandRockPaperScissorsWinner: (playerMove: string, steveMove: string, winner: number) => string;

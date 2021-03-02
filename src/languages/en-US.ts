@@ -414,6 +414,10 @@ export default class extends Language {
 		commandDogExtended: builder.display('dog', {
 			extendedHelp: 'This command grabs random dog images from the Dog API at https://dog.ceo/dog-api.'
 		}),
+		commandFoxDescription: 'Get a random fox picture',
+		commandFoxExtended: builder.display('fox', {
+			extendedHelp: 'This command grabs random fox pictures frm the fox API at https://randomfox.ca.'
+		}),
 		commandRockPaperScissorsDescription: `Play a game of rock, paper, scissors against ${botName}`,
 		commandRockPaperScissorsExtended: builder.display('rps', {
 			examples: [
