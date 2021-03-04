@@ -19,9 +19,9 @@ export default class extends SteveCommand {
 	private yarnUrl = 'https://registry.yarnpkg.com';
 
 	public async run(msg: KlasaMessage, [pkg]: [string]) {
-		const res = await axios.get<YarnPackage>(`${this.yarnUrl}/${pkg}`);
+		try {
+			const res = await axios.get<YarnPackage>(`${this.yarnUrl}/${pkg}`);
 
-		if (res.statusText === 'OK') {
 			const yarnPkg = res.data;
 			const embedData = msg.language.tget('commandYarnEmbed');
 
@@ -35,9 +35,9 @@ export default class extends SteveCommand {
 				.setURL(`https://yarnpkg.com/en/package/${yarnPkg.name}`);
 
 			return msg.channel.send(embed);
+		} catch {
+			return msg.channel.send(msg.language.tget('commandYarnPackageNotFound', pkg));
 		}
-
-		return msg.channel.send(msg.language.tget('commandYarnPackageNotFound', pkg));
 	}
 
 }
