@@ -169,6 +169,13 @@ declare module 'klasa' {
 		argumentTimespanInvalid: (arg: string) => string;
 		argumentUsernameCannotFind: (search: string) => string;
 		argumentUsernameMultiple: (users: string) => string;
+		commandYarnDescription: string;
+		commandYarnExtended: string;
+		commandYarnPackageNotFound: (package: string) => string;
+		commandYarnEmbed: {
+			description: (author: string | undefined, description: string, license: string) => string;
+			footer: (version: string, date: string) => string;
+		};
 		commandLyricsDescription: string;
 		commandLyricsExtended: string;
 		commandLyricsEmbed: {

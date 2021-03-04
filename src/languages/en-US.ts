@@ -360,6 +360,22 @@ export default class extends Language {
 		argumentUsernameMultiple: users => `Found multiple users: \`${users}\`.`,
 		/**
 		 * ################################
+		 * #      DEVELOPER COMMANDS      #
+		 * ################################
+		 */
+		commandYarnDescription: 'Get information about an yarn/npm package',
+		commandYarnExtended: builder.display('yarn', {
+			examples: [
+				'discord.js'
+			]
+		}),
+		commandYarnPackageNotFound: pkg => `I couldn't find a package by searching with **${pkg}**.`,
+		commandYarnEmbed: {
+			description: (author, description, license) => `*${description}*\n\n**Author:** ${author ?? 'Unknown Author'}\n**License:** ${license}`,
+			footer: (version, date) => `Latest version: ${version} | Last updated: ${date}`
+		},
+		/**
+		 * ################################
 		 * #      MISCELLANEOUS COMMANDS  #
 		 * ################################
 		 */
