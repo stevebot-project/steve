@@ -7,7 +7,8 @@ import { UserSettings } from '@lib/types/settings/UserSettings';
 import { ApplyOptions, CreateResolvers } from '@skyra/decorators';
 import { chunk } from '@klasa/utils';
 import * as prettyMilliseconds from 'pretty-ms';
-import { floatPromise } from '@utils/util';
+import { floatPromise, sendLoadingMessage } from '@utils/util';
+import { ImageAssets } from '@lib/types/Enums';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['remindme', 'reminders', 'myreminders'],
@@ -55,9 +56,7 @@ export default class extends SteveCommand {
 		const reminders = this.client.schedule.getUserReminders(msg.author.id);
 		if (reminders.length < 1) throw msg.language.tget('commandRemindNoReminders');
 
-		const response = await msg.send(new MessageEmbed()
-			.setDescription('Loading...')
-			.setColor(msg.author.settings.get(UserSettings.EmbedColor) as ColorResolvable || 0xadcb27));
+		const response = await sendLoadingMessage(msg) as KlasaMessage;
 
 		const embedData = msg.language.tget('commandRemindViewEmbed');
 
@@ -138,7 +137,7 @@ export default class extends SteveCommand {
 		return new MessageEmbed()
 			.setColor(msg.author.settings.get(UserSettings.EmbedColor) as ColorResolvable || 0xadcb27)
 			.setTitle(embedData.title)
-			.setThumbnail('https://github.com/tuataria/steve/blob/master/assets/images/alarmclock.png?raw=true');
+			.setThumbnail(ImageAssets.AlarmClock);
 	}
 
 }
