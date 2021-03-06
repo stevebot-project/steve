@@ -6,6 +6,7 @@ import { friendlyDuration } from '@utils/util';
 import { Reminder } from '@root/src/extendables/Schedule';
 import { UserSettings } from '@lib/types/settings/UserSettings';
 import { ApplyOptions, CreateResolvers } from '@skyra/decorators';
+import { ImageAssets } from '@lib/types/Enums';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['remindme', 'reminders', 'myreminders'],
@@ -63,11 +64,10 @@ export default class extends SteveCommand {
 		const embedData = msg.language.tget('commandRemindViewEmbed');
 
 		const embed = new MessageEmbed()
-			.attachFiles(['./assets/images/alarmclock.png'])
 			.setColor(msg.author.settings.get(UserSettings.EmbedColor) as ColorResolvable || 0xadcb27)
 			.setDescription(output)
 			.setTitle(embedData.title)
-			.setThumbnail('attachment://alarmclock.png');
+			.setThumbnail(ImageAssets.AlarmClock);
 
 		return msg.channel.send(embed);
 	}

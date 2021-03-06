@@ -1,4 +1,5 @@
 export const enum ImageAssets {
+	AlarmClock = 'https://stevebot.xyz/steveassets/alarmclock.png',
 	DiscordLogo = 'https://discord.com/assets/2c21aeda16de354ba5334551a883b481.png',
 	Dog = 'https://stevebot.xyz/steveassets/animals/dog.png',
 	Fox = 'https://stevebot.xyz/steveassets/animals/fox.png',
