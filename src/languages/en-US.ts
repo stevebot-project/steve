@@ -52,7 +52,18 @@ const dftba = [
 
 const loading = [
 	'Reticulating splines...',
-	'Gathering eucalyptus...'
+	'Gathering eucalyptus...',
+	'Waking up from my nap...',
+	'Readying the ban hammer...',
+	'Polishing the kick mallet...',
+	'Not forgetting to be awesome...',
+	'Impatiently waiting for the next Halo...',
+	'Working on my book...',
+	'Making sure my pants are packed...',
+	'Planning my next move...',
+	'Attaining world domination...',
+	'Making a sea shanty...',
+	'Scheming with Carl...'
 ];
 
 const Perms = {
