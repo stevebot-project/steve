@@ -50,6 +50,11 @@ const dftba = [
 	'Dynamic Flavors That Bring Amazement'
 ];
 
+const loading = [
+	'Reticulating splines...',
+	'Gathering eucalyptus...'
+];
+
 const Perms = {
 	ADMINISTRATOR: 'Administrator',
 	CREATE_INSTANT_INVITE: 'Create Instant Invite',
@@ -89,10 +94,15 @@ export default class extends Language {
 
 	public caseActions = caseActions;
 	public dftba = dftba;
+	public loadingMessages = loading;
 	public PERMISSIONS = Perms;
 
 	public get randomDftba(): string {
 		return this.dftba[Math.floor(Math.random() * this.dftba.length)];
+	}
+
+	public get randomLoadingMessage() {
+		return this.loadingMessages[Math.floor(Math.random() * this.loadingMessages.length)];
 	}
 
 

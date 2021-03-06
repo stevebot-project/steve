@@ -1,7 +1,7 @@
 import { SteveCommand } from '@lib/structures/commands/SteveCommand';
 import { CommandOptions, KlasaMessage } from 'klasa';
 import { EmbedField, Message, MessageEmbed } from 'discord.js';
-import { formatDate } from '@utils/util';
+import { formatDate, sendLoadingMessage } from '@utils/util';
 import { ApplyOptions } from '@skyra/decorators';
 import axios from 'axios';
 
@@ -17,10 +17,12 @@ export default class extends SteveCommand {
 		const url = 'https://srhpyqt94yxb.statuspage.io/api/v2/summary.json';
 		const embedData = msg.language.tget('commandDiscordStatusEmbed');
 
+		const response = await sendLoadingMessage(msg);
+
 		const { data: currentStatus, statusText } = await axios.get<DiscordStatus>(url);
 
 		if (statusText !== 'OK') {
-			return msg.channel.send(msg.language.tget('commandDiscordStatusError'));
+			return response.edit(msg.language.tget('commandDiscordStatusError'));
 		}
 
 		const fields: EmbedField[] = [];
@@ -62,7 +64,7 @@ export default class extends SteveCommand {
 			.setFooter(embedData.footer(formatDate(new Date(currentStatus.page.updated_at))))
 			.setColor('BLURPLE');
 
-		return msg.channel.send(embed);
+		return response.edit(undefined, embed);
 
 	}
 

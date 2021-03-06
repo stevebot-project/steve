@@ -40,6 +40,7 @@ declare module 'klasa' {
 		dftba: string[];
 		PERMISSIONS: PermissionStrings;
 		randomDftba: string;
+		randomLoadingMessage: string;
 		tget<T extends SimpleLanguageKeys>(term: T): LanguageKeys[T];
 		tget<T extends ComplexLanguageKeys>(term: T, ...args: Parameters<LanguageKeys[T]>): ReturnType<LanguageKeys[T]>;
 	}

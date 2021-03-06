@@ -1,4 +1,5 @@
 export const enum Emojis {
+	LOADING = '<a:loading_spinner:817151391377653770>',
 	MINUS = '<:minus:693881833007611996>',
 	PLUS = '<:plus:693881818675675136>',
 	REDX = '<:red_x:688365693485187072>'
