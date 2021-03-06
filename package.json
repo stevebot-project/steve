@@ -1,6 +1,6 @@
 {
   "name": "steve",
-  "version": "3.16.0",
+  "version": "3.18.0",
   "description": "Discord bot for Tuataria and its sideservers.",
   "main": "dist/src/bot.js",
   "scripts": {
