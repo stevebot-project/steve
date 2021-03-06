@@ -1,5 +1,7 @@
 import { SteveCommand } from '@lib/structures/commands/SteveCommand';
+import { ImageAssets } from '@lib/types/Enums';
 import { ApplyOptions } from '@skyra/decorators';
+import { sendLoadingMessage } from '@utils/util';
 import axios from 'axios';
 import { MessageEmbed } from 'discord.js';
 import { CommandOptions, KlasaMessage } from 'klasa';
@@ -10,22 +12,25 @@ import { CommandOptions, KlasaMessage } from 'klasa';
 	cooldownLevel: 'author',
 	description: lang => lang.tget('commandDogDescription'),
 	extendedHelp: lang => lang.tget('commandDogExtended'),
-	requiredPermissions: ['ATTACH_FILES', 'EMBED_LINKS']
+	requiredPermissions: ['EMBED_LINKS']
 })
 export default class extends SteveCommand {
 
 	private dogUrl = 'https://dog.ceo/api/breeds/image/random';
 
 	public async run(msg: KlasaMessage) {
-		const { data } = await axios.get<DogResponse>(this.dogUrl);
-
+		const response = await sendLoadingMessage(msg);
 		const embed = new MessageEmbed();
 
-		data.status === 'success'
-			? embed.setImage(data.message)
-			: embed.attachFiles(['./assets/images/animals/dog.jpg']).setImage('attachment://dog.jpg');
+		try {
+			const { data } = await axios.get<DogResponse>(this.dogUrl);
 
-		return msg.channel.send(embed);
+			embed.setImage(data.message);
+		} catch {
+			embed.setImage(ImageAssets.Dog);
+		}
+
+		return response.edit(undefined, embed);
 	}
 
 }

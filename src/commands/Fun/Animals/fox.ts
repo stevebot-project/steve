@@ -1,5 +1,7 @@
 import { SteveCommand } from '@lib/structures/commands/SteveCommand';
+import { ImageAssets } from '@lib/types/Enums';
 import { ApplyOptions } from '@skyra/decorators';
+import { sendLoadingMessage } from '@utils/util';
 import axios from 'axios';
 import { MessageEmbed } from 'discord.js';
 import { CommandOptions, KlasaMessage } from 'klasa';
@@ -13,19 +15,17 @@ import { CommandOptions, KlasaMessage } from 'klasa';
 })
 export default class extends SteveCommand {
 
-	private foxUrl = 'https://randomfox.ca/floof';
+	private foxUrl = 'https://randomfox.ca/';
 
 	public async run(msg: KlasaMessage) {
-		const res = await axios.get<FoxResponse>(this.foxUrl);
+		const response = await sendLoadingMessage(msg);
 
-		const embed = new MessageEmbed();
+		const { data } = await axios.get<FoxResponse>(this.foxUrl);
 
-		res.data.image
-			? embed.setImage(res.data.image)
-			: embed.attachFiles(['./assets/images/animals/fox.png']).setImage('attachment://fox.png');
+		const embed = new MessageEmbed()
+			.setImage(data.image ?? ImageAssets.Fox);
 
-
-		return msg.channel.send(embed);
+		return response.edit(undefined, embed);
 	}
 
 }

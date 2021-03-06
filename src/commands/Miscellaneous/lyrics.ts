@@ -4,6 +4,7 @@ import { SteveCommand } from '@lib/structures/commands/SteveCommand';
 import { Message, MessageEmbed } from 'discord.js';
 import { TOKENS } from '@root/config';
 import { ApplyOptions } from '@skyra/decorators';
+import { sendLoadingMessage } from '@utils/util';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['genius'],
@@ -18,6 +19,7 @@ export default class extends SteveCommand {
 	}
 
 	public async run(msg: KlasaMessage, [song]: [string]): Promise<Message> {
+		const response = await sendLoadingMessage(msg);
 		const Client = new Genius.Client(TOKENS.GENIUS);
 		const songs = await Client.songs.search(song);
 
@@ -36,7 +38,7 @@ export default class extends SteveCommand {
 				]);
 		}
 
-		return msg.channel.send(embed);
+		return response.edit(undefined, embed);
 	}
 
 }

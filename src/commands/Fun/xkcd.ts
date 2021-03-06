@@ -1,6 +1,6 @@
 import { SteveCommand } from '@lib/structures/commands/SteveCommand';
 import { ApplyOptions } from '@skyra/decorators';
-import { formatDate } from '@utils/util';
+import { formatDate, sendLoadingMessage } from '@utils/util';
 import { MessageEmbed } from 'discord.js';
 import { CommandOptions, KlasaMessage } from 'klasa';
 import { oneLine } from 'common-tags';
@@ -31,6 +31,8 @@ interface XkcdComic {
 export default class extends SteveCommand {
 
 	public async run(msg: KlasaMessage, [comicID]: [number]) {
+		const response = await sendLoadingMessage(msg);
+
 		const comic = comicID
 			? await this.getXkcdByNumber(comicID).catch(() => { throw msg.language.tget('commandXkcdInvalid'); })
 			: await this.getCurrentXkcd();
@@ -43,7 +45,7 @@ export default class extends SteveCommand {
 			.setTitle(oneLine`${comic.safe_title} (#${comic.num},
 				${formatDate(new Date(Number(comic.year), Number(comic.month) - 1, Number(comic.day)), 'YYYY MMMM Do')})`);
 
-		return msg.channel.send(embed);
+		return response.edit(undefined, embed);
 	}
 
 	private async getCurrentXkcd() {

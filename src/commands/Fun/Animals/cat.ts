@@ -17,6 +17,7 @@ export default class extends SteveCommand {
 	private catUrl = 'https://cataas.com/cat';
 
 	public async run(msg: KlasaMessage) {
+		// TODO: loading message?
 		const embed = new MessageEmbed();
 
 		try {
