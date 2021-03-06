@@ -1,6 +1,6 @@
 {
   "name": "steve",
-  "version": "3.14.0",
+  "version": "3.18.0",
   "description": "Discord bot for Tuataria and its sideservers.",
   "main": "dist/src/bot.js",
   "scripts": {
@@ -10,7 +10,8 @@
     "dev": "tsc -p . && node --harmony dist/src/Steve.js",
     "dev-clear": "rm -rf dist && tsc -p . && node --harmony dist/src/Steve.js",
     "test": "jest",
-    "lint": "eslint src --ext .ts --fix",
+    "lint": "eslint src --ext .ts",
+    "lint-fix": "eslint src --ext .ts --fix",
     "contrib:add": "all-contributors add"
   },
   "repository": {
@@ -28,6 +29,7 @@
     "@skyra/decorators": "^3.0.0",
     "axios": "^0.21.1",
     "common-tags": "^1.8.0",
+    "convert-units": "^2.3.4",
     "discord.js": "^12.5.1",
     "genius-lyrics": "^4.0.0",
     "klasa": "git://github.com/tuataria/klasa.git#725632bfcfc135bc49f5b102b67c726dac72d015",
@@ -48,6 +50,7 @@
     "@babel/preset-env": "^7.12.11",
     "@types/backoff": "^2.5.1",
     "@types/common-tags": "^1.8.0",
+    "@types/convert-units": "^2.3.3",
     "@types/jest": "^26.0.20",
     "@types/mongodb": "^3.3.16",
     "@types/node-fetch": "^2.5.4",

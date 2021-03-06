@@ -31,6 +31,7 @@ export class ModerationCases {
 		this.manager = manager;
 	}
 
+	// eslint-disable-next-line max-len
 	public async createCase(action: string, moderator: User, target: User, reason: string, duration: number | undefined, task: ScheduledTask | null): Promise<ModerationCase> {
 		const newCase: ModerationCase
 			= {

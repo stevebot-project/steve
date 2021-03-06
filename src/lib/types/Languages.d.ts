@@ -122,7 +122,8 @@ declare module 'klasa' {
 		commandConfUserDescription: string;
 		commandConfUserExtended: string;
 		commandConfUser: (key: string, list: string) => string;
-		commandStats: (memUsage: number, uptime: string, users: number, guilds: number, channels: number, klasaVersion: string, discordVersion: string, processVersion: string) => string[];
+		commandStats: (memUsage: number, uptime: string, users: number, guilds: number, channels: number, klasaVersion: string,
+			discordVersion: string, processVersion: string) => string[];
 		commandStatsDescription: string;
 		commandStatsExtended: string;
 		commandStatsEmbed: {
@@ -168,6 +169,13 @@ declare module 'klasa' {
 		argumentTimespanInvalid: (arg: string) => string;
 		argumentUsernameCannotFind: (search: string) => string;
 		argumentUsernameMultiple: (users: string) => string;
+		commandYarnDescription: string;
+		commandYarnExtended: string;
+		commandYarnPackageNotFound: (package: string) => string;
+		commandYarnEmbed: {
+			description: (author: string | undefined, description: string, license: string) => string;
+			footer: (version: string, date: string) => string;
+		};
 		commandLyricsDescription: string;
 		commandLyricsExtended: string;
 		commandLyricsEmbed: {
@@ -184,6 +192,12 @@ declare module 'klasa' {
 		commandRateDescription: string;
 		commandRateExtended: string;
 		commandRateResponse: (thing: string, rating: number) => string;
+		commandCatDescription: string;
+		commandCatExtended: string;
+		commandDogDescription: string;
+		commandDogExtended: string;
+		commandFoxDescription: string;
+		commandFoxExtended: string;
 		commandRockPaperScissorsDescription: string;
 		commandRockPaperScissorsExtended: string;
 		commandRockPaperScissorsWinner: (playerMove: string, steveMove: string, winner: number) => string;
@@ -455,6 +469,13 @@ declare module 'klasa' {
 		commandFeedbackNoChannel: string;
 		commandFeedbackSent: string;
 		commandSupportDescription: string;
+		invalidUnit: (unit: string) => string;
+		commandTempConvertDescription: string;
+		commandTempConvertExtended: string;
+		commandLengthConvertDescription: string;
+		commandLengthConvertExtended: string;
+		commandMassConvertDescription: string;
+		commandMassConvertExtended: string;
 		commandToggleChannelCreateDescription: string;
 		commandToggleChannelCreate: (disabled: boolean) => string;
 		commandToggleChannelDeleteDescription: string;

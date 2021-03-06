@@ -1,6 +1,7 @@
-import { Guild, GuildAuditLogsAction, MessageEmbed, User } from 'discord.js';
+import { Guild, GuildAuditLogsAction, Message, MessageEmbed, User } from 'discord.js';
 import { Client, util, RichDisplay } from 'klasa';
 import { chunk } from '@klasa/utils';
+import { Emojis } from '@lib/types/Enums';
 import * as prettyMilliseconds from 'pretty-ms';
 import * as moment from 'moment';
 
@@ -60,4 +61,8 @@ export function richDisplayList(items: string[], chunkSize: number, stringPrefix
 	}
 
 	return display;
+}
+
+export function sendLoadingMessage(msg: Message) {
+	return msg.channel.send(new MessageEmbed().setColor(0x71adcf).setDescription(`${Emojis.LOADING} ${msg.language.randomLoadingMessage}`));
 }

@@ -46,7 +46,24 @@ const dftba = [
 	'Dead Frogs Teach Bored Anatomists',
 	'Duel For The Best Acronym',
 	'Dandelions Fly Through Blue Air',
-	'Dragons Fight Ten Bald Assassins'
+	'Dragons Fight Ten Bald Assassins',
+	'Dynamic Flavors That Bring Amazement'
+];
+
+const loading = [
+	'Reticulating splines...',
+	'Gathering eucalyptus...',
+	'Waking up from my nap...',
+	'Readying the ban hammer...',
+	'Polishing the kick mallet...',
+	'Not forgetting to be awesome...',
+	'Impatiently waiting for the next Halo...',
+	'Working on my book...',
+	'Making sure my pants are packed...',
+	'Planning my next move...',
+	'Attaining world domination...',
+	'Making a sea shanty...',
+	'Scheming with Carl...'
 ];
 
 const Perms = {
@@ -88,10 +105,15 @@ export default class extends Language {
 
 	public caseActions = caseActions;
 	public dftba = dftba;
+	public loadingMessages = loading;
 	public PERMISSIONS = Perms;
 
 	public get randomDftba(): string {
 		return this.dftba[Math.floor(Math.random() * this.dftba.length)];
+	}
+
+	public get randomLoadingMessage() {
+		return this.loadingMessages[Math.floor(Math.random() * this.loadingMessages.length)];
 	}
 
 
@@ -359,6 +381,22 @@ export default class extends Language {
 		argumentUsernameMultiple: users => `Found multiple users: \`${users}\`.`,
 		/**
 		 * ################################
+		 * #      DEVELOPER COMMANDS      #
+		 * ################################
+		 */
+		commandYarnDescription: 'Get information about an yarn/npm package',
+		commandYarnExtended: builder.display('yarn', {
+			examples: [
+				'discord.js'
+			]
+		}),
+		commandYarnPackageNotFound: pkg => `I couldn't find a package by searching with **${pkg}**.`,
+		commandYarnEmbed: {
+			description: (author, description, license) => `*${description}*\n\n**Author:** ${author ?? 'Unknown Author'}\n**License:** ${license}`,
+			footer: (version, date) => `Latest version: ${version} | Last updated: ${date}`
+		},
+		/**
+		 * ################################
 		 * #      MISCELLANEOUS COMMANDS  #
 		 * ################################
 		 */
@@ -405,6 +443,18 @@ export default class extends Language {
 			reminder: 'Things to be rated have a maximum length of 500 characters.'
 		}),
 		commandRateResponse: (thing, rating) => `${botName} gives \`${thing}\` a ${rating}!`,
+		commandCatDescription: 'Get a random cat picture',
+		commandCatExtended: builder.display('cat', {
+			extendedHelp: 'This command grabs random cat pictures from the cat API at https://cataas.com.'
+		}),
+		commandDogDescription: 'Get a random dog picture',
+		commandDogExtended: builder.display('dog', {
+			extendedHelp: 'This command grabs random dog images from the Dog API at https://dog.ceo/dog-api.'
+		}),
+		commandFoxDescription: 'Get a random fox picture',
+		commandFoxExtended: builder.display('fox', {
+			extendedHelp: 'This command grabs random fox pictures frm the fox API at https://randomfox.ca.'
+		}),
 		commandRockPaperScissorsDescription: `Play a game of rock, paper, scissors against ${botName}`,
 		commandRockPaperScissorsExtended: builder.display('rps', {
 			examples: [
@@ -1128,6 +1178,43 @@ export default class extends Language {
 		commandFeedbackNoChannel: 'The specified feedback channel for this bot does not exist; contact a bot owner.',
 		commandFeedbackSent: 'Your feedback has been sent, thanks!',
 		commandSupportDescription: `Get a link to ${botName}'s support server.`,
+		/**
+		 * ################################
+		 * #   UNIT CONVERSION COMMANDS   #
+		 * ################################
+		 */
+		invalidUnit: unit => `**${unit}** is not vaild/supported unit.`,
+		commandTempConvertDescription: 'Easily convert temperatures',
+		commandTempConvertExtended: builder.display('tempconvert', {
+			examples: [
+				'32|f|c',
+				'0|celsius|fahrenheit'
+			],
+			explainedUsage: [
+				['unit', 'Supported units: Celsius (C), Fahrenheit (F), Kelvin (K), Rankine (R)']
+			]
+		}),
+		commandLengthConvertDescription: 'Easily convert lengths',
+		commandLengthConvertExtended: builder.display('lengthconvert', {
+			examples: [
+				'100|cm|m',
+				'5|miles|feet'
+			],
+			explainedUsage: [
+				['unit', 'Supported units: millimeters (mm), centimeters (cm), meters (m), kilometers (km), inches (in), International Feet (ft), U.S. Survey Feet (ft-us), miles (mi). Using "feet" as an argument will map to International Feet.']
+			],
+			reminder: 'There\'s functionally no difference between the two kinds of feet.'
+		}),
+		commandMassConvertDescription: 'Easily convert masses',
+		commandMassConvertExtended: builder.display('massconvert', {
+			examples: [
+				'1000|g|kg',
+				'16|ounces|pounds'
+			],
+			explainedUsage: [
+				['unit', 'Supported units: micrograms (mcg), milligrams (mg), grams (g), kilograms (kg), ounces (oz), pounds (lb), metric tonnes (mt), tons (t).']
+			]
+		}),
 		/**
 		 * ################################
 		 * #  LOG EVENT  TOGGLE COMMANDS  #

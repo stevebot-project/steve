@@ -1,9 +1,10 @@
 import { SteveCommand } from '@lib/structures/commands/SteveCommand';
 import { CommandOptions, KlasaMessage } from 'klasa';
 import { EmbedField, Message, MessageEmbed } from 'discord.js';
-import { formatDate } from '@utils/util';
+import { formatDate, sendLoadingMessage } from '@utils/util';
 import { ApplyOptions } from '@skyra/decorators';
 import axios from 'axios';
+import { ImageAssets } from '@lib/types/Enums';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['ds', 'discstatus', 'isdiscordbroke'],
@@ -13,14 +14,17 @@ import axios from 'axios';
 })
 export default class extends SteveCommand {
 
+	private baseUrl = 'https://srhpyqt94yxb.statuspage.io/api/v2/summary.json';
+
 	public async run(msg: KlasaMessage): Promise<Message> {
-		const url = 'https://srhpyqt94yxb.statuspage.io/api/v2/summary.json';
 		const embedData = msg.language.tget('commandDiscordStatusEmbed');
 
-		const { data: currentStatus, statusText } = await axios.get<DiscordStatus>(url);
+		const response = await sendLoadingMessage(msg);
+
+		const { data: currentStatus, statusText } = await axios.get<DiscordStatus>(this.baseUrl);
 
 		if (statusText !== 'OK') {
-			return msg.channel.send(msg.language.tget('commandDiscordStatusError'));
+			return response.edit(msg.language.tget('commandDiscordStatusError'), { embed: null });
 		}
 
 		const fields: EmbedField[] = [];
@@ -57,12 +61,12 @@ export default class extends SteveCommand {
 				? currentStatus.incidents.map(i => i.name).join('\n')
 				: embedData.noIncidents))
 			.addFields(fields)
-			.setThumbnail('https://discord.com/assets/2c21aeda16de354ba5334551a883b481.png')
+			.setThumbnail(ImageAssets.DiscordLogo)
 			.setTimestamp()
 			.setFooter(embedData.footer(formatDate(new Date(currentStatus.page.updated_at))))
 			.setColor('BLURPLE');
 
-		return msg.channel.send(embed);
+		return response.edit(undefined, embed);
 
 	}
 

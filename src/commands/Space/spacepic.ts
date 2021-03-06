@@ -4,7 +4,7 @@ import { TOKENS } from '@root/config';
 import axios from 'axios';
 import { MessageEmbed } from 'discord.js';
 import { ApplyOptions } from '@skyra/decorators';
-import { formatDate } from '@utils/util';
+import { formatDate, sendLoadingMessage } from '@utils/util';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['apod'],
@@ -12,6 +12,7 @@ import { formatDate } from '@utils/util';
 	cooldownLevel: 'author',
 	description: lang => lang.tget('commandSpacePicDescription'),
 	extendedHelp: lang => lang.tget('commandSpacePicExtended'),
+	requiredPermissions: ['EMBED_LINKS'],
 	usage: '[date:date]'
 })
 export default class extends SteveCommand {
@@ -23,6 +24,8 @@ export default class extends SteveCommand {
 	}
 
 	public async run(msg: KlasaMessage, [date]: [Date]) {
+		const response = await sendLoadingMessage(msg);
+
 		try {
 			const res = await axios.get<ApodResponse>(`${this.baseUrl}${date ? `&date=${formatDate(date, 'YYYY-MM-DD')}` : ''}`);
 
@@ -36,10 +39,10 @@ export default class extends SteveCommand {
 
 				if (data.copyright) embed.setFooter(`Copyright ${data.copyright}`);
 
-				return msg.channel.send(embed);
+				return response.edit(undefined, embed);
 			}
 		} catch {
-			return msg.channel.send(msg.language.tget('commandSpacePicError'));
+			return response.edit(msg.language.tget('commandSpacePicError'), { embed: null });
 		}
 	}
 

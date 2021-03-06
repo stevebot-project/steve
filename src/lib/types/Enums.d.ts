@@ -1,4 +1,13 @@
+export const enum ImageAssets {
+	AlarmClock = 'https://stevebot.xyz/steveassets/alarmclock.png',
+	DiscordLogo = 'https://discord.com/assets/2c21aeda16de354ba5334551a883b481.png',
+	Dog = 'https://stevebot.xyz/steveassets/animals/dog.png',
+	Fox = 'https://stevebot.xyz/steveassets/animals/fox.png',
+	NodeJs = 'https://stevebot.xyz/steveassets/nodejs.png'
+}
+
 export const enum Emojis {
+	LOADING = '<a:loading_spinner:817151391377653770>',
 	MINUS = '<:minus:693881833007611996>',
 	PLUS = '<:plus:693881818675675136>',
 	REDX = '<:red_x:688365693485187072>'
