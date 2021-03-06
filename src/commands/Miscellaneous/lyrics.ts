@@ -23,7 +23,7 @@ export default class extends SteveCommand {
 		const Client = new Genius.Client(TOKENS.GENIUS);
 		const songs = await Client.songs.search(song);
 
-		if (songs.length < 1) throw msg.language.tget('commandLyricsNoLyrics');
+		if (songs.length < 1) return response.edit('commandLyricsNoLyrics', { embed: null });
 
 		const embedData = msg.language.tget('commandLyricsEmbed');
 

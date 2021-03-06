@@ -1,6 +1,7 @@
 import { SteveCommand } from '@lib/structures/commands/SteveCommand';
+import { ImageAssets } from '@lib/types/Enums';
 import { ApplyOptions } from '@skyra/decorators';
-import { formatDate } from '@utils/util';
+import { formatDate, sendLoadingMessage } from '@utils/util';
 import axios from 'axios';
 import { MessageEmbed } from 'discord.js';
 import { CommandOptions, KlasaMessage } from 'klasa';
@@ -19,24 +20,23 @@ export default class extends SteveCommand {
 	private yarnUrl = 'https://registry.yarnpkg.com';
 
 	public async run(msg: KlasaMessage, [pkg]: [string]) {
+		const response = await sendLoadingMessage(msg);
 		try {
-			const res = await axios.get<YarnPackage>(`${this.yarnUrl}/${pkg}`);
+			const { data } = await axios.get<YarnPackage>(`${this.yarnUrl}/${pkg.toLowerCase()}`);
 
-			const yarnPkg = res.data;
 			const embedData = msg.language.tget('commandYarnEmbed');
 
 			const embed = new MessageEmbed()
-				.attachFiles(['./assets/images/nodejs.png'])
-				.setDescription(embedData.description(yarnPkg.author?.name, yarnPkg.description, yarnPkg.license))
-				.setFooter(embedData.footer(yarnPkg['dist-tags'].latest, formatDate(new Date(yarnPkg.time[yarnPkg['dist-tags'].latest]))))
-				.setThumbnail('attachment://nodejs.png')
-				.setTitle(yarnPkg.name)
+				.setDescription(embedData.description(data.author?.name, data.description, data.license))
+				.setFooter(embedData.footer(data['dist-tags'].latest, formatDate(new Date(data.time[data['dist-tags'].latest]))))
+				.setThumbnail(ImageAssets.NodeJs)
+				.setTitle(data.name)
 				.setTimestamp()
-				.setURL(`https://yarnpkg.com/en/package/${yarnPkg.name}`);
+				.setURL(`https://yarnpkg.com/en/package/${data.name}`);
 
-			return msg.channel.send(embed);
+			return response.edit(undefined, embed);
 		} catch {
-			return msg.channel.send(msg.language.tget('commandYarnPackageNotFound', pkg));
+			return response.edit(msg.language.tget('commandYarnPackageNotFound', pkg), { embed: null });
 		}
 	}
 

@@ -1,7 +1,8 @@
 export const enum ImageAssets {
 	DiscordLogo = 'https://discord.com/assets/2c21aeda16de354ba5334551a883b481.png',
 	Dog = 'https://stevebot.xyz/steveassets/animals/dog.png',
-	Fox = 'https://stevebot.xyz/steveassets/animals/fox.png'
+	Fox = 'https://stevebot.xyz/steveassets/animals/fox.png',
+	NodeJs = 'https://stevebot.xyz/steveassets/nodejs.png'
 }
 
 export const enum Emojis {

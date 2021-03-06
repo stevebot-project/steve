@@ -24,7 +24,7 @@ export default class extends SteveCommand {
 		const { data: currentStatus, statusText } = await axios.get<DiscordStatus>(this.baseUrl);
 
 		if (statusText !== 'OK') {
-			return response.edit(msg.language.tget('commandDiscordStatusError'));
+			return response.edit(msg.language.tget('commandDiscordStatusError'), { embed: null });
 		}
 
 		const fields: EmbedField[] = [];

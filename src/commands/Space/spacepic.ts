@@ -42,7 +42,7 @@ export default class extends SteveCommand {
 				return response.edit(undefined, embed);
 			}
 		} catch {
-			return response.edit(msg.language.tget('commandSpacePicError'));
+			return response.edit(msg.language.tget('commandSpacePicError'), { embed: null });
 		}
 	}
 
