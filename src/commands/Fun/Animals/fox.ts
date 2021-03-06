@@ -15,7 +15,7 @@ import { CommandOptions, KlasaMessage } from 'klasa';
 })
 export default class extends SteveCommand {
 
-	private foxUrl = 'https://randomfox.ca/';
+	private foxUrl = 'https://randomfox.ca/floof';
 
 	public async run(msg: KlasaMessage) {
 		const response = await sendLoadingMessage(msg);
