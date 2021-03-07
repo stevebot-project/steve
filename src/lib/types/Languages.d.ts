@@ -323,6 +323,8 @@ declare module 'klasa' {
 		commandSnoozeExtended: string;
 		commandSnoozeNoRemind: string;
 		commandSnoozeCreated: (content: string, duration: string) => string;
+		commandSetSnoozeDescription: string;
+		commandSetSnoozeSet: (duration: string) => string;
 		commandPomodoroDescription: string;
 		commandPomodoroExtended: string;
 		commandPomodoroUnderConstruction: string;
