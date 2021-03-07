@@ -805,6 +805,17 @@ export default class extends Language {
 		commandRemindViewEmbed: {
 			title: 'Pending Reminders'
 		},
+		commandSnoozeDescription: 'Repeat your last reminder.',
+		commandSnoozeExtended: builder.display('snooze', {
+			examples: [
+				'',
+				'5m'
+			],
+			reminder: 'You can only snooze reminders that happened in the past 5 minutes.',
+			extendedHelp: 'You can change your default snooze time with the `setsnooze` command.'
+		}),
+		commandSnoozeCreated: (content, duration) => `I'll remind you **${content}** in ${duration}.`,
+		commandSnoozeNoRemind: 'It looks like you haven\'t had any reminders go off in the past 5 minutes.',
 		/**
 		 * ################################
 		 * #      POMODORO                #

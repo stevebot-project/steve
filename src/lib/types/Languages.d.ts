@@ -319,6 +319,10 @@ declare module 'klasa' {
 		commandRemindViewEmbed: {
 			title: string;
 		};
+		commandSnoozeDescription: string;
+		commandSnoozeExtended: string;
+		commandSnoozeNoRemind: string;
+		commandSnoozeCreated: (content: string, duration: string) => string;
 		commandPomodoroDescription: string;
 		commandPomodoroExtended: string;
 		commandPomodoroUnderConstruction: string;
