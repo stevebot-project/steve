@@ -1,5 +1,7 @@
 import { SteveCommand } from '@lib/structures/commands/SteveCommand';
+import { ImageAssets } from '@lib/types/Enums';
 import { ApplyOptions } from '@skyra/decorators';
+import { sendLoadingMessage } from '@utils/util';
 import axios from 'axios';
 import { MessageEmbed } from 'discord.js';
 import { CommandOptions, KlasaMessage } from 'klasa';
@@ -10,27 +12,34 @@ import { CommandOptions, KlasaMessage } from 'klasa';
 	cooldownLevel: 'author',
 	description: lang => lang.tget('commandCatDescription'),
 	extendedHelp: lang => lang.tget('commandCatExtended'),
-	requiredPermissions: ['ATTACH_FILES', 'EMBED_LINKS']
+	requiredPermissions: ['EMBED_LINKS']
 })
 export default class extends SteveCommand {
 
-	private catUrl = 'https://cataas.com/cat';
+	private catUrl = 'https://cataas.com';
 
 	public async run(msg: KlasaMessage) {
-		// TODO: loading message?
+		const response = await sendLoadingMessage(msg);
 		const embed = new MessageEmbed();
 
 		try {
-			const res = await axios.get(this.catUrl, { responseType: 'arraybuffer' });
-			const img = Buffer.from(res.data);
+			const { data } = await axios.get<CatResponse>(`${this.catUrl}/cat?json=true`);
 
-			embed.attachFiles([{ attachment: img, name: 'randomcat.jpg' }]).setImage('attachment://randomcat.jpg');
+			embed.setImage(data.url
+				? `${this.catUrl}${data.url}`
+				: ImageAssets.Cat);
 		} catch {
-			embed.attachFiles(['./assets/images/animals/cat.png']).setImage('attachment://cat.png');
+			embed.setImage(ImageAssets.Cat);
 		}
 
-
-		return msg.channel.send(embed);
+		return response.edit(undefined, embed);
 	}
 
+}
+
+interface CatResponse {
+	id: string;
+	created_at: string;
+	tags: string[];
+	url: string;
 }
