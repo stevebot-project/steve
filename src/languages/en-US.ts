@@ -817,7 +817,7 @@ export default class extends Language {
 		commandSnoozeCreated: (content, duration) => `I'll remind you **${content}** in ${duration}.`,
 		commandSnoozeNoRemind: 'It looks like you haven\'t had any reminders go off in the past 5 minutes.',
 		commandSetSnoozeDescription: 'Set your default snooze duration.',
-		commandSetSnoozeSet: (duration) => `Your default snooze duration is now ${duration}.`,
+		commandSetSnoozeSet: duration => `Your default snooze duration is now ${duration}.`,
 		/**
 		 * ################################
 		 * #      POMODORO                #
