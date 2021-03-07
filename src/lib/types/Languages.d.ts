@@ -318,6 +318,7 @@ declare module 'klasa' {
 		commandReminderDisplayHidden: string;
 		commandRemindViewEmbed: {
 			title: string;
+			fieldValues: (time: string) => string;
 		};
 		commandPomodoroDescription: string;
 		commandPomodoroExtended: string;

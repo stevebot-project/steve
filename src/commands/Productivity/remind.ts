@@ -1,11 +1,13 @@
 import { SteveCommand } from '@lib/structures/commands/SteveCommand';
-import { CommandOptions, KlasaMessage } from 'klasa';
-import { ColorResolvable, Message, MessageEmbed, TextChannel } from 'discord.js';
+import { CommandOptions, KlasaMessage, RichDisplay } from 'klasa';
+import { ColorResolvable, EmbedField, Message, MessageEmbed, TextChannel } from 'discord.js';
 import { GuildSettings } from '@lib/types/settings/GuildSettings';
-import { friendlyDuration } from '@utils/util';
 import { Reminder } from '@root/src/extendables/Schedule';
 import { UserSettings } from '@lib/types/settings/UserSettings';
 import { ApplyOptions, CreateResolvers } from '@skyra/decorators';
+import { chunk } from '@klasa/utils';
+import * as prettyMilliseconds from 'pretty-ms';
+import { floatPromise, sendLoadingMessage } from '@utils/util';
 import { ImageAssets } from '@lib/types/Enums';
 
 @ApplyOptions<CommandOptions>({
@@ -47,29 +49,60 @@ export default class extends SteveCommand {
 			? reminderChannel
 			: msg.channel.id);
 
-		return msg.channel.send(msg.language.tget('commandRemindCreated', friendlyDuration(duration)));
+		return msg.channel.send(msg.language.tget('commandRemindCreated', this.getTimeUntilRemind(duration)));
 	}
 
 	public async view(msg: KlasaMessage): Promise<Message> {
-		let output = '';
 		const reminders = this.client.schedule.getUserReminders(msg.author.id);
 		if (reminders.length < 1) throw msg.language.tget('commandRemindNoReminders');
 
-		for (let i = 0; i < reminders.length; i++) {
-			const reminder = reminders[i];
-			const display = await this.getReminderDisplayContent(msg, reminder);
-			output += `**${i + 1}**: ${display} (${friendlyDuration(reminder.time.getTime() - Date.now())} left!)\n\n`;
-		}
+		const response = await sendLoadingMessage(msg) as KlasaMessage;
 
 		const embedData = msg.language.tget('commandRemindViewEmbed');
 
-		const embed = new MessageEmbed()
-			.setColor(msg.author.settings.get(UserSettings.EmbedColor) as ColorResolvable || 0xadcb27)
-			.setDescription(output)
-			.setTitle(embedData.title)
-			.setThumbnail(ImageAssets.AlarmClock);
+		if (msg.channel.type !== 'dm') {
+			const display = new RichDisplay(this.buildViewEmbed(msg));
 
-		return msg.channel.send(embed);
+			for (const page of chunk(reminders, 5)) {
+				const fields: EmbedField[] = [];
+
+				for (let i = 0; i < page.length; i++) {
+					const displayMessage = await this.getReminderDisplayContent(msg, page[i]);
+					fields.push({
+						name: `**${reminders.indexOf(page[i]) + 1}: ${displayMessage}**`,
+						value: embedData.fieldValues(this.getTimeUntilRemind(page[i])),
+						inline: false
+					});
+				}
+
+				display.addPage((template: MessageEmbed) => template.addFields(fields));
+			}
+
+			await display.run(response);
+			return response;
+		}
+
+		const embeds: MessageEmbed[] = [];
+
+		for (const page of chunk(reminders, 25)) {
+			const fields: EmbedField[] = [];
+
+			for (let i = 0; i < page.length; i++) {
+				const displayMessage = await this.getReminderDisplayContent(msg, page[i]);
+				fields.push({
+					name: `**${reminders.indexOf(page[i]) + 1}: ${displayMessage}**`,
+					value: embedData.fieldValues(this.getTimeUntilRemind(page[i])),
+					inline: false
+				});
+			}
+
+			embeds.push(this.buildViewEmbed(msg).addFields(fields));
+		}
+		embeds.reverse();
+
+		floatPromise(this, response.edit(embeds.pop()));
+		embeds.forEach(embed => msg.channel.send(embed));
+		return response;
 	}
 
 	public async cancel(msg: KlasaMessage, [reminderNum]: [number]): Promise<Message> {
@@ -92,6 +125,19 @@ export default class extends SteveCommand {
 		return channelID === reminderUser.dmChannel.id && msg.channel.id !== reminderUser.dmChannel.id
 			? msg.language.tget('commandReminderDisplayHidden')
 			: reminder.data.content;
+	}
+
+	private getTimeUntilRemind(reminder: Reminder | number): string {
+		if (typeof (reminder) === 'number') return prettyMilliseconds(reminder, { verbose: true, secondsDecimalDigits: 0 });
+		return prettyMilliseconds(reminder.time.getTime() - Date.now(), { verbose: true, secondsDecimalDigits: 0 });
+	}
+
+	private buildViewEmbed(msg: Message): MessageEmbed {
+		const embedData = msg.language.tget('commandRemindViewEmbed');
+		return new MessageEmbed()
+			.setColor(msg.author.settings.get(UserSettings.EmbedColor) as ColorResolvable || 0xadcb27)
+			.setTitle(embedData.title)
+			.setThumbnail(ImageAssets.AlarmClock);
 	}
 
 }
