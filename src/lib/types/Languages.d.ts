@@ -133,6 +133,7 @@ declare module 'klasa' {
 				users: string;
 				guilds: string;
 				channels: string;
+				steve: string;
 				klasa: string;
 				discordjs: string;
 				node: string;

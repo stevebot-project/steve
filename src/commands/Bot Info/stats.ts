@@ -1,5 +1,6 @@
 import { CommandOptions, KlasaMessage, Duration, version as klasaVersion } from 'klasa';
 import { MessageEmbed, version as discordVersion } from 'discord.js';
+import { version as steveVersion } from '@root/package.json';
 import { SteveCommand } from '@lib/structures/commands/SteveCommand';
 import { ApplyOptions } from '@skyra/decorators';
 
@@ -32,6 +33,7 @@ export default class extends SteveCommand {
 				{ name: embedData.fieldTitles.users, value: (users || this.client.users.cache.size).toLocaleString() },
 				{ name: embedData.fieldTitles.guilds, value: (guilds || this.client.guilds.cache.size).toLocaleString() },
 				{ name: embedData.fieldTitles.channels, value: (channels || this.client.channels.cache.size).toLocaleString() },
+				{ name: embedData.fieldTitles.steve, value: `v${steveVersion}` },
 				{ name: embedData.fieldTitles.klasa, value: `v${klasaVersion}` },
 				{ name: embedData.fieldTitles.discordjs, value: `v${discordVersion}` },
 				{ name: embedData.fieldTitles.node, value: process.version }
