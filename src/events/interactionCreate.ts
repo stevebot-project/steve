@@ -16,13 +16,13 @@ export default class extends Event {
 				this.client.emit(Events.AudinoSlash, guild!, channel);
 				break;
 			case 'dftba':
-				this.client.emit(Events.DftbaSlash, guild!, channel);
+				this.client.emit(Events.DftbaSlash, data.id, data.token, this.client.languages.default);
 				break;
 			case 'payrespects':
 				this.client.emit(Events.PayRespectsSlash, guild!, channel);
 				break;
 			case 'rps':
-				this.client.emit(Events.RpsSlash, guild!, channel, data.data.options[0].value);
+				this.client.emit(Events.RpsSlash, data.data.options[0].value, data.id, data.token, this.client.languages.default);
 				break;
 			case 'whoami':
 				this.client.emit(Events.WhoAmISlash, guild!, channel, data.member);
