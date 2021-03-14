@@ -8,24 +8,12 @@ import { inspect } from 'util';
 export default class extends Event {
 
 	public run(data: InteractionCreatePacket) {
-		const guild = this.client.guilds.cache.get(data.guild_id) ?? null;
-		const channel = guild ? guild.channels.cache.get(data.channel_id) : null;
-
 		switch (data.data.name) {
-			case 'audino':
-				this.client.emit(Events.AudinoSlash, guild!, channel);
-				break;
 			case 'dftba':
 				this.client.emit(Events.DftbaSlash, data.id, data.token, this.client.languages.default);
 				break;
-			case 'payrespects':
-				this.client.emit(Events.PayRespectsSlash, guild!, channel);
-				break;
 			case 'rps':
 				this.client.emit(Events.RpsSlash, data.data.options[0].value, data.id, data.token, this.client.languages.default);
-				break;
-			case 'whoami':
-				this.client.emit(Events.WhoAmISlash, guild!, channel, data.member);
 				break;
 			default:
 				this.client.console.log(inspect(data, { depth: 4 }));
@@ -45,7 +33,7 @@ interface InteractionCreatePacket {
 	channel_id: string;
 }
 
-export interface InteractionCreatePacketMember {
+interface InteractionCreatePacketMember {
 	user: InteractionCreatePacketMemberUser;
 	roles: string[];
 	premium_since: Date | null;
