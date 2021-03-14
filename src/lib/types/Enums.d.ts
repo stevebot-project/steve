@@ -23,6 +23,12 @@ export const enum Events {
 	WhoAmISlash = 'whoAmISlash'
 }
 
+export const enum InteractionResponseTypes {
+	Pong = 1,
+	ChannelMessageWithSource = 4,
+	DeferredChannelMessageWithSource = 5
+}
+
 export const enum LogColors {
 	BLUE = 0x3a34eb,
 	PINK = 0xfc0ce8,

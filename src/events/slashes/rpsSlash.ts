@@ -1,15 +1,17 @@
-import { Event } from 'klasa';
+import { Event, Language } from 'klasa';
 import { checkWinner, chooseRandomPlay, rpsPlay } from '@lib/util/RockPaperScissors';
-import { Guild, GuildChannel } from 'discord.js';
+import axios from 'axios';
+import { InteractionResponseTypes } from '@lib/types/Enums';
 
 export default class extends Event {
 
-	public run(guild: Guild, channel: GuildChannel, playerPlay: rpsPlay) {
-		if (channel.isText()) {
-			const stevePlay = chooseRandomPlay();
-			const winner = checkWinner(stevePlay, playerPlay);
-			return channel.send(guild.language.tget('commandRockPaperScissorsWinner', playerPlay, stevePlay, winner));
-		}
+	public run(playerPlay: rpsPlay, interactionID: string, interactionToken: string, lang: Language) {
+		const stevePlay = chooseRandomPlay();
+		const winner = checkWinner(stevePlay, playerPlay);
+
+		const url = `https://discord.com/api/v8/interactions/${interactionID}/${interactionToken}/callback`;
+
+		return axios.post(url, { type: InteractionResponseTypes.ChannelMessageWithSource, data: { content: lang.tget('commandRockPaperScissorsWinner', playerPlay, stevePlay, winner) } });
 	}
 
 }
