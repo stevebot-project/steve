@@ -333,7 +333,7 @@ export default class extends Language {
 				users: 'Users',
 				guilds: 'Guilds',
 				channels: 'Channels',
-				steve: 'Steve Version',
+				steve: `${botName} Version`,
 				klasa: 'Klasa Version',
 				discordjs: 'Discord.js Version',
 				node: 'Node.js Version'
