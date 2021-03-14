@@ -15,12 +15,9 @@ export const enum Emojis {
 }
 
 export const enum Events {
-	AudinoSlash = 'audinoSlash',
 	DftbaSlash = 'dftbaSlash',
 	InteractionCreate = 'interactionCreate',
-	PayRespectsSlash = 'payRespectsSlash',
-	RpsSlash = 'rpsSlash',
-	WhoAmISlash = 'whoAmISlash'
+	RpsSlash = 'rpsSlash'
 }
 
 export const enum InteractionResponseTypes {
