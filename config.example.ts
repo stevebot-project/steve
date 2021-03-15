@@ -3,7 +3,9 @@ import { KlasaClientOptions } from 'klasa';
 
 export const TOKENS = {
 	BOT_TOKEN: '', // put your bot's token here
-	GENIUS: '' // get a genius api key and put it here (https://docs.genius.com/)
+	GENIUS: '', // get a genius api key and put it here (https://docs.genius.com/)
+	NASA: '',
+	WOLFRAM: '' // get an app id from https://products.wolframalpha.com/api/
 };
 
 export const CLIENT_ID = ''; // put your bot's client id here
