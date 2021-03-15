@@ -2,5 +2,6 @@
 export namespace UserSettings {
 
 	export const EmbedColor = 'embedColor';
+	export const SnoozeDuration = 'snoozeDuration';
 
 }

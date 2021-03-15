@@ -807,6 +807,19 @@ export default class extends Language {
 			title: 'Pending Reminders',
 			fieldValues: time => `${time} left!`
 		},
+		commandSnoozeDescription: 'Repeat your last reminder.',
+		commandSnoozeExtended: builder.display('snooze', {
+			examples: [
+				'',
+				'5m'
+			],
+			reminder: 'You can only snooze reminders that happened in the past 5 minutes.',
+			extendedHelp: 'You can change your default snooze time with the `setsnooze` command.'
+		}),
+		commandSnoozeCreated: (content, duration) => `I'll remind you **${content}** in ${duration}.`,
+		commandSnoozeNoRemind: 'It looks like you haven\'t had any reminders go off in the past 5 minutes.',
+		commandSetSnoozeDescription: 'Set your default snooze duration.',
+		commandSetSnoozeSet: duration => `Your default snooze duration is now ${duration}.`,
 		/**
 		 * ################################
 		 * #      POMODORO                #

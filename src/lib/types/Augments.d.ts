@@ -48,7 +48,9 @@ declare module 'klasa' {
 	interface Schedule {
 		createModerationTask(taskName: ModerationTask, duration: number, taskData: ModerationTaskData): Promise<ScheduledTask>;
 		createReminder(duration: number, userID: string, content: string, channelID: string): Promise<Reminder>;
+		createSnooze(userID: string, content: string, channelID: string): Promise<Reminder>;
 		getUserReminders(userID: string): Reminder[];
+		getUserSnooze(userID: string): Reminder;
 	}
 }
 
