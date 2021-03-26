@@ -1388,8 +1388,18 @@ export default class extends Language {
 		 * #         SERIALIZERS           #
 		 * ################################
 		 */
+
 		serializerColorInvalidHex: code => `${code} is not a valid hex.`,
-		serializerTrustedRoleSettingInvalidSetting: setting => `${setting} is not a valid setting for giveTrustedRoleOn.`
+		serializerTrustedRoleSettingInvalidSetting: setting => `${setting} is not a valid setting for giveTrustedRoleOn.`,
+		/**
+		 * ################################
+		 * #         INTERACTIONS         #
+		 * ################################
+		 */
+		interactionMustBeInGuild: 'This slash command only works in servers!',
+		interactionAssignList: prefix => `You can see the list of self-assignable roles by doing \`${prefix}assign --list\`. The ability to see them with this slash command is coming Soon.`,
+		interactionAssignRoleNotAssignable: roleName => `The **${roleName}** role is not self-assignable.`,
+		interactionAssignMissingPermission: `I can't run this slash command without the ${this.PERMISSIONS.MANAGE_ROLES} permission!`
 	};
 
 

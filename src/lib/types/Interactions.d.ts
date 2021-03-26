@@ -23,6 +23,7 @@ export interface InteractionCreatePacket {
 export interface InteractionCreatePacketData {
 	resolved: {
 		members?: Record<string, InteractionCreatePacketMember>;
+		roles?: Record<string, InteractionResolvedRole>;
 		users?: Record<string, InteractionCreatePacketMemberUser>;
 	};
 	options: InteractionCreatePacketDataOptions[];
@@ -33,6 +34,7 @@ export interface InteractionCreatePacketData {
 export interface InteractionCreatePacketDataOptions {
 	name: string;
 	value: string;
+	options: [{ value: string; type: number; name: string }];
 }
 
 export interface InteractionCreatePacketMember {
@@ -54,6 +56,17 @@ export interface InteractionCreatePacketMemberUser {
 	avatar: string;
 	discriminator: string;
 	public_flags: number;
+}
+
+export interface InteractionResolvedRole {
+	position: number;
+	permissions: string;
+	name: string;
+	mentionable: boolean;
+	managed: boolean;
+	id: string;
+	hoist: string;
+	color: number;
 }
 
 export interface InteractionResponseData {

@@ -618,5 +618,9 @@ declare module 'klasa' {
 		inhibitorPingprotectionEveryone: string;
 		serializerColorInvalidHex: (code: string) => string;
 		serializerTrustedRoleSettingInvalidSetting: (setting: string) => string;
+		interactionMustBeInGuild: string;
+		interactionAssignList: (prefix: string) => string;
+		interactionAssignRoleNotAssignable: (roleName: string) => string;
+		interactionAssignMissingPermission: string;
 	}
 }
