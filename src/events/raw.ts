@@ -1,10 +1,10 @@
 import { Event } from 'klasa';
-import { Events } from '@lib/types/Enums';
+import { CustomEvents } from '@lib/types/Enums';
 
 export default class extends Event {
 
 	public run(packet: RawEventPacket) {
-		if (packet.t === 'INTERACTION_CREATE') this.client.emit(Events.InteractionCreate, packet.d);
+		if (packet.t === 'INTERACTION_CREATE') this.client.emit(CustomEvents.InteractionCreate, packet.d);
 	}
 
 }
