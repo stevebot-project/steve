@@ -10,10 +10,10 @@ export default class extends Event {
 	public run(data: InteractionCreatePacket) {
 		switch (data.data.name) {
 			case 'dftba':
-				this.client.emit(Events.DftbaSlash, data.id, data.token, this.client.languages.default);
+				this.client.emit(Events.DftbaSlash, data);
 				break;
 			case 'rps':
-				this.client.emit(Events.RpsSlash, data.data.options[0].value, data.id, data.token, this.client.languages.default);
+				this.client.emit(Events.RpsSlash, data);
 				break;
 			default:
 				this.client.console.log(inspect(data, { depth: 4 }));
@@ -22,7 +22,7 @@ export default class extends Event {
 
 }
 
-interface InteractionCreatePacket {
+export interface InteractionCreatePacket {
 	version: number;
 	type: number;
 	token: string;

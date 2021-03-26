@@ -1,17 +1,15 @@
-import { Event, Language } from 'klasa';
 import { checkWinner, chooseRandomPlay, rpsPlay } from '@lib/util/RockPaperScissors';
-import axios from 'axios';
-import { InteractionResponseTypes } from '@lib/types/Enums';
+import { InteractionResponseData, ApplicationCommand } from '@lib/structures/events/ApplicationCommand';
+import { InteractionCreatePacket } from '../interactionCreate';
 
-export default class extends Event {
+export default class extends ApplicationCommand {
 
-	public run(playerPlay: rpsPlay, interactionID: string, interactionToken: string, lang: Language) {
+	// eslint-disable-next-line @typescript-eslint/require-await
+	public async handle(data: InteractionCreatePacket): Promise<InteractionResponseData> {
+		const playerPlay = data.data.options[0].value as rpsPlay;
 		const stevePlay = chooseRandomPlay();
-		const winner = checkWinner(stevePlay, playerPlay);
 
-		const url = `https://discord.com/api/v8/interactions/${interactionID}/${interactionToken}/callback`;
-
-		return axios.post(url, { type: InteractionResponseTypes.ChannelMessageWithSource, data: { content: lang.tget('commandRockPaperScissorsWinner', playerPlay, stevePlay, winner) } });
+		return { content: this.client.languages.default.tget('commandRockPaperScissorsWinner', playerPlay, stevePlay, checkWinner(stevePlay, playerPlay)) };
 	}
 
 }

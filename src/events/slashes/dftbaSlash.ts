@@ -1,13 +1,10 @@
-import { Event, Language } from 'klasa';
-import axios from 'axios';
-import { InteractionResponseTypes } from '@lib/types/Enums';
+import { InteractionResponseData, ApplicationCommand } from '@lib/structures/events/ApplicationCommand';
 
-export default class extends Event {
+export default class extends ApplicationCommand {
 
-	public run(interactionID: string, interactionToken: string, lang: Language) {
-		const url = `https://discord.com/api/v8/interactions/${interactionID}/${interactionToken}/callback`;
-
-		return axios.post(url, { type: InteractionResponseTypes.ChannelMessageWithSource, data: { content: lang.randomDftba } });
+	// eslint-disable-next-line @typescript-eslint/require-await
+	public async handle(): Promise<InteractionResponseData> {
+		return { content: this.client.languages.default.randomDftba };
 	}
 
 }
