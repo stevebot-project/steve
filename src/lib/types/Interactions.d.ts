@@ -21,6 +21,10 @@ export interface InteractionCreatePacket {
 }
 
 export interface InteractionCreatePacketData {
+	resolved: {
+		members?: Record<string, InteractionCreatePacketMember>;
+		users?: Record<string, InteractionCreatePacketMemberUser>;
+	};
 	options: InteractionCreatePacketDataOptions[];
 	name: string;
 	id: string;

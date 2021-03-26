@@ -10,6 +10,9 @@ export default class extends Event {
 
 	public run(data: InteractionCreatePacket) {
 		switch (data.data.name) {
+			case 'avatar':
+				this.client.emit(ApplicationCommands.Avatar, data);
+				break;
 			case 'dftba':
 				this.client.emit(ApplicationCommands.Dftba, data);
 				break;
