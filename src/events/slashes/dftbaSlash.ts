@@ -1,4 +1,5 @@
-import { InteractionResponseData, ApplicationCommand } from '@lib/structures/events/ApplicationCommand';
+import { ApplicationCommand } from '@lib/structures/events/ApplicationCommand';
+import { InteractionResponseData } from '@lib/types/Interactions';
 
 export default class extends ApplicationCommand {
 

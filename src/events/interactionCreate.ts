@@ -4,6 +4,7 @@
 import { Event } from 'klasa';
 import { Events } from '@lib/types/Enums';
 import { inspect } from 'util';
+import { InteractionCreatePacket } from '@lib/types/Interactions';
 
 export default class extends Event {
 
@@ -22,45 +23,3 @@ export default class extends Event {
 
 }
 
-export interface InteractionCreatePacket {
-	version: number;
-	type: number;
-	token: string;
-	member: InteractionCreatePacketMember;
-	id: string;
-	guild_id: string;
-	data: InteractionCreatePacketData;
-	channel_id: string;
-}
-
-interface InteractionCreatePacketMember {
-	user: InteractionCreatePacketMemberUser;
-	roles: string[];
-	premium_since: Date | null;
-	permissions: string;
-	pending: boolean;
-	nick: string;
-	mute: boolean;
-	joined_at: Date;
-	is_pending: false;
-	deaf: boolean;
-}
-
-interface InteractionCreatePacketMemberUser {
-	id: string;
-	username: string;
-	avatar: string;
-	discriminator: string;
-	public_flags: number;
-}
-
-interface InteractionCreatePacketData {
-	options: InteractionCreatePacketDataOptions[];
-	name: string;
-	id: string;
-}
-
-interface InteractionCreatePacketDataOptions {
-	name: string;
-	value: string;
-}

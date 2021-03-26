@@ -1,6 +1,6 @@
 import { checkWinner, chooseRandomPlay, rpsPlay } from '@lib/util/RockPaperScissors';
-import { InteractionResponseData, ApplicationCommand } from '@lib/structures/events/ApplicationCommand';
-import { InteractionCreatePacket } from '../interactionCreate';
+import { ApplicationCommand } from '@lib/structures/events/ApplicationCommand';
+import { InteractionCreatePacket, InteractionResponseData } from '@lib/types/Interactions';
 
 export default class extends ApplicationCommand {
 

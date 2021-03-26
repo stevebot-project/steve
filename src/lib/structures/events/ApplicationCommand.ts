@@ -1,7 +1,6 @@
 import { InteractionResponseTypes } from '@lib/types/Enums';
-import { InteractionCreatePacket } from '@root/src/events/interactionCreate';
+import { InteractionCreatePacket, InteractionResponseData } from '@lib/types/Interactions';
 import axios from 'axios';
-import { MessageEmbed } from 'discord.js';
 import { Event } from 'klasa';
 
 export abstract class ApplicationCommand extends Event {
@@ -15,20 +14,3 @@ export abstract class ApplicationCommand extends Event {
 	public abstract handle(data: InteractionCreatePacket): Promise<InteractionResponseData>;
 
 }
-
-export interface InteractionResponseData {
-	tts?: boolean;
-	content?: string;
-	embeds?: MessageEmbed[];
-	allowed_mentions?: AllowedMentions;
-	flags?: number;
-}
-
-interface AllowedMentions {
-	parse: AllowedMentionsTypes[];
-	roles: string[];
-	users: string[];
-	replied_user: boolean;
-}
-
-type AllowedMentionsTypes = 'roles' | 'users' | 'everyone';
