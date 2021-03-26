@@ -14,6 +14,7 @@ declare module 'discord.js' {
 	}
 
 	interface GuildMember {
+		canUseSelfAssign: boolean;
 		isAdmin: boolean;
 		isMod: boolean;
 		isStaff: boolean;

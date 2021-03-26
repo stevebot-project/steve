@@ -30,10 +30,8 @@ export default class extends SteveCommand {
 	public async run(msg: GuildMessage, roles: Role[]): Promise<Message | null> {
 		if (Reflect.has(msg.flagArgs, 'list')) return this.listAssignableRoles(msg);
 
-		const trustedRoleID = msg.guild.settings.get(GuildSettings.Roles.Trusted);
-		const trustedRoleRequirement = msg.guild.settings.get(GuildSettings.Roles.RequireTrustedRoleForSelfAssign) as boolean;
-
-		if (trustedRoleID && trustedRoleRequirement && !msg.member.roles.cache.has(trustedRoleID)) {
+		if (!msg.member.canUseSelfAssign) {
+			const trustedRoleID = msg.guild.settings.get(GuildSettings.Roles.Trusted);
 			throw msg.guild.language.tget('commandAssignRoleNeedTrusted', msg.guild.roles.cache.get(trustedRoleID)!.name);
 		}
 
