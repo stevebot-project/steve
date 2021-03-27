@@ -20,7 +20,7 @@ export default class extends ApplicationCommand {
 
 			if (!guild.me!.permissions.has('MANAGE_ROLES')) return { content: guild.language.tget('interactionAssignMissingPermission') };
 
-			const role = data.data.resolved.roles![data.data.options[0].options[0].value];
+			const role = data.data.resolved.roles![data.data.options[0].options[0].value as string];
 			const assignableRoles = guild.settings.get(GuildSettings.Roles.Assignable) as string[];
 			if (!assignableRoles.includes(role.id)) return { content: guild.language.tget('interactionAssignRoleNotAssignable', role.name) };
 

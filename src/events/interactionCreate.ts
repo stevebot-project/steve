@@ -16,6 +16,9 @@ export default class extends Event {
 			case 'avatar':
 				this.client.emit(ApplicationCommands.Avatar, data);
 				break;
+			case 'convert':
+				this.client.emit(ApplicationCommands.Convert, data);
+				break;
 			case 'dftba':
 				this.client.emit(ApplicationCommands.Dftba, data);
 				break;

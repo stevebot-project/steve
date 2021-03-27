@@ -15,7 +15,7 @@ type LengthUnit = LengthUnitTuple[number];
 type MassUnit = MassUnitTuple[number];
 type TemperatureUnit = TemperatureUnitTuple[number];
 
-type ConversionUnit = LengthUnit | MassUnit | TemperatureUnit;
+export type ConversionUnit = LengthUnit | MassUnit | TemperatureUnit;
 
 export abstract class UnitConversionCommand extends SteveCommand {
 

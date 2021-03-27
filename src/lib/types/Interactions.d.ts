@@ -1,6 +1,7 @@
 import { MessageEmbed } from 'discord.js';
 
 export type AllowedMentionsTypes = 'roles' | 'users' | 'everyone';
+export type ConvertApplicationCommandSubcommand = 'temperature' | 'length' | 'mass';
 
 export interface AllowedMentions {
 	parse: AllowedMentionsTypes[];
@@ -34,7 +35,7 @@ export interface InteractionCreatePacketData {
 export interface InteractionCreatePacketDataOptions {
 	name: string;
 	value: string;
-	options: [{ value: string; type: number; name: string }];
+	options: { value: string | number | boolean; type: number; name: string }[];
 }
 
 export interface InteractionCreatePacketMember {
