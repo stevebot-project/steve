@@ -3,7 +3,7 @@ import { InteractionCreatePacket, InteractionResponseData } from '@lib/types/Int
 import axios from 'axios';
 import { Event } from 'klasa';
 
-export abstract class ApplicationCommand extends Event {
+export abstract class SimpleApplicationCommand extends Event {
 
 	public async run(data: InteractionCreatePacket) {
 		const responseData = await this.handle(data);
