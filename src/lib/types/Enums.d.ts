@@ -3,7 +3,8 @@ export const enum ApplicationCommands {
 	Avatar = 'avatar',
 	Convert = 'convert',
 	Dftba = 'dftba',
-	Rps = 'rps'
+	Rps = 'rps',
+	Whois = 'whois'
 }
 
 export const enum CustomEvents {

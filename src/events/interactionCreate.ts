@@ -25,6 +25,9 @@ export default class extends Event {
 			case 'rps':
 				this.client.emit(ApplicationCommands.Rps, data);
 				break;
+			case 'whois':
+				this.client.emit(ApplicationCommands.Whois, data);
+				break;
 			default:
 				this.client.console.log(inspect(data, { depth: 4 }));
 		}
