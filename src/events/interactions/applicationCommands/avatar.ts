@@ -1,7 +1,11 @@
-import { SimpleApplicationCommand } from '@lib/structures/events/SimpleApplicationCommand';
+import { SimpleApplicationCommand, SimpleApplicationCommandOptions } from '@lib/structures/events/SimpleApplicationCommand';
 import { InteractionCreatePacket, InteractionResponseData } from '@lib/types/Interactions';
+import { ApplyOptions } from '@skyra/decorators';
 import { MessageEmbed } from 'discord.js';
 
+@ApplyOptions<SimpleApplicationCommandOptions>({
+	guildOnly: false
+})
 export default class extends SimpleApplicationCommand {
 
 	public async handle(data: InteractionCreatePacket): Promise<InteractionResponseData> {
