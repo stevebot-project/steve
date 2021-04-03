@@ -1,5 +1,5 @@
-import { InteractionResponseTypes } from '@lib/types/Enums';
-import { InteractionCreatePacket, InteractionResponseData } from '@lib/types/Interactions';
+import { InteractionResponseType } from '@lib/types/Enums';
+import { Interaction, InteractionApplicationCommandCallbackResponseData } from '@lib/types/Interactions';
 import axios from 'axios';
 import { Event, EventOptions, EventStore, util } from 'klasa';
 
@@ -13,13 +13,13 @@ export abstract class SimpleApplicationCommand extends Event {
 		this.guildOnly = options.guildOnly;
 	}
 
-	public async run(data: InteractionCreatePacket) {
-		const responseData: InteractionResponseData = this.guildOnly && !data.guild_id ? { content: this.client.languages.default.tget('interactionMustBeInGuild') } : await this.handle(data);
+	public async run(data: Interaction) {
+		const responseData: InteractionApplicationCommandCallbackResponseData = this.guildOnly && !data.guild_id ? { content: this.client.languages.default.tget('interactionMustBeInGuild') } : await this.handle(data);
 
-		return axios.post(`https://discord.com/api/v8/interactions/${data.id}/${data.token}/callback`, { type: InteractionResponseTypes.ChannelMessageWithSource, data: responseData });
+		return axios.post(`https://discord.com/api/v8/interactions/${data.id}/${data.token}/callback`, { type: InteractionResponseType.ChannelMessageWithSource, data: responseData });
 	}
 
-	public abstract handle(data: InteractionCreatePacket): Promise<InteractionResponseData>;
+	public abstract handle(data: Interaction): Promise<InteractionApplicationCommandCallbackResponseData>;
 
 
 }

@@ -1,5 +1,5 @@
 import { SimpleApplicationCommand, SimpleApplicationCommandOptions } from '@lib/structures/events/SimpleApplicationCommand';
-import { InteractionCreatePacket, InteractionResponseData } from '@lib/types/Interactions';
+import { Interaction, InteractionApplicationCommandCallbackResponseData } from '@lib/types/Interactions';
 import { UserSettings } from '@lib/types/settings/UserSettings';
 import { ApplyOptions } from '@skyra/decorators';
 import { getJoinDateString, userAccountCreated } from '@utils/UserInfo';
@@ -10,10 +10,12 @@ import { ColorResolvable, MessageEmbed } from 'discord.js';
 })
 export default class extends SimpleApplicationCommand {
 
-	public async handle(data: InteractionCreatePacket): Promise<InteractionResponseData> {
-		const guild = this.client.guilds.cache.get(data.guild_id)!;
-		const user = this.client.users.cache.get(data.data.options[0].value) ?? await this.client.users.fetch(data.data.options[0].value);
-		const member = guild.members.cache.get(data.data.options[0].value) ?? await guild.members.fetch(data.data.options[0].value);
+	public async handle(interaction: Interaction): Promise<InteractionApplicationCommandCallbackResponseData> {
+		const guild = this.client.guilds.cache.get(interaction.guild_id!)!;
+
+		const userID = interaction.data!.options![0].value as string;
+		const user = this.client.users.cache.get(userID) ?? await this.client.users.fetch(userID);
+		const member = guild.members.cache.get(userID) ?? await guild.members.fetch(userID);
 
 		const accountCreated = userAccountCreated(guild, member.user.createdTimestamp);
 

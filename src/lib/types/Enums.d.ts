@@ -7,6 +7,17 @@ export const enum ApplicationCommands {
 	Whois = 'whois'
 }
 
+export const enum ApplicationCommandOptionType {
+	SUB_COMMAND = 1,
+	SUB_COMMAND_GROUP = 2,
+	STRING = 3,
+	INTEGER = 4,
+	BOOLEAN = 5,
+	USER = 6,
+	CHANNEL = 7,
+	ROLE = 8
+}
+
 export const enum CustomEvents {
 	InteractionCreate = 'interactionCreate'
 }
@@ -27,7 +38,12 @@ export const enum ImageAssets {
 	NodeJs = 'https://stevebot.xyz/steveassets/nodejs.png'
 }
 
-export const enum InteractionResponseTypes {
+export const enum InteractionType {
+	Ping = 1,
+	ApplicationCommand = 2
+}
+
+export const enum InteractionResponseType {
 	Pong = 1,
 	ChannelMessageWithSource = 4,
 	DeferredChannelMessageWithSource = 5
