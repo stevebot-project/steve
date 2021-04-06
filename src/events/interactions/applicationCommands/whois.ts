@@ -1,14 +1,14 @@
-import { SimpleApplicationCommand, SimpleApplicationCommandOptions } from '@lib/structures/events/SimpleApplicationCommand';
+import { ApplicationCommand, ApplicationCommandOptions } from '@lib/structures/events/ApplicationCommand';
 import { Interaction, InteractionApplicationCommandCallbackResponseData } from '@lib/types/Interactions';
 import { UserSettings } from '@lib/types/settings/UserSettings';
 import { ApplyOptions } from '@skyra/decorators';
 import { getJoinDateString, userAccountCreated } from '@utils/UserInfo';
 import { ColorResolvable, MessageEmbed } from 'discord.js';
 
-@ApplyOptions<SimpleApplicationCommandOptions>({
+@ApplyOptions<ApplicationCommandOptions>({
 	guildOnly: true
 })
-export default class extends SimpleApplicationCommand {
+export default class extends ApplicationCommand {
 
 	public async handle(interaction: Interaction): Promise<InteractionApplicationCommandCallbackResponseData> {
 		const guild = this.client.guilds.cache.get(interaction.guild_id!)!;

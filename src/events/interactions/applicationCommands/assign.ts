@@ -1,12 +1,12 @@
-import { SimpleApplicationCommand, SimpleApplicationCommandOptions } from '@lib/structures/events/SimpleApplicationCommand';
+import { ApplicationCommand, ApplicationCommandOptions } from '@lib/structures/events/ApplicationCommand';
 import { Interaction, InteractionApplicationCommandCallbackResponseData } from '@lib/types/Interactions';
 import { GuildSettings } from '@lib/types/settings/GuildSettings';
 import { ApplyOptions } from '@skyra/decorators';
 
-@ApplyOptions<SimpleApplicationCommandOptions>({
+@ApplyOptions<ApplicationCommandOptions>({
 	guildOnly: true
 })
-export default class extends SimpleApplicationCommand {
+export default class extends ApplicationCommand {
 
 	public async handle(interaction: Interaction): Promise<InteractionApplicationCommandCallbackResponseData> {
 		const subcommand = interaction.data!.options![0].name;

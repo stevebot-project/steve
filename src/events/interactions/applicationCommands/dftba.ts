@@ -1,11 +1,11 @@
-import { SimpleApplicationCommand, SimpleApplicationCommandOptions } from '@lib/structures/events/SimpleApplicationCommand';
+import { ApplicationCommand, ApplicationCommandOptions } from '@lib/structures/events/ApplicationCommand';
 import { InteractionApplicationCommandCallbackResponseData } from '@lib/types/Interactions';
 import { ApplyOptions } from '@skyra/decorators';
 
-@ApplyOptions<SimpleApplicationCommandOptions>({
+@ApplyOptions<ApplicationCommandOptions>({
 	guildOnly: false
 })
-export default class extends SimpleApplicationCommand {
+export default class extends ApplicationCommand {
 
 	// eslint-disable-next-line @typescript-eslint/require-await
 	public async handle(): Promise<InteractionApplicationCommandCallbackResponseData> {
