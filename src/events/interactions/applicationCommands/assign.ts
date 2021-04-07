@@ -4,6 +4,7 @@ import { GuildSettings } from '@lib/types/settings/GuildSettings';
 import { ApplyOptions } from '@skyra/decorators';
 
 @ApplyOptions<ApplicationCommandOptions>({
+	ephemeral: true,
 	guildOnly: true
 })
 export default class extends ApplicationCommand {
@@ -18,12 +19,21 @@ export default class extends ApplicationCommand {
 			return { content: guild.language.tget('commandAssignRoleNeedTrusted', guild.roles.cache.get(trustedRoleID)!.name) };
 		}
 
-		if (subcommand === 'list') return { content: guild.language.tget('interactionAssignList', guild.settings.get(GuildSettings.Prefix)) };
+		const assignableRoles = guild.settings.get(GuildSettings.Roles.Assignable) as string[];
+
+		if (subcommand === 'list') {
+			const roleNames: string[] = [];
+
+			assignableRoles.forEach(snowflake => {
+				if (guild.roles.cache.has(snowflake)) roleNames.push(guild.roles.cache.get(snowflake)!.name);
+			});
+
+			return { content: roleNames.join('\n') };
+		}
 
 		if (!guild.me!.permissions.has('MANAGE_ROLES')) return { content: guild.language.tget('interactionAssignMissingPermission') };
 
 		const role = interaction.data!.resolved!.roles![interaction.data!.options![0].options![0].value as string];
-		const assignableRoles = guild.settings.get(GuildSettings.Roles.Assignable) as string[];
 		if (!assignableRoles.includes(role.id)) return { content: guild.language.tget('interactionAssignRoleNotAssignable', role.name) };
 
 		if (subcommand === 'add') {

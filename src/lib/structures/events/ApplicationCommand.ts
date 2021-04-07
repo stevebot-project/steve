@@ -6,16 +6,18 @@ import { CLIENT_ID as applicationID } from '@root/config';
 
 export abstract class ApplicationCommand extends Event {
 
+	public ephemeral?: boolean;
 	public guildOnly: boolean;
 
 	protected constructor(store: EventStore, file: string[], directory: string, options: ApplicationCommandOptions) {
 		super(store, file, directory, util.mergeDefault({}, options));
 
+		this.ephemeral = options.ephemeral;
 		this.guildOnly = options.guildOnly;
 	}
 
 	public async run(interaction: Interaction) {
-		await this.defer(interaction.id, interaction.token);
+		await this.defer(interaction.id, interaction.token, this.ephemeral);
 
 		const callbackResponseData: InteractionApplicationCommandCallbackResponseData = this.guildOnly && !interaction.guild_id
 			? { content: this.client.languages.default.tget('interactionMustBeInGuild') }
@@ -26,8 +28,9 @@ export abstract class ApplicationCommand extends Event {
 
 	public abstract handle(data: Interaction): Promise<InteractionApplicationCommandCallbackResponseData>;
 
-	private defer(interactionID: string, interactionToken: string) {
-		return axios.post(`https://discord.com/api/v8/interactions/${interactionID}/${interactionToken}/callback`, { type: InteractionResponseType.DeferredChannelMessageWithSource });
+	private defer(interactionID: string, interactionToken: string, ephemeral = false) {
+		return axios.post(`https://discord.com/api/v8/interactions/${interactionID}/${interactionToken}/callback`,
+			{ type: InteractionResponseType.DeferredChannelMessageWithSource, data: { flags: ephemeral ? 64 : undefined } });
 	}
 
 	private followup(interactionToken: string, callbackResponseData: InteractionApplicationCommandCallbackResponseData) {
@@ -37,5 +40,6 @@ export abstract class ApplicationCommand extends Event {
 }
 
 export interface ApplicationCommandOptions extends EventOptions {
+	ephemeral?: boolean;
 	guildOnly: boolean;
 }
