@@ -28,7 +28,7 @@ export default class extends ApplicationCommand {
 				if (guild.roles.cache.has(snowflake)) roleNames.push(guild.roles.cache.get(snowflake)!.name);
 			});
 
-			return { content: roleNames.join('\n') };
+			return { content: roleNames.length ? roleNames.join('\n') : guild.language.tget('commandManageAssignableRolesShowNoRoles') };
 		}
 
 		if (!guild.me!.permissions.has('MANAGE_ROLES')) return { content: guild.language.tget('interactionAssignMissingPermission') };
