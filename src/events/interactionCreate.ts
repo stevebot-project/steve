@@ -25,6 +25,9 @@ export default class extends Event {
 			case 'rps':
 				this.client.emit(ApplicationCommands.Rps, interaction);
 				break;
+			case 'serverinfo':
+				this.client.emit(ApplicationCommands.ServerInfo, interaction);
+				break;
 			case 'whois':
 				this.client.emit(ApplicationCommands.Whois, interaction);
 				break;

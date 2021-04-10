@@ -4,6 +4,7 @@ export const enum ApplicationCommands {
 	Convert = 'convert',
 	Dftba = 'dftba',
 	Rps = 'rps',
+	ServerInfo = 'serverinfo',
 	Whois = 'whois'
 }
 
