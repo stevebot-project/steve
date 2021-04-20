@@ -4,12 +4,12 @@
 import { Event } from 'klasa';
 import { ApplicationCommands } from '@lib/types/Enums';
 import { inspect } from 'util';
-import { Interaction } from '@lib/types/Interactions';
+import { APIApplicationCommandInteraction } from 'discord-api-types/payloads/v8';
 
 export default class extends Event {
 
-	public run(interaction: Interaction) {
-		switch (interaction.data!.name) {
+	public run(interaction: APIApplicationCommandInteraction) {
+		switch (interaction.data.name) {
 			case 'assign':
 				this.client.emit(ApplicationCommands.Assign, interaction);
 				break;

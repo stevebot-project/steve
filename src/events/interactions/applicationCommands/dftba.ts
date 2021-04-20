@@ -1,6 +1,6 @@
 import { ApplicationCommand, ApplicationCommandOptions } from '@lib/structures/events/ApplicationCommand';
-import { InteractionApplicationCommandCallbackResponseData } from '@lib/types/Interactions';
 import { ApplyOptions } from '@skyra/decorators';
+import { APIInteractionApplicationCommandCallbackData } from 'discord-api-types/payloads/v8';
 
 @ApplyOptions<ApplicationCommandOptions>({
 	guildOnly: false
@@ -8,7 +8,7 @@ import { ApplyOptions } from '@skyra/decorators';
 export default class extends ApplicationCommand {
 
 	// eslint-disable-next-line @typescript-eslint/require-await
-	public async handle(): Promise<InteractionApplicationCommandCallbackResponseData> {
+	public async handle(): Promise<APIInteractionApplicationCommandCallbackData> {
 		return { content: this.client.languages.default.randomDftba };
 	}
 

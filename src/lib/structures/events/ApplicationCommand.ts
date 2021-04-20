@@ -1,8 +1,8 @@
-import { InteractionResponseType } from '@lib/types/Enums';
-import { Interaction, InteractionApplicationCommandCallbackResponseData } from '@lib/types/Interactions';
 import axios from 'axios';
 import { Event, EventOptions, EventStore, util } from 'klasa';
 import { CLIENT_ID as applicationID } from '@root/config';
+import { APIInteractionApplicationCommandCallbackData, APIApplicationCommandInteraction, InteractionResponseType } from 'discord-api-types/payloads/v8';
+import { isApplicationCommandGuildInteraction } from 'discord-api-types/utils/v8';
 
 export abstract class ApplicationCommand extends Event {
 
@@ -16,24 +16,25 @@ export abstract class ApplicationCommand extends Event {
 		this.guildOnly = options.guildOnly;
 	}
 
-	public async run(interaction: Interaction) {
+	public async run(interaction: APIApplicationCommandInteraction) {
 		await this.defer(interaction.id, interaction.token, this.ephemeral);
 
-		const callbackResponseData: InteractionApplicationCommandCallbackResponseData = this.guildOnly && !interaction.guild_id
-			? { content: this.client.languages.default.tget('interactionMustBeInGuild') }
-			: await this.handle(interaction);
+		const callbackResponseData: APIInteractionApplicationCommandCallbackData
+			= this.guildOnly && !isApplicationCommandGuildInteraction(interaction)
+				? { content: this.client.languages.default.tget('interactionMustBeInGuild') }
+				: await this.handle(interaction);
 
 		return this.followup(interaction.token, callbackResponseData);
 	}
 
-	public abstract handle(data: Interaction): Promise<InteractionApplicationCommandCallbackResponseData>;
+	public abstract handle(data: APIApplicationCommandInteraction): Promise<APIInteractionApplicationCommandCallbackData>;
 
 	private defer(interactionID: string, interactionToken: string, ephemeral = false) {
 		return axios.post(`https://discord.com/api/v8/interactions/${interactionID}/${interactionToken}/callback`,
 			{ type: InteractionResponseType.DeferredChannelMessageWithSource, data: { flags: ephemeral ? 64 : undefined } });
 	}
 
-	private followup(interactionToken: string, callbackResponseData: InteractionApplicationCommandCallbackResponseData) {
+	private followup(interactionToken: string, callbackResponseData: APIInteractionApplicationCommandCallbackData) {
 		return axios.patch(`https://discord.com/api/v8/webhooks/${applicationID}/${interactionToken}/messages/@original`, callbackResponseData);
 	}
 

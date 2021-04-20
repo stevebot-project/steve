@@ -1,7 +1,7 @@
 import { ApplicationCommand, ApplicationCommandOptions } from '@lib/structures/events/ApplicationCommand';
-import { Interaction, InteractionApplicationCommandCallbackResponseData } from '@lib/types/Interactions';
 import { ApplyOptions } from '@skyra/decorators';
 import { formatDate, friendlyDuration } from '@utils/util';
+import { APIApplicationCommandGuildInteraction, APIInteractionApplicationCommandCallbackData } from 'discord-api-types/payloads/v8';
 import { MessageEmbed } from 'discord.js';
 
 @ApplyOptions<ApplicationCommandOptions>({
@@ -10,8 +10,8 @@ import { MessageEmbed } from 'discord.js';
 export default class extends ApplicationCommand {
 
 	// eslint-disable-next-line @typescript-eslint/require-await
-	public async handle(interaction: Interaction): Promise<InteractionApplicationCommandCallbackResponseData> {
-		const guild = this.client.guilds.cache.get(interaction.guild_id!)!;
+	public async handle(interaction: APIApplicationCommandGuildInteraction): Promise<APIInteractionApplicationCommandCallbackData> {
+		const guild = this.client.guilds.cache.get(interaction.guild_id)!;
 
 		const embedData = guild.language.tget('commandServerInfoEmbed');
 
@@ -26,7 +26,8 @@ export default class extends ApplicationCommand {
 			])
 			.setAuthor(guild.name, guild.iconURL()!)
 			.setFooter(embedData.footer(formatDate(guild.createdTimestamp), friendlyDuration(Date.now() - guild.createdTimestamp)))
-			.setTimestamp();
+			.setTimestamp()
+			.toJSON();
 
 		return { embeds: [embed] };
 	}

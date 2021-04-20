@@ -1,8 +1,8 @@
 import { ApplicationCommand, ApplicationCommandOptions } from '@lib/structures/events/ApplicationCommand';
-import { Interaction, InteractionApplicationCommandCallbackResponseData } from '@lib/types/Interactions';
 import { UserSettings } from '@lib/types/settings/UserSettings';
 import { ApplyOptions } from '@skyra/decorators';
 import { getJoinDateString, userAccountCreated } from '@utils/UserInfo';
+import { APIApplicationCommandGuildInteraction, APIApplicationCommandInteractionDataOptionWithValues, APIInteractionApplicationCommandCallbackData } from 'discord-api-types/payloads/v8';
 import { ColorResolvable, MessageEmbed } from 'discord.js';
 
 @ApplyOptions<ApplicationCommandOptions>({
@@ -10,10 +10,10 @@ import { ColorResolvable, MessageEmbed } from 'discord.js';
 })
 export default class extends ApplicationCommand {
 
-	public async handle(interaction: Interaction): Promise<InteractionApplicationCommandCallbackResponseData> {
-		const guild = this.client.guilds.cache.get(interaction.guild_id!)!;
+	public async handle(interaction: APIApplicationCommandGuildInteraction): Promise<APIInteractionApplicationCommandCallbackData> {
+		const guild = this.client.guilds.cache.get(interaction.guild_id)!;
 
-		const userID = interaction.data!.options![0].value as string;
+		const userID = (interaction.data.options![0] as APIApplicationCommandInteractionDataOptionWithValues).value as string;
 		const user = this.client.users.cache.get(userID) ?? await this.client.users.fetch(userID);
 		const member = guild.members.cache.get(userID) ?? await guild.members.fetch(userID);
 
@@ -44,7 +44,7 @@ export default class extends ApplicationCommand {
 			]);
 		}
 
-		return { embeds: [embed] };
+		return { embeds: [embed.toJSON()] };
 	}
 
 }
