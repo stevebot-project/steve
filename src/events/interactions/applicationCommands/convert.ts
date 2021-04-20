@@ -1,13 +1,9 @@
 import { ConversionUnit } from '@lib/structures/commands/UnitConversionCommand';
-import { ApplicationCommand, ApplicationCommandOptions } from '@lib/structures/events/ApplicationCommand';
-import { ApplyOptions } from '@skyra/decorators';
+import { ApplicationCommand } from '@lib/structures/events/ApplicationCommand';
 import convert = require('convert-units');
 import { APIApplicationCommandInteraction, APIInteractionApplicationCommandCallbackData, ApplicationCommandInteractionDataOptionSubCommand } from 'discord-api-types/payloads/v8';
 import { MessageEmbed } from 'discord.js';
 
-@ApplyOptions<ApplicationCommandOptions>({
-	guildOnly: false
-})
 export default class extends ApplicationCommand {
 
 	// eslint-disable-next-line @typescript-eslint/require-await

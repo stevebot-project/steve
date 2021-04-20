@@ -7,13 +7,13 @@ import { isApplicationCommandGuildInteraction } from 'discord-api-types/utils/v8
 export abstract class ApplicationCommand extends Event {
 
 	public ephemeral?: boolean;
-	public guildOnly: boolean;
+	public guildOnly?: boolean;
 
 	protected constructor(store: EventStore, file: string[], directory: string, options: ApplicationCommandOptions) {
 		super(store, file, directory, util.mergeDefault({}, options));
 
-		this.ephemeral = options.ephemeral;
-		this.guildOnly = options.guildOnly;
+		this.ephemeral = options ? options.ephemeral ?? false : false;
+		this.guildOnly = options ? options.guildOnly ?? false : false;
 	}
 
 	public async run(interaction: APIApplicationCommandInteraction) {
@@ -42,5 +42,5 @@ export abstract class ApplicationCommand extends Event {
 
 export interface ApplicationCommandOptions extends EventOptions {
 	ephemeral?: boolean;
-	guildOnly: boolean;
+	guildOnly?: boolean;
 }

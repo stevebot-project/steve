@@ -1,11 +1,7 @@
-import { ApplicationCommand, ApplicationCommandOptions } from '@lib/structures/events/ApplicationCommand';
+import { ApplicationCommand } from '@lib/structures/events/ApplicationCommand';
 import { APIApplicationCommandInteraction, APIApplicationCommandInteractionDataOptionWithValues, APIInteractionApplicationCommandCallbackData } from 'discord-api-types/payloads/v8';
-import { ApplyOptions } from '@skyra/decorators';
 import { MessageEmbed } from 'discord.js';
 
-@ApplyOptions<ApplicationCommandOptions>({
-	guildOnly: false
-})
 export default class extends ApplicationCommand {
 
 	public async handle(interaction: APIApplicationCommandInteraction): Promise<APIInteractionApplicationCommandCallbackData> {
