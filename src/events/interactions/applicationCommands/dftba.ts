@@ -3,7 +3,6 @@ import { APIInteractionApplicationCommandCallbackData } from 'discord-api-types/
 
 export default class extends ApplicationCommand {
 
-	// eslint-disable-next-line @typescript-eslint/require-await
 	public async handle(): Promise<APIInteractionApplicationCommandCallbackData> {
 		return { content: this.client.languages.default.randomDftba };
 	}

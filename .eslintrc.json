@@ -30,7 +30,7 @@
 	},
 	"overrides": [
 		{
-			"files": ["src/commands/**/*.ts"],
+			"files": ["src/commands/**/*.ts", "src/events/interactions/applicationCommands/**/*.ts"],
 			"rules": {
 				"@typescript-eslint/require-await": 0
 			}

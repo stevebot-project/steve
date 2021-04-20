@@ -9,7 +9,6 @@ import { MessageEmbed } from 'discord.js';
 })
 export default class extends ApplicationCommand {
 
-	// eslint-disable-next-line @typescript-eslint/require-await
 	public async handle(interaction: APIApplicationCommandGuildInteraction): Promise<APIInteractionApplicationCommandCallbackData> {
 		const guild = this.client.guilds.cache.get(interaction.guild_id)!;
 

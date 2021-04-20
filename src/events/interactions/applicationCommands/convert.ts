@@ -6,7 +6,6 @@ import { MessageEmbed } from 'discord.js';
 
 export default class extends ApplicationCommand {
 
-	// eslint-disable-next-line @typescript-eslint/require-await
 	public async handle(interaction: APIApplicationCommandInteraction): Promise<APIInteractionApplicationCommandCallbackData> {
 		const amount = (interaction.data.options![0] as ApplicationCommandInteractionDataOptionSubCommand).options![0].value as number;
 
