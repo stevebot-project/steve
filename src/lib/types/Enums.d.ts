@@ -22,7 +22,7 @@ export const enum Emojis {
 export const enum ImageAssets {
 	AlarmClock = 'https://stevebot.xyz/steveassets/alarmclock.png',
 	Cat = 'https://stevebot.xyz/steveassets/animals/cat.png',
-	DiscordLogo = 'https://discord.com/assets/2c21aeda16de354ba5334551a883b481.png',
+	DiscordLogo = 'https://discord.com/assets/f9bb9c4af2b9c32a2c5ee0014661546d.png',
 	Dog = 'https://stevebot.xyz/steveassets/animals/dog.png',
 	Fox = 'https://stevebot.xyz/steveassets/animals/fox.png',
 	NodeJs = 'https://stevebot.xyz/steveassets/nodejs.png'
