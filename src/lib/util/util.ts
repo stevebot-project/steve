@@ -47,6 +47,15 @@ export async function getExecutor(guild: Guild, type: GuildAuditLogsAction | num
 
 /**
  *
+ * @param array An array of any type
+ * @returns A random element of the array
+ */
+export function pickRandom<T>(array: T[]): T {
+	return array[Math.floor(Math.random() * array.length)];
+}
+
+/**
+ *
  * @param items The list of items to be displayed in the RichDisplay
  * @param chunkSize The number of items to be included on each page
  * @param stringPrefix An optional string to affix each item with

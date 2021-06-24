@@ -5,7 +5,7 @@ import { HelpBuilder } from '@utils/HelpBuilder';
 import { NAME as botName } from '@root/config';
 import { oneLine } from 'common-tags';
 import { Emojis } from '@lib/types/Enums';
-import { formatDate } from '@utils/util';
+import { formatDate, pickRandom } from '@utils/util';
 
 const builder = new HelpBuilder()
 	.setExamples('👀 | **Examples**')
@@ -109,11 +109,11 @@ export default class extends Language {
 	public PERMISSIONS = Perms;
 
 	public get randomDftba(): string {
-		return this.dftba[Math.floor(Math.random() * this.dftba.length)];
+		return pickRandom(this.dftba);
 	}
 
 	public get randomLoadingMessage() {
-		return this.loadingMessages[Math.floor(Math.random() * this.loadingMessages.length)];
+		return pickRandom(this.loadingMessages);
 	}
 
 

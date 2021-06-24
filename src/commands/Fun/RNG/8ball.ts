@@ -2,6 +2,7 @@ import { CommandOptions, KlasaMessage } from 'klasa';
 import { SteveCommand } from '@lib/structures/commands/SteveCommand';
 import { Message } from 'discord.js';
 import { ApplyOptions } from '@skyra/decorators';
+import { pickRandom } from '@utils/util';
 
 @ApplyOptions<CommandOptions>({
 	aliases: ['magic8ball'],
@@ -15,7 +16,7 @@ export default class extends SteveCommand {
 
 	public async run(msg: KlasaMessage): Promise<Message> {
 		const responses = msg.language.tget('command_8BallResponses') as string[];
-		return msg.channel.send(responses[Math.floor(Math.random() * responses.length)]);
+		return msg.channel.send(pickRandom(responses));
 	}
 
 }
