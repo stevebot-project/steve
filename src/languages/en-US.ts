@@ -435,7 +435,7 @@ export default class extends Language {
 		}),
 		commandChooseResponse: choice => `${botName} chooses... ${choice}!`,
 		commandChooseTooFew: 'You must provide at least two choices!',
-		commandRateDescription: `Have ${botName} rate an item of your choosing`,
+		commandRateDescription: `Have ${botName} rate an item of your choosing on a five-star scale`,
 		commandRateExtended: builder.display('rate', {
 			examples: [
 				'the existence of eucalyptus'
@@ -443,7 +443,7 @@ export default class extends Language {
 			extendedHelp: 'This command has a cooldown of 5 seconds per user.',
 			reminder: 'Things to be rated have a maximum length of 500 characters.'
 		}),
-		commandRateResponse: (thing, rating) => `${botName} gives \`${thing}\` a ${rating}!`,
+		commandRateResponse: (thing, rating) => `I give ${thing} ${rating} stars.`,
 		commandCatDescription: 'Get a random cat picture',
 		commandCatExtended: builder.display('cat', {
 			extendedHelp: 'This command grabs random cat pictures from the cat API at https://cataas.com.'

@@ -13,7 +13,7 @@ import { ApplyOptions } from '@skyra/decorators';
 export default class extends SteveCommand {
 
 	public async run(msg: KlasaMessage, [thing]: [string]): Promise<Message> {
-		return msg.channel.send(msg.language.tget('commandRateResponse', thing, Math.floor((Math.random() * 10) + 1)));
+		return msg.channel.send(msg.language.tget('commandRateResponse', thing, Math.floor((Math.random() * 5) + 1)));
 	}
 
 }
