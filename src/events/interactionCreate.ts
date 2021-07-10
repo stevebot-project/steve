@@ -10,6 +10,9 @@ export default class extends Event {
 
 	public run(interaction: APIApplicationCommandInteraction) {
 		switch (interaction.data.name) {
+			case 'animal':
+				this.client.emit(ApplicationCommands.Animal, interaction);
+				break;
 			case 'assign':
 				this.client.emit(ApplicationCommands.Assign, interaction);
 				break;

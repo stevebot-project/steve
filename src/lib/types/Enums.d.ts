@@ -1,4 +1,5 @@
 export const enum ApplicationCommands {
+	Animal = 'animal',
 	Assign = 'assign',
 	Avatar = 'avatar',
 	Convert = 'convert',
