@@ -54,6 +54,10 @@ export function pickRandom<T>(array: T[]): T {
 	return array[Math.floor(Math.random() * array.length)];
 }
 
+export function randomInteger(max: number): number {
+	return Math.floor((Math.random() * Math.floor(max)) + 1);
+}
+
 /**
  *
  * @param items The list of items to be displayed in the RichDisplay

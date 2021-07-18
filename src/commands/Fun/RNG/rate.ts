@@ -2,6 +2,7 @@ import { CommandOptions, KlasaMessage } from 'klasa';
 import { SteveCommand } from '@lib/structures/commands/SteveCommand';
 import { Message } from 'discord.js';
 import { ApplyOptions } from '@skyra/decorators';
+import { randomInteger } from '@utils/util';
 
 @ApplyOptions<CommandOptions>({
 	cooldown: 5,
@@ -13,7 +14,7 @@ import { ApplyOptions } from '@skyra/decorators';
 export default class extends SteveCommand {
 
 	public async run(msg: KlasaMessage, [thing]: [string]): Promise<Message> {
-		return msg.channel.send(msg.language.tget('commandRateResponse', thing, Math.floor((Math.random() * 5) + 1)));
+		return msg.channel.send(msg.language.tget('commandRateResponse', thing, randomInteger(5)));
 	}
 
 }
