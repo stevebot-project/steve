@@ -25,6 +25,9 @@ export default class extends Event {
 			case 'dftba':
 				this.client.emit(ApplicationCommands.Dftba, interaction);
 				break;
+			case 'rate':
+				this.client.emit(ApplicationCommands.Rate, interaction);
+				break;
 			case 'roleinfo':
 				this.client.emit(ApplicationCommands.RoleInfo, interaction);
 				break;

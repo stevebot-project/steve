@@ -443,7 +443,7 @@ export default class extends Language {
 			extendedHelp: 'This command has a cooldown of 5 seconds per user.',
 			reminder: 'Things to be rated have a maximum length of 500 characters.'
 		}),
-		commandRateResponse: (thing, rating) => `I give ${thing} ${rating} stars.`,
+		commandRateResponse: (thing, rating) => `I give ${thing} ${rating} star${rating === 1 ? '' : 's'}.`,
 		commandCatDescription: 'Get a random cat picture',
 		commandCatExtended: builder.display('cat', {
 			extendedHelp: 'This command grabs random cat pictures from the cat API at https://cataas.com.'

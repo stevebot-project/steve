@@ -4,6 +4,7 @@ export const enum ApplicationCommands {
 	Avatar = 'avatar',
 	Convert = 'convert',
 	Dftba = 'dftba',
+	Rate = 'rate',
 	RoleInfo = 'roleinfo',
 	Rps = 'rps',
 	ServerInfo = 'serverinfo',
