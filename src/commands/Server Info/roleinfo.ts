@@ -1,15 +1,16 @@
-import { SteveCommand } from '@lib/structures/commands/SteveCommand';
-import { CommandOptions } from 'klasa';
+import { SteveCommand, SteveCommandOptions } from '@lib/structures/commands/SteveCommand';
 import { Role, Message, MessageEmbed } from 'discord.js';
 import { formatDate } from '@utils/util';
 import { RoleAlias } from '../Role Aliases/rolealias';
 import { GuildSettings } from '@lib/types/settings/GuildSettings';
 import { ApplyOptions } from '@skyra/decorators';
 import { GuildMessage } from '@lib/types/Messages';
+import { ApplicationCommands } from '@lib/types/Enums';
 
-@ApplyOptions<CommandOptions>({
+@ApplyOptions<SteveCommandOptions>({
 	aliases: ['membersin'],
 	description: lang => lang.tget('commandRoleInfoDescription'),
+	deprecatedForSlash: ApplicationCommands.RoleInfo,
 	extendedHelp: lang => lang.tget('commandRoleInfoExtended'),
 	requiredPermissions: ['EMBED_LINKS'],
 	runIn: ['text'],

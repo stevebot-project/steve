@@ -1,16 +1,17 @@
-import { SteveCommand } from '@lib/structures/commands/SteveCommand';
-import { ImageAssets } from '@lib/types/Enums';
+import { SteveCommand, SteveCommandOptions } from '@lib/structures/commands/SteveCommand';
+import { ApplicationCommands, ImageAssets } from '@lib/types/Enums';
 import { ApplyOptions } from '@skyra/decorators';
 import { sendLoadingMessage } from '@utils/util';
 import axios from 'axios';
 import { MessageEmbed } from 'discord.js';
-import { CommandOptions, KlasaMessage } from 'klasa';
+import { KlasaMessage } from 'klasa';
 
-@ApplyOptions<CommandOptions>({
+@ApplyOptions<SteveCommandOptions>({
 	aliases: ['kitty'],
 	cooldown: 30,
 	cooldownLevel: 'author',
 	description: lang => lang.tget('commandCatDescription'),
+	deprecatedForSlash: ApplicationCommands.Animal,
 	extendedHelp: lang => lang.tget('commandCatExtended'),
 	requiredPermissions: ['EMBED_LINKS']
 })

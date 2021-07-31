@@ -365,6 +365,7 @@ export default class extends Language {
 		 * #      GENERAL STUFF           #
 		 * ################################
 		 */
+		deprecatedForSlash: (cmd, slashCmd) => `INFO: This version of the **${cmd}** command has been deprecated in favor of the **/${slashCmd}** slash command. It will be removed entirely in a future update. Feel free to join ${botName}'s support server (**s;support**) if you have any questions!`,
 		userNotFound: 'I could not find that user.',
 		userNotInGuild: user => `${user} is not in this server.`,
 		none: 'None',

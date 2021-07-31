@@ -1,12 +1,14 @@
-import { SteveCommand } from '@lib/structures/commands/SteveCommand';
+import { SteveCommand, SteveCommandOptions } from '@lib/structures/commands/SteveCommand';
+import { ApplicationCommands } from '@lib/types/Enums';
 import { UserSettings } from '@lib/types/settings/UserSettings';
 import { ApplyOptions, CreateResolvers } from '@skyra/decorators';
 import { Message, MessageEmbed, User } from 'discord.js';
-import { CommandOptions, KlasaMessage } from 'klasa';
+import { KlasaMessage } from 'klasa';
 
-@ApplyOptions<CommandOptions>({
+@ApplyOptions<SteveCommandOptions>({
 	aliases: ['av'],
 	description: lang => lang.tget('commandAvatarDescription'),
+	deprecatedForSlash: ApplicationCommands.Avatar,
 	requiredPermissions: ['EMBED_LINKS'],
 	usage: '[user:username]'
 })

@@ -1,10 +1,12 @@
 import { ApplyOptions, CreateResolvers } from '@skyra/decorators';
-import { CommandOptions } from 'klasa';
 import { UnitConversionCommand, massUnits } from '@lib/structures/commands/UnitConversionCommand';
+import { SteveCommandOptions } from '@lib/structures/commands/SteveCommand';
+import { ApplicationCommands } from '@lib/types/Enums';
 
-@ApplyOptions<CommandOptions>({
+@ApplyOptions<SteveCommandOptions>({
 	aliases: ['mass'],
 	description: lang => lang.tget('commandMassConvertDescription'),
+	deprecatedForSlash: ApplicationCommands.Convert,
 	extendedHelp: lang => lang.tget('commandMassConvertExtended')
 })
 @CreateResolvers([

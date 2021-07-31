@@ -1,14 +1,15 @@
-import { SteveCommand } from '@lib/structures/commands/SteveCommand';
-import { CommandOptions } from 'klasa';
+import { SteveCommand, SteveCommandOptions } from '@lib/structures/commands/SteveCommand';
 import { User, Message, MessageEmbed, ColorResolvable } from 'discord.js';
 import { UserSettings } from '@lib/types/settings/UserSettings';
 import { getJoinDateString, userAccountCreated } from '@utils/UserInfo';
 import { ApplyOptions, CreateResolvers } from '@skyra/decorators';
 import { GuildMessage } from '@lib/types/Messages';
+import { ApplicationCommands } from '@lib/types/Enums';
 
-@ApplyOptions<CommandOptions>({
+@ApplyOptions<SteveCommandOptions>({
 	aliases: ['member'],
 	description: lang => lang.tget('commandWhoIsDescription'),
+	deprecatedForSlash: ApplicationCommands.Whois,
 	extendedHelp: lang => lang.tget('commandWhoIsExtended'),
 	requiredPermissions: ['EMBED_LINKS'],
 	runIn: ['text'],

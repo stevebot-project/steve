@@ -160,6 +160,7 @@ declare module 'klasa' {
 		};
 		messagePromptTimeout: string;
 		textPromptAbortOptions: string[];
+		deprecatedForSlash: (cmd: string, slashCmd: string) => string;
 		userNotFound: string;
 		userNotInGuild: (user: string) => string;
 		none: string;

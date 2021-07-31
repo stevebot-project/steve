@@ -1,14 +1,16 @@
-import { CommandOptions, KlasaMessage } from 'klasa';
-import { SteveCommand } from '@lib/structures/commands/SteveCommand';
+import { KlasaMessage } from 'klasa';
+import { SteveCommand, SteveCommandOptions } from '@lib/structures/commands/SteveCommand';
 import { Message } from 'discord.js';
 import { checkWinner, chooseRandomPlay, rpsPlay } from '@lib/util/RockPaperScissors';
 import { ApplyOptions } from '@skyra/decorators';
+import { ApplicationCommands } from '@lib/types/Enums';
 
-@ApplyOptions<CommandOptions>({
+@ApplyOptions<SteveCommandOptions>({
 	aliases: ['rps'],
 	cooldown: 5,
 	cooldownLevel: 'author',
 	description: lang => lang.tget('commandRockPaperScissorsDescription'),
+	deprecatedForSlash: ApplicationCommands.Rps,
 	extendedHelp: lang => lang.tget('commandRockPaperScissorsExtended'),
 	usage: '<rock|paper|scissors>'
 })

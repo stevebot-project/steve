@@ -1,10 +1,12 @@
 import { ApplyOptions, CreateResolvers } from '@skyra/decorators';
-import { CommandOptions } from 'klasa';
 import { UnitConversionCommand, temperatureUnits } from '@lib/structures/commands/UnitConversionCommand';
+import { ApplicationCommands } from '@lib/types/Enums';
+import { SteveCommandOptions } from '@lib/structures/commands/SteveCommand';
 
-@ApplyOptions<CommandOptions>({
+@ApplyOptions<SteveCommandOptions>({
 	aliases: ['temp'],
 	description: lang => lang.tget('commandTempConvertDescription'),
+	deprecatedForSlash: ApplicationCommands.Convert,
 	extendedHelp: lang => lang.tget('commandTempConvertExtended')
 })
 @CreateResolvers([

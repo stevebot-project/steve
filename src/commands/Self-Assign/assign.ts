@@ -1,14 +1,15 @@
-import { SteveCommand } from '@lib/structures/commands/SteveCommand';
-import { CommandOptions } from 'klasa';
+import { SteveCommand, SteveCommandOptions } from '@lib/structures/commands/SteveCommand';
 import { Role, Message, MessageEmbed } from 'discord.js';
 import { GuildSettings } from '@lib/types/settings/GuildSettings';
 import { floatPromise, richDisplayList } from '@utils/util';
 import { ApplyOptions, CreateResolvers, requiredPermissions } from '@skyra/decorators';
 import { GuildMessage } from '@lib/types/Messages';
+import { ApplicationCommands } from '@lib/types/Enums';
 
-@ApplyOptions<CommandOptions>({
+@ApplyOptions<SteveCommandOptions>({
 	aliases: ['rank'],
 	description: lang => lang.tget('commandAssignDescription'),
+	deprecatedForSlash: ApplicationCommands.Assign,
 	extendedHelp: lang => lang.tget('commandAssignExtended'),
 	flagSupport: true,
 	requiredPermissions: ['MANAGE_ROLES'],

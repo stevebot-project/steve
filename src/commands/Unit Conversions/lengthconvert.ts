@@ -1,9 +1,11 @@
 import { ApplyOptions, CreateResolvers } from '@skyra/decorators';
-import { CommandOptions } from 'klasa';
 import { UnitConversionCommand, lengthUnits } from '@lib/structures/commands/UnitConversionCommand';
-@ApplyOptions<CommandOptions>({
+import { SteveCommandOptions } from '@lib/structures/commands/SteveCommand';
+import { ApplicationCommands } from '@lib/types/Enums';
+@ApplyOptions<SteveCommandOptions>({
 	aliases: ['length'],
 	description: lang => lang.tget('commandLengthConvertDescription'),
+	deprecatedForSlash: ApplicationCommands.Convert,
 	extendedHelp: lang => lang.tget('commandLengthConvertExtended')
 })
 @CreateResolvers([
