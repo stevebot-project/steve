@@ -1,38 +1,23 @@
-import { KlasaClient, Colors, KlasaClientOptions, PermissionLevels } from 'klasa';
-import permissionLevels from '@lib/setup/PermissionLevels';
-import { Node as Lavalink } from 'lavalink';
-import { LAVALINK_ENABLE } from '@root/config';
-import { Guild } from 'discord.js';
+import { SapphireClient } from "@sapphire/framework";
+import { Intents } from "discord.js";
 
-import '@lib/schemas/Guild';
-import '@lib/schemas/User';
-import '@lib/extensions/SteveGuild';
+export class SteveClient extends SapphireClient {
 
+	public production: boolean;
 
-export class SteveClient extends KlasaClient {
+	// TODO: move client options to env/config
+	public constructor() {
+		super({
+			intents: [
+				Intents.FLAGS.DIRECT_MESSAGES,
+				Intents.FLAGS.GUILDS,
+				Intents.FLAGS.GUILD_BANS,
+				Intents.FLAGS.GUILD_EMOJIS_AND_STICKERS,
+				Intents.FLAGS.GUILD_INVITES,
+				Intents.FLAGS.GUILD_MESSAGES
+			],
+		});
 
-	public lavalink: Lavalink | null;
-
-
-	public constructor(options: KlasaClientOptions = {}) {
-		super(options);
-
-		this.lavalink = LAVALINK_ENABLE
-			? new Lavalink({
-				send: (guildID: string, packet: Record<string, unknown>) => {
-					const guild: Guild | undefined = this.guilds.cache.get(guildID);
-					if (guild) this.ws.shards.get(guild.shardID)!.send(packet);
-					else throw new Error('Attempted to send a packet on the wrong shard!');
-				},
-				...this.options.lavalink
-			})
-			: null;
-
-		this.permissionLevels = permissionLevels as PermissionLevels;
-
-		if (this.lavalink !== null) {
-			this.lavalink.once('open', () => this.console.verbose(`${new Colors({ text: 'magenta' }).format('[LAVALINK]')} Connected.`));
-		}
+		this.production = process.env.NODE_ENV === "production";
 	}
-
 }

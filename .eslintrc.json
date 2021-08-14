@@ -1,6 +1,6 @@
 
 {
-	"extends": "bamboo",
+	"extends": "@sapphire",
 	"rules": {
 		"max-len": [
 			"warn",
@@ -22,7 +22,10 @@
 		"@typescript-eslint/no-unsafe-return": 0,
 		"@typescript-eslint/prefer-for-of": 0,
 		"@typescript-eslint/explicit-module-boundary-types": 0,
-		"@typescript-eslint/ban-ts-comment": 0
+		"@typescript-eslint/ban-ts-comment": 0,
+		"@typescript-eslint/unbound-method": 0,
+		"prettier/prettier": 0,
+		"semi": 2
 	},
 	"env": {
 		"es6": true,
@@ -30,7 +33,7 @@
 	},
 	"overrides": [
 		{
-			"files": ["src/commands/**/*.ts", "src/events/interactions/applicationCommands/**/*.ts"],
+			"files": ["src/commands/**/*.ts"],
 			"rules": {
 				"@typescript-eslint/require-await": 0
 			}

@@ -1,8 +1,10 @@
-import 'module-alias/register';
-import { TOKENS, CLIENT_OPTIONS } from '@root/config';
+/* eslint-disable @typescript-eslint/no-var-requires */
+
+require('dotenv').config();
+require('module-alias/register');
 
 import { SteveClient } from '@lib/SteveClient';
 
-const bot = new SteveClient(CLIENT_OPTIONS);
+const steve = new SteveClient();
 
-bot.login(TOKENS.BOT_TOKEN).catch(e => console.error(e));
+void steve.login(steve.production ? process.env.DISCORD_TOKEN_PROD : process.env.DISCORD_TOKEN_DEV);
