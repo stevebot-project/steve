@@ -1,3 +1,4 @@
+import { Time } from '@lib/types/Enums';
 import { ApplyOptions } from '@skyra/decorators';
 import { Extendable, ExtendableOptions, Schedule, ScheduledTask } from 'klasa';
 
@@ -21,12 +22,26 @@ export default class extends Extendable {
 		});
 	}
 
+	public createSnooze(this: Schedule, userID: string, content: string, channelID: string): Promise<Reminder> {
+		return this.create('snooze', Date.now() + (5 * Time.MINUTE), {
+			catchUp: true,
+			data: { userID, content, channelID }
+		});
+	}
+
 	public getUserReminders(this: Schedule, userID: string): Reminder[] {
 		const filter = (task: ScheduledTask) => {
 			const id = task.data.userID ?? task.data.user;
 			return task.taskName === 'reminder' && id === userID;
 		};
 		return this.tasks.filter(filter);
+	}
+
+	public getUserSnooze(this: Schedule, userID: string): Reminder | undefined {
+		return this.tasks.filter((task: ScheduledTask) => {
+			const id = task.data.userID ?? task.data.user;
+			return task.taskName === 'snooze' && id === userID;
+		}).pop();
 	}
 
 }
