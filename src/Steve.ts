@@ -1,8 +1,8 @@
-import 'module-alias/register';
-import { TOKENS, CLIENT_OPTIONS } from '@root/config';
+import { SapphireClient } from "@sapphire/framework";
+import { BotOptions, Tokens } from "#root/config";
 
-import { SteveClient } from '@lib/SteveClient';
+import "@sapphire/plugin-i18next/register";
 
-const bot = new SteveClient(CLIENT_OPTIONS);
+const steve = new SapphireClient(BotOptions);
 
-bot.login(TOKENS.BOT_TOKEN).catch(e => console.error(e));
+steve.login(Tokens.BotToken).catch((err) => console.error(err));

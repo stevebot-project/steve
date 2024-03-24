@@ -1,84 +1,128 @@
-import { SteveCommand } from '@lib/structures/commands/SteveCommand';
-import { PermissionsLevels } from '@lib/types/Enums';
-import { ApplyOptions } from '@skyra/decorators';
-import { CommandOptions, KlasaMessage, Stopwatch, Type, util } from 'klasa';
-import { inspect } from 'util';
+import { SteveCommand } from "#lib/structures/commands/SteveCommand";
+import { ApplyOptions } from "@sapphire/decorators";
+import type {
+	ApplicationCommandRegistry,
+	CommandOptions,
+} from "@sapphire/framework";
+import { Stopwatch } from "@sapphire/stopwatch";
+import { codeBlock, isThenable } from "@sapphire/utilities";
+import type { ChatInputCommandInteraction } from "discord.js";
+import { inspect } from "util";
 
 @ApplyOptions<CommandOptions>({
-	aliases: ['ev'],
-	description: lang => lang.tget('commandEvalDescription'),
-	extendedHelp: lang => lang.tget('commandEvalExtended'),
-	guarded: true,
-	permissionLevel: PermissionsLevels.OWNER,
-	usage: '<expression:str>'
+	description: "Evaluates JavaScript code. Reserved for my owners.",
+	preconditions: ["isOwner"],
 })
 export default class extends SteveCommand {
-
-	public async run(msg: KlasaMessage, [code]: [string]) {
-		const { success, result, time, type } = await this.eval(msg, code);
-		const footer = util.codeBlock('ts', type);
-		const output = msg.language.tget(success ? 'commandEvalOutput' : 'commandEvalError',
-			time, util.codeBlock('js', result), footer);
-
-		if ('silent' in msg.flagArgs) return null;
-
-		// Handle too-long-messages
-		if (output.length > 2000) {
-			// @ts-expect-error 2339
-			if (msg.guild && msg.channel.attachable) {
-				// @ts-expect-error 2339
-				return msg.channel.sendFile(Buffer.from(result), 'output.txt', msg.language.tget('commandEvalSendFile', time, footer));
-			}
-			this.client.emit('log', result);
-			return msg.sendLocale('commandEvalSendConsole', [time, footer]);
-		}
-
-		// If it's a message that can be sent correctly, send it
-		return msg.send(output);
+	public override registerApplicationCommands(
+		registry: ApplicationCommandRegistry,
+	) {
+		registry.registerChatInputCommand((builder) =>
+			builder
+				.setName(this.name)
+				.setDescription(this.description)
+				.addStringOption((option) =>
+					option
+						.setName("expression")
+						.setDescription("The expression to be evaluated.")
+						.setRequired(true),
+				)
+				.addIntegerOption((option) =>
+					option
+						.setName("depth")
+						.setDescription("Customizes util.inspect's depth."),
+				)
+				.addBooleanOption((option) =>
+					option
+						.setName("silent")
+						.setDescription("Make the command output nothing."),
+				)
+				.addBooleanOption((option) =>
+					option
+						.setName("async")
+						.setDescription(
+							"Wraps the code in an async function; you need to use the return keyword here!",
+						),
+				)
+				.addBooleanOption((option) =>
+					option
+						.setName("show_hidden")
+						.setDescription("Enables the showHidden option on util.inspect."),
+				),
+		);
 	}
 
-	// Eval the input
-	private async eval(msg: KlasaMessage, code: string) {
-		const { flagArgs: flags } = msg;
-		code = code.replace(/[“”]/g, '"').replace(/[‘’]/g, "'");
+	public override async chatInputRun(interaction: ChatInputCommandInteraction) {
+		const t = await this.prehandle(interaction);
+
+		const { success, result, time } = await this.eval(interaction);
+
+		let output = t(success ? "commands/eval:output" : "commands/eval:error", {
+			result: codeBlock("ts", result),
+			time,
+		});
+
+		if (interaction.options.getBoolean("silent")) return null;
+
+		if (output.length > 2000) {
+			this.container.client.emit("log", result);
+
+			output = t("commands/eval:send_console", { time });
+			return interaction.editReply(output);
+		}
+		return interaction.editReply(output);
+	}
+
+	private async eval(interaction: ChatInputCommandInteraction) {
+		const options = {
+			code: interaction.options.getString("expression")!,
+			depth: interaction.options.getInteger("depth"),
+			async: interaction.options.getBoolean("async"),
+			showHidden: interaction.options.getBoolean("showHidden"),
+		};
+
+		let code = options.code.replace(/[“”]/g, '"').replace(/[‘’]/g, "'");
+
 		const stopwatch = new Stopwatch();
-		// eslint-disable-next-line @typescript-eslint/init-declarations, one-var
-		let success, syncTime, asyncTime, result, type;
+
+		// eslint-disable-next-line one-var
+		let success, syncTime, asyncTime, result;
 		let thenable = false;
+
 		try {
-			if (flags.async) code = `(async () => {\n${code}\n})();`;
+			if (options.async) code = `(async () => {\n${code}\n})();`;
 			// eslint-disable-next-line no-eval
 			result = eval(code);
 			syncTime = stopwatch.toString();
-			type = new Type(result);
-			if (util.isThenable(result)) {
+
+			if (isThenable(result)) {
 				thenable = true;
 				stopwatch.restart();
 				result = await result;
 				asyncTime = stopwatch.toString();
 			}
+
 			success = true;
 		} catch (error) {
 			if (!syncTime) syncTime = stopwatch.toString();
-			if (!type) type = new Type(error);
 			if (thenable && !asyncTime) asyncTime = stopwatch.toString();
-			if (error && error.stack) this.client.emit('error', error.stack);
+
 			result = error;
 			success = false;
 		}
 
 		stopwatch.stop();
-		if (typeof result !== 'string') {
+		if (typeof result !== "string") {
 			result = inspect(result, {
-				depth: flags.depth ? parseInt(flags.depth, 10) || 0 : 0,
-				showHidden: Boolean(flags.showHidden)
+				depth: options.depth ? options.depth || 0 : 0,
+				showHidden: Boolean(options.showHidden),
 			});
 		}
-		return { success, type, time: this.formatTime(syncTime, asyncTime), result: util.clean(result) };
+
+		return { success, time: this.formatTime(syncTime, asyncTime), result };
 	}
 
 	private formatTime(syncTime: string, asyncTime: string | undefined) {
 		return asyncTime ? `⏱ ${asyncTime}<${syncTime}>` : `⏱ ${syncTime}`;
 	}
-
 }

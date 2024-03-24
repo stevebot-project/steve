@@ -1,0 +1,5 @@
+{
+    "error": "**Error**:{{result}}\n{{time}}",
+    "send_console": "Output was too long... sent the result to the console.\n{{time}}",
+    "output": "**Output**:{{result}}\n{{time}}"
+}

@@ -1,8 +1,8 @@
 {
     "editor.detectIndentation": false,
     "editor.insertSpaces": false,
-    "editor.tabSize": 4,
+    "editor.tabSize": 2,
     "eslint.validate": ["typescript"],
 	"typescript.tsdk": "node_modules\\typescript\\lib",
-	"typescript.preferences.quoteStyle": "single"
+	"typescript.preferences.quoteStyle": "double"
 }

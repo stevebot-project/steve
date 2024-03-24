@@ -1,12 +1,10 @@
-import { Command, KlasaMessage, util, CommandStore, CommandOptions } from 'klasa';
+import { Command } from "@sapphire/framework";
+import { fetchT } from "@sapphire/plugin-i18next";
+import type { CommandInteraction } from "discord.js";
 
 export abstract class SteveCommand extends Command {
-
-	protected constructor(store: CommandStore, file: string[], directory: string, options: CommandOptions) {
-		super(store, file, directory, util.mergeDefault({ usageDelim: '|' }, options));
+	public async prehandle(interaction: CommandInteraction) {
+		await interaction.deferReply();
+		return fetchT(interaction);
 	}
-
-	/* eslint-disable-next-line @typescript-eslint/no-unused-vars */
-	public run(msg: KlasaMessage, _params: any[]): any { return msg; }
-
 }

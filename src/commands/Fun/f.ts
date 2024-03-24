@@ -1,19 +1,28 @@
-import { CommandOptions, KlasaMessage } from 'klasa';
-import { SteveCommand } from '@lib/structures/commands/SteveCommand';
-import { Message } from 'discord.js';
-import { ApplyOptions } from '@skyra/decorators';
+import { SteveCommand } from "#lib/structures/commands/SteveCommand";
+import { registerBasicCommand } from "#utils/util";
+import { ApplyOptions } from "@sapphire/decorators";
+import {
+	ApplicationCommandRegistry,
+	CommandOptions,
+} from "@sapphire/framework";
+import { ChatInputCommandInteraction } from "discord.js";
 
 @ApplyOptions<CommandOptions>({
-	cooldown: 60,
-	cooldownLevel: 'channel',
-	description: lang => lang.tget('commandFDescription'),
-	extendedHelp: lang => lang.tget('commandFExtended')
+	description: "Press F to pay respects.",
 })
 export default class extends SteveCommand {
-
-	public async run(msg: KlasaMessage): Promise<Message> {
-		return msg.channel.send(msg.language.tget('commandFId'),
-			{ files: [{ attachment: './assets/images/f.png', name: 'pay_respects.png' }] });
+	public override registerApplicationCommands(
+		registry: ApplicationCommandRegistry,
+	) {
+		registerBasicCommand(registry, this.name, this.description);
 	}
 
+	public override async chatInputRun(interaction: ChatInputCommandInteraction) {
+		const t = await this.prehandle(interaction);
+
+		return interaction.editReply({
+			content: t("commands/f:alt"),
+			files: [{ attachment: "./assets/images/f.png" }],
+		});
+	}
 }

@@ -1,0 +1,12 @@
+{
+    "date": "{{duration}} ago ({{date}})",
+    "embed": {
+        "fieldTitles": {
+            "accountCreated": "Account Created",
+            "displayName": "Display Name",
+            "joinedGuild": "Joined Server",
+            "roles": "Roles"
+        },
+        "footer": "Member ID: {{id}}"
+    }
+}

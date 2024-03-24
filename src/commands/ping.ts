@@ -1,14 +1,14 @@
-import { SteveCommand } from "#lib/structures/commands/SteveCommand";
-import { registerBasicCommand } from "#utils/util";
 import { ApplyOptions } from "@sapphire/decorators";
-import {
+import { registerBasicCommand } from "#utils/util";
+import { SteveCommand } from "#lib/structures/commands/SteveCommand";
+import type {
 	ApplicationCommandRegistry,
 	CommandOptions,
 } from "@sapphire/framework";
-import { ChatInputCommandInteraction } from "discord.js";
+import type { ChatInputCommandInteraction } from "discord.js";
 
 @ApplyOptions<CommandOptions>({
-	description: "For when the audio cuts out and you must screm!",
+	description: "Run a connection test to Discord.",
 })
 export default class extends SteveCommand {
 	public override registerApplicationCommands(
@@ -19,10 +19,12 @@ export default class extends SteveCommand {
 
 	public override async chatInputRun(interaction: ChatInputCommandInteraction) {
 		const t = await this.prehandle(interaction);
+		const reply = await interaction.fetchReply();
 
-		return interaction.editReply({
-			content: t("commands/audino:alt"),
-			files: [{ attachment: "./assets/images/john_screech.png" }],
+		const reply_content = t("commands/ping:success", {
+			latency: reply.createdTimestamp - interaction.createdTimestamp,
 		});
+
+		return interaction.editReply(reply_content);
 	}
 }

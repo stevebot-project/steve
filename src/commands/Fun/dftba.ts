@@ -1,14 +1,14 @@
 import { SteveCommand } from "#lib/structures/commands/SteveCommand";
-import { registerBasicCommand } from "#utils/util";
 import { ApplyOptions } from "@sapphire/decorators";
-import {
+import type {
 	ApplicationCommandRegistry,
 	CommandOptions,
 } from "@sapphire/framework";
-import { ChatInputCommandInteraction } from "discord.js";
+import { randomDftba, registerBasicCommand } from "#utils/util";
+import type { ChatInputCommandInteraction } from "discord.js";
 
 @ApplyOptions<CommandOptions>({
-	description: "For when the audio cuts out and you must screm!",
+	description: "Get a fun random DFTBA!",
 })
 export default class extends SteveCommand {
 	public override registerApplicationCommands(
@@ -18,11 +18,8 @@ export default class extends SteveCommand {
 	}
 
 	public override async chatInputRun(interaction: ChatInputCommandInteraction) {
-		const t = await this.prehandle(interaction);
+		await this.prehandle(interaction);
 
-		return interaction.editReply({
-			content: t("commands/audino:alt"),
-			files: [{ attachment: "./assets/images/john_screech.png" }],
-		});
+		return interaction.editReply({ content: randomDftba() });
 	}
 }

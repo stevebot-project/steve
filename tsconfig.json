@@ -1,23 +1,17 @@
 {
-	"extends": "eslint-config-bamboo",
-	"compilerOptions": {
-		"outDir": "./dist",
-		"rootDir": ".",
-		"baseUrl": ".",
-		"experimentalDecorators": true,
-		"paths": {
-			"@utils/*": ["src/lib/util/*"],
-			"@lib/*": ["src/lib/*"],
-			"@root/*": ["*"]
-		},
-		"target": "ES2019",
-		"types": [
-			"node",
-			"discord.js",
-			"klasa",
-			"jest"
-		],
-	},
-	"include": ["."],
-	"exclude": ["./config.example.ts"]
+    "extends": [
+        "@sapphire/ts-config",
+        "@sapphire/ts-config/decorators"
+    ],
+    "compilerOptions": {
+        "baseUrl": ".",
+        "outDir": "dist",
+        "paths": {
+            "#utils/*": ["src/lib/util/*.ts"],
+            "#lib/*": ["src/lib/*.ts"],
+            "#root/*": ["./*.ts"],
+        },
+        "rootDir": "."
+    },
+    "include": ["src", "src/**/*.json"]
 }

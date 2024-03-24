@@ -2,8 +2,5 @@
 	"extends": "./tsconfig.json",
 	"include": [
 		"src",
-		"tests",
-		"jest.config.ts",
-		"babel.config.js"
 	]
 }
