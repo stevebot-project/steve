@@ -9,6 +9,7 @@
     "build-clear": "rm -rf dist && tsc -p .",
     "dev": "tsc -p . && node dist/src/Steve.js",
     "dev-clear": "rm -rf dist && tsc -p . && node dist/src/Steve.js",
+		"lint": "eslint src --ext .ts",
     "start": "node dist/src/Steve.js"
   },
   "repository": {
