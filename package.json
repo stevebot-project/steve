@@ -9,7 +9,7 @@
     "build-clear": "rm -rf dist && tsc -p .",
     "dev": "tsc -p . && node dist/src/Steve.js",
     "dev-clear": "rm -rf dist && tsc -p . && node dist/src/Steve.js",
-		"lint": "eslint src --ext .ts",
+    "lint": "eslint src --ext .ts",
     "start": "node dist/src/Steve.js"
   },
   "repository": {
@@ -28,6 +28,7 @@
   },
   "homepage": "https://github.com/stevebot-project/steve#readme",
   "dependencies": {
+    "@prisma/client": "^5.11.0",
     "@sapphire/decorators": "^6.1.0",
     "@sapphire/duration": "^1.1.2",
     "@sapphire/framework": "^5.0.10",
@@ -41,6 +42,7 @@
     "@sapphire/eslint-config": "^5.0.4",
     "@sapphire/ts-config": "^5.0.1",
     "eslint": "^8.57.0",
+    "prisma": "^5.11.0",
     "typescript": "^5.4.3"
   }
 }

@@ -1,0 +1,132 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+type ClientStorageSchedules {
+  catchUp   Boolean
+  data      ClientStorageSchedulesData
+  id        String
+  /// Could not determine type: the field only had null or empty values in the sample set.
+  recurring Json?
+  running   Boolean
+  taskName  String
+  time      DateTime                   @db.Date
+}
+
+type ClientStorageSchedulesData {
+  channel   String?
+  channelID String?
+  content   String
+  user      String?
+  userID    String?
+}
+
+type GuildsChannels {
+  memberlog       String?
+  modlog          String?
+  reminderChannel String?
+  serverlog       String?
+}
+
+type GuildsLogEvents {
+  channelCreate     Boolean?
+  channelUpdate     Boolean?
+  guildMemberAdd    Boolean?
+  guildMemberRemove Boolean?
+  messageDelete     Boolean?
+  roleCreate        Boolean?
+  roleUpdate        Boolean?
+}
+
+type GuildsModeration {
+  cases GuildsModerationCases[]
+}
+
+type GuildsModerationCases {
+  action    String
+  duration  String
+  moderator String
+  number    Int
+  reason    String
+  target    String
+  task      String?
+  timestamp Float
+}
+
+type GuildsRoleAliases {
+  alias String
+  role  String
+}
+
+type GuildsRoles {
+  administrator                   String?
+  assignable                      String[]
+  deafened                        String?
+  dj                              String?
+  giveTrustedRoleOn               String?
+  moderator                       String?
+  muted                           String?
+  private                         String[]
+  requireTrustedRoleForSelfAssign Boolean?
+  restricted                      String[]
+  trusted                         String?
+}
+
+type GuildsSnippets {
+  content String
+  embed   Boolean?
+  name    String
+}
+
+type GuildsWordBlacklist {
+  wordList String[]
+}
+
+type UsersPomodoro {
+  currentSegment  String?
+  longBreakTime   Int?
+  running         Boolean
+  shortBreakTime  Int?
+  workRoundNumber Int
+  workTime        Int?
+}
+
+model clientStorage {
+  id             String                   @id @default(auto()) @map("_id") @db.ObjectId
+  /// Could not determine type: the field only had null or empty values in the sample set.
+  guildBlacklist Json?
+  id_            String                   @map("id")
+  schedules      ClientStorageSchedules[]
+  userBlacklist  String[]
+  wordBlacklist  String[]
+}
+
+model guilds {
+  id                String                  @id @default(auto()) @map("_id") @db.ObjectId
+  channels          GuildsChannels?
+  deletePinMessages Boolean?
+  disabledCommands  String[]
+  id_               String                  @map("id")
+  ignoredChannels   String[]
+  logEvents         GuildsLogEvents?
+  maxMentions       Int?
+  moderation        GuildsModeration?
+  moderationCases   GuildsModerationCases[]
+  prefix            String?
+  roleAliases       GuildsRoleAliases[]
+  roles             GuildsRoles?
+  snippets          GuildsSnippets[]
+  wordBlacklist     GuildsWordBlacklist?
+}
+
+model users {
+  id         String         @id @default(auto()) @map("_id") @db.ObjectId
+  embedColor String?
+  id_        String         @map("id")
+  pomodoro   UsersPomodoro?
+}
