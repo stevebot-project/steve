@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { SapphireClient, container } from "@sapphire/framework";
 import { GatewayIntentBits } from "discord.js";
+import SettingsProvider from "./database/SettingsProvider.js";
 
 export default class SteveClient extends SapphireClient {
 	public constructor() {
@@ -18,6 +19,7 @@ export default class SteveClient extends SapphireClient {
 	public override async login(token: string) {
 		// connect to database
 		container.prisma = new PrismaClient();
+		container.settings = new SettingsProvider(container.prisma);
 
 		return super.login(token);
 	}
@@ -25,6 +27,7 @@ export default class SteveClient extends SapphireClient {
 
 declare module "@sapphire/pieces" {
 	interface Container {
+		settings: SettingsProvider;
 		prisma: PrismaClient;
 	}
 }
