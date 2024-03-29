@@ -6,8 +6,8 @@ export default class SettingsProvider {
 
 	private prisma: PrismaClient;
 
-	public constructor(prisma: PrismaClient) {
-		this.guilds = new GuildSettings(prisma);
-		this.prisma = prisma;
+	public constructor() {
+		this.prisma = new PrismaClient();
+		this.guilds = new GuildSettings(this.prisma);
 	}
 }
