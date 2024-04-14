@@ -7,6 +7,15 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Feedback {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  content   String
+  timestamp DateTime
+  user      String
+
+  @@map("feedback")
+}
+
 model Guild {
   id                String    @id @default(auto()) @map("_id") @db.ObjectId
   id_               String    @unique @map("id") // snowflake

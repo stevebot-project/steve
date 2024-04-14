@@ -1,0 +1,11 @@
+{
+	"modal": {
+		"input": {
+			"label": "What feedback do you have for us?",
+			"placeholder": "Help make Steve better!"
+		},
+		"title": "Feedback"
+	},
+	"submissionFailure": "There was a problem submitting your feedback, please try again later!",
+	"submissionSuccess": "Thanks for your feedback!"
+}
