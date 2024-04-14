@@ -45,8 +45,8 @@ export default class extends SteveCommand {
 			);
 
 			return submissionData.reply(t("commands/feedback:submissionSuccess"));
-		} catch (e) {
-			console.log(e); // TODO: set up logger plugin
+		} catch (err) {
+			this.container.logger.error(err);
 			return interaction.reply(t("commands/feedback:submissionFailure"));
 		}
 	}

@@ -2,6 +2,7 @@ import SteveClient from "#lib/SteveClient";
 import { Tokens } from "#root/config";
 
 import "@sapphire/plugin-i18next/register";
+import "@sapphire/plugin-logger/register";
 
 const steve = new SteveClient();
 

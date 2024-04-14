@@ -7,6 +7,6 @@ export default class extends Listener {
 	public run(client: Client) {
 		const { username, id } = client.user!;
 
-		console.log(`Logged in and ready as ${username} (${id})!`);
+		this.container.logger.info(`Logged in and ready as ${username} (${id})!`);
 	}
 }
