@@ -6,11 +6,11 @@ import { Command, type CommandOptions } from "@sapphire/framework";
 import { type TFunction } from "@sapphire/plugin-i18next";
 import { cast } from "@sapphire/utilities";
 import {
-	type ChatInputCommandInteraction,
-	GuildMember,
-	EmbedBuilder,
 	ApplicationCommandType,
+	EmbedBuilder,
+	GuildMember,
 	UserContextMenuCommandInteraction,
+	type ChatInputCommandInteraction,
 } from "discord.js";
 
 @ApplyOptions<CommandOptions>({

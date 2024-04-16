@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
-import GuildSettings from "./GuildSettings.js";
 import FeedbackSettings from "./FeedbackSettings.js";
+import GuildSettings from "./GuildSettings.js";
 
 export default class SettingsProvider {
 	public feedback: FeedbackSettings;

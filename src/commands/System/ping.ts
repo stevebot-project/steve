@@ -1,6 +1,6 @@
-import { ApplyOptions } from "@sapphire/decorators";
-import { registerBasicCommand } from "#utils/util";
 import { SteveCommand } from "#lib/structures/commands/SteveCommand";
+import { registerBasicCommand } from "#utils/util";
+import { ApplyOptions } from "@sapphire/decorators";
 import type {
 	ApplicationCommandRegistry,
 	CommandOptions,

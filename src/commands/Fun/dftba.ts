@@ -1,10 +1,10 @@
 import { SteveCommand } from "#lib/structures/commands/SteveCommand";
+import { randomDftba, registerBasicCommand } from "#utils/util";
 import { ApplyOptions } from "@sapphire/decorators";
 import type {
 	ApplicationCommandRegistry,
 	CommandOptions,
 } from "@sapphire/framework";
-import { randomDftba, registerBasicCommand } from "#utils/util";
 import type { ChatInputCommandInteraction } from "discord.js";
 
 @ApplyOptions<CommandOptions>({
