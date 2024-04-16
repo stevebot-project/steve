@@ -1,22 +1,20 @@
 import { SapphireClient, container } from "@sapphire/framework";
-import { GatewayIntentBits } from "discord.js";
 import SettingsProvider from "./database/SettingsProvider.js";
+import { STEVE_CLIENT_OPTIONS } from "#lib/setup/config";
 
-export default class SteveClient extends SapphireClient {
+export class SteveClient extends SapphireClient {
+	public dev = process.env.NODE_ENV !== "production";
+
 	public constructor() {
-		super({
-			intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages],
-			i18n: {
-				// eslint-disable-next-line @typescript-eslint/require-await
-				fetchLanguage: async () => {
-					return "en-US";
-				},
-			},
-		});
+		super(STEVE_CLIENT_OPTIONS);
 	}
 
-	public override async login(token: string) {
+	public override async login() {
 		container.settings = new SettingsProvider();
+
+		const token = this.dev
+			? process.env.DISCORD_TOKEN_DEV
+			: process.env.DISCORD_TOKEN_PROD;
 
 		return super.login(token);
 	}

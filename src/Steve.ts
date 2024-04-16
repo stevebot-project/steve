@@ -1,9 +1,16 @@
-import SteveClient from "#lib/SteveClient";
-import { Tokens } from "#root/config";
+import "#lib/setup/setup";
 
-import "@sapphire/plugin-i18next/register";
-import "@sapphire/plugin-logger/register";
+import { SteveClient } from "#lib/SteveClient";
+import { container } from "@sapphire/framework";
 
-const steve = new SteveClient();
+const client = new SteveClient();
 
-steve.login(Tokens.BotToken).catch((err) => console.error(err));
+async function steve() {
+	try {
+		await client.login();
+	} catch (err) {
+		container.logger.error(err);
+	}
+}
+
+steve().catch(container.logger.error.bind(container.logger));
