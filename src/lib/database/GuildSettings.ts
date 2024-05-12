@@ -10,13 +10,13 @@ export default class GuildSettings {
 
 	public createGuild(guildSnowflake: Snowflake) {
 		return this.prisma.guild.create({
-			data: { id_: guildSnowflake, logEvents: {} },
+			data: { id: guildSnowflake },
 		});
 	}
 
 	public deleteGuild(guildSnowflake: Snowflake) {
 		return this.prisma.guild.delete({
-			where: { id_: guildSnowflake },
+			where: { id: guildSnowflake },
 		});
 	}
 }

@@ -3,72 +3,63 @@ generator client {
 }
 
 datasource db {
-  provider = "mongodb"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
 model Feedback {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  id        Int      @id @default(autoincrement())
   content   String
   timestamp DateTime
-  user      String
 
   @@map("feedback")
 }
 
 model Guild {
-  id                String    @id @default(auto()) @map("_id") @db.ObjectId
-  id_               String    @unique @map("id") // snowflake
-  channels          Channels?
-  deletePinMessages Boolean   @default(false)
-  logEvents         LogEvents
-  roles             Roles?
-  snippets          Snippet[]
+  id                        String    @id @db.VarChar(19)
+  channelMemberlog          String?   @map("channels.memberlog") @db.VarChar(19)
+  channelServerlog          String?   @map("channels.serverlog") @db.VarChar(19)
+  deletePinMessages         Boolean   @default(false)
+  logEventChannelCreate     Boolean   @default(true) @map("logEvents.channelCreate")
+  logEventChannelDelete     Boolean   @default(true) @map("logEvents.channelDelete")
+  logEventChannelUpdate     Boolean   @default(true) @map("logEvents.channelUpdate")
+  logEventEmojiCreate       Boolean   @default(true) @map("logEvents.emojiCreate")
+  logEventEmojiDelete       Boolean   @default(true) @map("logEvents.emojiDelete")
+  logEventEmojiUpdate       Boolean   @default(true) @map("logEvents.emojiUpdate")
+  logEventGuildBanAdd       Boolean   @default(true) @map("logEvents.guildBanAdd")
+  logEventGuildBanRemove    Boolean   @default(true) @map("logEvents.guildBanRemove")
+  logEventGuildMemberAdd    Boolean   @default(true) @map("logEvents.guildMemberAdd")
+  logEventGuildMemberRemove Boolean   @default(true) @map("logEvents.guildMemberRemove")
+  logEventGuildMemberUpdate Boolean   @default(true) @map("logEvents.guildMemberUpdate")
+  logEventInviteCreate      Boolean   @default(true) @map("logEvents.inviteCreate")
+  logEventInviteDelete      Boolean   @default(true) @map("logEvents.inviteDelete")
+  logEventMessageDelete     Boolean   @default(true) @map("logEvents.messageDelete")
+  logEventMessageDeleteBulk Boolean   @default(true) @map("logEvents.messageDeleteBulk")
+  logEventRoleCreate        Boolean   @default(true) @map("logEvents.roleCreate")
+  logEventRoleDelete        Boolean   @default(true) @map("logEvents.roleDelete")
+  logEventRoleUpdate        Boolean   @default(true) @map("logEvents.roleUpdate")
+  roleAdministrator         String?   @map("roles.administrator") @db.VarChar(19)
+  roleAssignable            String[]  @default([]) @map("roles.assignable") @db.VarChar(19)
+  roleModerator             String?   @map("roles.moderator") @db.VarChar(19)
+  snippets                  Snippet[]
 
-  // TODO: investigate creating an index on Atlas for this
-  @@unique([id_, snippets.name])
   @@map("guilds")
 }
 
-type Channels {
-  memberlog       String?
-  reminderChannel String?
-  serverlog       String?
-}
-
-type LogEvents {
-  channelCreate     Boolean @default(true)
-  channelDelete     Boolean @default(true)
-  channelUpdate     Boolean @default(true)
-  emojiCreate       Boolean @default(true)
-  emojiDelete       Boolean @default(true)
-  emojiUpdate       Boolean @default(true)
-  guildBanAdd       Boolean @default(true)
-  guildBanRemove    Boolean @default(true)
-  guildMemberAdd    Boolean @default(true)
-  guildMemberRemove Boolean @default(true)
-  guildMemberUpdate Boolean @default(true)
-  inviteCreate      Boolean @default(true)
-  inviteDelete      Boolean @default(true)
-  messageDelete     Boolean @default(true)
-  messageDeleteBulk Boolean @default(true)
-  roleCreate        Boolean @default(true)
-  roleDelete        Boolean @default(true)
-  roleUpdate        Boolean @default(true)
-}
-
-type Roles {
-  administrator String?
-  assignable    String[]
-  deafened      String?
-  moderator     String?
-  muted         String?
-  restricted    String[]
-  trusted       String?
-}
-
-type Snippet {
-  name    String
-  content String
+model Snippet {
+  content String  @db.VarChar(1900)
   embed   Boolean @default(false)
+  guild   Guild   @relation(fields: [guildId], references: [id])
+  guildId String  @db.VarChar(19)
+  name    String  @db.VarChar(100)
+
+  @@id([guildId, name])
+  @@map("snippets")
+}
+
+model User {
+  id         String  @id @db.VarChar(19)
+  embedColor String? @db.VarChar(6)
+
+  @@map("users")
 }

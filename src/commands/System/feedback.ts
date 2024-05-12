@@ -41,7 +41,6 @@ export default class extends SteveCommand {
 			await this.container.settings.feedback.addFeedback(
 				feedback,
 				submissionData.createdAt,
-				submissionData.user.id,
 			);
 
 			return submissionData.reply(t("commands/feedback:submissionSuccess"));
