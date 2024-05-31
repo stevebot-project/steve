@@ -819,6 +819,27 @@ export default class extends Language {
 		commandPomodoroUnderConstruction: 'This command is under reconstruction and is not currently available. Check back soon!',
 		/**
 		 * ################################
+		 * #      WOLFRAM-ALPHA           #
+		 * ################################
+		 */
+		commandWolframDescription: 'Use Wolfram Alpha to do some math.',
+		commandWolframExtended: builder.display('wolfram', {
+			examples: [
+				'(3 + 9) / 7',
+				'derive 4x^2 + 3x +7'
+			]
+		}),
+		commandWolframLoading: 'Using mad math skillz...',
+		commandWolframError: 'There was too much math and something went wrong.',
+		commandWolframEmbed: {
+			title: 'The math is done!',
+			description: 'Powered by [Wolfram Alpha](https://www.wolframalpha.com/).',
+			queryHeader: 'Your Question',
+			resultHeader: 'The Result',
+			footer: this.randomDftba
+		},
+		/**
+		 * ################################
 		 * #      SELF-ASSIGN             #
 		 * ################################
 		 */
