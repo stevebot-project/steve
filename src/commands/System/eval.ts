@@ -74,6 +74,9 @@ export default class extends SteveCommand {
 	}
 
 	private async eval(interaction: ChatInputCommandInteraction) {
+		// @ts-ignore 6198
+		const { guild, user } = interaction;
+
 		const options = {
 			code: interaction.options.getString("expression")!,
 			depth: interaction.options.getInteger("depth"),
