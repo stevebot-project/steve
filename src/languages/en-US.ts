@@ -805,7 +805,7 @@ export default class extends Language {
 		commandReminderDisplayHidden: 'Private reminder: content hidden',
 		commandRemindViewEmbed: {
 			title: 'Pending Reminders',
-			fieldValues: time => `${time} left!`
+			description: time => `${time} left!`
 		},
 		/**
 		 * ################################

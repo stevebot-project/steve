@@ -1,6 +1,6 @@
 import { SteveCommand } from '@lib/structures/commands/SteveCommand';
 import { CommandOptions, KlasaMessage, RichDisplay } from 'klasa';
-import { ColorResolvable, EmbedField, Message, MessageEmbed, TextChannel } from 'discord.js';
+import { ColorResolvable, Message, MessageEmbed, TextChannel } from 'discord.js';
 import { GuildSettings } from '@lib/types/settings/GuildSettings';
 import { Reminder } from '@root/src/extendables/Schedule';
 import { UserSettings } from '@lib/types/settings/UserSettings';
@@ -64,18 +64,15 @@ export default class extends SteveCommand {
 			const display = new RichDisplay(this.buildViewEmbed(msg));
 
 			for (const page of chunk(reminders, 5)) {
-				const fields: EmbedField[] = [];
+				let content = '';
 
 				for (let i = 0; i < page.length; i++) {
 					const displayMessage = await this.getReminderDisplayContent(msg, page[i]);
-					fields.push({
-						name: `**${reminders.indexOf(page[i]) + 1}: ${displayMessage}**`,
-						value: embedData.fieldValues(this.getTimeUntilRemind(page[i])),
-						inline: false
-					});
+					content += `**${reminders.indexOf(page[i]) + 1}: ${displayMessage}**\n${
+						embedData.description(this.getTimeUntilRemind(page[i]))}\n\n`;
 				}
 
-				display.addPage((template: MessageEmbed) => template.addFields(fields));
+				display.addPage((template: MessageEmbed) => template.setDescription(content));
 			}
 
 			await display.run(response);
@@ -85,18 +82,15 @@ export default class extends SteveCommand {
 		const embeds: MessageEmbed[] = [];
 
 		for (const page of chunk(reminders, 25)) {
-			const fields: EmbedField[] = [];
+			let content = '';
 
 			for (let i = 0; i < page.length; i++) {
 				const displayMessage = await this.getReminderDisplayContent(msg, page[i]);
-				fields.push({
-					name: `**${reminders.indexOf(page[i]) + 1}: ${displayMessage}**`,
-					value: embedData.fieldValues(this.getTimeUntilRemind(page[i])),
-					inline: false
-				});
+				content += `**${reminders.indexOf(page[i]) + 1}: ${displayMessage}**\n${
+					embedData.description(this.getTimeUntilRemind(page[i]))}\n\n`;
 			}
 
-			embeds.push(this.buildViewEmbed(msg).addFields(fields));
+			embeds.push(this.buildViewEmbed(msg).setDescription(content));
 		}
 		embeds.reverse();
 
