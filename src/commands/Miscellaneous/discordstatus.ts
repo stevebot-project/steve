@@ -64,7 +64,7 @@ export default class extends SteveCommand {
 			.setThumbnail(ImageAssets.DiscordLogo)
 			.setTimestamp()
 			.setFooter(embedData.footer(formatDate(new Date(currentStatus.page.updated_at))))
-			.setColor('BLURPLE');
+			.setColor(0x5865F2);
 
 		return response.edit(undefined, embed);
 
