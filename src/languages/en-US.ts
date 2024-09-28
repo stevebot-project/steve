@@ -521,6 +521,9 @@ export default class extends Language {
 			extendedHelp: 'The ability to search for a relevant XKCD is coming soon!'
 		}),
 		commandXkcdInvalid: 'I was unable to find that XKCD.',
+		commandDoubtDescription: 'React to a message with <:x2doubt:805574339651043378>.',
+		commandDoubtExtended: 'This command must be used when replying to a message.',
+		commandDoubtFail: 'Something went wrong and I couldn\'t find that message.',
 		/**
 		 * ################################
 		 * #      MODERATION SYSTEM       #
