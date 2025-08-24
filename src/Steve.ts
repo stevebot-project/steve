@@ -1,4 +1,5 @@
 import "#lib/setup/setup";
+import "dotenv/config";
 
 import { SteveClient } from "#lib/SteveClient";
 import { container } from "@sapphire/framework";
