@@ -1,5 +1,6 @@
 dist
 node_modules
-src/generated
+**/generated
+**/.turbo
 
-.env
+*.env
