@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { Feedback, PrismaClient } from "@steve/database";
 
 export default class FeedbackSettings {
 	private prisma: PrismaClient;
@@ -7,7 +7,10 @@ export default class FeedbackSettings {
 		this.prisma = prisma;
 	}
 
-	public addFeedback(content: string, timestamp: Date) {
+	public addFeedback(
+		content: string,
+		timestamp: Date,
+	): Promise<Feedback | null> {
 		return this.prisma.feedback.create({
 			data: {
 				content,

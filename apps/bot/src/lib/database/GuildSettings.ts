@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { Guild, PrismaClient } from "@steve/database";
 import { Snowflake } from "discord.js";
 
 export default class GuildSettings {
@@ -8,13 +8,13 @@ export default class GuildSettings {
 		this.prisma = prisma;
 	}
 
-	public createGuild(guildSnowflake: Snowflake) {
+	public async createGuild(guildSnowflake: Snowflake): Promise<Guild | null> {
 		return this.prisma.guild.create({
 			data: { id: guildSnowflake },
 		});
 	}
 
-	public deleteGuild(guildSnowflake: Snowflake) {
+	public async deleteGuild(guildSnowflake: Snowflake): Promise<Guild | null> {
 		return this.prisma.guild.delete({
 			where: { id: guildSnowflake },
 		});
