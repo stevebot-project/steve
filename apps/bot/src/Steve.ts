@@ -7,11 +7,11 @@ import { container } from "@sapphire/framework";
 const client = new SteveClient();
 
 async function steve() {
-	try {
-		await client.login();
-	} catch (err) {
-		container.logger.error(err);
-	}
+	await client.login();
 }
+
+process.on("unhandledRejection", (error) => {
+	container.logger.error(error);
+});
 
 steve().catch(container.logger.error.bind(container.logger));
