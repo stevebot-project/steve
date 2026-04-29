@@ -1,0 +1,119 @@
+import { SteveCommand } from "#lib/structures/commands/SteveCommand";
+import { ModerationErrors } from "#lib/structures/moderation/ModerationManager";
+import { SteveGuild } from "#lib/structures/SteveGuild";
+import { ApplyOptions } from "@sapphire/decorators";
+import { Duration, DurationFormatter } from "@sapphire/duration";
+import {
+	ApplicationCommandRegistry,
+	CommandOptions,
+} from "@sapphire/framework";
+import { Time } from "@sapphire/timestamp";
+import {
+	ChatInputCommandInteraction,
+	InteractionContextType,
+} from "discord.js";
+
+@ApplyOptions<CommandOptions>({
+	description:
+		"Timeout a specified member. A duration for the timeout, as well as a reason, can be provided.",
+})
+export default class extends SteveCommand {
+	public override registerApplicationCommands(
+		registry: ApplicationCommandRegistry,
+	) {
+		registry.registerChatInputCommand((builder) =>
+			builder
+				.setName(this.name)
+				.setDescription(this.description)
+				.setContexts(InteractionContextType.Guild)
+				.addUserOption((option) =>
+					option
+						.setName("target")
+						.setDescription("The member you'd like to timeout.")
+						.setRequired(true),
+				)
+				.addStringOption((option) =>
+					option
+						.setName("duration")
+						.setDescription(
+							"How long would you like this member to be in timeout? The maximum is 28 days.",
+						)
+						.setRequired(true),
+				)
+				.addStringOption((option) =>
+					option
+						.setName("reason")
+						.setDescription("Why are you putting this member in timeout?")
+						.setRequired(false),
+				),
+		);
+	}
+
+	public async chatInputRun(interaction: ChatInputCommandInteraction) {
+		const t = await this.prehandle(interaction);
+
+		if (!interaction.inCachedGuild()) {
+			return interaction.editReply(t("commands/timeout:errors.guild_only"));
+		}
+
+		const guild = await SteveGuild.get(interaction.guild!);
+
+		const target = interaction.options.getMember("target");
+		if (!target) {
+			return interaction.editReply(t("commands/timeout:errors.unknown_member"));
+		}
+
+		const duration = this.parseDuration(
+			interaction.options.getString("duration")!,
+		);
+		if (!duration) {
+			return interaction.editReply(
+				t("commands/timeout:errors.invalid_duration", {
+					input: interaction.options.getString("duration")!,
+				}),
+			);
+		}
+
+		if (duration > Time.Day * 28) {
+			return interaction.editReply(t("commands/timeout:errors.max_duration"));
+		}
+
+		// GuildMember.timeout (called in guild.moderation.timeout) expects string | undefined for reason
+		const reason = interaction.options.getString("reason") ?? undefined;
+
+		const result = await guild.moderation.timeout(target, { duration, reason });
+
+		if (result.success) {
+			const formatter = new DurationFormatter();
+			return interaction.editReply(
+				t("commands/timeout:success", {
+					member: target.user.username,
+					duration: formatter.format(duration, 2),
+				}),
+			);
+		}
+
+		switch (result.error) {
+			case ModerationErrors.GENERIC_FAIL:
+				return interaction.editReply(
+					t("commands/timeout:errors.generic_fail", {
+						member: target.user.username,
+					}),
+				);
+			case ModerationErrors.NOT_MODERATABLE:
+				return interaction.editReply(
+					t("commands/timeout:errors.not_moderatable", {
+						member: target.user.username,
+					}),
+				);
+		}
+	}
+
+	private parseDuration(input: string) {
+		try {
+			return new Duration(input).offset;
+		} catch {
+			return null;
+		}
+	}
+}

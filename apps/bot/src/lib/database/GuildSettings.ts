@@ -19,4 +19,10 @@ export default class GuildSettings {
 			where: { id: guildSnowflake },
 		});
 	}
+
+	public async getGuild(guildSnowflake: Snowflake) {
+		return this.prisma.guild.findUnique({
+			where: { id: guildSnowflake },
+		});
+	}
 }
