@@ -54,7 +54,7 @@ model Snippet {
   guildId String  @db.VarChar(19)
   name    String  @db.VarChar(100)
 
-  @@id([guildId, name])
+  @@id(name: "snippetId", [guildId, name])
   @@map("snippets")
 }
 

@@ -10,7 +10,7 @@ export default class SnippetSettings {
 
 	public async deleteSnippet(guildId: Snowflake, name: string) {
 		return this.prisma.snippet.delete({
-			where: { guildId_name: { guildId, name } },
+			where: { snippetId: { guildId, name } },
 		});
 	}
 
@@ -22,7 +22,7 @@ export default class SnippetSettings {
 
 	public async getSnippet(guildId: Snowflake, name: string) {
 		return this.prisma.snippet.findUnique({
-			where: { guildId_name: { guildId, name } },
+			where: { snippetId: { guildId, name } },
 		});
 	}
 
@@ -34,7 +34,7 @@ export default class SnippetSettings {
 		embed: boolean,
 	) {
 		return this.prisma.snippet.upsert({
-			where: { guildId_name: { guildId, name } },
+			where: { snippetId: { guildId, name } },
 			create: { guildId, name, content, embed },
 			update: { name, content, embed },
 		});
