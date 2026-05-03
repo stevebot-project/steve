@@ -2,64 +2,25 @@ import { LanguageKeys } from "#lib/i18n/index";
 import { SteveCommand } from "#lib/structures/commands/SteveCommand";
 import { useT } from "#utils/i18n";
 import { ApplyOptions } from "@sapphire/decorators";
-import type {
-	ApplicationCommandRegistry,
-	CommandOptions,
-} from "@sapphire/framework";
+import { LogLevel, type Args, type CommandOptions } from "@sapphire/framework";
 import { fetchT } from "@sapphire/plugin-i18next";
 import { Stopwatch } from "@sapphire/stopwatch";
-import { codeBlock, isThenable } from "@sapphire/utilities";
-import type { ChatInputCommandInteraction } from "discord.js";
+import { cast, codeBlock, isThenable } from "@sapphire/utilities";
+import type { Message } from "discord.js";
 import { inspect } from "util";
 
 @ApplyOptions<CommandOptions>({
+	aliases: ["ev"],
 	description: "Evaluates JavaScript code. Reserved for my owners.",
+	flags: ["silent", "async", "show-hidden"],
+	options: ["depth"],
 	preconditions: ["isOwner"],
 })
 export default class extends SteveCommand {
-	public override registerApplicationCommands(
-		registry: ApplicationCommandRegistry,
-	) {
-		registry.registerChatInputCommand((builder) =>
-			builder
-				.setName(this.name)
-				.setDescription(this.description)
-				.addStringOption((option) =>
-					option
-						.setName("expression")
-						.setDescription("The expression to be evaluated.")
-						.setRequired(true),
-				)
-				.addIntegerOption((option) =>
-					option
-						.setName("depth")
-						.setDescription("Customizes util.inspect's depth."),
-				)
-				.addBooleanOption((option) =>
-					option
-						.setName("silent")
-						.setDescription("Make the command output nothing."),
-				)
-				.addBooleanOption((option) =>
-					option
-						.setName("async")
-						.setDescription(
-							"Wraps the code in an async function; you need to use the return keyword here!",
-						),
-				)
-				.addBooleanOption((option) =>
-					option
-						.setName("show_hidden")
-						.setDescription("Enables the showHidden option on util.inspect."),
-				),
-		);
-	}
+	public override async messageRun(msg: Message, args: Args) {
+		const t = useT(await fetchT(msg));
 
-	public override async chatInputRun(interaction: ChatInputCommandInteraction) {
-		await interaction.deferReply();
-		const t = useT(await fetchT(interaction));
-
-		const { success, result, time } = await this.eval(interaction);
+		const { success, result, time } = await this.eval(args);
 
 		let output = t(
 			success
@@ -71,26 +32,22 @@ export default class extends SteveCommand {
 			},
 		);
 
-		if (interaction.options.getBoolean("silent")) return null;
+		if (args.getFlags("silent")) return null;
 
 		if (output.length > 2000) {
-			this.container.client.emit("log", result);
-
+			this.container.logger.write(LogLevel.None, result);
 			output = t(LanguageKeys.Commands.System.EvalSendConsole, { time });
-			return interaction.editReply(output);
+			return msg.reply(output);
 		}
-		return interaction.editReply(output);
+		return msg.reply(output);
 	}
 
-	private async eval(interaction: ChatInputCommandInteraction) {
-		// @ts-ignore 6198
-		const { guild, user } = interaction;
-
+	private async eval(args: Args) {
 		const options = {
-			code: interaction.options.getString("expression")!,
-			depth: interaction.options.getInteger("depth"),
-			async: interaction.options.getBoolean("async"),
-			showHidden: interaction.options.getBoolean("showHidden"),
+			code: await args.rest("string"),
+			depth: args.getOption("depth"),
+			async: args.getFlags("async"),
+			showHidden: args.getFlags("show-hidden"),
 		};
 
 		let code = options.code.replace(/[“”]/g, '"').replace(/[‘’]/g, "'");
@@ -126,10 +83,14 @@ export default class extends SteveCommand {
 		stopwatch.stop();
 		if (typeof result !== "string") {
 			result = inspect(result, {
-				depth: options.depth ? options.depth || 0 : 0,
+				depth: options.depth ? parseInt(options.depth, 10) : 0,
 				showHidden: Boolean(options.showHidden),
 			});
 		}
+		result = result.replaceAll(
+			cast<string>(process.env.DISCORD_TOKEN),
+			"[REDACTED]",
+		);
 
 		return { success, time: this.formatTime(syncTime, asyncTime), result };
 	}
