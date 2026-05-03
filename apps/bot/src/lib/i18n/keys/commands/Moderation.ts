@@ -11,7 +11,9 @@ export const ErrorNotModeratable = FT<{ member: string }>(
 	"commands/moderation:error_not_moderatable",
 );
 export const ErrorUnknownMember = T("commands/moderation:error_unknown_member");
-export const TimeoutErrorMaxDuration = T("commands/timeout:error_max_duration");
+export const TimeoutErrorMaxDuration = T(
+	"commands/moderation:timeout_error_max_duration",
+);
 export const TimeoutSuccess = FT<{ member: string; duration: string }>(
-	"commands/timeout:success",
+	"commands/moderation:timeout_success",
 );
