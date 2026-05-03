@@ -1,9 +1,11 @@
+import { LanguageKeys } from "#lib/i18n/index";
+import { useT } from "#lib/i18n/utils";
 import { SteveCommand } from "#lib/structures/commands/SteveCommand";
 import { defaultDateFormat } from "#utils/util";
 import { ApplyOptions } from "@sapphire/decorators";
 import { DurationFormatter } from "@sapphire/duration";
 import { Command, type CommandOptions } from "@sapphire/framework";
-import { type TFunction } from "@sapphire/plugin-i18next";
+import { fetchT } from "@sapphire/plugin-i18next";
 import { cast } from "@sapphire/utilities";
 import {
 	ApplicationCommandType,
@@ -38,7 +40,8 @@ export default class extends SteveCommand {
 	}
 
 	public override async chatInputRun(interaction: ChatInputCommandInteraction) {
-		const t = await this.prehandle(interaction);
+		await interaction.deferReply();
+		const t = useT(await fetchT(interaction));
 		const user = interaction.options.getUser("user");
 
 		const embed = this.buildEmbed(
@@ -52,7 +55,8 @@ export default class extends SteveCommand {
 	public override async contextMenuRun(
 		interaction: UserContextMenuCommandInteraction,
 	) {
-		const t = await this.prehandle(interaction);
+		await interaction.deferReply();
+		const t = useT(await fetchT(interaction));
 		const embed = this.buildEmbed(
 			t,
 			cast<GuildMember>(interaction.targetMember)!,
@@ -61,7 +65,7 @@ export default class extends SteveCommand {
 		return interaction.editReply({ embeds: [embed] });
 	}
 
-	private buildEmbed(t: TFunction, member: GuildMember) {
+	private buildEmbed(t: ReturnType<typeof useT>, member: GuildMember) {
 		const formatter = new DurationFormatter();
 
 		const accountCreatedDate = defaultDateFormat.display(
@@ -81,21 +85,21 @@ export default class extends SteveCommand {
 		const embed = new EmbedBuilder()
 			.addFields(
 				{
-					name: t("commands/whois:embed.fieldTitles.displayName"),
+					name: t(LanguageKeys.Commands.Info.WhoisEmbedDisplayName),
 					value: member.displayName,
 					inline: true,
 				},
 				{
-					name: t("commands/whois:embed.fieldTitles.accountCreated"),
-					value: t("commands/whois:date", {
+					name: t(LanguageKeys.Commands.Info.WhoisEmbedAccountCreated),
+					value: t(LanguageKeys.Commands.Info.WhoisDate, {
 						duration: accountCreatedDuration,
 						date: accountCreatedDate,
 					}),
 					inline: true,
 				},
 				{
-					name: t("commands/whois:embed.fieldTitles.joinedGuild"),
-					value: t("commands/whois:date", {
+					name: t(LanguageKeys.Commands.Info.WhoisEmbedJoinedGuild),
+					value: t(LanguageKeys.Commands.Info.WhoisDate, {
 						duration: joindGuildDuration,
 						date: joinedGuildDate,
 					}),
@@ -107,7 +111,7 @@ export default class extends SteveCommand {
 				iconURL: member.displayAvatarURL(),
 			})
 			.setFooter({
-				text: t("commands/whois:embed.footer", {
+				text: t(LanguageKeys.Commands.Info.WhoisEmbedFooter, {
 					id: member.id,
 				}),
 			})
@@ -116,7 +120,7 @@ export default class extends SteveCommand {
 		if (member.roles.cache.size > 1) {
 			embed.addFields([
 				{
-					name: t("commands/whois:embed.fieldTitles.roles"),
+					name: t(LanguageKeys.Commands.Info.WhoisEmbedRoles),
 					value: member.roles.cache
 						.filter((r) => r.id !== member.guild.id)
 						.sort()

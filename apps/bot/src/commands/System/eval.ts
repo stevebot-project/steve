@@ -1,9 +1,12 @@
+import { LanguageKeys } from "#lib/i18n/index";
+import { useT } from "#lib/i18n/utils";
 import { SteveCommand } from "#lib/structures/commands/SteveCommand";
 import { ApplyOptions } from "@sapphire/decorators";
 import type {
 	ApplicationCommandRegistry,
 	CommandOptions,
 } from "@sapphire/framework";
+import { fetchT } from "@sapphire/plugin-i18next";
 import { Stopwatch } from "@sapphire/stopwatch";
 import { codeBlock, isThenable } from "@sapphire/utilities";
 import type { ChatInputCommandInteraction } from "discord.js";
@@ -53,21 +56,27 @@ export default class extends SteveCommand {
 	}
 
 	public override async chatInputRun(interaction: ChatInputCommandInteraction) {
-		const t = await this.prehandle(interaction);
+		await interaction.deferReply();
+		const t = useT(await fetchT(interaction));
 
 		const { success, result, time } = await this.eval(interaction);
 
-		let output = t(success ? "commands/eval:output" : "commands/eval:error", {
-			result: codeBlock("ts", result),
-			time,
-		});
+		let output = t(
+			success
+				? LanguageKeys.Commands.System.EvalOutput
+				: LanguageKeys.Commands.System.EvalError,
+			{
+				result: codeBlock("ts", result),
+				time,
+			},
+		);
 
 		if (interaction.options.getBoolean("silent")) return null;
 
 		if (output.length > 2000) {
 			this.container.client.emit("log", result);
 
-			output = t("commands/eval:send_console", { time });
+			output = t(LanguageKeys.Commands.System.EvalSendConsole, { time });
 			return interaction.editReply(output);
 		}
 		return interaction.editReply(output);

@@ -1,3 +1,5 @@
+import { LanguageKeys } from "#lib/i18n/index";
+import { useT } from "#lib/i18n/utils";
 import { SteveCommand } from "#lib/structures/commands/SteveCommand";
 import { registerBasicCommand } from "#utils/util";
 import { ApplyOptions } from "@sapphire/decorators";
@@ -5,6 +7,7 @@ import {
 	ApplicationCommandRegistry,
 	CommandOptions,
 } from "@sapphire/framework";
+import { fetchT } from "@sapphire/plugin-i18next";
 import { ChatInputCommandInteraction } from "discord.js";
 
 @ApplyOptions<CommandOptions>({
@@ -18,10 +21,12 @@ export default class extends SteveCommand {
 	}
 
 	public override async chatInputRun(interaction: ChatInputCommandInteraction) {
-		const t = await this.prehandle(interaction);
+		await interaction.deferReply();
+
+		const t = useT(await fetchT(interaction));
 
 		return interaction.editReply({
-			content: t("commands/audino:alt"),
+			content: t(LanguageKeys.Commands.Fun.AudinoAlt),
 			files: [{ attachment: "./assets/images/john_screech.png" }],
 		});
 	}

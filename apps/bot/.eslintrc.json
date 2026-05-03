@@ -1,3 +1,9 @@
 {
-	"extends": "@sapphire"
+	"extends": "@sapphire",
+  "overrides": [{
+    "files": ["src/lib/i18n/keys/*"],
+    "rules": {
+      "prettier/prettier": 0
+    }
+  }]
 }

@@ -1,3 +1,5 @@
+import { LanguageKeys } from "#lib/i18n/index";
+import { useT } from "#lib/i18n/utils";
 import { SteveCommand } from "#lib/structures/commands/SteveCommand";
 import { ModerationErrors } from "#lib/structures/moderation/ModerationManager";
 import { SteveGuild } from "#lib/structures/SteveGuild";
@@ -7,6 +9,7 @@ import {
 	ApplicationCommandRegistry,
 	CommandOptions,
 } from "@sapphire/framework";
+import { fetchT } from "@sapphire/plugin-i18next";
 import { Time } from "@sapphire/timestamp";
 import {
 	ChatInputCommandInteraction,
@@ -50,17 +53,22 @@ export default class extends SteveCommand {
 	}
 
 	public async chatInputRun(interaction: ChatInputCommandInteraction) {
-		const t = await this.prehandle(interaction);
+		await interaction.deferReply();
+		const t = useT(await fetchT(interaction));
 
 		if (!interaction.inCachedGuild()) {
-			return interaction.editReply(t("commands/timeout:errors.guild_only"));
+			return interaction.editReply(
+				t(LanguageKeys.Commands.Moderation.ErrorGuildOnly),
+			);
 		}
 
 		const guild = await SteveGuild.get(interaction.guild!);
 
 		const target = interaction.options.getMember("target");
 		if (!target) {
-			return interaction.editReply(t("commands/timeout:errors.unknown_member"));
+			return interaction.editReply(
+				t(LanguageKeys.Commands.Moderation.ErrorUnknownMember),
+			);
 		}
 
 		const duration = this.parseDuration(
@@ -68,14 +76,16 @@ export default class extends SteveCommand {
 		);
 		if (!duration) {
 			return interaction.editReply(
-				t("commands/timeout:errors.invalid_duration", {
+				t(LanguageKeys.Commands.Moderation.ErrorInvalidDuration, {
 					input: interaction.options.getString("duration")!,
 				}),
 			);
 		}
 
 		if (duration > Time.Day * 28) {
-			return interaction.editReply(t("commands/timeout:errors.max_duration"));
+			return interaction.editReply(
+				t(LanguageKeys.Commands.Moderation.TimeoutErrorMaxDuration),
+			);
 		}
 
 		// GuildMember.timeout (called in guild.moderation.timeout) expects string | undefined for reason
@@ -86,7 +96,7 @@ export default class extends SteveCommand {
 		if (result.success) {
 			const formatter = new DurationFormatter();
 			return interaction.editReply(
-				t("commands/timeout:success", {
+				t(LanguageKeys.Commands.Moderation.TimeoutSuccess, {
 					member: target.user.username,
 					duration: formatter.format(duration, 2),
 				}),
@@ -96,13 +106,13 @@ export default class extends SteveCommand {
 		switch (result.error) {
 			case ModerationErrors.GENERIC_FAIL:
 				return interaction.editReply(
-					t("commands/timeout:errors.generic_fail", {
+					t(LanguageKeys.Commands.Moderation.ErrorGenericFail, {
 						member: target.user.username,
 					}),
 				);
 			case ModerationErrors.NOT_MODERATABLE:
 				return interaction.editReply(
-					t("commands/timeout:errors.not_moderatable", {
+					t(LanguageKeys.Commands.Moderation.ErrorNotModeratable, {
 						member: target.user.username,
 					}),
 				);

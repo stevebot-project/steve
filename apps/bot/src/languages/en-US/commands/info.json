@@ -1,0 +1,8 @@
+{
+	"whois_embed_account_created": "Account Created",
+	"whois_embed_display_name": "Display Name",
+	"whois_embed_footer": "Member ID: {{id}}",
+	"whois_embed_joined_guild": "Joined Server",
+	"whois_roles": "Roles",
+	"whois_date": "{{duration}} ago ({{date}})"
+}

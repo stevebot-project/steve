@@ -1,3 +1,5 @@
+import { LanguageKeys } from "#lib/i18n/index";
+import { useT } from "#lib/i18n/utils";
 import { SteveCommand } from "#lib/structures/commands/SteveCommand";
 import { registerBasicCommand } from "#utils/util";
 import { ApplyOptions } from "@sapphire/decorators";
@@ -5,7 +7,7 @@ import {
 	ApplicationCommandRegistry,
 	CommandOptions,
 } from "@sapphire/framework";
-import { TFunction, fetchT } from "@sapphire/plugin-i18next";
+import { fetchT } from "@sapphire/plugin-i18next";
 import { Time } from "@sapphire/timestamp";
 import {
 	ActionRowBuilder,
@@ -26,7 +28,7 @@ export default class extends SteveCommand {
 	}
 
 	public override async chatInputRun(interaction: ChatInputCommandInteraction) {
-		const t = await fetchT(interaction);
+		const t = useT(await fetchT(interaction));
 
 		try {
 			await this.sendFeedbackModal(interaction, t);
@@ -43,22 +45,28 @@ export default class extends SteveCommand {
 				submissionData.createdAt,
 			);
 
-			return submissionData.reply(t("commands/feedback:submissionSuccess"));
+			return submissionData.reply(
+				t(LanguageKeys.Commands.System.FeedbackSubmissionSuccess),
+			);
 		} catch (err) {
 			this.container.logger.error(err);
-			return interaction.reply(t("commands/feedback:submissionFailure"));
+			return interaction.reply(
+				t(LanguageKeys.Commands.System.FeedbackSubmissionFailure),
+			);
 		}
 	}
 
 	private sendFeedbackModal(
 		interaction: ChatInputCommandInteraction,
-		t: TFunction,
+		t: ReturnType<typeof useT>,
 	) {
 		const input = new TextInputBuilder()
 			.setCustomId("feedback_input")
-			.setLabel(t("commands/feedback:modal.input.label"))
+			.setLabel(t(LanguageKeys.Commands.System.FeedbackModalInputLabel))
 			.setMaxLength(1900)
-			.setPlaceholder(t("commands/feedback:modal.input.placeholder"))
+			.setPlaceholder(
+				t(LanguageKeys.Commands.System.FeedbackModalInputPlaceholder),
+			)
 			.setRequired(true)
 			.setStyle(TextInputStyle.Paragraph);
 
@@ -68,7 +76,7 @@ export default class extends SteveCommand {
 
 		const modal = new ModalBuilder()
 			.setCustomId("feedback_modal")
-			.setTitle(t("commands/feedback:modal.title"))
+			.setTitle(t(LanguageKeys.Commands.System.FeedbackModalTitle))
 			.addComponents(actionRow);
 
 		return interaction.showModal(modal);

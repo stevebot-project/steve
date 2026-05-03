@@ -1,0 +1,11 @@
+{
+	"eval_error": "**Error**:{{result}}\n{{time}}",
+	"eval_output": "**Output**:{{result}}\n{{time}}",
+	"eval_send_console": "Output was too long... sent the result to the console.\n{{time}}",
+	"feedback_modal_input_label": "What feedback do you have for us?",
+	"feedback_modal_input_placeholder": "Help make Steve better!",
+	"feedback_modal_title": "Feedback",
+	"feedback_submission_failure": "There was a problem submitting your feedback, please try again later!",
+	"feedback_submission_success": "Thanks for your feedback!",
+	"ping_success": "Pong! Your ping is {{latency}}ms."
+}

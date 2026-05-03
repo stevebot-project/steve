@@ -1,5 +1,7 @@
+import { LanguageKeys } from "#lib/i18n/index";
+import { useT } from "#utils/i18n";
 import { AllFlowsPrecondition } from "@sapphire/framework";
-import { resolveKey, type Target } from "@sapphire/plugin-i18next";
+import { fetchT, type Target } from "@sapphire/plugin-i18next";
 import {
 	User,
 	type CommandInteraction,
@@ -26,23 +28,18 @@ export default class extends AllFlowsPrecondition {
 		await this.container.client.application!.fetch();
 		const owner = this.container.client.application!.owner!;
 
+		const t = useT(await fetchT(context));
+
 		if (owner instanceof User) {
 			return owner.id === user_id
 				? this.ok()
 				: this.error({
-						message: (await resolveKey(
-							context,
-							"preconditions/isOwner:error_msg",
-						)) as string,
+						message: t(LanguageKeys.Preconditions.IsOwner.NotOwner),
 					});
 		}
+
 		return owner.members.has(user_id)
 			? this.ok()
-			: this.error({
-					message: (await resolveKey(
-						context,
-						"preconditions/isOwner:error_msg",
-					)) as string,
-				});
+			: this.error({ message: t(LanguageKeys.Preconditions.IsOwner.NotOwner) });
 	}
 }
