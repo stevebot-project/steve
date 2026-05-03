@@ -1,6 +1,6 @@
 import { LanguageKeys } from "#lib/i18n/index";
-import { useT } from "#lib/i18n/utils";
 import { SteveCommand } from "#lib/structures/commands/SteveCommand";
+import { useT } from "#utils/i18n";
 import { registerBasicCommand } from "#utils/util";
 import { ApplyOptions } from "@sapphire/decorators";
 import {
