@@ -88,7 +88,7 @@ export default class extends SteveCommand {
 			});
 		}
 		result = result.replaceAll(
-			cast<string>(process.env.DISCORD_TOKEN),
+			cast<string>(process.env.DISCORD_TOKEN ?? process.env.DISCORD_TOKEN_DEV),
 			"[REDACTED]",
 		);
 
