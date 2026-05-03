@@ -22,6 +22,10 @@
     },
 		"db:push": {
 			"cache": false
+		},
+		"test": {
+  		"dependsOn": ["build"],
+  		"inputs": ["src/**", "tests/**"]
 		}
   }
 }

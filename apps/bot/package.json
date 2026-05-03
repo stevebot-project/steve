@@ -10,7 +10,9 @@
     "dev": "tsc -p . && node dist/src/Steve.js",
     "dev-clear": "rm -rf dist && tsc -p . && node dist/src/Steve.js",
     "lint": "eslint src --ext .ts",
-    "start": "node dist/src/Steve.js"
+    "start": "node dist/src/Steve.js",
+		"test": "vitest run",
+		"test:watch": "vitest"
   },
   "repository": {
     "type": "git",
@@ -47,6 +49,7 @@
     "@sapphire/ts-config": "^5.0.1",
     "eslint": "^8.57.0",
     "prisma": "^6.14.0",
-    "typescript": "^5.4.3"
+    "typescript": "^5.4.3",
+    "vitest": "^4.1.5"
   }
 }
