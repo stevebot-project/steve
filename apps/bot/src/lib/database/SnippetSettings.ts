@@ -8,9 +8,37 @@ export default class SnippetSettings {
 		this.prisma = prisma;
 	}
 
+	public async createSnippet(
+		guildId: Snowflake,
+		name: string,
+		content: string,
+		embed: boolean,
+	) {
+		return this.prisma.snippet.create({
+			data: {
+				guildId,
+				name,
+				content,
+				embed,
+			},
+		});
+	}
+
 	public async deleteSnippet(guildId: Snowflake, name: string) {
 		return this.prisma.snippet.delete({
 			where: { snippetId: { guildId, name } },
+		});
+	}
+
+	public async editSnippet(
+		guildId: Snowflake,
+		name: string,
+		content: string,
+		embed: boolean,
+	) {
+		return this.prisma.snippet.update({
+			where: { snippetId: { guildId, name } },
+			data: { content, embed },
 		});
 	}
 
@@ -23,20 +51,6 @@ export default class SnippetSettings {
 	public async getSnippet(guildId: Snowflake, name: string) {
 		return this.prisma.snippet.findUnique({
 			where: { snippetId: { guildId, name } },
-		});
-	}
-
-	// prisma upsert lets us use one method for creating and updating snippets
-	public async updateSnippet(
-		guildId: Snowflake,
-		name: string,
-		content: string,
-		embed: boolean,
-	) {
-		return this.prisma.snippet.upsert({
-			where: { snippetId: { guildId, name } },
-			create: { guildId, name, content, embed },
-			update: { name, content, embed },
 		});
 	}
 }
