@@ -42,11 +42,11 @@ export default class extends SteveCommand {
 	public override async chatInputRun(interaction: ChatInputCommandInteraction) {
 		await interaction.deferReply();
 		const t = useT(await fetchT(interaction));
-		const user = interaction.options.getUser("user");
+		const user = interaction.options.getUser("user", true);
 
 		const embed = this.buildEmbed(
 			t,
-			await interaction.guild!.members.fetch(user!.id),
+			await interaction.guild!.members.fetch(user.id),
 		);
 
 		return interaction.editReply({ embeds: [embed] });
