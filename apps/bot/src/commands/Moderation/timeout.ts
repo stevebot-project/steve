@@ -14,12 +14,12 @@ import { Time } from "@sapphire/timestamp";
 import {
 	ChatInputCommandInteraction,
 	InteractionContextType,
+	PermissionFlagsBits,
 } from "discord.js";
 
 @ApplyOptions<CommandOptions>({
 	description:
 		"Timeout a specified member. A duration for the timeout, as well as a reason, can be provided.",
-	preconditions: ["isModerator"],
 })
 export default class extends SteveCommand {
 	public override registerApplicationCommands(
@@ -30,6 +30,7 @@ export default class extends SteveCommand {
 				.setName(this.name)
 				.setDescription(this.description)
 				.setContexts(InteractionContextType.Guild)
+				.setDefaultMemberPermissions(PermissionFlagsBits.ModerateMembers)
 				.addUserOption((option) =>
 					option
 						.setName("target")
