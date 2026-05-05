@@ -1,0 +1,7 @@
+{
+	"add_success": "New *{{name}}* snippet has been added successfully.",
+	"edit_success": "The *{{name}}* snippet has been edited successfully.",
+	"error_already_exists": "A snippet with the name *{{name}}* already exists.",
+	"error_not_found": "No snippet found with the name *{{name}}*.",
+	"remove_success": "The *{{name}}* snippet has been removed successfully."
+}
