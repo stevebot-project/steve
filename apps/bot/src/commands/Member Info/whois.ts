@@ -11,6 +11,7 @@ import {
 	ApplicationCommandType,
 	EmbedBuilder,
 	GuildMember,
+	InteractionContextType,
 	UserContextMenuCommandInteraction,
 	type ChatInputCommandInteraction,
 } from "discord.js";
@@ -25,13 +26,13 @@ export default class extends SteveCommand {
 			builder
 				.setName(this.name)
 				.setDescription(this.description)
+				.setContexts(InteractionContextType.Guild)
 				.addUserOption((option) =>
 					option
 						.setName("user")
 						.setDescription("The user you'd like to get information about.")
 						.setRequired(true),
-				)
-				.setDMPermission(false),
+				),
 		);
 
 		registry.registerContextMenuCommand((builder) =>
