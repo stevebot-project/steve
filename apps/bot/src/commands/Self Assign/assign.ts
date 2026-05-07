@@ -1,0 +1,100 @@
+import { SteveCommand } from "#lib/structures/commands/SteveCommand";
+import { SteveGuild } from "#lib/structures/SteveGuild";
+import { ApplyOptions } from "@sapphire/decorators";
+import {
+	ApplicationCommandRegistry,
+	CommandOptions,
+} from "@sapphire/framework";
+import {
+	AutocompleteInteraction,
+	ChatInputCommandInteraction,
+	GuildMember,
+	InteractionContextType,
+	MessageFlags,
+} from "discord.js";
+
+@ApplyOptions<CommandOptions>({
+	description: "Assign roles to yourself using Steve",
+})
+export default class extends SteveCommand {
+	public override registerApplicationCommands(
+		registry: ApplicationCommandRegistry,
+	) {
+		registry.registerChatInputCommand((builder) =>
+			builder
+				.setName(this.name)
+				.setDescription(this.description)
+				.setContexts(InteractionContextType.Guild)
+				.addStringOption((option) =>
+					option
+						.setName("role")
+						.setDescription("The role to assign.")
+						.setRequired(true)
+						.setAutocomplete(true),
+				),
+		);
+	}
+
+	// TODO: i18n, role being above bot
+	public override async chatInputRun(interaction: ChatInputCommandInteraction) {
+		const roleName = interaction.options.getString("role", true);
+		const role = interaction.guild!.roles.cache.find(
+			(r) =>
+				r.name.toLowerCase() === roleName.toLowerCase() || r.id === roleName,
+		);
+
+		if (!role) {
+			return interaction.reply({
+				content: "could not find that role",
+				flags: MessageFlags.Ephemeral,
+			});
+		}
+
+		const guild = await SteveGuild.get(interaction.guild!);
+		const assignableRoles = guild.settings!.roleAssignable;
+
+		if (!assignableRoles.includes(role.id)) {
+			return interaction.reply({
+				content: "that role is not self-assignable",
+				flags: MessageFlags.Ephemeral,
+			});
+		}
+
+		if (interaction.member instanceof GuildMember) {
+			if (interaction.member.roles.cache.has(role.id)) {
+				await interaction.member.roles.remove(role);
+
+				return interaction.reply({
+					content: "removed role",
+					flags: MessageFlags.Ephemeral,
+				});
+			}
+			await interaction.member.roles.add(role);
+
+			return interaction.reply({
+				content: "assigned role",
+				flags: MessageFlags.Ephemeral,
+			});
+		}
+
+		return interaction.reply({
+			content: "could not assign role",
+			flags: MessageFlags.Ephemeral,
+		});
+	}
+
+	public override async autocompleteRun(interaction: AutocompleteInteraction) {
+		const focusedValue = interaction.options.getFocused();
+		const guild = await SteveGuild.get(interaction.guild!);
+
+		const assignableRoles = guild.settings!.roleAssignable;
+
+		const filtered = interaction
+			.guild!.roles.cache.filter((r) => assignableRoles.includes(r.id))
+			.filter((r) => r.name.toLowerCase().includes(focusedValue.toLowerCase()))
+			.map((r) => ({ name: r.name, value: r.name }))
+			.slice(0, 25);
+
+		return interaction.respond(filtered);
+	}
+}

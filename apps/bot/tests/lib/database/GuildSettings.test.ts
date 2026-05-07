@@ -14,6 +14,7 @@ const mockPrisma = {
 	},
 } as unknown as PrismaClient;
 
+// TODO: more tests for assignable role methods
 describe("GuildSettings", () => {
 	beforeEach(() => {
 		vi.clearAllMocks();
@@ -86,6 +87,38 @@ describe("GuildSettings", () => {
 			mockDelete.mockRejectedValueOnce(new Error("error"));
 
 			await expect(settings.deleteGuild(mockSnowflake)).rejects.toThrow(
+				"error",
+			);
+		});
+	});
+
+	describe("getAssignableRoles", () => {
+		it("calls prisma.guild.findUnique with a snowflake and selects roleAssignable", async () => {
+			mockFindUnique.mockResolvedValueOnce({
+				roleAssignable: ["12345678901234567"],
+			});
+
+			const result = await settings.getAssignableRoles(mockSnowflake);
+
+			expect(mockFindUnique).toHaveBeenCalledExactlyOnceWith({
+				where: { id: mockSnowflake },
+				select: { roleAssignable: true },
+			});
+			expect(result).toEqual({ roleAssignable: ["12345678901234567"] });
+		});
+
+		it("returns an empty array if no assignable roles are found", async () => {
+			mockFindUnique.mockResolvedValueOnce({ roleAssignable: [] });
+
+			const result = await settings.getAssignableRoles(mockSnowflake);
+
+			expect(result).toEqual({ roleAssignable: [] });
+		});
+
+		it("throws errors from prisma", async () => {
+			mockFindUnique.mockRejectedValueOnce(new Error("error"));
+
+			await expect(settings.getAssignableRoles(mockSnowflake)).rejects.toThrow(
 				"error",
 			);
 		});
