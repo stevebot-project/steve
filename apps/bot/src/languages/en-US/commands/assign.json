@@ -1,0 +1,12 @@
+{
+	"error_already_assignable": "The *{{name}}* role is already self-assignable. You don't need me, let me go back to my eucalyptus.",
+	"eror_already_not_assignable": "The *{{name}}* role is already not self-assignable. Pay more attention next time, okay?",
+	"error_not_assignable_by_bot": "I don't have permission to assign the *{{name}}* role. Let me go dry my tears...",
+	"error_not_self_assignable": "The *{{name}}* role is not self-assignable. Too bad, so sad...",
+	"error_role_not_found": "Could not find a role named *{{name}}.*",
+	"error_unable_to_assign": "Unable to assign the *{{name}}* role.",
+	"success_role_assigned": "The *{{name}}* role has been assigned.",
+	"success_role_assignable": "The *{{name}}* role is now self-assignable.",
+	"success_role_not_assignable": "The *{{name}}* role is no longer self-assignable.",
+	"success_role_removed": "The *{{name}}* role has been removed."
+}

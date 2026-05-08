@@ -1,10 +1,13 @@
+import { LanguageKeys } from "#lib/i18n/index";
 import { SteveCommand } from "#lib/structures/commands/SteveCommand";
 import { SteveGuild } from "#lib/structures/SteveGuild";
+import { useT } from "#utils/i18n";
 import { ApplyOptions } from "@sapphire/decorators";
 import {
 	ApplicationCommandRegistry,
 	CommandOptions,
 } from "@sapphire/framework";
+import { fetchT } from "@sapphire/plugin-i18next";
 import {
 	AutocompleteInteraction,
 	ChatInputCommandInteraction,
@@ -37,6 +40,8 @@ export default class extends SteveCommand {
 
 	// TODO: i18n, role being above bot
 	public override async chatInputRun(interaction: ChatInputCommandInteraction) {
+		const t = useT(await fetchT(interaction));
+
 		const roleName = interaction.options.getString("role", true);
 		const role = interaction.guild!.roles.cache.find(
 			(r) =>
@@ -45,7 +50,9 @@ export default class extends SteveCommand {
 
 		if (!role) {
 			return interaction.reply({
-				content: "could not find that role",
+				content: t(LanguageKeys.Commands.Assign.ErrorRoleNotFound, {
+					name: roleName,
+				}),
 				flags: MessageFlags.Ephemeral,
 			});
 		}
@@ -55,7 +62,9 @@ export default class extends SteveCommand {
 
 		if (!assignableRoles.includes(role.id)) {
 			return interaction.reply({
-				content: "that role is not self-assignable",
+				content: t(LanguageKeys.Commands.Assign.ErrorNotSelfAssignable, {
+					name: role.name,
+				}),
 				flags: MessageFlags.Ephemeral,
 			});
 		}
@@ -65,20 +74,26 @@ export default class extends SteveCommand {
 				await interaction.member.roles.remove(role);
 
 				return interaction.reply({
-					content: "removed role",
+					content: t(LanguageKeys.Commands.Assign.SuccessRoleRemoved, {
+						name: role.name,
+					}),
 					flags: MessageFlags.Ephemeral,
 				});
 			}
 			await interaction.member.roles.add(role);
 
 			return interaction.reply({
-				content: "assigned role",
+				content: t(LanguageKeys.Commands.Assign.SuccessRoleAssigned, {
+					name: role.name,
+				}),
 				flags: MessageFlags.Ephemeral,
 			});
 		}
 
 		return interaction.reply({
-			content: "could not assign role",
+			content: t(LanguageKeys.Commands.Assign.ErrorUnableToAssign, {
+				name: role.name,
+			}),
 			flags: MessageFlags.Ephemeral,
 		});
 	}

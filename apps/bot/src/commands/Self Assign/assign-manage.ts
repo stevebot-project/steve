@@ -1,5 +1,8 @@
+import { LanguageKeys } from "#lib/i18n/index";
 import { SteveGuild } from "#lib/structures/SteveGuild";
+import { useT } from "#utils/i18n";
 import { ApplyOptions } from "@sapphire/decorators";
+import { fetchT } from "@sapphire/plugin-i18next";
 import { Subcommand } from "@sapphire/plugin-subcommands";
 import {
 	InteractionContextType,
@@ -49,6 +52,8 @@ export default class extends Subcommand {
 	}
 
 	public async add(interaction: Subcommand.ChatInputCommandInteraction) {
+		const t = useT(await fetchT(interaction));
+
 		const role = interaction.options.getRole("role", true);
 		const guild = await SteveGuild.get(interaction.guild!);
 
@@ -56,7 +61,9 @@ export default class extends Subcommand {
 
 		if (assignableRoles.includes(role.id)) {
 			return interaction.reply({
-				content: "already self-assignable",
+				content: t(LanguageKeys.Commands.Assign.ErrorAlreadyAssignable, {
+					name: role.name,
+				}),
 				flags: MessageFlags.Ephemeral,
 			});
 		}
@@ -67,12 +74,16 @@ export default class extends Subcommand {
 		);
 
 		return interaction.reply({
-			content: "role is now self-assignable",
+			content: t(LanguageKeys.Commands.Assign.SuccessRoleAssignable, {
+				name: role.name,
+			}),
 			flags: MessageFlags.Ephemeral,
 		});
 	}
 
 	public async remove(interaction: Subcommand.ChatInputCommandInteraction) {
+		const t = useT(await fetchT(interaction));
+
 		const roleName = interaction.options.getString("role", true);
 		const guild = await SteveGuild.get(interaction.guild!);
 
@@ -82,7 +93,9 @@ export default class extends Subcommand {
 
 		if (!role) {
 			return interaction.reply({
-				content: "role not found",
+				content: t(LanguageKeys.Commands.Assign.ErrorRoleNotFound, {
+					name: roleName,
+				}),
 				flags: MessageFlags.Ephemeral,
 			});
 		}
@@ -91,7 +104,9 @@ export default class extends Subcommand {
 
 		if (!assignableRoles.includes(role.id)) {
 			return interaction.reply({
-				content: "already not self-assignable",
+				content: t(LanguageKeys.Commands.Assign.ErrorAlreadyNotAssignable, {
+					name: role.name,
+				}),
 				flags: MessageFlags.Ephemeral,
 			});
 		}
@@ -102,7 +117,9 @@ export default class extends Subcommand {
 		);
 
 		return interaction.reply({
-			content: "role is no longer self-assignable",
+			content: t(LanguageKeys.Commands.Assign.SuccessRoleNotAssignable, {
+				name: role.name,
+			}),
 			flags: MessageFlags.Ephemeral,
 		});
 	}
