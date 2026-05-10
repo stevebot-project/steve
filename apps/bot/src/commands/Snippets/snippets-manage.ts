@@ -7,7 +7,6 @@ import { Subcommand } from "@sapphire/plugin-subcommands";
 import {
 	AutocompleteInteraction,
 	InteractionContextType,
-	MessageFlags,
 	PermissionFlagsBits,
 } from "discord.js";
 
@@ -95,6 +94,8 @@ export default class extends Subcommand {
 	}
 
 	public async add(interaction: Subcommand.ChatInputCommandInteraction) {
+		await interaction.deferReply();
+
 		const t = useT(await fetchT(interaction));
 
 		const name = interaction.options.getString("name", true);
@@ -107,10 +108,9 @@ export default class extends Subcommand {
 		);
 
 		if (existing) {
-			return interaction.reply({
-				content: t(LanguageKeys.Commands.Snippets.ErrorAlreadyExists, { name }),
-				flags: MessageFlags.Ephemeral,
-			});
+			return interaction.editReply(
+				t(LanguageKeys.Commands.Snippets.ErrorAlreadyExists, { name }),
+			);
 		}
 
 		await this.container.settings.snippets.createSnippet(
@@ -120,12 +120,14 @@ export default class extends Subcommand {
 			embed,
 		);
 
-		return interaction.reply(
+		return interaction.editReply(
 			t(LanguageKeys.Commands.Snippets.AddSuccess, { name }),
 		);
 	}
 
 	public async edit(interaction: Subcommand.ChatInputCommandInteraction) {
+		await interaction.deferReply();
+
 		const t = useT(await fetchT(interaction));
 
 		const name = interaction.options.getString("name", true);
@@ -138,10 +140,9 @@ export default class extends Subcommand {
 		);
 
 		if (!existing) {
-			return interaction.reply({
-				content: t(LanguageKeys.Commands.Snippets.ErrorNotFound, { name }),
-				flags: MessageFlags.Ephemeral,
-			});
+			return interaction.editReply(
+				t(LanguageKeys.Commands.Snippets.ErrorNotFound, { name }),
+			);
 		}
 
 		await this.container.settings.snippets.editSnippet(
@@ -151,12 +152,14 @@ export default class extends Subcommand {
 			embed ?? existing.embed,
 		);
 
-		return interaction.reply(
+		return interaction.editReply(
 			t(LanguageKeys.Commands.Snippets.EditSuccess, { name }),
 		);
 	}
 
 	public async remove(interaction: Subcommand.ChatInputCommandInteraction) {
+		await interaction.deferReply();
+
 		const t = useT(await fetchT(interaction));
 
 		const name = interaction.options.getString("name", true);
@@ -167,10 +170,9 @@ export default class extends Subcommand {
 		);
 
 		if (!existing) {
-			return interaction.reply({
-				content: t(LanguageKeys.Commands.Snippets.ErrorNotFound, { name }),
-				flags: MessageFlags.Ephemeral,
-			});
+			return interaction.editReply(
+				t(LanguageKeys.Commands.Snippets.ErrorNotFound, { name }),
+			);
 		}
 
 		await this.container.settings.snippets.deleteSnippet(
@@ -178,7 +180,7 @@ export default class extends Subcommand {
 			name,
 		);
 
-		return interaction.reply(
+		return interaction.editReply(
 			t(LanguageKeys.Commands.Snippets.RemoveSuccess, { name }),
 		);
 	}
