@@ -54,7 +54,7 @@ export default class extends SteveCommand {
 		);
 	}
 
-	public async chatInputRun(interaction: ChatInputCommandInteraction) {
+	public override async chatInputRun(interaction: ChatInputCommandInteraction) {
 		await interaction.deferReply();
 		const t = useT(await fetchT(interaction));
 
