@@ -61,16 +61,22 @@ export default class extends SteveCommand {
 	}
 
 	public override async autocompleteRun(interaction: AutocompleteInteraction) {
-		const focusedValue = interaction.options.getFocused();
-		const snippets = await this.container.settings.snippets.getGuildSnippets(
-			interaction.guildId!,
-		);
+		const query = interaction.options.getFocused();
 
-		const filtered = snippets
-			.filter((s) => s.name.startsWith(focusedValue))
-			.slice(0, 25)
-			.map((s) => ({ name: s.name, value: s.name }));
+		const snippets = query
+			? await this.container.settings.snippets.searchSnippetsByName(
+					interaction.guildId!,
+					query,
+				)
+			: await this.container.settings.snippets.getGuildSnippets(
+					interaction.guildId!,
+				);
 
-		return interaction.respond(filtered);
+		const result = snippets.map((snippet) => ({
+			name: snippet.name,
+			value: snippet.name,
+		}));
+
+		return interaction.respond(result);
 	}
 }

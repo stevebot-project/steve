@@ -4,7 +4,6 @@ import { ApplyOptions } from "@sapphire/decorators";
 import { Command } from "@sapphire/framework";
 import { fetchT } from "@sapphire/plugin-i18next";
 import { Subcommand } from "@sapphire/plugin-subcommands";
-import { Snippet } from "@steve/database";
 import {
 	AutocompleteInteraction,
 	InteractionContextType,
@@ -193,17 +192,22 @@ export default class extends Subcommand {
 	}
 
 	private async autocompleteSnippetName(interaction: AutocompleteInteraction) {
-		const focusedValue = interaction.options.getFocused();
-		const snippets: Snippet[] =
-			await this.container.settings.snippets.getGuildSnippets(
-				interaction.guildId!,
-			);
+		const query = interaction.options.getFocused();
 
-		const filtered = snippets
-			.filter((s) => s.name.startsWith(focusedValue))
-			.slice(0, 25)
-			.map((s) => ({ name: s.name, value: s.name }));
+		const snippets = query
+			? await this.container.settings.snippets.searchSnippetsByName(
+					interaction.guildId!,
+					query,
+				)
+			: await this.container.settings.snippets.getGuildSnippets(
+					interaction.guildId!,
+				);
 
-		return interaction.respond(filtered);
+		const result = snippets.map((snippet) => ({
+			name: snippet.name,
+			value: snippet.name,
+		}));
+
+		return interaction.respond(result);
 	}
 }

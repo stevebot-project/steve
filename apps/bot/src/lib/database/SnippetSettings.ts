@@ -53,4 +53,18 @@ export default class SnippetSettings {
 			where: { snippetId: { guildId, name } },
 		});
 	}
+
+	public async searchSnippetsByName(guildId: Snowflake, query: string) {
+		return this.prisma.snippet.findMany({
+			where: {
+				guildId,
+				name: {
+					contains: query,
+					mode: "insensitive",
+				},
+			},
+			select: { name: true },
+			take: 25,
+		});
+	}
 }

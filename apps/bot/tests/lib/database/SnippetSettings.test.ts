@@ -1,6 +1,6 @@
 import SnippetSettings from "#lib/database/SnippetSettings";
 import { PrismaClient, Snippet } from "@steve/database";
-import { describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const mockCreate = vi.fn();
 const mockDelete = vi.fn();
@@ -27,6 +27,10 @@ describe("SnippetSettings", () => {
 		embed: false,
 		guildId: mockGuildId,
 	};
+
+	beforeEach(() => {
+		vi.clearAllMocks();
+	});
 
 	describe("createSnippet", () => {
 		it("calls prisma.snippet.create with the correct data", async () => {
@@ -190,6 +194,39 @@ describe("SnippetSettings", () => {
 			await expect(settings.getSnippet(mockGuildId, "test")).rejects.toThrow(
 				"error",
 			);
+		});
+	});
+
+	describe("searchSnippetsByName", () => {
+		it("calls prisma.snippet.findMany with a name filter and guild snowflake", async () => {
+			mockFindMany.mockResolvedValueOnce([mockSnippetResult]);
+
+			const result = await settings.searchSnippetsByName(mockGuildId, "te");
+
+			expect(mockFindMany).toHaveBeenCalledExactlyOnceWith({
+				where: {
+					guildId: mockGuildId,
+					name: { contains: "te", mode: "insensitive" },
+				},
+			});
+
+			expect(result).toEqual([mockSnippetResult]);
+		});
+
+		it("returns an empty array when no snippets match the search", async () => {
+			mockFindMany.mockResolvedValueOnce([]);
+
+			const result = await settings.searchSnippetsByName(mockGuildId, "te");
+
+			expect(result).toEqual([]);
+		});
+
+		it("throws errors from prisma", async () => {
+			mockFindMany.mockRejectedValueOnce(new Error("error"));
+
+			await expect(
+				settings.searchSnippetsByName(mockGuildId, "te"),
+			).rejects.toThrow("error");
 		});
 	});
 });
