@@ -15,9 +15,6 @@ export const ErrorNotSelfAssignable = FT<{ name: string }>(
 export const ErrorRoleNotFound = FT<{ name: string }>(
 	"commands/assign:error_role_not_found",
 );
-export const ErrorUnableToAssign = FT<{ name: string }>(
-	"commands/assign:error_unable_to_assign",
-);
 export const SuccessRoleAssigned = FT<{ name: string }>(
 	"commands/assign:success_role_assigned",
 );

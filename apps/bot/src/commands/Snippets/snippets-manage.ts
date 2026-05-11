@@ -6,6 +6,7 @@ import { fetchT } from "@sapphire/plugin-i18next";
 import { Subcommand } from "@sapphire/plugin-subcommands";
 import {
 	AutocompleteInteraction,
+	ChatInputCommandInteraction,
 	InteractionContextType,
 	PermissionFlagsBits,
 } from "discord.js";
@@ -93,17 +94,21 @@ export default class extends Subcommand {
 		);
 	}
 
-	public async add(interaction: Subcommand.ChatInputCommandInteraction) {
+	public async add(interaction: ChatInputCommandInteraction) {
 		await interaction.deferReply();
 
 		const t = useT(await fetchT(interaction));
+
+		if (!interaction.inCachedGuild()) {
+			return interaction.reply(t(LanguageKeys.General.Errors.NotInCachedGuild));
+		}
 
 		const name = interaction.options.getString("name", true);
 		const content = interaction.options.getString("content", true);
 		const embed = interaction.options.getBoolean("embed") ?? false;
 
 		const existing = await this.container.settings.snippets.getSnippet(
-			interaction.guildId!,
+			interaction.guildId,
 			name,
 		);
 
@@ -114,7 +119,7 @@ export default class extends Subcommand {
 		}
 
 		await this.container.settings.snippets.createSnippet(
-			interaction.guildId!,
+			interaction.guildId,
 			name,
 			content,
 			embed,
@@ -125,17 +130,20 @@ export default class extends Subcommand {
 		);
 	}
 
-	public async edit(interaction: Subcommand.ChatInputCommandInteraction) {
+	public async edit(interaction: ChatInputCommandInteraction) {
 		await interaction.deferReply();
-
 		const t = useT(await fetchT(interaction));
+
+		if (!interaction.inCachedGuild()) {
+			return interaction.reply(t(LanguageKeys.General.Errors.NotInCachedGuild));
+		}
 
 		const name = interaction.options.getString("name", true);
 		const content = interaction.options.getString("content", true);
 		const embed = interaction.options.getBoolean("embed");
 
 		const existing = await this.container.settings.snippets.getSnippet(
-			interaction.guildId!,
+			interaction.guildId,
 			name,
 		);
 
@@ -157,15 +165,18 @@ export default class extends Subcommand {
 		);
 	}
 
-	public async remove(interaction: Subcommand.ChatInputCommandInteraction) {
+	public async remove(interaction: ChatInputCommandInteraction) {
 		await interaction.deferReply();
-
 		const t = useT(await fetchT(interaction));
+
+		if (!interaction.inCachedGuild()) {
+			return interaction.reply(t(LanguageKeys.General.Errors.NotInCachedGuild));
+		}
 
 		const name = interaction.options.getString("name", true);
 
 		const existing = await this.container.settings.snippets.getSnippet(
-			interaction.guildId!,
+			interaction.guildId,
 			name,
 		);
 
@@ -176,7 +187,7 @@ export default class extends Subcommand {
 		}
 
 		await this.container.settings.snippets.deleteSnippet(
-			interaction.guildId!,
+			interaction.guildId,
 			name,
 		);
 
@@ -185,7 +196,9 @@ export default class extends Subcommand {
 		);
 	}
 
-	public override async autocompleteRun(interaction: AutocompleteInteraction) {
+	public override async autocompleteRun(
+		interaction: AutocompleteInteraction<"cached">,
+	) {
 		const subcommand = interaction.options.getSubcommand();
 
 		if (subcommand === "edit" || subcommand === "remove") {
@@ -193,16 +206,18 @@ export default class extends Subcommand {
 		}
 	}
 
-	private async autocompleteSnippetName(interaction: AutocompleteInteraction) {
+	private async autocompleteSnippetName(
+		interaction: AutocompleteInteraction<"cached">,
+	) {
 		const query = interaction.options.getFocused();
 
 		const snippets = query
 			? await this.container.settings.snippets.searchSnippetsByName(
-					interaction.guildId!,
+					interaction.guildId,
 					query,
 				)
 			: await this.container.settings.snippets.getGuildSnippets(
-					interaction.guildId!,
+					interaction.guildId,
 				);
 
 		const result = snippets.map((snippet) => ({

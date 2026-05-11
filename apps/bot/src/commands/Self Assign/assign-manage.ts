@@ -5,6 +5,8 @@ import { ApplyOptions } from "@sapphire/decorators";
 import { fetchT } from "@sapphire/plugin-i18next";
 import { Subcommand } from "@sapphire/plugin-subcommands";
 import {
+	AutocompleteInteraction,
+	ChatInputCommandInteraction,
 	InteractionContextType,
 	MessageFlags,
 	PermissionFlagsBits,
@@ -51,11 +53,15 @@ export default class extends Subcommand {
 		);
 	}
 
-	public async add(interaction: Subcommand.ChatInputCommandInteraction) {
+	public async add(interaction: ChatInputCommandInteraction) {
 		const t = useT(await fetchT(interaction));
 
+		if (!interaction.inCachedGuild()) {
+			return interaction.reply(t(LanguageKeys.General.Errors.NotInCachedGuild));
+		}
+
 		const role = interaction.options.getRole("role", true);
-		const guild = await SteveGuild.get(interaction.guild!);
+		const guild = await SteveGuild.get(interaction.guild);
 
 		const assignableRoles = guild.settings!.roleAssignable;
 
@@ -69,7 +75,7 @@ export default class extends Subcommand {
 		}
 
 		await this.container.settings.guilds.addAssignableRole(
-			interaction.guildId!,
+			interaction.guildId,
 			role.id,
 		);
 
@@ -81,13 +87,17 @@ export default class extends Subcommand {
 		});
 	}
 
-	public async remove(interaction: Subcommand.ChatInputCommandInteraction) {
+	public async remove(interaction: ChatInputCommandInteraction) {
 		const t = useT(await fetchT(interaction));
 
-		const roleName = interaction.options.getString("role", true);
-		const guild = await SteveGuild.get(interaction.guild!);
+		if (!interaction.inCachedGuild()) {
+			return interaction.reply(t(LanguageKeys.General.Errors.NotInCachedGuild));
+		}
 
-		const role = interaction.guild!.roles.cache.find(
+		const roleName = interaction.options.getString("role", true);
+		const guild = await SteveGuild.get(interaction.guild);
+
+		const role = interaction.guild.roles.cache.find(
 			(r) => r.name.toLowerCase() === roleName.toLowerCase(),
 		);
 
@@ -112,7 +122,7 @@ export default class extends Subcommand {
 		}
 
 		await this.container.settings.guilds.removeAssignableRole(
-			interaction.guildId!,
+			interaction.guildId,
 			role.id,
 		);
 
@@ -125,19 +135,19 @@ export default class extends Subcommand {
 	}
 
 	public override async autocompleteRun(
-		interaction: Subcommand.AutocompleteInteraction,
+		interaction: AutocompleteInteraction<"cached">,
 	) {
-		const focusedValue = interaction.options.getFocused();
-		const guild = await SteveGuild.get(interaction.guild!);
+		const query = interaction.options.getFocused();
+		const guild = await SteveGuild.get(interaction.guild);
 
 		const assignableRoles = guild.settings!.roleAssignable;
 
-		const filtered = interaction
-			.guild!.roles.cache.filter((r) => assignableRoles.includes(r.id))
-			.filter((r) => r.name.toLowerCase().includes(focusedValue.toLowerCase()))
+		const response = interaction.guild.roles.cache
+			.filter((r) => assignableRoles.includes(r.id))
+			.filter((r) => r.name.toLowerCase().includes(query.toLowerCase()))
 			.map((r) => ({ name: r.name, value: r.name }))
 			.slice(0, 25);
 
-		return interaction.respond(filtered);
+		return interaction.respond(response);
 	}
 }

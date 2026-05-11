@@ -11,7 +11,6 @@ import { fetchT } from "@sapphire/plugin-i18next";
 import {
 	AutocompleteInteraction,
 	ChatInputCommandInteraction,
-	GuildMember,
 	InteractionContextType,
 	MessageFlags,
 } from "discord.js";
@@ -42,8 +41,12 @@ export default class extends SteveCommand {
 	public override async chatInputRun(interaction: ChatInputCommandInteraction) {
 		const t = useT(await fetchT(interaction));
 
+		if (!interaction.inCachedGuild()) {
+			return interaction.reply(t(LanguageKeys.General.Errors.NotInCachedGuild));
+		}
+
 		const roleName = interaction.options.getString("role", true);
-		const role = interaction.guild!.roles.cache.find(
+		const role = interaction.guild.roles.cache.find(
 			(r) =>
 				r.name.toLowerCase() === roleName.toLowerCase() || r.id === roleName,
 		);
@@ -57,7 +60,7 @@ export default class extends SteveCommand {
 			});
 		}
 
-		const guild = await SteveGuild.get(interaction.guild!);
+		const guild = await SteveGuild.get(interaction.guild);
 		const assignableRoles = guild.settings!.roleAssignable;
 
 		if (!assignableRoles.includes(role.id)) {
@@ -69,47 +72,41 @@ export default class extends SteveCommand {
 			});
 		}
 
-		if (interaction.member instanceof GuildMember) {
-			if (interaction.member.roles.cache.has(role.id)) {
-				await interaction.member.roles.remove(role);
-
-				return interaction.reply({
-					content: t(LanguageKeys.Commands.Assign.SuccessRoleRemoved, {
-						name: role.name,
-					}),
-					flags: MessageFlags.Ephemeral,
-				});
-			}
-			await interaction.member.roles.add(role);
+		if (interaction.member.roles.cache.has(role.id)) {
+			await interaction.member.roles.remove(role);
 
 			return interaction.reply({
-				content: t(LanguageKeys.Commands.Assign.SuccessRoleAssigned, {
+				content: t(LanguageKeys.Commands.Assign.SuccessRoleRemoved, {
 					name: role.name,
 				}),
 				flags: MessageFlags.Ephemeral,
 			});
 		}
 
+		await interaction.member.roles.add(role);
+
 		return interaction.reply({
-			content: t(LanguageKeys.Commands.Assign.ErrorUnableToAssign, {
+			content: t(LanguageKeys.Commands.Assign.SuccessRoleAssigned, {
 				name: role.name,
 			}),
 			flags: MessageFlags.Ephemeral,
 		});
 	}
 
-	public override async autocompleteRun(interaction: AutocompleteInteraction) {
-		const focusedValue = interaction.options.getFocused();
-		const guild = await SteveGuild.get(interaction.guild!);
+	public override async autocompleteRun(
+		interaction: AutocompleteInteraction<"cached">,
+	) {
+		const query = interaction.options.getFocused();
+		const guild = await SteveGuild.get(interaction.guild);
 
 		const assignableRoles = guild.settings!.roleAssignable;
 
-		const filtered = interaction
-			.guild!.roles.cache.filter((r) => assignableRoles.includes(r.id))
-			.filter((r) => r.name.toLowerCase().includes(focusedValue.toLowerCase()))
+		const response = interaction.guild.roles.cache
+			.filter((r) => assignableRoles.includes(r.id))
+			.filter((r) => r.name.toLowerCase().includes(query.toLowerCase()))
 			.map((r) => ({ name: r.name, value: r.name }))
 			.slice(0, 25);
 
-		return interaction.respond(filtered);
+		return interaction.respond(response);
 	}
 }

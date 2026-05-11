@@ -3,7 +3,6 @@ import { FT, T } from "#utils/i18n";
 export const ErrorGenericFail = FT<{ member: string }>(
 	"commands/moderation:error_generic_fail",
 );
-export const ErrorGuildOnly = T("commands/moderation:error_guild_only");
 export const ErrorInvalidDuration = FT<{ input: string }>(
 	"commands/moderation:error_invalid_duration",
 );

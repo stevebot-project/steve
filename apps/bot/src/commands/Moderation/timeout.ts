@@ -59,12 +59,9 @@ export default class extends SteveCommand {
 		const t = useT(await fetchT(interaction));
 
 		if (!interaction.inCachedGuild()) {
-			return interaction.editReply(
-				t(LanguageKeys.Commands.Moderation.ErrorGuildOnly),
-			);
+			return interaction.reply(t(LanguageKeys.General.Errors.NotInCachedGuild));
 		}
-
-		const guild = await SteveGuild.get(interaction.guild!);
+		const guild = await SteveGuild.get(interaction.guild);
 
 		const target = interaction.options.getMember("target");
 		if (!target) {

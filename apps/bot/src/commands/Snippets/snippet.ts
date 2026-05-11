@@ -41,9 +41,13 @@ export default class extends SteveCommand {
 		await interaction.deferReply();
 		const t = useT(await fetchT(interaction));
 
+		if (!interaction.inCachedGuild()) {
+			return interaction.reply(t(LanguageKeys.General.Errors.NotInCachedGuild));
+		}
+
 		const name = interaction.options.getString("name", true);
 		const snippet = await this.container.settings.snippets.getSnippet(
-			interaction.guildId!,
+			interaction.guildId,
 			name,
 		);
 
@@ -60,16 +64,18 @@ export default class extends SteveCommand {
 		);
 	}
 
-	public override async autocompleteRun(interaction: AutocompleteInteraction) {
+	public override async autocompleteRun(
+		interaction: AutocompleteInteraction<"cached">,
+	) {
 		const query = interaction.options.getFocused();
 
 		const snippets = query
 			? await this.container.settings.snippets.searchSnippetsByName(
-					interaction.guildId!,
+					interaction.guildId,
 					query,
 				)
 			: await this.container.settings.snippets.getGuildSnippets(
-					interaction.guildId!,
+					interaction.guildId, // TODO: make sure this only grabs 25
 				);
 
 		const result = snippets.map((snippet) => ({

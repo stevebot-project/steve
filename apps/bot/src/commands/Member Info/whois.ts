@@ -6,7 +6,6 @@ import { ApplyOptions } from "@sapphire/decorators";
 import { DurationFormatter } from "@sapphire/duration";
 import { Command, type CommandOptions } from "@sapphire/framework";
 import { fetchT } from "@sapphire/plugin-i18next";
-import { cast } from "@sapphire/utilities";
 import {
 	ApplicationCommandType,
 	EmbedBuilder,
@@ -36,19 +35,26 @@ export default class extends SteveCommand {
 		);
 
 		registry.registerContextMenuCommand((builder) =>
-			builder.setName(this.name).setType(ApplicationCommandType.User),
+			builder
+				.setName(this.name)
+				.setType(ApplicationCommandType.User)
+				.setContexts(InteractionContextType.Guild),
 		);
 	}
 
 	public override async chatInputRun(interaction: ChatInputCommandInteraction) {
 		await interaction.deferReply();
 		const t = useT(await fetchT(interaction));
-		const user = interaction.options.getUser("user", true);
 
-		const embed = this.buildEmbed(
-			t,
-			await interaction.guild!.members.fetch(user.id),
-		);
+		if (!interaction.inCachedGuild()) {
+			return interaction.editReply(
+				t(LanguageKeys.General.Errors.NotInCachedGuild),
+			);
+		}
+
+		const member = interaction.options.getMember("user");
+
+		const embed = this.buildEmbed(t, member!);
 
 		return interaction.editReply({ embeds: [embed] });
 	}
@@ -58,10 +64,12 @@ export default class extends SteveCommand {
 	) {
 		await interaction.deferReply();
 		const t = useT(await fetchT(interaction));
-		const embed = this.buildEmbed(
-			t,
-			cast<GuildMember>(interaction.targetMember)!,
-		);
+
+		if (!interaction.inCachedGuild()) {
+			return interaction.reply(t(LanguageKeys.General.Errors.NotInCachedGuild));
+		}
+
+		const embed = this.buildEmbed(t, interaction.targetMember!);
 
 		return interaction.editReply({ embeds: [embed] });
 	}
