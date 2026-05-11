@@ -3,12 +3,9 @@ import { SteveCommand } from "#lib/structures/commands/SteveCommand";
 import { ModerationErrors } from "#lib/structures/moderation/ModerationManager";
 import { SteveGuild } from "#lib/structures/SteveGuild";
 import { useT } from "#utils/i18n";
-import { ApplyOptions } from "@sapphire/decorators";
+import { ApplyOptions, RegisterChatInputCommand } from "@sapphire/decorators";
 import { Duration, DurationFormatter } from "@sapphire/duration";
-import {
-	ApplicationCommandRegistry,
-	CommandOptions,
-} from "@sapphire/framework";
+import { CommandOptions } from "@sapphire/framework";
 import { fetchT } from "@sapphire/plugin-i18next";
 import { Time } from "@sapphire/timestamp";
 import {
@@ -21,39 +18,34 @@ import {
 	description:
 		"Timeout a specified member. A duration for the timeout, as well as a reason, can be provided.",
 })
+@RegisterChatInputCommand((builder, command) =>
+	builder
+		.setName(command.name)
+		.setDescription(command.description)
+		.setContexts(InteractionContextType.Guild)
+		.setDefaultMemberPermissions(PermissionFlagsBits.ModerateMembers)
+		.addUserOption((option) =>
+			option
+				.setName("target")
+				.setDescription("The member you'd like to timeout.")
+				.setRequired(true),
+		)
+		.addStringOption((option) =>
+			option
+				.setName("duration")
+				.setDescription(
+					"How long would you like this member to be in timeout? The maximum is 28 days.",
+				)
+				.setRequired(true),
+		)
+		.addStringOption((option) =>
+			option
+				.setName("reason")
+				.setDescription("Why are you putting this member in timeout?")
+				.setRequired(false),
+		),
+)
 export default class extends SteveCommand {
-	public override registerApplicationCommands(
-		registry: ApplicationCommandRegistry,
-	) {
-		registry.registerChatInputCommand((builder) =>
-			builder
-				.setName(this.name)
-				.setDescription(this.description)
-				.setContexts(InteractionContextType.Guild)
-				.setDefaultMemberPermissions(PermissionFlagsBits.ModerateMembers)
-				.addUserOption((option) =>
-					option
-						.setName("target")
-						.setDescription("The member you'd like to timeout.")
-						.setRequired(true),
-				)
-				.addStringOption((option) =>
-					option
-						.setName("duration")
-						.setDescription(
-							"How long would you like this member to be in timeout? The maximum is 28 days.",
-						)
-						.setRequired(true),
-				)
-				.addStringOption((option) =>
-					option
-						.setName("reason")
-						.setDescription("Why are you putting this member in timeout?")
-						.setRequired(false),
-				),
-		);
-	}
-
 	public override async chatInputRun(interaction: ChatInputCommandInteraction) {
 		await interaction.deferReply();
 		const t = useT(await fetchT(interaction));

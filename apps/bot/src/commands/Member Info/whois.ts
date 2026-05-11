@@ -2,12 +2,15 @@ import { LanguageKeys } from "#lib/i18n/index";
 import { SteveCommand } from "#lib/structures/commands/SteveCommand";
 import { useT } from "#utils/i18n";
 import { defaultDateFormat } from "#utils/util";
-import { ApplyOptions } from "@sapphire/decorators";
+import {
+	ApplyOptions,
+	RegisterChatInputCommand,
+	RegisterUserContextMenuCommand,
+} from "@sapphire/decorators";
 import { DurationFormatter } from "@sapphire/duration";
-import { Command, type CommandOptions } from "@sapphire/framework";
+import { type CommandOptions } from "@sapphire/framework";
 import { fetchT } from "@sapphire/plugin-i18next";
 import {
-	ApplicationCommandType,
 	EmbedBuilder,
 	GuildMember,
 	InteractionContextType,
@@ -19,29 +22,22 @@ import {
 	description: "Get basic information about a member of the server.",
 	requiredClientPermissions: ["EmbedLinks"],
 })
+@RegisterChatInputCommand((builder, command) =>
+	builder
+		.setName(command.name)
+		.setDescription(command.description)
+		.setContexts(InteractionContextType.Guild)
+		.addUserOption((option) =>
+			option
+				.setName("user")
+				.setDescription("The user you'd like to get information about.")
+				.setRequired(true),
+		),
+)
+@RegisterUserContextMenuCommand((builder, command) =>
+	builder.setName(command.name).setContexts(InteractionContextType.Guild),
+)
 export default class extends SteveCommand {
-	public override registerApplicationCommands(registry: Command.Registry) {
-		registry.registerChatInputCommand((builder) =>
-			builder
-				.setName(this.name)
-				.setDescription(this.description)
-				.setContexts(InteractionContextType.Guild)
-				.addUserOption((option) =>
-					option
-						.setName("user")
-						.setDescription("The user you'd like to get information about.")
-						.setRequired(true),
-				),
-		);
-
-		registry.registerContextMenuCommand((builder) =>
-			builder
-				.setName(this.name)
-				.setType(ApplicationCommandType.User)
-				.setContexts(InteractionContextType.Guild),
-		);
-	}
-
 	public override async chatInputRun(interaction: ChatInputCommandInteraction) {
 		await interaction.deferReply();
 		const t = useT(await fetchT(interaction));

@@ -1,16 +1,15 @@
 import { LanguageKeys } from "#lib/i18n/index";
 import { useT } from "#utils/i18n";
-import { ApplyOptions } from "@sapphire/decorators";
-import { Command } from "@sapphire/framework";
+import { ApplyOptions, RegisterChatInputCommand } from "@sapphire/decorators";
 import { fetchT } from "@sapphire/plugin-i18next";
-import { Subcommand } from "@sapphire/plugin-subcommands";
+import { Subcommand, SubcommandOptions } from "@sapphire/plugin-subcommands";
 import {
 	ChatInputCommandInteraction,
 	InteractionContextType,
 	PermissionFlagsBits,
 } from "discord.js";
 
-@ApplyOptions<Subcommand.Options>({
+@ApplyOptions<SubcommandOptions>({
 	description: "Manage snippets.",
 	subcommands: [
 		{ name: "add", chatInputRun: "add" },
@@ -18,81 +17,78 @@ import {
 		{ name: "remove", chatInputRun: "remove" },
 	],
 })
-export default class extends Subcommand {
-	public override registerApplicationCommands(registry: Command.Registry) {
-		registry.registerChatInputCommand((builder) =>
-			builder
-				.setName(this.name)
-				.setDescription(this.description)
-				.setContexts(InteractionContextType.Guild)
-				.setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
-				.addSubcommand((subcommand) =>
-					subcommand
-						.setName("add")
-						.setDescription("Add a new snippet.")
-						.addStringOption((option) =>
-							option
-								.setName("name")
-								.setDescription("The name of the snippet.")
-								.setRequired(true)
-								.setMaxLength(100),
-						)
-						.addStringOption((option) =>
-							option
-								.setName("content")
-								.setDescription("The content of the snippet.")
-								.setRequired(true)
-								.setMaxLength(1900),
-						)
-						.addBooleanOption((option) =>
-							option
-								.setName("embed")
-								.setDescription("Whether to display the snippet as an embed.")
-								.setRequired(false),
-						),
+@RegisterChatInputCommand((builder, command) =>
+	builder
+		.setName(command.name)
+		.setDescription(command.description)
+		.setContexts(InteractionContextType.Guild)
+		.setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
+		.addSubcommand((subcommand) =>
+			subcommand
+				.setName("add")
+				.setDescription("Add a new snippet.")
+				.addStringOption((option) =>
+					option
+						.setName("name")
+						.setDescription("The name of the snippet.")
+						.setRequired(true)
+						.setMaxLength(100),
 				)
-				.addSubcommand((subcommand) =>
-					subcommand
-						.setName("edit")
-						.setDescription("Edit an existing snippet.")
-						.addStringOption((option) =>
-							option
-								.setName("name")
-								.setAutocomplete(true)
-								.setDescription("The name of the snippet.")
-								.setRequired(true)
-								.setMaxLength(100),
-						)
-						.addStringOption((option) =>
-							option
-								.setName("content")
-								.setDescription("The new content of the snippet.")
-								.setRequired(true)
-								.setMaxLength(1900),
-						)
-						.addBooleanOption((option) =>
-							option
-								.setName("embed")
-								.setDescription("Whether to display the snippet as an embed.")
-								.setRequired(false),
-						),
+				.addStringOption((option) =>
+					option
+						.setName("content")
+						.setDescription("The content of the snippet.")
+						.setRequired(true)
+						.setMaxLength(1900),
 				)
-				.addSubcommand((subcommand) =>
-					subcommand
-						.setName("remove")
-						.setDescription("Remove an existing snippet.")
-						.addStringOption((option) =>
-							option
-								.setName("name")
-								.setAutocomplete(true)
-								.setDescription("The name of the snippet.")
-								.setRequired(true)
-								.setMaxLength(100),
-						),
+				.addBooleanOption((option) =>
+					option
+						.setName("embed")
+						.setDescription("Whether to display the snippet as an embed.")
+						.setRequired(false),
 				),
-		);
-	}
-
+		)
+		.addSubcommand((subcommand) =>
+			subcommand
+				.setName("edit")
+				.setDescription("Edit an existing snippet.")
+				.addStringOption((option) =>
+					option
+						.setName("name")
+						.setAutocomplete(true)
+						.setDescription("The name of the snippet.")
+						.setRequired(true)
+						.setMaxLength(100),
+				)
+				.addStringOption((option) =>
+					option
+						.setName("content")
+						.setDescription("The new content of the snippet.")
+						.setRequired(true)
+						.setMaxLength(1900),
+				)
+				.addBooleanOption((option) =>
+					option
+						.setName("embed")
+						.setDescription("Whether to display the snippet as an embed.")
+						.setRequired(false),
+				),
+		)
+		.addSubcommand((subcommand) =>
+			subcommand
+				.setName("remove")
+				.setDescription("Remove an existing snippet.")
+				.addStringOption((option) =>
+					option
+						.setName("name")
+						.setAutocomplete(true)
+						.setDescription("The name of the snippet.")
+						.setRequired(true)
+						.setMaxLength(100),
+				),
+		),
+)
+export default class extends Subcommand {
 	public async add(interaction: ChatInputCommandInteraction) {
 		await interaction.deferReply();
 

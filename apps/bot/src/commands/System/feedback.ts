@@ -1,12 +1,8 @@
 import { LanguageKeys } from "#lib/i18n/index";
 import { SteveCommand } from "#lib/structures/commands/SteveCommand";
 import { useT } from "#utils/i18n";
-import { registerBasicCommand } from "#utils/util";
-import { ApplyOptions } from "@sapphire/decorators";
-import {
-	ApplicationCommandRegistry,
-	CommandOptions,
-} from "@sapphire/framework";
+import { ApplyOptions, RegisterChatInputCommand } from "@sapphire/decorators";
+import { CommandOptions } from "@sapphire/framework";
 import { fetchT } from "@sapphire/plugin-i18next";
 import { Time } from "@sapphire/timestamp";
 import {
@@ -20,13 +16,10 @@ import {
 @ApplyOptions<CommandOptions>({
 	description: "Send feedback to my developers.",
 })
+@RegisterChatInputCommand((builder, command) =>
+	builder.setName(command.name).setDescription(command.description),
+)
 export default class extends SteveCommand {
-	public override registerApplicationCommands(
-		registry: ApplicationCommandRegistry,
-	) {
-		registerBasicCommand(registry, this.name, this.description);
-	}
-
 	public override async chatInputRun(interaction: ChatInputCommandInteraction) {
 		const t = useT(await fetchT(interaction));
 

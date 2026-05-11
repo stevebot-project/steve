@@ -2,11 +2,8 @@ import { LanguageKeys } from "#lib/i18n/index";
 import { SteveCommand } from "#lib/structures/commands/SteveCommand";
 import { SteveGuild } from "#lib/structures/SteveGuild";
 import { useT } from "#utils/i18n";
-import { ApplyOptions } from "@sapphire/decorators";
-import {
-	ApplicationCommandRegistry,
-	CommandOptions,
-} from "@sapphire/framework";
+import { ApplyOptions, RegisterChatInputCommand } from "@sapphire/decorators";
+import { CommandOptions } from "@sapphire/framework";
 import { fetchT } from "@sapphire/plugin-i18next";
 import {
 	ChatInputCommandInteraction,
@@ -17,25 +14,20 @@ import {
 @ApplyOptions<CommandOptions>({
 	description: "Assign roles to yourself using Steve",
 })
+@RegisterChatInputCommand((builder, command) =>
+	builder
+		.setName(command.name)
+		.setDescription(command.description)
+		.setContexts(InteractionContextType.Guild)
+		.addStringOption((option) =>
+			option
+				.setName("role")
+				.setDescription("The role to assign.")
+				.setRequired(true)
+				.setAutocomplete(true),
+		),
+)
 export default class extends SteveCommand {
-	public override registerApplicationCommands(
-		registry: ApplicationCommandRegistry,
-	) {
-		registry.registerChatInputCommand((builder) =>
-			builder
-				.setName(this.name)
-				.setDescription(this.description)
-				.setContexts(InteractionContextType.Guild)
-				.addStringOption((option) =>
-					option
-						.setName("role")
-						.setDescription("The role to assign.")
-						.setRequired(true)
-						.setAutocomplete(true),
-				),
-		);
-	}
-
 	// TODO: i18n, role being above bot
 	public override async chatInputRun(interaction: ChatInputCommandInteraction) {
 		const t = useT(await fetchT(interaction));

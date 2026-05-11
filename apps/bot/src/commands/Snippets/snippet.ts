@@ -1,11 +1,8 @@
 import { LanguageKeys } from "#lib/i18n/index";
 import { SteveCommand } from "#lib/structures/commands/SteveCommand";
 import { useT } from "#utils/i18n";
-import { ApplyOptions } from "@sapphire/decorators";
-import {
-	ApplicationCommandRegistry,
-	type CommandOptions,
-} from "@sapphire/framework";
+import { ApplyOptions, RegisterChatInputCommand } from "@sapphire/decorators";
+import { type CommandOptions } from "@sapphire/framework";
 import { fetchT } from "@sapphire/plugin-i18next";
 import {
 	EmbedBuilder,
@@ -17,25 +14,20 @@ import {
 	description:
 		"Snippets are small pieces of information that can be quickly accessed.",
 })
+@RegisterChatInputCommand((builder, command) =>
+	builder
+		.setName(command.name)
+		.setDescription(command.description)
+		.setContexts(InteractionContextType.Guild)
+		.addStringOption((option) =>
+			option
+				.setName("name")
+				.setDescription("The name of the snippet that you'd like to view.")
+				.setRequired(true)
+				.setAutocomplete(true),
+		),
+)
 export default class extends SteveCommand {
-	public override registerApplicationCommands(
-		registry: ApplicationCommandRegistry,
-	) {
-		registry.registerChatInputCommand((builder) =>
-			builder
-				.setName(this.name)
-				.setDescription(this.description)
-				.setContexts(InteractionContextType.Guild)
-				.addStringOption((option) =>
-					option
-						.setName("name")
-						.setDescription("The name of the snippet that you'd like to view.")
-						.setRequired(true)
-						.setAutocomplete(true),
-				),
-		);
-	}
-
 	public override async chatInputRun(interaction: ChatInputCommandInteraction) {
 		await interaction.deferReply();
 		const t = useT(await fetchT(interaction));

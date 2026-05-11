@@ -1,9 +1,9 @@
 import { LanguageKeys } from "#lib/i18n/index";
 import { SteveGuild } from "#lib/structures/SteveGuild";
 import { useT } from "#utils/i18n";
-import { ApplyOptions } from "@sapphire/decorators";
+import { ApplyOptions, RegisterChatInputCommand } from "@sapphire/decorators";
 import { fetchT } from "@sapphire/plugin-i18next";
-import { Subcommand } from "@sapphire/plugin-subcommands";
+import { Subcommand, SubcommandOptions } from "@sapphire/plugin-subcommands";
 import {
 	ChatInputCommandInteraction,
 	InteractionContextType,
@@ -11,47 +11,44 @@ import {
 	PermissionFlagsBits,
 } from "discord.js";
 
-@ApplyOptions<Subcommand.Options>({
+@ApplyOptions<SubcommandOptions>({
 	description: "Manage self-assignable roles.",
 	subcommands: [
 		{ name: "add", chatInputRun: "add" },
 		{ name: "remove", chatInputRun: "remove" },
 	],
 })
-export default class extends Subcommand {
-	public override registerApplicationCommands(registry: Subcommand.Registry) {
-		registry.registerChatInputCommand((builder) =>
-			builder
-				.setName(this.name)
-				.setDescription(this.description)
-				.setContexts(InteractionContextType.Guild)
-				.setDefaultMemberPermissions(PermissionFlagsBits.ManageRoles)
-				.addSubcommand((subcommand) =>
-					subcommand
-						.setName("add")
-						.setDescription("Add a self-assignable role.")
-						.addRoleOption((option) =>
-							option
-								.setName("role")
-								.setDescription("The role to add.")
-								.setRequired(true),
-						),
-				)
-				.addSubcommand((subcommand) =>
-					subcommand
-						.setName("remove")
-						.setDescription("Set a role to no longer be self-assignable.")
-						.addStringOption((option) =>
-							option
-								.setName("role")
-								.setDescription("The role to remove.")
-								.setRequired(true)
-								.setAutocomplete(true),
-						),
+@RegisterChatInputCommand((builder, command) =>
+	builder
+		.setName(command.name)
+		.setDescription(command.description)
+		.setContexts(InteractionContextType.Guild)
+		.setDefaultMemberPermissions(PermissionFlagsBits.ManageRoles)
+		.addSubcommand((subcommand) =>
+			subcommand
+				.setName("add")
+				.setDescription("Add a self-assignable role.")
+				.addRoleOption((option) =>
+					option
+						.setName("role")
+						.setDescription("The role to add.")
+						.setRequired(true),
 				),
-		);
-	}
-
+		)
+		.addSubcommand((subcommand) =>
+			subcommand
+				.setName("remove")
+				.setDescription("Set a role to no longer be self-assignable.")
+				.addStringOption((option) =>
+					option
+						.setName("role")
+						.setDescription("The role to remove.")
+						.setRequired(true)
+						.setAutocomplete(true),
+				),
+		),
+)
+export default class extends Subcommand {
 	public async add(interaction: ChatInputCommandInteraction) {
 		const t = useT(await fetchT(interaction));
 
