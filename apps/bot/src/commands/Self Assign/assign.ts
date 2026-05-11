@@ -9,7 +9,6 @@ import {
 } from "@sapphire/framework";
 import { fetchT } from "@sapphire/plugin-i18next";
 import {
-	AutocompleteInteraction,
 	ChatInputCommandInteraction,
 	InteractionContextType,
 	MessageFlags,
@@ -91,22 +90,5 @@ export default class extends SteveCommand {
 			}),
 			flags: MessageFlags.Ephemeral,
 		});
-	}
-
-	public override async autocompleteRun(
-		interaction: AutocompleteInteraction<"cached">,
-	) {
-		const query = interaction.options.getFocused();
-		const guild = await SteveGuild.get(interaction.guild);
-
-		const assignableRoles = guild.settings!.roleAssignable;
-
-		const response = interaction.guild.roles.cache
-			.filter((r) => assignableRoles.includes(r.id))
-			.filter((r) => r.name.toLowerCase().includes(query.toLowerCase()))
-			.map((r) => ({ name: r.name, value: r.name }))
-			.slice(0, 25);
-
-		return interaction.respond(response);
 	}
 }

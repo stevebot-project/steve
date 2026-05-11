@@ -8,7 +8,6 @@ import {
 } from "@sapphire/framework";
 import { fetchT } from "@sapphire/plugin-i18next";
 import {
-	AutocompleteInteraction,
 	EmbedBuilder,
 	InteractionContextType,
 	type ChatInputCommandInteraction,
@@ -62,27 +61,5 @@ export default class extends SteveCommand {
 				? { embeds: [new EmbedBuilder().setDescription(snippet.content)] }
 				: snippet.content,
 		);
-	}
-
-	public override async autocompleteRun(
-		interaction: AutocompleteInteraction<"cached">,
-	) {
-		const query = interaction.options.getFocused();
-
-		const snippets = query
-			? await this.container.settings.snippets.searchSnippetsByName(
-					interaction.guildId,
-					query,
-				)
-			: await this.container.settings.snippets.getGuildSnippets(
-					interaction.guildId, // TODO: make sure this only grabs 25
-				);
-
-		const result = snippets.map((snippet) => ({
-			name: snippet.name,
-			value: snippet.name,
-		}));
-
-		return interaction.respond(result);
 	}
 }

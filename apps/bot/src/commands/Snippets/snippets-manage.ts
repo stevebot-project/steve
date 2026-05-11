@@ -5,7 +5,6 @@ import { Command } from "@sapphire/framework";
 import { fetchT } from "@sapphire/plugin-i18next";
 import { Subcommand } from "@sapphire/plugin-subcommands";
 import {
-	AutocompleteInteraction,
 	ChatInputCommandInteraction,
 	InteractionContextType,
 	PermissionFlagsBits,
@@ -194,37 +193,5 @@ export default class extends Subcommand {
 		return interaction.editReply(
 			t(LanguageKeys.Commands.Snippets.RemoveSuccess, { name }),
 		);
-	}
-
-	public override async autocompleteRun(
-		interaction: AutocompleteInteraction<"cached">,
-	) {
-		const subcommand = interaction.options.getSubcommand();
-
-		if (subcommand === "edit" || subcommand === "remove") {
-			return this.autocompleteSnippetName(interaction);
-		}
-	}
-
-	private async autocompleteSnippetName(
-		interaction: AutocompleteInteraction<"cached">,
-	) {
-		const query = interaction.options.getFocused();
-
-		const snippets = query
-			? await this.container.settings.snippets.searchSnippetsByName(
-					interaction.guildId,
-					query,
-				)
-			: await this.container.settings.snippets.getGuildSnippets(
-					interaction.guildId,
-				);
-
-		const result = snippets.map((snippet) => ({
-			name: snippet.name,
-			value: snippet.name,
-		}));
-
-		return interaction.respond(result);
 	}
 }
