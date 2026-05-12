@@ -1,18 +1,20 @@
 import { LanguageKeys } from "#lib/i18n/index";
-import { SteveCommand } from "#lib/structures/commands/SteveCommand";
-import { useT } from "#utils/i18n";
+import {
+	SteveCommand,
+	SteveCommandOptions,
+} from "#lib/structures/commands/SteveCommand";
+import { SteveT } from "#utils/i18n";
 import { ApplyOptions, RegisterChatInputCommand } from "@sapphire/decorators";
-import { type CommandOptions } from "@sapphire/framework";
-import { fetchT } from "@sapphire/plugin-i18next";
 import {
 	EmbedBuilder,
 	InteractionContextType,
 	type ChatInputCommandInteraction,
 } from "discord.js";
 
-@ApplyOptions<CommandOptions>({
+@ApplyOptions<SteveCommandOptions>({
 	description:
 		"Snippets are small pieces of information that can be quickly accessed.",
+	shouldDefer: true,
 })
 @RegisterChatInputCommand((builder, command) =>
 	builder
@@ -28,12 +30,14 @@ import {
 		),
 )
 export default class extends SteveCommand {
-	public override async chatInputRun(interaction: ChatInputCommandInteraction) {
-		await interaction.deferReply();
-		const t = useT(await fetchT(interaction));
-
+	public override async slashRun(
+		interaction: ChatInputCommandInteraction,
+		t: SteveT,
+	) {
 		if (!interaction.inCachedGuild()) {
-			return interaction.reply(t(LanguageKeys.General.Errors.NotInCachedGuild));
+			return interaction.editReply(
+				t(LanguageKeys.General.Errors.NotInCachedGuild),
+			);
 		}
 
 		const name = interaction.options.getString("name", true);

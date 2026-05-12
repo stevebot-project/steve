@@ -1,9 +1,10 @@
 import { LanguageKeys } from "#lib/i18n/index";
-import { SteveCommand } from "#lib/structures/commands/SteveCommand";
-import { useT } from "#utils/i18n";
+import {
+	SteveCommand,
+	SteveCommandOptions,
+} from "#lib/structures/commands/SteveCommand";
+import { SteveT } from "#utils/i18n";
 import { ApplyOptions, RegisterChatInputCommand } from "@sapphire/decorators";
-import { CommandOptions } from "@sapphire/framework";
-import { fetchT } from "@sapphire/plugin-i18next";
 import { Time } from "@sapphire/timestamp";
 import {
 	ActionRowBuilder,
@@ -13,16 +14,17 @@ import {
 	TextInputStyle,
 } from "discord.js";
 
-@ApplyOptions<CommandOptions>({
+@ApplyOptions<SteveCommandOptions>({
 	description: "Send feedback to my developers.",
 })
 @RegisterChatInputCommand((builder, command) =>
 	builder.setName(command.name).setDescription(command.description),
 )
 export default class extends SteveCommand {
-	public override async chatInputRun(interaction: ChatInputCommandInteraction) {
-		const t = useT(await fetchT(interaction));
-
+	public override async slashRun(
+		interaction: ChatInputCommandInteraction,
+		t: SteveT,
+	) {
 		try {
 			await this.sendFeedbackModal(interaction, t);
 
@@ -51,7 +53,7 @@ export default class extends SteveCommand {
 
 	private sendFeedbackModal(
 		interaction: ChatInputCommandInteraction,
-		t: ReturnType<typeof useT>,
+		t: SteveT,
 	) {
 		const input = new TextInputBuilder()
 			.setCustomId("feedback_input")

@@ -1,15 +1,17 @@
 import { LanguageKeys } from "#lib/i18n/index";
-import { SteveCommand } from "#lib/structures/commands/SteveCommand";
-import { useT } from "#utils/i18n";
+import {
+	SteveCommand,
+	SteveCommandOptions,
+} from "#lib/structures/commands/SteveCommand";
+import { SteveT } from "#utils/i18n";
 import { ApplyOptions } from "@sapphire/decorators";
-import { LogLevel, type Args, type CommandOptions } from "@sapphire/framework";
-import { fetchT } from "@sapphire/plugin-i18next";
+import { LogLevel, type Args } from "@sapphire/framework";
 import { Stopwatch } from "@sapphire/stopwatch";
 import { cast, codeBlock, isThenable } from "@sapphire/utilities";
 import type { Message } from "discord.js";
 import { inspect } from "util";
 
-@ApplyOptions<CommandOptions>({
+@ApplyOptions<SteveCommandOptions>({
 	aliases: ["ev"],
 	description: "Evaluates JavaScript code. Reserved for my owners.",
 	flags: ["silent", "async", "show-hidden"],
@@ -17,9 +19,7 @@ import { inspect } from "util";
 	preconditions: ["isOwner"],
 })
 export default class extends SteveCommand {
-	public override async messageRun(msg: Message, args: Args) {
-		const t = useT(await fetchT(msg));
-
+	public override async textRun(msg: Message, args: Args, t: SteveT) {
 		const { success, result, time } = await this.eval(args);
 
 		let output = t(

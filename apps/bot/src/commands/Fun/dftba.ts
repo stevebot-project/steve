@@ -11,9 +11,7 @@ import type { ChatInputCommandInteraction } from "discord.js";
 	builder.setName(command.name).setDescription(command.description),
 )
 export default class extends SteveCommand {
-	public override async chatInputRun(interaction: ChatInputCommandInteraction) {
-		await this.prehandle(interaction);
-
+	public override async slashRun(interaction: ChatInputCommandInteraction) {
 		return interaction.editReply({ content: randomDftba() });
 	}
 }

@@ -2,6 +2,7 @@ import { TFunction } from "@sapphire/plugin-i18next";
 
 export type TypedT = string & { __type__: string };
 export type TypedFT<TArgs extends object> = string & { __args__: TArgs };
+export type SteveT = ReturnType<typeof useT>;
 
 export function FT<TArgs extends object>(k: string): TypedFT<TArgs> {
 	return k as TypedFT<TArgs>;

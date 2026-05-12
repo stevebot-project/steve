@@ -1,6 +1,9 @@
 import { LanguageKeys } from "#lib/i18n/index";
-import { SteveCommand } from "#lib/structures/commands/SteveCommand";
-import { useT } from "#utils/i18n";
+import {
+	SteveCommand,
+	SteveCommandOptions,
+} from "#lib/structures/commands/SteveCommand";
+import { SteveT } from "#utils/i18n";
 import { defaultDateFormat } from "#utils/util";
 import {
 	ApplyOptions,
@@ -8,8 +11,6 @@ import {
 	RegisterUserContextMenuCommand,
 } from "@sapphire/decorators";
 import { DurationFormatter } from "@sapphire/duration";
-import { type CommandOptions } from "@sapphire/framework";
-import { fetchT } from "@sapphire/plugin-i18next";
 import {
 	EmbedBuilder,
 	GuildMember,
@@ -18,9 +19,10 @@ import {
 	type ChatInputCommandInteraction,
 } from "discord.js";
 
-@ApplyOptions<CommandOptions>({
+@ApplyOptions<SteveCommandOptions>({
 	description: "Get basic information about a member of the server.",
 	requiredClientPermissions: ["EmbedLinks"],
+	shouldDefer: true,
 })
 @RegisterChatInputCommand((builder, command) =>
 	builder
@@ -38,10 +40,10 @@ import {
 	builder.setName(command.name).setContexts(InteractionContextType.Guild),
 )
 export default class extends SteveCommand {
-	public override async chatInputRun(interaction: ChatInputCommandInteraction) {
-		await interaction.deferReply();
-		const t = useT(await fetchT(interaction));
-
+	public override async slashRun(
+		interaction: ChatInputCommandInteraction,
+		t: SteveT,
+	) {
 		if (!interaction.inCachedGuild()) {
 			return interaction.editReply(
 				t(LanguageKeys.General.Errors.NotInCachedGuild),
@@ -55,14 +57,14 @@ export default class extends SteveCommand {
 		return interaction.editReply({ embeds: [embed] });
 	}
 
-	public override async contextMenuRun(
+	public override async menuRun(
 		interaction: UserContextMenuCommandInteraction,
+		t: SteveT,
 	) {
-		await interaction.deferReply();
-		const t = useT(await fetchT(interaction));
-
 		if (!interaction.inCachedGuild()) {
-			return interaction.reply(t(LanguageKeys.General.Errors.NotInCachedGuild));
+			return interaction.editReply(
+				t(LanguageKeys.General.Errors.NotInCachedGuild),
+			);
 		}
 
 		const embed = this.buildEmbed(t, interaction.targetMember!);
@@ -70,7 +72,7 @@ export default class extends SteveCommand {
 		return interaction.editReply({ embeds: [embed] });
 	}
 
-	private buildEmbed(t: ReturnType<typeof useT>, member: GuildMember) {
+	private buildEmbed(t: SteveT, member: GuildMember) {
 		const formatter = new DurationFormatter();
 
 		const accountCreatedDate = defaultDateFormat.display(
