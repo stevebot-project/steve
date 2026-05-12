@@ -52,7 +52,7 @@ export class AutocompleteHandler extends InteractionHandler {
 			.map((r) => ({ name: r.name, value: r.name }))
 			.slice(0, 25);
 
-		return this.some(response);
+		return response ? this.some(response) : this.none();
 	}
 
 	private async snippetNameAutocomplete(
