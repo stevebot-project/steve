@@ -65,9 +65,7 @@ describe("GuildSettings", () => {
 		it("throws errors from prisma", async () => {
 			mockCreate.mockRejectedValueOnce(new Error("error"));
 
-			await expect(settings.createGuild(mockSnowflake)).rejects.toThrow(
-				"error",
-			);
+			await expect(settings.createGuild(mockSnowflake)).rejects.toThrow("error");
 		});
 	});
 
@@ -86,9 +84,7 @@ describe("GuildSettings", () => {
 		it("throws errors from prisma", async () => {
 			mockDelete.mockRejectedValueOnce(new Error("error"));
 
-			await expect(settings.deleteGuild(mockSnowflake)).rejects.toThrow(
-				"error",
-			);
+			await expect(settings.deleteGuild(mockSnowflake)).rejects.toThrow("error");
 		});
 	});
 
@@ -118,9 +114,7 @@ describe("GuildSettings", () => {
 		it("throws errors from prisma", async () => {
 			mockFindUnique.mockRejectedValueOnce(new Error("error"));
 
-			await expect(settings.getAssignableRoles(mockSnowflake)).rejects.toThrow(
-				"error",
-			);
+			await expect(settings.getAssignableRoles(mockSnowflake)).rejects.toThrow("error");
 		});
 	});
 

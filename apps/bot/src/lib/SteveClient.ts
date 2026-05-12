@@ -12,9 +12,7 @@ export class SteveClient extends SapphireClient {
 	public override async login() {
 		container.settings = new SettingsProvider();
 
-		const token = this.dev
-			? process.env.DISCORD_TOKEN_DEV
-			: process.env.DISCORD_TOKEN_PROD;
+		const token = this.dev ? process.env.DISCORD_TOKEN_DEV : process.env.DISCORD_TOKEN_PROD;
 
 		return super.login(token);
 	}

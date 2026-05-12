@@ -8,19 +8,9 @@ export default class SnippetSettings {
 		this.prisma = prisma;
 	}
 
-	public async createSnippet(
-		guildId: Snowflake,
-		name: string,
-		content: string,
-		embed: boolean,
-	) {
+	public async createSnippet(guildId: Snowflake, name: string, content: string, embed: boolean) {
 		return this.prisma.snippet.create({
-			data: {
-				guildId,
-				name,
-				content,
-				embed,
-			},
+			data: { guildId, name, content, embed },
 		});
 	}
 
@@ -30,12 +20,7 @@ export default class SnippetSettings {
 		});
 	}
 
-	public async editSnippet(
-		guildId: Snowflake,
-		name: string,
-		content: string,
-		embed: boolean,
-	) {
+	public async editSnippet(guildId: Snowflake, name: string, content: string, embed: boolean) {
 		return this.prisma.snippet.update({
 			where: { snippetId: { guildId, name } },
 			data: { content, embed },

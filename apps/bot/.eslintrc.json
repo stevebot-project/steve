@@ -1,5 +1,8 @@
 {
 	"extends": "@sapphire",
+	"rules": {
+		"prettier/prettier": ["warn", { "printWidth": 120 }]
+	},
   "overrides": [{
     "files": ["src/lib/i18n/keys/*"],
     "rules": {

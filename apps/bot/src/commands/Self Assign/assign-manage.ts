@@ -4,12 +4,7 @@ import { useT } from "#utils/i18n";
 import { ApplyOptions, RegisterChatInputCommand } from "@sapphire/decorators";
 import { fetchT } from "@sapphire/plugin-i18next";
 import { Subcommand, SubcommandOptions } from "@sapphire/plugin-subcommands";
-import {
-	ChatInputCommandInteraction,
-	InteractionContextType,
-	MessageFlags,
-	PermissionFlagsBits,
-} from "discord.js";
+import { ChatInputCommandInteraction, InteractionContextType, MessageFlags, PermissionFlagsBits } from "discord.js";
 
 @ApplyOptions<SubcommandOptions>({
 	description: "Manage self-assignable roles.",
@@ -28,23 +23,14 @@ import {
 			subcommand
 				.setName("add")
 				.setDescription("Add a self-assignable role.")
-				.addRoleOption((option) =>
-					option
-						.setName("role")
-						.setDescription("The role to add.")
-						.setRequired(true),
-				),
+				.addRoleOption((option) => option.setName("role").setDescription("The role to add.").setRequired(true)),
 		)
 		.addSubcommand((subcommand) =>
 			subcommand
 				.setName("remove")
 				.setDescription("Set a role to no longer be self-assignable.")
 				.addStringOption((option) =>
-					option
-						.setName("role")
-						.setDescription("The role to remove.")
-						.setRequired(true)
-						.setAutocomplete(true),
+					option.setName("role").setDescription("The role to remove.").setRequired(true).setAutocomplete(true),
 				),
 		),
 )
@@ -70,10 +56,7 @@ export default class extends Subcommand {
 			});
 		}
 
-		await this.container.settings.guilds.addAssignableRole(
-			interaction.guildId,
-			role.id,
-		);
+		await this.container.settings.guilds.addAssignableRole(interaction.guildId, role.id);
 
 		return interaction.reply({
 			content: t(LanguageKeys.Commands.Assign.SuccessRoleAssignable, {
@@ -93,9 +76,7 @@ export default class extends Subcommand {
 		const roleName = interaction.options.getString("role", true);
 		const guild = await SteveGuild.get(interaction.guild);
 
-		const role = interaction.guild.roles.cache.find(
-			(r) => r.name.toLowerCase() === roleName.toLowerCase(),
-		);
+		const role = interaction.guild.roles.cache.find((r) => r.name.toLowerCase() === roleName.toLowerCase());
 
 		if (!role) {
 			return interaction.reply({
@@ -117,10 +98,7 @@ export default class extends Subcommand {
 			});
 		}
 
-		await this.container.settings.guilds.removeAssignableRole(
-			interaction.guildId,
-			role.id,
-		);
+		await this.container.settings.guilds.removeAssignableRole(interaction.guildId, role.id);
 
 		return interaction.reply({
 			content: t(LanguageKeys.Commands.Assign.SuccessRoleNotAssignable, {

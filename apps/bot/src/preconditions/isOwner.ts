@@ -2,12 +2,7 @@ import { LanguageKeys } from "#lib/i18n/index";
 import { useT } from "#utils/i18n";
 import { AllFlowsPrecondition } from "@sapphire/framework";
 import { fetchT, type Target } from "@sapphire/plugin-i18next";
-import {
-	User,
-	type CommandInteraction,
-	type ContextMenuCommandInteraction,
-	type Message,
-} from "discord.js";
+import { User, type CommandInteraction, type ContextMenuCommandInteraction, type Message } from "discord.js";
 
 export default class extends AllFlowsPrecondition {
 	public override async messageRun(msg: Message) {
@@ -18,9 +13,7 @@ export default class extends AllFlowsPrecondition {
 		return this.isOwner(interaction.user.id, interaction);
 	}
 
-	public override async contextMenuRun(
-		interaction: ContextMenuCommandInteraction,
-	) {
+	public override async contextMenuRun(interaction: ContextMenuCommandInteraction) {
 		return this.isOwner(interaction.user.id, interaction);
 	}
 

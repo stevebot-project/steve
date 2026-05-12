@@ -7,9 +7,7 @@ import type { ChatInputCommandInteraction } from "discord.js";
 @ApplyOptions<CommandOptions>({
 	description: "Get a fun random DFTBA!",
 })
-@RegisterChatInputCommand((builder, command) =>
-	builder.setName(command.name).setDescription(command.description),
-)
+@RegisterChatInputCommand((builder, command) => builder.setName(command.name).setDescription(command.description))
 export default class extends SteveCommand {
 	public override async slashRun(interaction: ChatInputCommandInteraction) {
 		return interaction.editReply({ content: randomDftba() });

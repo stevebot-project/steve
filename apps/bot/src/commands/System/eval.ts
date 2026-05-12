@@ -1,8 +1,5 @@
 import { LanguageKeys } from "#lib/i18n/index";
-import {
-	SteveCommand,
-	SteveCommandOptions,
-} from "#lib/structures/commands/SteveCommand";
+import { SteveCommand, SteveCommandOptions } from "#lib/structures/commands/SteveCommand";
 import { SteveT } from "#utils/i18n";
 import { ApplyOptions } from "@sapphire/decorators";
 import { LogLevel, type Args } from "@sapphire/framework";
@@ -22,15 +19,10 @@ export default class extends SteveCommand {
 	public override async textRun(msg: Message, args: Args, t: SteveT) {
 		const { success, result, time } = await this.eval(args);
 
-		let output = t(
-			success
-				? LanguageKeys.Commands.System.EvalOutput
-				: LanguageKeys.Commands.System.EvalError,
-			{
-				result: codeBlock("ts", result),
-				time,
-			},
-		);
+		let output = t(success ? LanguageKeys.Commands.System.EvalOutput : LanguageKeys.Commands.System.EvalError, {
+			result: codeBlock("ts", result),
+			time,
+		});
 
 		if (args.getFlags("silent")) return null;
 
@@ -87,10 +79,7 @@ export default class extends SteveCommand {
 				showHidden: Boolean(options.showHidden),
 			});
 		}
-		result = result.replaceAll(
-			cast<string>(process.env.DISCORD_TOKEN ?? process.env.DISCORD_TOKEN_DEV),
-			"[REDACTED]",
-		);
+		result = result.replaceAll(cast<string>(process.env.DISCORD_TOKEN ?? process.env.DISCORD_TOKEN_DEV), "[REDACTED]");
 
 		return { success, time: this.formatTime(syncTime, asyncTime), result };
 	}

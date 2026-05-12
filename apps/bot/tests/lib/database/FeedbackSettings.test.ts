@@ -36,9 +36,7 @@ describe("FeedbackSettings", () => {
 		it("throws errors from prisma", async () => {
 			mockCreate.mockRejectedValueOnce(new Error("false"));
 
-			await expect(
-				settings.addFeedback("steve loves ali forever", new Date()),
-			).rejects.toThrow("false");
+			await expect(settings.addFeedback("steve loves ali forever", new Date())).rejects.toThrow("false");
 		});
 	});
 });

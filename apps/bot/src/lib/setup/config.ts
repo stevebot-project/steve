@@ -19,11 +19,7 @@ export const STEVE_CLIENT_OPTIONS: ClientOptions = {
 		return "s;";
 	},
 	i18n: setInternationalizationOptions(),
-	intents: [
-		GatewayIntentBits.Guilds,
-		GatewayIntentBits.GuildMessages,
-		GatewayIntentBits.MessageContent,
-	],
+	intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent],
 	loadMessageCommandListeners: true,
 	logger: { level: setLoggerLevel() },
 	subcommandsAdvanced: {

@@ -12,36 +12,25 @@ import { AutocompleteInteraction } from "discord.js";
 	interactionHandlerType: InteractionHandlerTypes.Autocomplete,
 })
 export class AutocompleteHandler extends InteractionHandler {
-	public override async run(
-		interaction: AutocompleteInteraction,
-		result: InteractionHandlerParseResult<this>,
-	) {
+	public override async run(interaction: AutocompleteInteraction, result: InteractionHandlerParseResult<this>) {
 		return interaction.respond(result);
 	}
 
 	public override async parse(interaction: AutocompleteInteraction) {
 		if (!interaction.inCachedGuild()) return this.none();
 
-		if (
-			interaction.commandName === "assign" ||
-			interaction.commandName === "assign-manage"
-		) {
+		if (interaction.commandName === "assign" || interaction.commandName === "assign-manage") {
 			return this.assignRoleNameAutocomplete(interaction);
 		}
 
-		if (
-			interaction.commandName === "snippet" ||
-			interaction.commandName === "snippets-manage"
-		) {
+		if (interaction.commandName === "snippet" || interaction.commandName === "snippets-manage") {
 			return this.snippetNameAutocomplete(interaction);
 		}
 
 		return this.none();
 	}
 
-	private async assignRoleNameAutocomplete(
-		interaction: AutocompleteInteraction<"cached">,
-	) {
+	private async assignRoleNameAutocomplete(interaction: AutocompleteInteraction<"cached">) {
 		const query = interaction.options.getFocused();
 		const guild = await SteveGuild.get(interaction.guild);
 		const assignableRoles = guild.settings!.roleAssignable;
@@ -55,19 +44,12 @@ export class AutocompleteHandler extends InteractionHandler {
 		return response ? this.some(response) : this.none();
 	}
 
-	private async snippetNameAutocomplete(
-		interaction: AutocompleteInteraction<"cached">,
-	) {
+	private async snippetNameAutocomplete(interaction: AutocompleteInteraction<"cached">) {
 		const query = interaction.options.getFocused();
 
 		const snippets = query
-			? await this.container.settings.snippets.searchSnippetsByName(
-					interaction.guildId,
-					query,
-				)
-			: await this.container.settings.snippets.getGuildSnippets(
-					interaction.guildId,
-				);
+			? await this.container.settings.snippets.searchSnippetsByName(interaction.guildId, query)
+			: await this.container.settings.snippets.getGuildSnippets(interaction.guildId);
 
 		const response = snippets
 			.map((snippet) => ({

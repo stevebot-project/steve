@@ -36,12 +36,7 @@ describe("SnippetSettings", () => {
 		it("calls prisma.snippet.create with the correct data", async () => {
 			mockCreate.mockResolvedValueOnce(mockSnippetResult);
 
-			const result = await settings.createSnippet(
-				mockGuildId,
-				"test",
-				"testcontent",
-				false,
-			);
+			const result = await settings.createSnippet(mockGuildId, "test", "testcontent", false);
 
 			expect(mockCreate).toHaveBeenCalledExactlyOnceWith({
 				data: {
@@ -58,9 +53,7 @@ describe("SnippetSettings", () => {
 		it("throws errors from prisma", async () => {
 			mockCreate.mockRejectedValueOnce(new Error("error"));
 
-			await expect(
-				settings.createSnippet(mockGuildId, "test", "testcontent", false),
-			).rejects.toThrow("error");
+			await expect(settings.createSnippet(mockGuildId, "test", "testcontent", false)).rejects.toThrow("error");
 		});
 	});
 
@@ -85,9 +78,7 @@ describe("SnippetSettings", () => {
 		it("throws errors from prisma", async () => {
 			mockDelete.mockRejectedValueOnce(new Error("error"));
 
-			await expect(settings.deleteSnippet(mockGuildId, "test")).rejects.toThrow(
-				"error",
-			);
+			await expect(settings.deleteSnippet(mockGuildId, "test")).rejects.toThrow("error");
 		});
 	});
 
@@ -100,12 +91,7 @@ describe("SnippetSettings", () => {
 			};
 			mockUpdate.mockResolvedValueOnce(edited);
 
-			const result = await settings.editSnippet(
-				mockGuildId,
-				"test",
-				"newcontent",
-				true,
-			);
+			const result = await settings.editSnippet(mockGuildId, "test", "newcontent", true);
 
 			expect(mockUpdate).toHaveBeenCalledExactlyOnceWith({
 				where: {
@@ -126,9 +112,7 @@ describe("SnippetSettings", () => {
 		it("throws errors from prisma", async () => {
 			mockUpdate.mockRejectedValueOnce(new Error("error"));
 
-			await expect(
-				settings.editSnippet(mockGuildId, "test", "newcontent", true),
-			).rejects.toThrow("error");
+			await expect(settings.editSnippet(mockGuildId, "test", "newcontent", true)).rejects.toThrow("error");
 		});
 	});
 
@@ -156,9 +140,7 @@ describe("SnippetSettings", () => {
 		it("throws errors from prisma", async () => {
 			mockFindMany.mockRejectedValueOnce(new Error("error"));
 
-			await expect(settings.getGuildSnippets(mockGuildId)).rejects.toThrow(
-				"error",
-			);
+			await expect(settings.getGuildSnippets(mockGuildId)).rejects.toThrow("error");
 		});
 	});
 
@@ -191,9 +173,7 @@ describe("SnippetSettings", () => {
 		it("throws errors from prisma", async () => {
 			mockFindUnique.mockRejectedValueOnce(new Error("error"));
 
-			await expect(settings.getSnippet(mockGuildId, "test")).rejects.toThrow(
-				"error",
-			);
+			await expect(settings.getSnippet(mockGuildId, "test")).rejects.toThrow("error");
 		});
 	});
 
@@ -224,9 +204,7 @@ describe("SnippetSettings", () => {
 		it("throws errors from prisma", async () => {
 			mockFindMany.mockRejectedValueOnce(new Error("error"));
 
-			await expect(
-				settings.searchSnippetsByName(mockGuildId, "te"),
-			).rejects.toThrow("error");
+			await expect(settings.searchSnippetsByName(mockGuildId, "te")).rejects.toThrow("error");
 		});
 	});
 });

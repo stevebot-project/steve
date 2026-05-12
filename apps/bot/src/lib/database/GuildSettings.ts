@@ -8,10 +8,7 @@ export default class GuildSettings {
 		this.prisma = prisma;
 	}
 
-	public async addAssignableRole(
-		guildSnowflake: Snowflake,
-		roleSnowflake: Snowflake,
-	) {
+	public async addAssignableRole(guildSnowflake: Snowflake, roleSnowflake: Snowflake) {
 		return this.prisma.guild.update({
 			where: { id: guildSnowflake },
 			data: {
@@ -47,10 +44,7 @@ export default class GuildSettings {
 		});
 	}
 
-	public async removeAssignableRole(
-		guildSnowflake: Snowflake,
-		roleSnowflake: Snowflake,
-	) {
+	public async removeAssignableRole(guildSnowflake: Snowflake, roleSnowflake: Snowflake) {
 		const guild = await this.prisma.guild.findUnique({
 			where: { id: guildSnowflake },
 			select: { roleAssignable: true },

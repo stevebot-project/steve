@@ -9,10 +9,7 @@ export default class ModerationManager {
 		this.guild = guild;
 	}
 
-	public async timeout(
-		target: GuildMember,
-		options: TimeoutOptions,
-	): Promise<ModerationResult> {
+	public async timeout(target: GuildMember, options: TimeoutOptions): Promise<ModerationResult> {
 		const { duration, reason } = options;
 
 		if (!target.moderatable) {
@@ -39,6 +36,4 @@ interface TimeoutOptions {
 	reason: string | undefined;
 }
 
-type ModerationResult =
-	| { success: true; member: GuildMember }
-	| { success: false; error: ModerationErrors };
+type ModerationResult = { success: true; member: GuildMember } | { success: false; error: ModerationErrors };

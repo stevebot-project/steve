@@ -1,15 +1,8 @@
 import { LanguageKeys } from "#lib/i18n/index";
-import {
-	SteveCommand,
-	SteveCommandOptions,
-} from "#lib/structures/commands/SteveCommand";
+import { SteveCommand, SteveCommandOptions } from "#lib/structures/commands/SteveCommand";
 import { SteveT } from "#utils/i18n";
 import { defaultDateFormat } from "#utils/util";
-import {
-	ApplyOptions,
-	RegisterChatInputCommand,
-	RegisterUserContextMenuCommand,
-} from "@sapphire/decorators";
+import { ApplyOptions, RegisterChatInputCommand, RegisterUserContextMenuCommand } from "@sapphire/decorators";
 import { DurationFormatter } from "@sapphire/duration";
 import {
 	EmbedBuilder,
@@ -30,24 +23,16 @@ import {
 		.setDescription(command.description)
 		.setContexts(InteractionContextType.Guild)
 		.addUserOption((option) =>
-			option
-				.setName("user")
-				.setDescription("The user you'd like to get information about.")
-				.setRequired(true),
+			option.setName("user").setDescription("The user you'd like to get information about.").setRequired(true),
 		),
 )
 @RegisterUserContextMenuCommand((builder, command) =>
 	builder.setName(command.name).setContexts(InteractionContextType.Guild),
 )
 export default class extends SteveCommand {
-	public override async slashRun(
-		interaction: ChatInputCommandInteraction,
-		t: SteveT,
-	) {
+	public override async slashRun(interaction: ChatInputCommandInteraction, t: SteveT) {
 		if (!interaction.inCachedGuild()) {
-			return interaction.editReply(
-				t(LanguageKeys.General.Errors.NotInCachedGuild),
-			);
+			return interaction.editReply(t(LanguageKeys.General.Errors.NotInCachedGuild));
 		}
 
 		const member = interaction.options.getMember("user");
@@ -57,14 +42,9 @@ export default class extends SteveCommand {
 		return interaction.editReply({ embeds: [embed] });
 	}
 
-	public override async menuRun(
-		interaction: UserContextMenuCommandInteraction,
-		t: SteveT,
-	) {
+	public override async menuRun(interaction: UserContextMenuCommandInteraction, t: SteveT) {
 		if (!interaction.inCachedGuild()) {
-			return interaction.editReply(
-				t(LanguageKeys.General.Errors.NotInCachedGuild),
-			);
+			return interaction.editReply(t(LanguageKeys.General.Errors.NotInCachedGuild));
 		}
 
 		const embed = this.buildEmbed(t, interaction.targetMember!);
@@ -75,19 +55,11 @@ export default class extends SteveCommand {
 	private buildEmbed(t: SteveT, member: GuildMember) {
 		const formatter = new DurationFormatter();
 
-		const accountCreatedDate = defaultDateFormat.display(
-			member.user.createdTimestamp,
-		);
-		const accountCreatedDuration = formatter.format(
-			Date.now() - member.user.createdTimestamp,
-			1,
-		);
+		const accountCreatedDate = defaultDateFormat.display(member.user.createdTimestamp);
+		const accountCreatedDuration = formatter.format(Date.now() - member.user.createdTimestamp, 1);
 
 		const joinedGuildDate = defaultDateFormat.display(member.joinedTimestamp!);
-		const joindGuildDuration = formatter.format(
-			Date.now() - member.joinedTimestamp!,
-			1,
-		);
+		const joindGuildDuration = formatter.format(Date.now() - member.joinedTimestamp!, 1);
 
 		const embed = new EmbedBuilder()
 			.addFields(
@@ -113,15 +85,8 @@ export default class extends SteveCommand {
 					inline: true,
 				},
 			)
-			.setAuthor({
-				name: member.user.username,
-				iconURL: member.displayAvatarURL(),
-			})
-			.setFooter({
-				text: t(LanguageKeys.Commands.Info.WhoisEmbedFooter, {
-					id: member.id,
-				}),
-			})
+			.setAuthor({ name: member.user.username, iconURL: member.displayAvatarURL() })
+			.setFooter({ text: t(LanguageKeys.Commands.Info.WhoisEmbedFooter, { id: member.id }) })
 			.setTimestamp();
 
 		if (member.roles.cache.size > 1) {

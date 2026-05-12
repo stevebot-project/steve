@@ -7,10 +7,7 @@ export default class FeedbackSettings {
 		this.prisma = prisma;
 	}
 
-	public addFeedback(
-		content: string,
-		timestamp: Date,
-	): Promise<Feedback | null> {
+	public addFeedback(content: string, timestamp: Date): Promise<Feedback | null> {
 		return this.prisma.feedback.create({
 			data: {
 				content,

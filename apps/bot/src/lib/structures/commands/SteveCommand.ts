@@ -1,19 +1,12 @@
 import { SteveT, useT } from "#utils/i18n";
 import { Args, Command, CommandOptions } from "@sapphire/framework";
 import { fetchT, Target } from "@sapphire/plugin-i18next";
-import {
-	ChatInputCommandInteraction,
-	ContextMenuCommandInteraction,
-	Message,
-} from "discord.js";
+import { ChatInputCommandInteraction, ContextMenuCommandInteraction, Message } from "discord.js";
 
 export abstract class SteveCommand extends Command {
 	public readonly shouldDefer: boolean;
 
-	public constructor(
-		context: Command.LoaderContext,
-		options: SteveCommandOptions,
-	) {
+	public constructor(context: Command.LoaderContext, options: SteveCommandOptions) {
 		super(context, options);
 
 		this.shouldDefer = options.shouldDefer ?? false;
@@ -27,9 +20,7 @@ export abstract class SteveCommand extends Command {
 		return this.slashRun(interaction, t);
 	}
 
-	public override async contextMenuRun(
-		interaction: ContextMenuCommandInteraction,
-	) {
+	public override async contextMenuRun(interaction: ContextMenuCommandInteraction) {
 		const t = await this.fetchSteveT(interaction);
 
 		return this.menuRun(interaction, t);
@@ -42,27 +33,17 @@ export abstract class SteveCommand extends Command {
 	}
 
 	// eslint-disable-next-line @typescript-eslint/require-await
-	public async menuRun(
-		_interaction: ContextMenuCommandInteraction,
-		_t: SteveT,
-	): Promise<unknown> {
+	public async menuRun(_interaction: ContextMenuCommandInteraction, _t: SteveT): Promise<unknown> {
 		return undefined;
 	}
 
 	// eslint-disable-next-line @typescript-eslint/require-await
-	public async slashRun(
-		_interaction: ChatInputCommandInteraction,
-		_t: SteveT,
-	): Promise<unknown> {
+	public async slashRun(_interaction: ChatInputCommandInteraction, _t: SteveT): Promise<unknown> {
 		return undefined;
 	}
 
 	// eslint-disable-next-line @typescript-eslint/require-await
-	public async textRun(
-		_message: Message,
-		_args: Args,
-		_t: SteveT,
-	): Promise<unknown> {
+	public async textRun(_message: Message, _args: Args, _t: SteveT): Promise<unknown> {
 		return undefined;
 	}
 

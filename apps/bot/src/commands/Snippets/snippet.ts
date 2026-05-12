@@ -1,19 +1,11 @@
 import { LanguageKeys } from "#lib/i18n/index";
-import {
-	SteveCommand,
-	SteveCommandOptions,
-} from "#lib/structures/commands/SteveCommand";
+import { SteveCommand, SteveCommandOptions } from "#lib/structures/commands/SteveCommand";
 import { SteveT } from "#utils/i18n";
 import { ApplyOptions, RegisterChatInputCommand } from "@sapphire/decorators";
-import {
-	EmbedBuilder,
-	InteractionContextType,
-	type ChatInputCommandInteraction,
-} from "discord.js";
+import { EmbedBuilder, InteractionContextType, type ChatInputCommandInteraction } from "discord.js";
 
 @ApplyOptions<SteveCommandOptions>({
-	description:
-		"Snippets are small pieces of information that can be quickly accessed.",
+	description: "Snippets are small pieces of information that can be quickly accessed.",
 	shouldDefer: true,
 })
 @RegisterChatInputCommand((builder, command) =>
@@ -30,32 +22,18 @@ import {
 		),
 )
 export default class extends SteveCommand {
-	public override async slashRun(
-		interaction: ChatInputCommandInteraction,
-		t: SteveT,
-	) {
+	public override async slashRun(interaction: ChatInputCommandInteraction, t: SteveT) {
 		if (!interaction.inCachedGuild()) {
-			return interaction.editReply(
-				t(LanguageKeys.General.Errors.NotInCachedGuild),
-			);
+			return interaction.editReply(t(LanguageKeys.General.Errors.NotInCachedGuild));
 		}
 
 		const name = interaction.options.getString("name", true);
-		const snippet = await this.container.settings.snippets.getSnippet(
-			interaction.guildId,
-			name,
-		);
+		const snippet = await this.container.settings.snippets.getSnippet(interaction.guildId, name);
 
-		if (!snippet) {
-			return interaction.editReply(
-				t(LanguageKeys.Commands.Snippets.ErrorNotFound, { name }),
-			);
-		}
+		if (!snippet) return interaction.editReply(t(LanguageKeys.Commands.Snippets.ErrorNotFound, { name }));
 
 		return interaction.editReply(
-			snippet.embed
-				? { embeds: [new EmbedBuilder().setDescription(snippet.content)] }
-				: snippet.content,
+			snippet.embed ? { embeds: [new EmbedBuilder().setDescription(snippet.content)] } : snippet.content,
 		);
 	}
 }
