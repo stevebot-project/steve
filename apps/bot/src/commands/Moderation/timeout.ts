@@ -2,7 +2,7 @@ import { LanguageKeys } from "#lib/i18n/index";
 import { GuildSlashCommandInteraction, SteveCommand, SteveCommandOptions } from "#lib/structures/commands/SteveCommand";
 import { SteveT } from "#utils/i18n";
 import { ApplyOptions, RegisterChatInputCommand } from "@sapphire/decorators";
-import { Duration, DurationFormatter } from "@sapphire/duration";
+import { DurationFormatter } from "@sapphire/duration";
 import { Time } from "@sapphire/timestamp";
 import { InteractionContextType, PermissionFlagsBits } from "discord.js";
 
@@ -40,7 +40,7 @@ export default class extends SteveCommand {
 				t(LanguageKeys.Commands.Moderation.ErrorNotModeratable, { member: target.user.username }),
 			);
 
-		const duration = this.parseDuration(interaction.options.getString("duration")!);
+		const duration = this.container.utilities.time.parseDuration(interaction.options.getString("duration")!);
 		if (!duration) {
 			return interaction.editReply(
 				t(LanguageKeys.Commands.Moderation.ErrorInvalidDuration, { input: interaction.options.getString("duration")! }),
@@ -67,13 +67,5 @@ export default class extends SteveCommand {
 				duration: new DurationFormatter().format(duration, 2),
 			}),
 		);
-	}
-
-	private parseDuration(input: string) {
-		try {
-			return new Duration(input).offset;
-		} catch {
-			return null;
-		}
 	}
 }

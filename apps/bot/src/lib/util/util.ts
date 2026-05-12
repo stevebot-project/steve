@@ -1,8 +1,5 @@
 import type { ApplicationCommandRegistry } from "@sapphire/framework";
-import { Timestamp } from "@sapphire/timestamp";
 import { pickRandom } from "@sapphire/utilities";
-
-export const defaultDateFormat = new Timestamp("YYYY MMM D");
 
 export function registerBasicCommand(registry: ApplicationCommandRegistry, name: string, description: string) {
 	registry.registerChatInputCommand((builder) => builder.setName(name).setDescription(description));

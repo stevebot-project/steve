@@ -11,8 +11,8 @@
     "dev:clear": "rm -rf dist && tsc -p . && node dist/src/Steve.js",
     "lint": "eslint src --ext .ts",
     "start": "node dist/src/Steve.js",
-		"test": "vitest run",
-		"test:watch": "vitest"
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "repository": {
     "type": "git",
@@ -38,6 +38,7 @@
     "@sapphire/plugin-i18next": "^7.1.2",
     "@sapphire/plugin-logger": "^4.0.2",
     "@sapphire/plugin-subcommands": "^7.0.1",
+    "@sapphire/plugin-utilities-store": "^2.0.3",
     "@sapphire/stopwatch": "^1.5.2",
     "@sapphire/timestamp": "^1.0.3",
     "@sapphire/utilities": "^3.15.3",
