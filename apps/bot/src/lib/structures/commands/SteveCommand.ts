@@ -36,7 +36,9 @@ export abstract class SteveCommand extends Command {
 		const t = await this.fetchSteveT(interaction);
 
 		if (this.guildOnly && !interaction.inCachedGuild()) {
-			return interaction.editReply(t(LanguageKeys.General.Errors.NotInCachedGuild));
+			return this.shouldDefer
+				? interaction.editReply(t(LanguageKeys.General.Errors.NotInCachedGuild))
+				: interaction.reply(t(LanguageKeys.General.Errors.NotInCachedGuild));
 		}
 
 		return this.slashRun(interaction, t);
