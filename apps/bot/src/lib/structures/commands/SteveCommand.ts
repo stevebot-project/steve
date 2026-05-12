@@ -1,14 +1,32 @@
+import { LanguageKeys } from "#lib/i18n/index";
 import { SteveT, useT } from "#utils/i18n";
 import { Args, Command, CommandOptions } from "@sapphire/framework";
 import { fetchT, Target } from "@sapphire/plugin-i18next";
-import { ChatInputCommandInteraction, ContextMenuCommandInteraction, Message } from "discord.js";
+import {
+	ChatInputCommandInteraction,
+	ContextMenuCommandInteraction,
+	Message,
+	MessageContextMenuCommandInteraction,
+	UserContextMenuCommandInteraction,
+} from "discord.js";
+
+export interface SteveCommandOptions extends CommandOptions {
+	guildOnly?: boolean;
+	shouldDefer?: boolean;
+}
+
+export type GuildSlashCommandInteraction = ChatInputCommandInteraction<"cached">;
+export type GuildUserMenuCommandInteraction = UserContextMenuCommandInteraction<"cached">;
+export type GuildMessageMenuCommandInteraction = MessageContextMenuCommandInteraction<"cached">;
 
 export abstract class SteveCommand extends Command {
+	public readonly guildOnly: boolean;
 	public readonly shouldDefer: boolean;
 
 	public constructor(context: Command.LoaderContext, options: SteveCommandOptions) {
 		super(context, options);
 
+		this.guildOnly = options.guildOnly ?? false;
 		this.shouldDefer = options.shouldDefer ?? false;
 	}
 
@@ -17,11 +35,19 @@ export abstract class SteveCommand extends Command {
 
 		const t = await this.fetchSteveT(interaction);
 
+		if (this.guildOnly && !interaction.inCachedGuild()) {
+			return interaction.editReply(t(LanguageKeys.General.Errors.NotInCachedGuild));
+		}
+
 		return this.slashRun(interaction, t);
 	}
 
 	public override async contextMenuRun(interaction: ContextMenuCommandInteraction) {
 		const t = await this.fetchSteveT(interaction);
+
+		if (this.guildOnly && !interaction.inCachedGuild()) {
+			return interaction.reply(t(LanguageKeys.General.Errors.NotInCachedGuild));
+		}
 
 		return this.menuRun(interaction, t);
 	}
@@ -50,8 +76,4 @@ export abstract class SteveCommand extends Command {
 	private async fetchSteveT(target: Target) {
 		return useT(await fetchT(target));
 	}
-}
-
-export interface SteveCommandOptions extends CommandOptions {
-	shouldDefer?: boolean;
 }

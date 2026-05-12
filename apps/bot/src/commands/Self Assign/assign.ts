@@ -1,12 +1,13 @@
 import { LanguageKeys } from "#lib/i18n/index";
-import { SteveCommand, SteveCommandOptions } from "#lib/structures/commands/SteveCommand";
+import { GuildSlashCommandInteraction, SteveCommand, SteveCommandOptions } from "#lib/structures/commands/SteveCommand";
 import { SteveGuild } from "#lib/structures/SteveGuild";
 import { SteveT } from "#utils/i18n";
 import { ApplyOptions, RegisterChatInputCommand } from "@sapphire/decorators";
-import { ChatInputCommandInteraction, InteractionContextType } from "discord.js";
+import { InteractionContextType } from "discord.js";
 
 @ApplyOptions<SteveCommandOptions>({
 	description: "Assign roles to yourself using Steve",
+	guildOnly: true,
 	shouldDefer: true,
 })
 @RegisterChatInputCommand((builder, command) =>
@@ -19,12 +20,8 @@ import { ChatInputCommandInteraction, InteractionContextType } from "discord.js"
 		),
 )
 export default class extends SteveCommand {
-	// TODO: i18n, role being above bot
-	public override async slashRun(interaction: ChatInputCommandInteraction, t: SteveT) {
-		if (!interaction.inCachedGuild()) {
-			return interaction.editReply(t(LanguageKeys.General.Errors.NotInCachedGuild));
-		}
-
+	// TODO: role being above bot
+	public override async slashRun(interaction: GuildSlashCommandInteraction, t: SteveT) {
 		const roleName = interaction.options.getString("role", true);
 		const role = interaction.guild.roles.cache.find(
 			(r) => r.name.toLowerCase() === roleName.toLowerCase() || r.id === roleName,

@@ -1,19 +1,19 @@
 import { LanguageKeys } from "#lib/i18n/index";
-import { SteveCommand, SteveCommandOptions } from "#lib/structures/commands/SteveCommand";
+import {
+	GuildSlashCommandInteraction,
+	GuildUserMenuCommandInteraction,
+	SteveCommand,
+	SteveCommandOptions,
+} from "#lib/structures/commands/SteveCommand";
 import { SteveT } from "#utils/i18n";
 import { defaultDateFormat } from "#utils/util";
 import { ApplyOptions, RegisterChatInputCommand, RegisterUserContextMenuCommand } from "@sapphire/decorators";
 import { DurationFormatter } from "@sapphire/duration";
-import {
-	EmbedBuilder,
-	GuildMember,
-	InteractionContextType,
-	UserContextMenuCommandInteraction,
-	type ChatInputCommandInteraction,
-} from "discord.js";
+import { EmbedBuilder, GuildMember, InteractionContextType } from "discord.js";
 
 @ApplyOptions<SteveCommandOptions>({
 	description: "Get basic information about a member of the server.",
+	guildOnly: true,
 	requiredClientPermissions: ["EmbedLinks"],
 	shouldDefer: true,
 })
@@ -30,11 +30,7 @@ import {
 	builder.setName(command.name).setContexts(InteractionContextType.Guild),
 )
 export default class extends SteveCommand {
-	public override async slashRun(interaction: ChatInputCommandInteraction, t: SteveT) {
-		if (!interaction.inCachedGuild()) {
-			return interaction.editReply(t(LanguageKeys.General.Errors.NotInCachedGuild));
-		}
-
+	public override async slashRun(interaction: GuildSlashCommandInteraction, t: SteveT) {
 		const member = interaction.options.getMember("user");
 
 		const embed = this.buildEmbed(t, member!);
@@ -42,11 +38,7 @@ export default class extends SteveCommand {
 		return interaction.editReply({ embeds: [embed] });
 	}
 
-	public override async menuRun(interaction: UserContextMenuCommandInteraction, t: SteveT) {
-		if (!interaction.inCachedGuild()) {
-			return interaction.editReply(t(LanguageKeys.General.Errors.NotInCachedGuild));
-		}
-
+	public override async menuRun(interaction: GuildUserMenuCommandInteraction, t: SteveT) {
 		const embed = this.buildEmbed(t, interaction.targetMember!);
 
 		return interaction.editReply({ embeds: [embed] });

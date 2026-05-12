@@ -1,11 +1,12 @@
 import { LanguageKeys } from "#lib/i18n/index";
-import { SteveCommand, SteveCommandOptions } from "#lib/structures/commands/SteveCommand";
+import { GuildSlashCommandInteraction, SteveCommand, SteveCommandOptions } from "#lib/structures/commands/SteveCommand";
 import { SteveT } from "#utils/i18n";
 import { ApplyOptions, RegisterChatInputCommand } from "@sapphire/decorators";
-import { EmbedBuilder, InteractionContextType, type ChatInputCommandInteraction } from "discord.js";
+import { EmbedBuilder, InteractionContextType } from "discord.js";
 
 @ApplyOptions<SteveCommandOptions>({
 	description: "Snippets are small pieces of information that can be quickly accessed.",
+	guildOnly: true,
 	shouldDefer: true,
 })
 @RegisterChatInputCommand((builder, command) =>
@@ -22,11 +23,7 @@ import { EmbedBuilder, InteractionContextType, type ChatInputCommandInteraction 
 		),
 )
 export default class extends SteveCommand {
-	public override async slashRun(interaction: ChatInputCommandInteraction, t: SteveT) {
-		if (!interaction.inCachedGuild()) {
-			return interaction.editReply(t(LanguageKeys.General.Errors.NotInCachedGuild));
-		}
-
+	public override async slashRun(interaction: GuildSlashCommandInteraction, t: SteveT) {
 		const name = interaction.options.getString("name", true);
 		const snippet = await this.container.settings.snippets.getSnippet(interaction.guildId, name);
 

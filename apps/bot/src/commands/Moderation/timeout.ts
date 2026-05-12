@@ -1,15 +1,16 @@
 import { LanguageKeys } from "#lib/i18n/index";
-import { SteveCommand, SteveCommandOptions } from "#lib/structures/commands/SteveCommand";
+import { GuildSlashCommandInteraction, SteveCommand, SteveCommandOptions } from "#lib/structures/commands/SteveCommand";
 import { ModerationErrors } from "#lib/structures/moderation/ModerationManager";
 import { SteveGuild } from "#lib/structures/SteveGuild";
 import { SteveT } from "#utils/i18n";
 import { ApplyOptions, RegisterChatInputCommand } from "@sapphire/decorators";
 import { Duration, DurationFormatter } from "@sapphire/duration";
 import { Time } from "@sapphire/timestamp";
-import { ChatInputCommandInteraction, InteractionContextType, PermissionFlagsBits } from "discord.js";
+import { InteractionContextType, PermissionFlagsBits } from "discord.js";
 
 @ApplyOptions<SteveCommandOptions>({
 	description: "Timeout a specified member. A duration for the timeout, as well as a reason, can be provided.",
+	guildOnly: true,
 	shouldDefer: true,
 })
 @RegisterChatInputCommand((builder, command) =>
@@ -32,10 +33,7 @@ import { ChatInputCommandInteraction, InteractionContextType, PermissionFlagsBit
 		),
 )
 export default class extends SteveCommand {
-	public override async slashRun(interaction: ChatInputCommandInteraction, t: SteveT) {
-		if (!interaction.inCachedGuild()) {
-			return interaction.editReply(t(LanguageKeys.General.Errors.NotInCachedGuild));
-		}
+	public override async slashRun(interaction: GuildSlashCommandInteraction, t: SteveT) {
 		const guild = await SteveGuild.get(interaction.guild);
 
 		const target = interaction.options.getMember("target");
