@@ -1,7 +1,5 @@
 import { LanguageKeys } from "#lib/i18n/index";
 import { GuildSlashCommandInteraction, SteveCommand, SteveCommandOptions } from "#lib/structures/commands/SteveCommand";
-import { ModerationErrors } from "#lib/structures/moderation/ModerationManager";
-import { SteveGuild } from "#lib/structures/SteveGuild";
 import { SteveT } from "#utils/i18n";
 import { ApplyOptions, RegisterChatInputCommand } from "@sapphire/decorators";
 import { Duration, DurationFormatter } from "@sapphire/duration";
@@ -34,10 +32,13 @@ import { InteractionContextType, PermissionFlagsBits } from "discord.js";
 )
 export default class extends SteveCommand {
 	public override async slashRun(interaction: GuildSlashCommandInteraction, t: SteveT) {
-		const guild = await SteveGuild.get(interaction.guild);
-
 		const target = interaction.options.getMember("target");
 		if (!target) return interaction.editReply(t(LanguageKeys.Commands.Moderation.ErrorUnknownMember));
+
+		if (!target.moderatable)
+			return interaction.editReply(
+				t(LanguageKeys.Commands.Moderation.ErrorNotModeratable, { member: target.user.username }),
+			);
 
 		const duration = this.parseDuration(interaction.options.getString("duration")!);
 		if (!duration) {
@@ -50,31 +51,22 @@ export default class extends SteveCommand {
 			return interaction.editReply(t(LanguageKeys.Commands.Moderation.TimeoutErrorMaxDuration));
 		}
 
-		// GuildMember.timeout (called in guild.moderation.timeout) expects string | undefined for reason
 		const reason = interaction.options.getString("reason") ?? undefined;
 
-		const result = await guild.moderation.timeout(target, { duration, reason });
-
-		if (result.success) {
-			const formatter = new DurationFormatter();
+		try {
+			await target.timeout(duration, reason);
+		} catch {
 			return interaction.editReply(
-				t(LanguageKeys.Commands.Moderation.TimeoutSuccess, {
-					member: target.user.username,
-					duration: formatter.format(duration, 2),
-				}),
+				t(LanguageKeys.Commands.Moderation.ErrorGenericFail, { member: target.user.username }),
 			);
 		}
 
-		switch (result.error) {
-			case ModerationErrors.GENERIC_FAIL:
-				return interaction.editReply(
-					t(LanguageKeys.Commands.Moderation.ErrorGenericFail, { member: target.user.username }),
-				);
-			case ModerationErrors.NOT_MODERATABLE:
-				return interaction.editReply(
-					t(LanguageKeys.Commands.Moderation.ErrorNotModeratable, { member: target.user.username }),
-				);
-		}
+		return interaction.editReply(
+			t(LanguageKeys.Commands.Moderation.TimeoutSuccess, {
+				member: target.user.username,
+				duration: new DurationFormatter().format(duration, 2),
+			}),
+		);
 	}
 
 	private parseDuration(input: string) {
