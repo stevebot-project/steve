@@ -3,6 +3,7 @@
 	"whois_embed_display_name": "Display Name",
 	"whois_embed_footer": "Member ID: {{id}}",
 	"whois_embed_joined_guild": "Joined Server",
+	"whois_error_member_not_found": "I couldn't find that member in this server.",
 	"whois_roles": "Roles",
 	"whois_date": "{{duration}} ago ({{date}})"
 }

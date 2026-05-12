@@ -32,16 +32,19 @@ import { EmbedBuilder, GuildMember, InteractionContextType } from "discord.js";
 export default class extends SteveCommand {
 	public override async slashRun(interaction: GuildSlashCommandInteraction, t: SteveT) {
 		const member = interaction.options.getMember("user");
+		if (!member) return interaction.editReply(t(LanguageKeys.Commands.Info.WhoisErrorMemberNotFound));
 
-		const embed = this.buildEmbed(t, member!);
+		const embed = this.buildEmbed(t, member);
 
 		return interaction.editReply({ embeds: [embed] });
 	}
 
 	public override async menuRun(interaction: GuildUserMenuCommandInteraction, t: SteveT) {
-		const embed = this.buildEmbed(t, interaction.targetMember!);
+		if (!interaction.targetMember) return interaction.reply(t(LanguageKeys.Commands.Info.WhoisErrorMemberNotFound));
 
-		return interaction.editReply({ embeds: [embed] });
+		const embed = this.buildEmbed(t, interaction.targetMember);
+
+		return interaction.reply({ embeds: [embed] });
 	}
 
 	private buildEmbed(t: SteveT, member: GuildMember) {
