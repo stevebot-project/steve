@@ -25,6 +25,7 @@ describe("GuildSettings", () => {
 	const mockGuildResult: Guild = {
 		id: mockSnowflake,
 		channelMemberlog: null,
+		channelReminder: null,
 		channelServerlog: null,
 		deletePinMessages: false,
 		logEventChannelCreate: true,

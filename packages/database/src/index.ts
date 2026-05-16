@@ -1,11 +1,10 @@
 // Re-export the Prisma client and all generated types
 export { PrismaClient } from "./generated/prisma/index.js";
 export type {
-  Feedback,
-  Guild,
-  Snippet,
-  User,
-  Prisma,
+	Feedback,
+	Guild, Prisma, Reminder,
+	Snippet,
+	User
 } from "./generated/prisma/index.js";
 
 // Export a singleton client for use in apps

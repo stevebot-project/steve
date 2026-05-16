@@ -17,13 +17,17 @@ export class AutocompleteHandler extends InteractionHandler {
 	}
 
 	public override async parse(interaction: AutocompleteInteraction) {
-		if (!interaction.inCachedGuild()) return this.none();
-
 		if (interaction.commandName === "assign" || interaction.commandName === "assign-manage") {
+			if (!interaction.inCachedGuild()) return this.none();
 			return this.assignRoleNameAutocomplete(interaction);
 		}
 
+		if (interaction.commandName === "remind") {
+			return this.reminderContentAutocomplete(interaction);
+		}
+
 		if (interaction.commandName === "snippet" || interaction.commandName === "snippets-manage") {
+			if (!interaction.inCachedGuild()) return this.none();
 			return this.snippetNameAutocomplete(interaction);
 		}
 
@@ -42,6 +46,19 @@ export class AutocompleteHandler extends InteractionHandler {
 			.slice(0, 25);
 
 		return response ? this.some(response) : this.none();
+	}
+
+	private async reminderContentAutocomplete(interaction: AutocompleteInteraction) {
+		const query = interaction.options.getFocused();
+
+		const reminders = query
+			? await this.container.settings.users.searchRemindersByContent(interaction.user.id, query)
+			: await this.container.settings.users.getReminders(interaction.user.id);
+
+		// TODO: reminders with the same name always end up selecting the same cuid
+		const response = reminders.map((reminder) => ({ name: reminder.content, value: reminder.id })).slice(0, 25);
+
+		return this.some(response);
 	}
 
 	private async snippetNameAutocomplete(interaction: AutocompleteInteraction<"cached">) {

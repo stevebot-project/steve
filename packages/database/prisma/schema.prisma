@@ -19,6 +19,7 @@ model Feedback {
 model Guild {
   id                        String    @id @db.VarChar(19)
   channelMemberlog          String?   @map("channels.memberlog") @db.VarChar(19)
+  channelReminder           String?   @map("channels.reminder") @db.VarChar(19)
   channelServerlog          String?   @map("channels.serverlog") @db.VarChar(19)
   deletePinMessages         Boolean   @default(false)
   logEventChannelCreate     Boolean   @default(true) @map("logEvents.channelCreate")
@@ -47,6 +48,17 @@ model Guild {
   @@map("guilds")
 }
 
+model Reminder {
+  id        String   @id @default(cuid())
+  content   String
+  channelId String   @db.VarChar(19)
+  sendAt    DateTime
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String   @db.VarChar(19)
+
+  @@map("reminders")
+}
+
 model Snippet {
   content String  @db.VarChar(1900)
   embed   Boolean @default(false)
@@ -59,8 +71,9 @@ model Snippet {
 }
 
 model User {
-  id         String  @id @db.VarChar(19)
-  embedColor String? @db.VarChar(6)
+  id         String     @id @db.VarChar(19)
+  embedColor String?    @db.VarChar(6)
+  reminders  Reminder[]
 
   @@map("users")
 }
