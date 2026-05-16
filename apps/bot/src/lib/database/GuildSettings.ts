@@ -44,6 +44,15 @@ export default class GuildSettings {
 		});
 	}
 
+	public async getMemberlog(guildSnowflake: Snowflake) {
+		const result = await this.prisma.guild.findUnique({
+			where: { id: guildSnowflake },
+			select: { channelMemberlog: true },
+		});
+
+		return result ? result.channelMemberlog : null;
+	}
+
 	public async removeAssignableRole(guildSnowflake: Snowflake, roleSnowflake: Snowflake) {
 		const guild = await this.prisma.guild.findUnique({
 			where: { id: guildSnowflake },
@@ -56,6 +65,15 @@ export default class GuildSettings {
 			where: { id: guildSnowflake },
 			data: {
 				roleAssignable: guild.roleAssignable.filter((r) => r !== roleSnowflake),
+			},
+		});
+	}
+
+	public async setMemberlogChannel(guildSnowflake: Snowflake, channelSnowflake: Snowflake) {
+		return this.prisma.guild.update({
+			where: { id: guildSnowflake },
+			data: {
+				channelMemberlog: channelSnowflake,
 			},
 		});
 	}

@@ -9,3 +9,5 @@ export const FeedbackModalTitle = T("commands/system:feedback_modal_title");
 export const FeedbackSubmissionFailure = T("commands/system:feedback_submission_failure");
 export const FeedbackSubmissionSuccess = T("commands/system:feedback_submission_success");
 export const PingSuccess = FT<{ latency: number }>("commands/system:ping_success");
+export const SetMemberlogAlreadyExists = FT<{ mention: string }>("commands/system:set_memberlog_already_exists");
+export const SetMemberlogSuccess = FT<{ mention: string }>("commands/system:set_memberlog_success");
