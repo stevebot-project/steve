@@ -1,0 +1,6 @@
+{
+	"embed_display_name_field": "New Display Name",
+	"embed_member_id_footer": "Member ID: {{id}}",
+	"embed_title_role_added": "Added to the {{role}} role by {{executor}}",
+	"embed_title_role_removed": "Removed from the {{role}} role by {{executor}}"
+}
