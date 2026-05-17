@@ -2,8 +2,11 @@
 	"error_generic_fail": "Failed to timeout {{member}}.",
 	"error_guild_only": "This moderation command can only be used within a server.",
 	"error_invalid_duration": "*{{input}}* is not a valid duration.",
+	"error_not_manageable": "I can't do anything to {{member}}. Sucks to be me (and you, I guess).",
 	"error_not_moderatable": "I cannot perform moderation actions on {{member}}. Sad.",
 	"error_unknown_member": "That user is not a member of this server.",
+	"nickname_reset": "{{username}}'s nickname has been reset.",
+	"nickname_success": "{{username}}'s nickname has been set to *{{nickname}}*.",
 	"timeout_error_max_duration": "The maximum duration for a timeout is 28 days.",
 	"timeout_success": "{{member}} has been given a timeout for {{duration}}."
 }
