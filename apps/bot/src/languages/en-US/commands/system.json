@@ -9,5 +9,7 @@
 	"feedback_submission_success": "Thanks for your feedback!",
 	"ping_success": "Pong! Your ping is {{latency}}ms.",
 	"set_memberlog_already_exists": "{{mention}} is already set as this server's memberlog.",
-	"set_memberlog_success": "{{mention}} is now set as the memberlog."
+	"set_memberlog_success": "{{mention}} is now set as the memberlog.",
+	"set_serverlog_already_exists": "{{mention}} is already set as this server's serverlog.",
+	"set_serverlog_success": "{{mention}} is now set as the serverlog."
 }

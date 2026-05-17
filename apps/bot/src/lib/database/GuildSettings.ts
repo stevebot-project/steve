@@ -53,6 +53,15 @@ export default class GuildSettings {
 		return result ? result.channelMemberlog : null;
 	}
 
+	public async getServerlog(guildSnowflake: Snowflake) {
+		const result = await this.prisma.guild.findUnique({
+			where: { id: guildSnowflake },
+			select: { channelServerlog: true },
+		});
+
+		return result ? result.channelServerlog : null;
+	}
+
 	public async removeAssignableRole(guildSnowflake: Snowflake, roleSnowflake: Snowflake) {
 		const guild = await this.prisma.guild.findUnique({
 			where: { id: guildSnowflake },
@@ -74,6 +83,15 @@ export default class GuildSettings {
 			where: { id: guildSnowflake },
 			data: {
 				channelMemberlog: channelSnowflake,
+			},
+		});
+	}
+
+	public async setServerlogChannel(guildSnowflake: Snowflake, channelSnowflake: Snowflake) {
+		return this.prisma.guild.update({
+			where: { id: guildSnowflake },
+			data: {
+				channelServerlog: channelSnowflake,
 			},
 		});
 	}
