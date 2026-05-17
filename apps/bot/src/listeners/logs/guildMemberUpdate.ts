@@ -6,14 +6,9 @@ import { AuditLogEvent, EmbedBuilder, Guild, GuildMember, TextChannel } from "di
 
 export default class extends Listener {
 	public async run(oldMember: GuildMember, newMember: GuildMember) {
-		const guildSettings = await this.container.settings.guilds.getGuild(newMember.guild.id);
-		if (!guildSettings?.logEventGuildMemberUpdate) return;
-
-		const memberlogId = guildSettings.channelMemberlog;
-		if (!memberlogId) return;
-
-		const memberlog = newMember.guild.channels.cache.get(memberlogId);
-		if (!memberlog || !(memberlog instanceof TextChannel)) return;
+		const { fetchMemberlog } = this.container.utilities.logs;
+		const memberlog = await fetchMemberlog(newMember.guild);
+		if (!memberlog) return;
 
 		const t = useT(await fetchT(newMember.guild));
 
@@ -28,11 +23,10 @@ export default class extends Listener {
 
 	private async getRoleChangeInfo(guild: Guild): Promise<RoleChangeInfo[]> {
 		const changes: RoleChangeInfo[] = [];
+		const { fetchMostRecentAuditLog, getExecutor } = this.container.utilities.logs;
 
-		const logs = await guild.fetchAuditLogs({ limit: 1, type: AuditLogEvent.MemberRoleUpdate });
-		const entry = logs.entries.first()!;
-
-		const executor = entry.executor ? (entry.executor.username ?? "Unknown") : "Discord";
+		const entry = await fetchMostRecentAuditLog(guild, AuditLogEvent.MemberRoleUpdate);
+		const executor = getExecutor(entry);
 
 		for (const change of entry.changes) {
 			if (change.key !== "$add" && change.key !== "$remove") continue;
