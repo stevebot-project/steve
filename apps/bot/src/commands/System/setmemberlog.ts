@@ -2,7 +2,7 @@ import { LanguageKeys } from "#lib/i18n/index";
 import { GuildSlashCommandInteraction, SteveCommand, SteveCommandOptions } from "#lib/structures/commands/SteveCommand";
 import { SteveT } from "#utils/i18n";
 import { ApplyOptions, RegisterChatInputCommand } from "@sapphire/decorators";
-import { channelMention, ChannelType, PermissionFlagsBits } from "discord.js";
+import { channelMention, ChannelType, InteractionContextType, PermissionFlagsBits } from "discord.js";
 
 @ApplyOptions<SteveCommandOptions>({
 	description: "Set or unset this server's memberlog.",
@@ -13,6 +13,7 @@ import { channelMention, ChannelType, PermissionFlagsBits } from "discord.js";
 	builder
 		.setName(command.name)
 		.setDescription(command.description)
+		.setContexts(InteractionContextType.Guild)
 		.setDefaultMemberPermissions(PermissionFlagsBits.ManageGuild)
 		.addChannelOption((option) =>
 			option
