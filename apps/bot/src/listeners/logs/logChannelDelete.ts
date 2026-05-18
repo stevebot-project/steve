@@ -3,13 +3,13 @@ import { useT } from "#utils/i18n";
 import { ApplyOptions } from "@sapphire/decorators";
 import { Listener, ListenerOptions } from "@sapphire/framework";
 import { fetchT } from "@sapphire/plugin-i18next";
-import { AuditLogEvent, EmbedBuilder, GuildChannel } from "discord.js";
+import { AuditLogEvent, DMChannel, EmbedBuilder, NonThreadGuildBasedChannel } from "discord.js";
 
-@ApplyOptions<ListenerOptions>({
-	event: "channelDelete",
-})
+@ApplyOptions<ListenerOptions>({ event: "channelDelete" })
 export default class extends Listener {
-	public async run(channel: GuildChannel) {
+	public async run(channel: DMChannel | NonThreadGuildBasedChannel) {
+		if (channel instanceof DMChannel) return;
+
 		const { fetchExecutor, fetchServerlog, parseChannelType } = this.container.utilities.logs;
 
 		const serverlog = await fetchServerlog(channel.guild);

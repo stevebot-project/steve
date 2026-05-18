@@ -3,13 +3,11 @@ import { SteveT, useT } from "#utils/i18n";
 import { ApplyOptions } from "@sapphire/decorators";
 import { Listener, ListenerOptions } from "@sapphire/framework";
 import { fetchT } from "@sapphire/plugin-i18next";
-import { AuditLogEvent, EmbedBuilder, Guild, GuildMember, TextChannel } from "discord.js";
+import { AuditLogEvent, EmbedBuilder, Guild, GuildMember, PartialGuildMember, TextChannel } from "discord.js";
 
-@ApplyOptions<ListenerOptions>({
-	event: "guildMemberUpdate",
-})
+@ApplyOptions<ListenerOptions>({ event: "guildMemberUpdate" })
 export default class extends Listener {
-	public async run(oldMember: GuildMember, newMember: GuildMember) {
+	public async run(oldMember: GuildMember | PartialGuildMember, newMember: GuildMember) {
 		const { fetchMemberlog } = this.container.utilities.logs;
 		const memberlog = await fetchMemberlog(newMember.guild);
 		if (!memberlog) return;
