@@ -1,9 +1,13 @@
 import { LanguageKeys } from "#lib/i18n/index";
 import { SteveT, useT } from "#utils/i18n";
-import { Listener } from "@sapphire/framework";
+import { ApplyOptions } from "@sapphire/decorators";
+import { Listener, ListenerOptions } from "@sapphire/framework";
 import { fetchT } from "@sapphire/plugin-i18next";
 import { AuditLogEvent, EmbedBuilder, Guild, GuildMember, TextChannel } from "discord.js";
 
+@ApplyOptions<ListenerOptions>({
+	event: "guildMemberUpdate",
+})
 export default class extends Listener {
 	public async run(oldMember: GuildMember, newMember: GuildMember) {
 		const { fetchMemberlog } = this.container.utilities.logs;
