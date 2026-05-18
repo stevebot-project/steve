@@ -23,10 +23,10 @@ export default class extends Listener {
 
 	private async getRoleChangeInfo(guild: Guild): Promise<RoleChangeInfo[]> {
 		const changes: RoleChangeInfo[] = [];
-		const { fetchMostRecentAuditLog, getExecutor } = this.container.utilities.logs;
+		const { fetchMostRecentAuditLog, getExecutorFromEntry } = this.container.utilities.logs;
 
 		const entry = await fetchMostRecentAuditLog(guild, AuditLogEvent.MemberRoleUpdate);
-		const executor = getExecutor(entry);
+		const executor = await getExecutorFromEntry(entry);
 
 		for (const change of entry.changes) {
 			if (change.key !== "$add" && change.key !== "$remove") continue;
@@ -34,7 +34,7 @@ export default class extends Listener {
 
 			for (const roleData of change.new) {
 				changes.push({
-					executor,
+					executor: executor.name,
 					roleName: roleData.name,
 					type: change.key,
 				});

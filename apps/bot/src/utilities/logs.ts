@@ -3,10 +3,9 @@ import { AuditLogEvent, Guild, GuildAuditLogsEntry, TextChannel } from "discord.
 
 export class GuildLoggingUtility extends Utility {
 	public fetchExecutor = async (guild: Guild, type: AuditLogEvent) => {
-		const logs = await guild.fetchAuditLogs({ limit: 1, type });
-		const entry = logs.entries.first()!;
+		const entry = await this.fetchMostRecentAuditLog(guild, type);
 
-		return entry.executor ? (entry.executor.username ?? "Unknown") : "Discord";
+		return this.getExecutorFromEntry(entry);
 	};
 
 	public fetchMemberlog = async (guild: Guild) => {
@@ -27,9 +26,23 @@ export class GuildLoggingUtility extends Utility {
 		return logs.entries.first()!;
 	};
 
-	public getExecutor = (entry: GuildAuditLogsEntry) => {
-		return entry.executor ? (entry.executor.username ?? "Unknown") : "Discord";
+	public getExecutorFromEntry = async (entry: GuildAuditLogsEntry) => {
+		const executorUser = entry.executor
+			? entry.executor.partial
+				? await entry.executor.fetch()
+				: entry.executor
+			: null;
+		const executor: AuditLogExecutor = executorUser
+			? { name: executorUser.username, avatar: executorUser.displayAvatarURL() }
+			: { name: "Discord", avatar: "https://cdn.discordapp.com/embed/avatars/0.png" };
+
+		return executor;
 	};
+}
+
+interface AuditLogExecutor {
+	name: string;
+	avatar: string;
 }
 
 declare module "@sapphire/plugin-utilities-store" {
