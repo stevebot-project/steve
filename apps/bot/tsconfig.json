@@ -11,7 +11,8 @@
             "#lib/*": ["./src/lib/*.ts"],
             "#root/*": ["./*.ts"]
         },
-        "rootDir": "."
+        "rootDir": ".",
+				"skipLibCheck": true
     },
     "include": ["src", "src/**/*.json", "tests"]
 }
