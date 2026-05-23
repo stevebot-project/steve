@@ -1,4 +1,5 @@
 import { LanguageKeys } from "#lib/i18n/index";
+import { GuildLogColors } from "#lib/types/Enums";
 import { useT } from "#utils/i18n";
 import { ApplyOptions } from "@sapphire/decorators";
 import { Listener, ListenerOptions } from "@sapphire/framework";
@@ -29,7 +30,7 @@ export default class extends Listener {
 
 		const embed = new EmbedBuilder()
 			.setAuthor({ name: executor.name, iconURL: executor.avatar })
-			.setColor(0xb942f4)
+			.setColor(GuildLogColors.PURPLE)
 			.setFooter({ text: t(LanguageKeys.Logs.Channel.EmbedFooter, { id: channel.id }) })
 			.setTimestamp()
 			.setTitle(title);

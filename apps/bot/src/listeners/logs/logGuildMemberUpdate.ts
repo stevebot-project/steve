@@ -1,4 +1,5 @@
 import { LanguageKeys } from "#lib/i18n/index";
+import { GuildLogColors } from "#lib/types/Enums";
 import { SteveT, useT } from "#utils/i18n";
 import { ApplyOptions } from "@sapphire/decorators";
 import { Listener, ListenerOptions } from "@sapphire/framework";
@@ -50,7 +51,7 @@ export default class extends Listener {
 		const embed = new EmbedBuilder()
 			.addFields({ name: t(LanguageKeys.Logs.GuildMember.EmbedDisplayNameField), value: newMember.displayName })
 			.setAuthor({ name: newMember.user.username, iconURL: newMember.displayAvatarURL() })
-			.setColor(0x61e3f9)
+			.setColor(GuildLogColors.TURQUOISE)
 			.setFooter({ text: t(LanguageKeys.Logs.GuildMember.EmbedMemberIDFooter, { id: newMember.id }) })
 			.setTimestamp();
 
@@ -64,7 +65,7 @@ export default class extends Listener {
 		for (const change of changes) {
 			const embed = new EmbedBuilder()
 				.setAuthor({ name: member.user.username, iconURL: member.displayAvatarURL() })
-				.setColor(0x61e3f9)
+				.setColor(GuildLogColors.TURQUOISE)
 				.setFooter({ text: t(LanguageKeys.Logs.GuildMember.EmbedMemberIDFooter, { id: member.id }) })
 				.setTimestamp()
 				.setTitle(
