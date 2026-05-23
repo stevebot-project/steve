@@ -16,7 +16,7 @@
   },
   "devDependencies": {
     "turbo": "^2.3.3",
-    "typescript": "^5.4.3"
+    "typescript": "^5.9.3"
   },
   "engines": {
     "node": ">=20.0.0"
