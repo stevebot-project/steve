@@ -7,7 +7,6 @@ import {
 } from "#lib/structures/commands/SteveCommand";
 import { SteveT } from "#utils/i18n";
 import { ApplyOptions, RegisterChatInputCommand, RegisterUserContextMenuCommand } from "@sapphire/decorators";
-import { DurationFormatter } from "@sapphire/duration";
 import { EmbedBuilder, GuildMember, InteractionContextType } from "discord.js";
 
 @ApplyOptions<SteveCommandOptions>({
@@ -47,14 +46,13 @@ export default class extends SteveCommand {
 	}
 
 	private buildEmbed(t: SteveT, member: GuildMember) {
-		const formatter = new DurationFormatter();
-		const { defaultDateFormat } = this.container.utilities.time;
+		const { defaultDateFormat, friendlyDuration } = this.container.utilities.time;
 
 		const accountCreatedDate = defaultDateFormat.display(member.user.createdTimestamp);
-		const accountCreatedDuration = formatter.format(Date.now() - member.user.createdTimestamp, 1);
+		const accountCreatedDuration = friendlyDuration(Date.now() - member.user.createdTimestamp, 1);
 
 		const joinedGuildDate = defaultDateFormat.display(member.joinedTimestamp!);
-		const joindGuildDuration = formatter.format(Date.now() - member.joinedTimestamp!, 1);
+		const joindGuildDuration = friendlyDuration(Date.now() - member.joinedTimestamp!, 1);
 
 		const embed = new EmbedBuilder()
 			.addFields(
