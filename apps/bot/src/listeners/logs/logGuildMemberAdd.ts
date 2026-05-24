@@ -21,12 +21,12 @@ export default class extends Listener {
 
 		const embed = new EmbedBuilder()
 			.addFields({
-				name: t(LanguageKeys.Logs.GuildMember.EmbedMemberAddFieldName),
-				value: t(LanguageKeys.Logs.GuildMember.EmbedMemberAddFieldValue, { duration: accountCreatedTime }),
+				name: t(LanguageKeys.Logs.GuildMember.Add.Embed.Field.Name),
+				value: t(LanguageKeys.Logs.GuildMember.Add.Embed.Field.Value, { duration: accountCreatedTime }),
 			})
 			.setAuthor({ name: member.user.username, iconURL: member.user.displayAvatarURL() })
 			.setColor(GuildLogColors.TURQUOISE)
-			.setFooter({ text: t(LanguageKeys.Logs.GuildMember.EmbedMemberIDFooter, { id: member.id }) })
+			.setFooter({ text: t(LanguageKeys.Logs.GuildMember.EmbedFooter, { id: member.id }) })
 			.setTimestamp();
 
 		return memberlog.send({ embeds: [embed] });

@@ -21,12 +21,12 @@ export default class extends Listener {
 		const executor = await fetchExecutor(channel.guild, AuditLogEvent.ChannelDelete);
 		const type = parseChannelType(channel.type, t);
 		const title = channel.parent
-			? t(LanguageKeys.Logs.Channel.DeleteEmbedTitleHasParent, {
+			? t(LanguageKeys.Logs.Channel.Delete.Embed.Title.HasParent, {
 					name: channel.name,
 					parentName: channel.parent.name,
 					type,
 				})
-			: t(LanguageKeys.Logs.Channel.DeleteEmbedTitleNoParent, { name: channel.name, type });
+			: t(LanguageKeys.Logs.Channel.Delete.Embed.Title.NoParent, { name: channel.name, type });
 
 		const embed = new EmbedBuilder()
 			.setAuthor({ name: executor.name, iconURL: executor.avatar })

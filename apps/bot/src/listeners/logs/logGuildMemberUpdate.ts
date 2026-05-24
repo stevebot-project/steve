@@ -49,10 +49,13 @@ export default class extends Listener {
 
 	private logDisplayNameChange(newMember: GuildMember, memberlog: TextChannel, t: SteveT) {
 		const embed = new EmbedBuilder()
-			.addFields({ name: t(LanguageKeys.Logs.GuildMember.EmbedDisplayNameField), value: newMember.displayName })
+			.addFields({
+				name: t(LanguageKeys.Logs.GuildMember.Update.DisplayName.Embed.Field.Name),
+				value: newMember.displayName,
+			})
 			.setAuthor({ name: newMember.user.username, iconURL: newMember.displayAvatarURL() })
 			.setColor(GuildLogColors.TURQUOISE)
-			.setFooter({ text: t(LanguageKeys.Logs.GuildMember.EmbedMemberIDFooter, { id: newMember.id }) })
+			.setFooter({ text: t(LanguageKeys.Logs.GuildMember.EmbedFooter, { id: newMember.id }) })
 			.setTimestamp();
 
 		return memberlog.send({ embeds: [embed] });
@@ -66,15 +69,15 @@ export default class extends Listener {
 			const embed = new EmbedBuilder()
 				.setAuthor({ name: member.user.username, iconURL: member.displayAvatarURL() })
 				.setColor(GuildLogColors.TURQUOISE)
-				.setFooter({ text: t(LanguageKeys.Logs.GuildMember.EmbedMemberIDFooter, { id: member.id }) })
+				.setFooter({ text: t(LanguageKeys.Logs.GuildMember.EmbedFooter, { id: member.id }) })
 				.setTimestamp()
 				.setTitle(
 					change.type === "$add"
-						? t(LanguageKeys.Logs.GuildMember.EmbedTitleRoleAdded, {
+						? t(LanguageKeys.Logs.GuildMember.Update.RoleChange.Embed.TitleAdd, {
 								role: change.roleName,
 								executor: change.executor,
 							})
-						: t(LanguageKeys.Logs.GuildMember.EmbedTitleRoleRemoved, {
+						: t(LanguageKeys.Logs.GuildMember.Update.RoleChange.Embed.TitleRemove, {
 								role: change.roleName,
 								executor: change.executor,
 							}),

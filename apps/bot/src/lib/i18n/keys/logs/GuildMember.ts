@@ -1,16 +1,41 @@
 import { FT, T } from "#utils/i18n";
 
-export const EmbedDisplayNameField = T("logs/guildmember:embed_display_name_field");
-export const EmbedMemberAddFieldName = T("logs/guildmember:embed_member_add_field_name");
-export const EmbedMemberAddFieldValue = FT<{ duration: string }>("logs/guildmember:embed_member_add_field_value");
-export const EmbedMemberIDFooter = FT<{ id: string }>("logs/guildmember:embed_member_id_footer");
-export const EmbedMemberRemoveDurationFieldName = T("logs/guildmember:embed_member_remove_duration_field_name");
-export const EmbedMemberRemoveDurationFieldValue = FT<{ duration: string }>(
-	"logs/guildmember:embed_member_remove_duration_field_value",
-);
-export const EmbedMemberRemoveRolesFieldName = T("logs/guildmember:embed_member_remove_roles_field_name");
-export const EmbedMemberRemoveRolesFieldNone = T("logs/guildmember:embed_member_remove_roles_field_none");
-export const EmbedTitleRoleAdded = FT<{ role: string; executor: string }>("logs/guildmember:embed_title_role_added");
-export const EmbedTitleRoleRemoved = FT<{ role: string; executor: string }>(
-	"logs/guildmember:embed_title_role_removed",
-);
+export const Add = {
+	Embed: {
+		Field: {
+			Name: T("logs/guildmember:add.embed.field.name"),
+			Value: FT<{ duration: string }>("logs/guildmember:add.embed.field.value"),
+		},
+	},
+};
+
+export const Remove = {
+	Embed: {
+		DurationField: {
+			Name: T("logs/guildmember:remove.embed.duration_field.name"),
+			Value: FT<{ duration: string }>("logs/guildmember:remove.embed.duration_field.value"),
+		},
+		RolesField: {
+			Name: T("logs/guildmember:remove.embed.roles_field.name"),
+			ValueNone: T("logs/guildmember:remove.embed.roles_field.value_none"),
+		},
+	},
+};
+
+export const Update = {
+	DisplayName: {
+		Embed: {
+			Field: {
+				Name: T("logs/guildmember:update.display_name.embed.name"),
+			},
+		},
+	},
+	RoleChange: {
+		Embed: {
+			TitleAdd: FT<{ role: string; executor: string }>("logs/guildmember:update.role_change.embed.title_add"),
+			TitleRemove: FT<{ role: string; executor: string }>("logs/guildmember:update.role_change.embed.title_remove"),
+		},
+	},
+};
+
+export const EmbedFooter = FT<{ id: string }>("logs/guildmember:embed_footer");

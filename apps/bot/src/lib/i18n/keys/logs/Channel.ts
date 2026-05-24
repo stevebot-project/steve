@@ -1,22 +1,35 @@
 import { FT, T } from "#utils/i18n";
 
-export const TypeText = T("logs/channel:type_text");
-export const TypeVoice = T("logs/channel:type_voice");
-export const TypeCategory = T("logs/channel:type_category");
-export const TypeAnnouncement = T("logs/channel:type_announcement");
-export const TypeAnnouncementThread = T("logs/channel:type_announcement_thread");
-export const TypePublicThread = T("logs/channel:type_public_thread");
-export const TypePrivateThread = T("logs/channel:type_private_thread");
-export const TypeStageVoice = T("logs/channel:type_stage_voice");
-export const TypeForum = T("logs/channel:type_forum");
-export const TypeMedia = T("logs/channel:type_media");
-export const TypeUnknown = T("logs/channel:type_unknown");
-export const CreateEmbedTitleNoParent = FT<{ name: string; type: string }>("logs/channel:create_embed_title_no_parent");
-export const CreateEmbedTitleHasParent = FT<{ name: string; parentName: string; type: string }>(
-	"logs/channel:create_embed_title_has_parent",
-);
-export const DeleteEmbedTitleHasParent = FT<{ name: string; parentName: string; type: string }>(
-	"logs/channel:delete_embed_title_has_parent",
-);
-export const DeleteEmbedTitleNoParent = FT<{ name: string; type: string }>("logs/channel:delete_embed_title_no_parent");
+export const Create = {
+	Embed: {
+		Title: {
+			HasParent: FT<{ name: string; parentName: string; type: string }>("logs/channel:create.embed.title.has_parent"),
+			NoParent: FT<{ name: string; type: string }>("logs/channel:create.embed.title.no_parent"),
+		},
+	},
+};
+
+export const Delete = {
+	Embed: {
+		Title: {
+			HasParent: FT<{ name: string; parentName: string; type: string }>("logs/channel:delete.embed.title.has_parent"),
+			NoParent: FT<{ name: string; type: string }>("logs/channel:delete.embed.title.no_parent"),
+		},
+	},
+};
+
 export const EmbedFooter = FT<{ id: string }>("logs/channel:embed_footer");
+
+export const Type = {
+	Announcement: T("logs/channel:type.announcement"),
+	AnnouncementThread: T("logs/channel:type.announcement_thread"),
+	Category: T("logs/channel:type.category"),
+	Forum: T("logs/channel:type.forum"),
+	Media: T("logs/channel:type.media"),
+	PrivateThread: T("logs/channel:private_thread"),
+	PublicThread: T("logs/channel:type.public_thread"),
+	StageVoice: T("logs/channel:type.stage_voice"),
+	Text: T("logs/channel:type.text"),
+	Unknown: T("logs/channel:type.unknown"),
+	Voice: T("logs/channel:type.voice"),
+};

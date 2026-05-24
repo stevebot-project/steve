@@ -1,18 +1,32 @@
 {
-	"create_embed_title_has_parent": "{{type}} Created in {{parentName}} | {{name}}",
-	"create_embed_title_no_parent": "{{type}} Created | {{name}}",
-	"delete_embed_title_has_parent": "{{type}} Deleted from {{parentName}} | {{name}}",
-	"delete_embed_title_no_parent": "{{type}} Deleted | {{name}}",
+	"create": {
+		"embed": {
+			"title": {
+				"has_parent": "{{type}} Created in {{parentName}} | {{name}}",
+				"no_parent": "{{type}} Created | {{name}}"
+			}
+		}
+	},
+	"delete": {
+		"embed": {
+			"title": {
+				"has_parent": "{{type}} Deleted from {{parentName}} | {{name}}",
+				"no_parent": "{{type}} Deleted | {{name}}"
+			}
+		}
+	},
 	"embed_footer": "Channel ID: {{id}}",
-	"type_text": "Text Channel",
-	"type_voice": "Voice Channel",
-	"type_category": "Category",
-	"type_announcement": "Announcement Channel",
-	"type_announcement_thread": "Announcement Thread",
-	"type_public_thread": "Public Thread",
-	"type_private_thread": "Private Thread",
-	"type_stage_voice": "Stage Channel",
-	"type_forum": "Forum",
-	"type_media": "Media Channel",
-	"type_unknown": "Unknown"
+	"type": {
+		"announcement": "Announcement Channel",
+		"announcement_thread": "Announcement Thread",
+		"category": "Category",
+		"forum": "Forum",
+		"media": "Media Channel",
+		"private_thread": "Private Thread",
+		"public_thread": "Public Thread",
+		"stage_voice": "Stage Channel",
+		"text": "Text Channel",
+		"unknown": "Unknown",
+		"voice": "Voice Channel"
+	}
 }

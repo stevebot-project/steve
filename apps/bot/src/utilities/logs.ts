@@ -56,21 +56,21 @@ export class GuildLoggingUtility extends Utility {
 
 	public parseChannelType = (type: GuildChannelType, t: SteveT) => {
 		const CHANNEL_TYPE_KEYS: Partial<Record<ChannelType, TypedT>> = {
-			[ChannelType.GuildText]: LanguageKeys.Logs.Channel.TypeText,
-			[ChannelType.GuildVoice]: LanguageKeys.Logs.Channel.TypeVoice,
-			[ChannelType.GuildCategory]: LanguageKeys.Logs.Channel.TypeCategory,
-			[ChannelType.GuildAnnouncement]: LanguageKeys.Logs.Channel.TypeAnnouncement,
-			[ChannelType.AnnouncementThread]: LanguageKeys.Logs.Channel.TypeAnnouncementThread,
-			[ChannelType.PublicThread]: LanguageKeys.Logs.Channel.TypePublicThread,
-			[ChannelType.PrivateThread]: LanguageKeys.Logs.Channel.TypePrivateThread,
-			[ChannelType.GuildStageVoice]: LanguageKeys.Logs.Channel.TypeStageVoice,
-			[ChannelType.GuildForum]: LanguageKeys.Logs.Channel.TypeForum,
-			[ChannelType.GuildMedia]: LanguageKeys.Logs.Channel.TypeMedia,
+			[ChannelType.GuildAnnouncement]: LanguageKeys.Logs.Channel.Type.Announcement,
+			[ChannelType.AnnouncementThread]: LanguageKeys.Logs.Channel.Type.AnnouncementThread,
+			[ChannelType.GuildCategory]: LanguageKeys.Logs.Channel.Type.Category,
+			[ChannelType.GuildForum]: LanguageKeys.Logs.Channel.Type.Forum,
+			[ChannelType.GuildMedia]: LanguageKeys.Logs.Channel.Type.Media,
+			[ChannelType.PrivateThread]: LanguageKeys.Logs.Channel.Type.PrivateThread,
+			[ChannelType.PublicThread]: LanguageKeys.Logs.Channel.Type.PublicThread,
+			[ChannelType.GuildStageVoice]: LanguageKeys.Logs.Channel.Type.StageVoice,
+			[ChannelType.GuildText]: LanguageKeys.Logs.Channel.Type.Text,
+			[ChannelType.GuildVoice]: LanguageKeys.Logs.Channel.Type.Voice,
 		};
 
 		const key = CHANNEL_TYPE_KEYS[type];
 
-		return key ? t(key) : t(LanguageKeys.Logs.Channel.TypeUnknown);
+		return key ? t(key) : t(LanguageKeys.Logs.Channel.Type.Unknown);
 	};
 }
 

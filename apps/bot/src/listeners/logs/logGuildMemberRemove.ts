@@ -25,24 +25,24 @@ export default class extends Listener {
 						.filter((r) => r.id !== member.guild.id)
 						.map((r) => r.name)
 						.join(", ")
-				: t(LanguageKeys.Logs.GuildMember.EmbedMemberRemoveRolesFieldNone);
+				: t(LanguageKeys.Logs.GuildMember.Remove.Embed.RolesField.ValueNone);
 
 		const embed = new EmbedBuilder()
 			.addFields(
 				{
-					name: t(LanguageKeys.Logs.GuildMember.EmbedMemberRemoveDurationFieldName),
-					value: t(LanguageKeys.Logs.GuildMember.EmbedMemberRemoveDurationFieldValue, { duration }),
+					name: t(LanguageKeys.Logs.GuildMember.Remove.Embed.DurationField.Name),
+					value: t(LanguageKeys.Logs.GuildMember.Remove.Embed.DurationField.Value, { duration }),
 					inline: true,
 				},
 				{
-					name: t(LanguageKeys.Logs.GuildMember.EmbedMemberRemoveRolesFieldName),
+					name: t(LanguageKeys.Logs.GuildMember.Remove.Embed.RolesField.Name),
 					value: roles,
 					inline: true,
 				},
 			)
 			.setAuthor({ name: member.user.username, iconURL: member.user.displayAvatarURL() })
 			.setColor(GuildLogColors.TURQUOISE)
-			.setFooter({ text: t(LanguageKeys.Logs.GuildMember.EmbedMemberIDFooter, { id: member.id }) })
+			.setFooter({ text: t(LanguageKeys.Logs.GuildMember.EmbedFooter, { id: member.id }) })
 			.setTimestamp();
 
 		return memberlog.send({ embeds: [embed] });

@@ -1,12 +1,38 @@
 {
-	"embed_display_name_field": "New Display Name",
-	"embed_member_add_field_name": "Member Joined Server",
-	"embed_member_add_field_value": "Account created {{duration}} ago",
-	"embed_member_id_footer": "Member ID: {{id}}",
-	"embed_member_remove_duration_field_name": "Member Left Server",
-	"embed_member_remove_duration_field_value": "Joined {{duration}} ago",
-	"embed_member_remove_roles_field_name": "Roles",
-	"embed_member_remove_roles_field_none": "None",
-	"embed_title_role_added": "Added to the {{role}} role by {{executor}}",
-	"embed_title_role_removed": "Removed from the {{role}} role by {{executor}}"
+	"add": {
+		"embed": {
+			"field": {
+				"name": "Member Joined Server",
+				"value": "Account created {{duration}} ago"
+			}
+		}
+	},
+	"remove": {
+		"embed": {
+			"duration_field": {
+				"name": "Member Left Server",
+				"value": "Joined {{duration}} ago"
+			},
+			"roles_field": {
+				"name": "Roles",
+				"value_none": "None"
+			}
+		}
+	},
+	"update": {
+		"display_name": {
+			"embed": {
+				"field": {
+					"name": "New Display Name"
+				}
+			}
+		},
+		"role_change": {
+			"embed": {
+				"title_add": "Added to the {{role}} role by {{executor}}",
+				"title_remove": "Removed from the {{role}} role by {{executor}}"
+			}
+		}
+	},
+	"embed_footer": "Member ID: {{id}}"
 }
