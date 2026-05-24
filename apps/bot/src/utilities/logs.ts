@@ -78,9 +78,3 @@ interface AuditLogExecutor {
 	name: string;
 	avatar: string;
 }
-
-declare module "@sapphire/plugin-utilities-store" {
-	export interface Utilities {
-		logs: GuildLoggingUtility;
-	}
-}

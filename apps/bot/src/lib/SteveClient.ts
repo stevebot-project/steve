@@ -17,9 +17,3 @@ export class SteveClient extends SapphireClient {
 		return super.login(token);
 	}
 }
-
-declare module "@sapphire/pieces" {
-	interface Container {
-		settings: SettingsProvider;
-	}
-}

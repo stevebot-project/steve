@@ -19,9 +19,3 @@ export class TimeUtility extends Utility {
 		return duration ? duration.offset : null;
 	};
 }
-
-declare module "@sapphire/plugin-utilities-store" {
-	export interface Utilities {
-		time: TimeUtility;
-	}
-}
