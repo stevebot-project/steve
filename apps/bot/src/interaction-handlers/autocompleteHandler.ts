@@ -6,6 +6,7 @@ import {
 	InteractionHandlerParseResult,
 	InteractionHandlerTypes,
 } from "@sapphire/framework";
+import { Reminder, Snippet } from "@steve/database";
 import { AutocompleteInteraction } from "discord.js";
 
 @ApplyOptions<InteractionHandlerOptions>({
@@ -51,7 +52,7 @@ export class AutocompleteHandler extends InteractionHandler {
 	private async reminderContentAutocomplete(interaction: AutocompleteInteraction) {
 		const query = interaction.options.getFocused();
 
-		const reminders = query
+		const reminders: Reminder[] = query
 			? await this.container.settings.users.searchRemindersByContent(interaction.user.id, query)
 			: await this.container.settings.users.getReminders(interaction.user.id);
 
@@ -64,7 +65,7 @@ export class AutocompleteHandler extends InteractionHandler {
 	private async snippetNameAutocomplete(interaction: AutocompleteInteraction<"cached">) {
 		const query = interaction.options.getFocused();
 
-		const snippets = query
+		const snippets: Snippet[] = query
 			? await this.container.settings.snippets.searchSnippetsByName(interaction.guildId, query)
 			: await this.container.settings.snippets.getGuildSnippets(interaction.guildId);
 
